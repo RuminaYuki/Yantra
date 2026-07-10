@@ -1,0 +1,298 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3433972638773545791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3951756684740787569}
+  - component: {fileID: 7518681782051052792}
+  - component: {fileID: 3724098259136643283}
+  m_Layer: 0
+  m_Name: YantraInputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3951756684740787569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433972638773545791}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 68.80657, y: 4.68908, z: 175.53781}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7518681782051052792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433972638773545791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: db0e9067649de694aba4b3fc8b88612f, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnMoveInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 71094e59-69f6-45a2-9101-1e167569f995
+    m_ActionName: '3D/Move3D[/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnInteractionInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 21b53cb7-e074-4748-a79c-124229f654da
+    m_ActionName: '3D/Interaction[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnRunInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d658c162-4f67-4ace-942e-6d2466c17ef6
+    m_ActionName: '3D/Run[/Keyboard/leftShift]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnJumpInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 74e906b3-f4ac-449c-b6f9-a43f03828a56
+    m_ActionName: '3D/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8041fad7-3c17-425b-ad1e-603406ea72e9
+    m_ActionName: '3D/Crawl[/Keyboard/leftCtrl]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: deba7a20-7201-4889-811c-b6920208b549
+    m_ActionName: '3D/Bag[/Keyboard/b]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 51d8c283-084d-4e54-b8ad-182ea89d6387
+    m_ActionName: '3D/Map[/Keyboard/m]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 66044306-3db6-4a57-8c2c-74a4ff6a02df
+    m_ActionName: '3D/UseItem[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6d5fe177-ec7c-4f82-91e1-37b1d5c1997e
+    m_ActionName: '3D/Navigate[/Keyboard/n]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8908cef7-2897-4f39-984b-20dcf551baa9
+    m_ActionName: '3D/Qust[/Keyboard/j]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnPressQ_ButtonInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0bdc4520-aab3-4a25-800c-66a6a94d6ad3
+    m_ActionName: '3D/SkillQ[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 276d30a5-b6a2-4d2d-88e6-fabbb6bacbe7
+    m_ActionName: '3D/HUD[/Keyboard/tab]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 206b127d-819a-4b85-960a-e8171ddbef33
+    m_ActionName: '3D/Num1[/Keyboard/1]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 009e8385-67e7-4c5a-894e-b13167c8dcbb
+    m_ActionName: '3D/Num2[/Keyboard/2]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 099b2346-970c-4855-a221-076df9302b86
+    m_ActionName: '3D/Num3[/Keyboard/3]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: faf40f33-9e56-475b-a18c-89de144ed532
+    m_ActionName: '3D/Num4[/Keyboard/4]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 545b231d-3533-416c-a814-fd6562757e15
+    m_ActionName: '3D/Num5[/Keyboard/5]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 51118519-cdcf-49e5-aa99-24d8f0a5515d
+    m_ActionName: '3D/Num6[/Keyboard/6]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 28c2f9a6-33b5-4313-81a2-6ec7cec28c2f
+    m_ActionName: '3D/Num7[/Keyboard/7]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c07fc7c2-8f57-4109-85ed-f919f9d1b5c7
+    m_ActionName: '3D/Num8[/Keyboard/8]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 02ae1686-51aa-47e2-8485-baf5accdbfd3
+    m_ActionName: '3D/Num9[/Keyboard/9]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bb8ebe37-67d6-42c6-a939-19378ba25727
+    m_ActionName: '3D/Num0[/Keyboard/0]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnLeftClickInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 92374f30-062a-47d6-b380-92a4f38596ca
+    m_ActionName: '3D/LeftClick[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnMiddleClickInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fa9621f4-f889-4f29-b60e-49819b7d9d7d
+    m_ActionName: '3D/MidClick[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnRightClickInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6bfc4df0-6a34-431d-80d3-f1c61a070e3f
+    m_ActionName: '3D/RightClick[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3724098259136643283}
+        m_TargetAssemblyTypeName: YantraInputManager, Assembly-CSharp
+        m_MethodName: OnPressF_ButtonInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 39ce7823-9844-4617-a2d0-fc75da356fbe
+    m_ActionName: 3D/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 05d40700-1a52-46ab-9532-cd937065439e
+    m_ActionName: 'UI/AnyKey[/Keyboard/anyKey,/Mouse/leftButton,/Mouse/middleButton,/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5eee3625-bde9-4ac5-b5b0-502698f4ab77
+    m_ActionName: 3D/New action1
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 3D
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &3724098259136643283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433972638773545791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebb8a3e398b7d8e49a5dc668ca813ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantraInputManager
+  InputObserver: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
