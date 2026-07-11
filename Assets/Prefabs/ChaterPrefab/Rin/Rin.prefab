@@ -481,7 +481,7 @@ MonoBehaviour:
   _jumpStaminaCost: 25
   _regenStaminaDelay: 0.3
   _currentRegenStaminaDelay: 0
-  _lowHpPercent: 0.3
+  _staminaLowPercent: 0.3
 --- !u!114 &2845471275117838169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,17 +551,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f44e542b033a04d996efffc75dcad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RinAudioController
-  _soundAndTags:
-  - Tag: 
-    Sound: []
   _audioSource: {fileID: 388201104023246194}
-  _statsController: {fileID: 297939241838729157}
-  _raycastPos: {fileID: 3671497378946717865}
-  _voiceLines:
-  - EventName: 9
-    Sound: []
   _voiceSource: {fileID: 0}
   _interruptCurrentVoice: 0
+  _statsController: {fileID: 297939241838729157}
+  _raycastPos: {fileID: 3671497378946717865}
+  _soundAndTags:
+  - Tag: 
+    FootstepSounds: []
+    RunSounds: []
+    JumpLandSounds: []
+  _damageSounds: []
+  _lowHpThreshold: 0.5
+  _lowHp: []
+  _staminaLow: []
+  _staminaDepleted: []
+  _whileDrawing: []
+  _enterVillage: []
+  _findFatherClue: []
+  _walkingToVillageCenter: []
+  _firstGhostEncounter: []
+  _enterYantraHouse: []
+  _findCave: []
+  _findSculptureRoom: []
+  _afterLeaveYantraHouse: []
 --- !u!1001 &3142502382187476670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1012,7 +1025,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d80aa353e05542f4cb431e94ca0d16af,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: d80aa353e05542f4cb431e94ca0d16af,
         type: 3}

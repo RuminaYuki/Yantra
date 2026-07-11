@@ -8,7 +8,7 @@ public class SaveFile : MonoBehaviour
 {
     [SerializeField] private SaveSO _saveSO;
 
-    private GameObject Players;
+    [SerializeField]private GameObject Players;
 
     private void Start()
     {
@@ -32,17 +32,17 @@ public class SaveFile : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
 
         if (other.CompareTag("Player")) {
-            Save();
-            Debug.Log("Game Saved!");
+            Debug.Log(Save() ? "Game Saved!" : "Game save fail");
+
         }
 
     }
-    public void Save()
+    public bool Save()
     {
         if (_saveSO == null)
         {
             Debug.LogError("SaveFile: SaveSO is not assigned.");
-            return;
+            return false;
         }
 
         if (Players == null)
@@ -53,14 +53,14 @@ public class SaveFile : MonoBehaviour
         if (Players == null)
         {
             Debug.LogError("SaveFile: Player object was not found, cannot save.");
-            return;
+            return false;
         }
 
         YantraStatsController stats = Players.GetComponent<YantraStatsController>();
         if (stats == null)
         {
             Debug.LogError("SaveFile: YantraStatsController was not found on the player.");
-            return;
+            return false;
         }
 
         _saveSO.SceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
@@ -71,9 +71,13 @@ public class SaveFile : MonoBehaviour
 
 #if UNITY_EDITOR
         EditorUtility.SetDirty(_saveSO);
-        AssetDatabase.SaveAssets();
+        if (!Application.isPlaying)
+        {
+            AssetDatabase.SaveAssets();
+        }
 #endif
 
         Debug.Log("SaveFile: Game saved successfully.");
+        return true;
     }
 }
