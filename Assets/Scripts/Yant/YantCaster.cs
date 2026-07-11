@@ -98,7 +98,12 @@ public class YantCaster : MonoBehaviour
             Debug.LogWarning($"<color=#00FFFF>[YantCaster]</color> Prefab '{binding.YantPrefab.name}' has no IYantEffect.");
         }
 
-        Destroy(paper);
+        DrawOn3DMesh drawOn3DMesh = paper.GetComponent<DrawOn3DMesh>();
+        if (drawOn3DMesh != null)
+        {
+            drawOn3DMesh.ClearDrawing();
+        }
+
         Debug.Log($"<color=#00FFFF>[YantCaster]</color> Cast '{category}' successfully.");
         return true;
     }
