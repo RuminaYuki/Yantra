@@ -9,7 +9,7 @@ public class CameraManager : MonoBehaviour
     [Header("Camera Debug")]
     [SerializeField] private bool _isDrawing;
 
-#if UNITY_EDITOR
+#if Unity_EDITOR
     private void OnValidate()
     {
         Setup();
