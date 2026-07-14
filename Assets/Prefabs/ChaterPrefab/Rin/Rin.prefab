@@ -185,7 +185,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8711756466054454352}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: d80aa353e05542f4cb431e94ca0d16af, type: 3}
   m_Controller: {fileID: 9100000, guid: 9f96c55e2f60ffa41ab1542490357bb6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -499,6 +499,7 @@ MonoBehaviour:
   _inputObserver: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   _drawOn3DMesh: {fileID: 4131966508099442192}
   _yantCaster: {fileID: 0}
+  _dampTime: 0.1
   _isDrawing: 0
   _isLampOn: 0
 --- !u!114 &9135904022605207811
