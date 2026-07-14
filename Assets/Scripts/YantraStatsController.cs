@@ -46,7 +46,7 @@ public class YantraStatsController : MonoBehaviour
         set
         {
             _isMoving = value;
-            if (EventBus.Instance) EventBus.Instance.Publish(new PlayerMovingEvent(value));
+            //if (EventBus.Instance) EventBus.Instance.Publish(new PlayerMovingEvent(value));
         }
     }
 
@@ -56,7 +56,7 @@ public class YantraStatsController : MonoBehaviour
         set
         {
             _isRunning = value;
-            if (EventBus.Instance) EventBus.Instance.Publish(new PlayerRunningEvent(value));
+            //if (EventBus.Instance) EventBus.Instance.Publish(new PlayerRunningEvent(value));
         }
     }
     public bool IsJumping
@@ -65,7 +65,7 @@ public class YantraStatsController : MonoBehaviour
         set 
         {
             _isJumping = value;
-            if (EventBus.Instance) EventBus.Instance.Publish(new PlayerJumpingEvent(value));
+            //if (EventBus.Instance) EventBus.Instance.Publish(new PlayerJumpingEvent(value));
         }
     }
     public bool IsGrounded
@@ -74,7 +74,7 @@ public class YantraStatsController : MonoBehaviour
         set
         {
             _isGrounded = value;
-            if (EventBus.Instance) EventBus.Instance.Publish(new PlayerGroundEvent(value));
+            //if (EventBus.Instance) EventBus.Instance.Publish(new PlayerGroundEvent(value));
         }
     }
 
