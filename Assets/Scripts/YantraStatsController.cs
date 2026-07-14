@@ -36,7 +36,9 @@ public class YantraStatsController : MonoBehaviour
         get => _isHurt;
         set
         {
+            if (_isHurt == value) return; // ป้องกันการทำงานซ้ำซ้อน
             _isHurt = value;
+            SpeedManament(); // คำนวณความเร็วใหม่เฉพาะตอนสถานะเปลี่ยน
         }
     }
 
@@ -45,6 +47,7 @@ public class YantraStatsController : MonoBehaviour
         get => _isMoving;
         set
         {
+            if (_isMoving == value) return; // ป้องกันการส่ง Event รัวๆ
             _isMoving = value;
             if (EventBus.Instance) EventBus.Instance.Publish(new PlayerMovingEvent(value));
         }
@@ -55,15 +58,18 @@ public class YantraStatsController : MonoBehaviour
         get => _isRunning;
         set
         {
+            if (_isRunning == value) return; // ป้องกันการส่ง Event รัวๆ
             _isRunning = value;
+            SpeedManament(); // คำนวณความเร็วใหม่เฉพาะตอนสลับวิ่ง/เดิน
             if (EventBus.Instance) EventBus.Instance.Publish(new PlayerRunningEvent(value));
         }
     }
     public bool IsJumping
     {
         get => _isJumping;
-        set 
+        set
         {
+            if (_isJumping == value) return; // ป้องกันการส่ง Event รัวๆ
             _isJumping = value;
             if (EventBus.Instance) EventBus.Instance.Publish(new PlayerJumpingEvent(value));
         }
@@ -73,6 +79,7 @@ public class YantraStatsController : MonoBehaviour
         get => _isGrounded;
         set
         {
+            if (_isGrounded == value) return; // ป้องกันการส่ง Event รัวๆ
             _isGrounded = value;
             if (EventBus.Instance) EventBus.Instance.Publish(new PlayerGroundEvent(value));
         }
@@ -110,11 +117,8 @@ public class YantraStatsController : MonoBehaviour
 
     private void Update()
     {
-       
-
-        SpeedManament();
+        // ย้าย SpeedManament() ออกไปแล้ว จะได้ไม่กิน CPU ทุกเฟรม
         StaminaManagement();
-
     }
 
     // ─── Stats Accessors ───────────────────────────────────────────────
@@ -242,7 +246,7 @@ public class YantraStatsController : MonoBehaviour
     public void SetYantCount(int count)
     {
         yantCount = count;
-    }   
+    }
 
     public void AddYantCount(int amount)
     {
