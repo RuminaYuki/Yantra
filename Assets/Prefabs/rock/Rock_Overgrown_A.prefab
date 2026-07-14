@@ -151,11 +151,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -909231065419568762, guid: 249458d5129350f42a5146a75f8b4710,
         type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -909231065419568762, guid: 249458d5129350f42a5146a75f8b4710,
-        type: 3}
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 2463918823162679605}
@@ -169,11 +164,6 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: fba07ae0ac6dbe94188dc1bd2c505bd8, type: 2}
-    - target: {fileID: 4540967297616445612, guid: 249458d5129350f42a5146a75f8b4710,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4540967297616445612, guid: 249458d5129350f42a5146a75f8b4710,
         type: 3}
       propertyPath: m_ProbeAnchor
@@ -217,22 +207,17 @@ PrefabInstance:
     - target: {fileID: 5551014577142218206, guid: 249458d5129350f42a5146a75f8b4710,
         type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.5
+      value: 0.6007998
       objectReference: {fileID: 0}
     - target: {fileID: 5551014577142218206, guid: 249458d5129350f42a5146a75f8b4710,
         type: 3}
       propertyPath: m_LODs.Array.data[1].screenRelativeHeight
-      value: 0.15
+      value: 0.29983565
       objectReference: {fileID: 0}
     - target: {fileID: 6027318853750211196, guid: 249458d5129350f42a5146a75f8b4710,
         type: 3}
       propertyPath: m_ReceiveGI
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6027318853750211196, guid: 249458d5129350f42a5146a75f8b4710,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6027318853750211196, guid: 249458d5129350f42a5146a75f8b4710,
         type: 3}
@@ -315,7 +300,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
