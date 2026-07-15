@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,11 +8,13 @@ public class FatalFrameCameraController : MonoBehaviour
     [Header("Camera States")]
     public bool IsGunAiming = false;    // คลิกขวา (ปืน)
     public bool IsYantraAiming = false; // กด Q (ยันต์)
+    [SerializeField] private CameraAnimationController _cameraAnimationController;
 
     [Header("Targets")]
     [SerializeField] private Transform _tppPivot;
     [SerializeField] private Transform _fppEyePosition;
     [SerializeField] private Transform _otsPivot; // ✨ เพิ่มช่องสำหรับใส่จุดเล็งข้ามไหล่
+    [SerializeField] private Transform _yantraPivot; // เพิ่มช่องสำหรับใส่จุดเล็งยันต์
 
     [Header("TPP Settings")]
     [SerializeField] private Vector3 _tppOffset = new Vector3(0.6f, 0.2f, -2.5f);
@@ -29,6 +32,8 @@ public class FatalFrameCameraController : MonoBehaviour
     [SerializeField] private LayerMask _collisionMask;
     [SerializeField] private float _cameraRadius = 0.2f;
     [SerializeField] private float _minDistance = 0.5f;
+
+    private bool _ChangeCameraFinish = false;
 
     private Camera _mainCamera;
     private float _pitch = 0f;
@@ -68,10 +73,13 @@ public class FatalFrameCameraController : MonoBehaviour
     {
         if (_tppPivot == null || _fppEyePosition == null || Mouse.current == null) return;
 
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-        _yaw += mouseDelta.x * _mouseSensitivity;
-        _pitch -= mouseDelta.y * _mouseSensitivity;
-        _pitch = Mathf.Clamp(_pitch, -40f, 60f);
+        if (!IsYantraAiming)
+        {
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+            _yaw += mouseDelta.x * _mouseSensitivity;
+            _pitch -= mouseDelta.y * _mouseSensitivity;
+            _pitch = Mathf.Clamp(_pitch, -40f, 60f);
+        }
 
         Quaternion targetRotation = Quaternion.Euler(_pitch, _yaw, 0f);
         Vector3 desiredPosition;
@@ -111,5 +119,22 @@ public class FatalFrameCameraController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * _transitionSpeed);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _transitionSpeed);
         _mainCamera.fieldOfView = Mathf.Lerp(_mainCamera.fieldOfView, targetFOV, Time.deltaTime * _transitionSpeed);
+        
+
+        if (IsYantraAiming && Vector3.Distance(transform.position, _fppEyePosition.position) <= 0.1f)
+        {
+            _cameraAnimationController.OnDrawEvent(true);
+
+            targetRotation = Quaternion.LookRotation(_yantraPivot.position - transform.position);
+
+            if (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
+            {
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    Time.deltaTime * _transitionSpeed
+                );
+            }
+        }
     }
 }

@@ -9,8 +9,9 @@ public class EmergencyAimFix : MonoBehaviour
     [Header("ลากเป้าสีขาว (AimTarget_Point) มาใส่")]
     public Transform aimTarget;
 
-    [Header("ลากสคริปต์กล้องมาใส่ เพื่อเช็คการเล็ง")]
+    [Header("ลากสคริปต์กล้องมาใส่ เพื่อเช็ค")]
     public FatalFrameCameraController cameraController;
+    public RinAnimationController rinAnimationController;
 
     [Header("ปรับแกนถ้ามันหันผิดทิศ (หมุนจนกว่าจะตรงเป้า)")]
     public Vector3 chestOffset = new Vector3(0, -90, -90);
@@ -29,7 +30,7 @@ public class EmergencyAimFix : MonoBehaviour
         }
 
         // บังคับแขนหันหาเป้าแบบทะลุทะลวง
-        if (rightArmBone != null)
+        if (rightArmBone != null && cameraController.IsGunAiming)
         {
             rightArmBone.LookAt(aimTarget);
             rightArmBone.Rotate(armOffset);

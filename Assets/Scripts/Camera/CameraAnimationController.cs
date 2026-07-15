@@ -4,7 +4,6 @@ using UnityEngine;
 public class CameraAnimationController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private YantraInputObserverSO _inputObserver;
 
     [Header("Look At Settings")]
     [SerializeField] private Transform _targetToLook;
@@ -18,6 +17,9 @@ public class CameraAnimationController : MonoBehaviour
     private Quaternion _cachedRotation;
     private Coroutine _lookRoutine;
 
+    public bool IsAnimationActive => _isDrawing;
+    public Quaternion DesiredRotation { get; private set; }
+
     private void OnValidate()
     {
         if (!_animator) TryGetComponent(out _animator);
@@ -25,8 +27,15 @@ public class CameraAnimationController : MonoBehaviour
 
     public void OnDrawEvent(bool isDrawing)
     {
+        Debug.Log($"OnDrawEvent called with isDrawing: {isDrawing}");
+        if (!_isDrawing && Quaternion.Angle(transform.rotation, _targetToLook.rotation) <= 0.1f)
+            return;
+
         _isDrawing = isDrawing;
-        _animator.SetBool("Draw", _isDrawing);
+        if (_animator != null)
+        {
+            _animator.SetBool("Draw", _isDrawing);
+        }
 
         if (_lookRoutine != null)
         {
@@ -35,11 +44,10 @@ public class CameraAnimationController : MonoBehaviour
 
         if (_isDrawing)
         {
-            // บันทึกมุมเริ่มต้นเก็บไว้เฉพาะตอนเริ่มวาด
             _cachedRotation = transform.rotation;
+            DesiredRotation = _cachedRotation;
         }
 
-        // เรียก Coroutine ชุดเดียวให้จัดการทั้งหมด
         _lookRoutine = StartCoroutine(SmoothRotateRoutine());
     }
 
@@ -50,25 +58,21 @@ public class CameraAnimationController : MonoBehaviour
         {
             Quaternion targetRotation;
 
-            if (_isDrawing)
+            if (_isDrawing && _targetToLook != null)
             {
-                // คำนวณทิศทางใหม่ทุกเฟรม (ทำให้ขยับเป้าหมาย หรือแก้ค่า Offset ใน Inspector แล้วเห็นผลทันที)
                 Vector3 directionToTarget = _targetToLook.position - transform.position;
                 targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Euler(_rotationOffset);
             }
             else
             {
-                // ถ้าหยุดวาด ให้เป้าหมายคือมุมกล้องเดิม
                 targetRotation = _cachedRotation;
             }
 
-            // ค่อยๆ หมุนไปยังมุมเป้าหมาย
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+            DesiredRotation = targetRotation;
 
-            // เงื่อนไขการหยุด: ถ้าไม่ได้กำลังวาดอยู่ และหมุนกลับมาถึงจุดเดิมแล้ว ให้หยุด Coroutine เพื่อประหยัดทรัพยากร
             if (!_isDrawing && Quaternion.Angle(transform.rotation, targetRotation) <= 0.1f)
             {
-                transform.rotation = targetRotation;
+                DesiredRotation = targetRotation;
                 break;
             }
 
