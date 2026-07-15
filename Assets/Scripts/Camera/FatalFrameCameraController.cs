@@ -55,9 +55,15 @@ public class FatalFrameCameraController : MonoBehaviour
     {
         if (Mouse.current != null)
         {
-            // บังคับว่าถ้ากางยันต์อยู่ จะห้ามเล็งปืนซ้อน
-            if (!IsYantraAiming)
+            // === จุดที่แก้ไข ===
+            if (IsYantraAiming)
             {
+                // ถ้ากางสมุดอยู่ บังคับให้ "ยกเลิกการเล็งปืน" ทันที!
+                IsGunAiming = false;
+            }
+            else
+            {
+                // ถ้าไม่ได้กางสมุด ก็รับค่าปุ่มเมาส์ตามปกติ
                 if (Mouse.current.rightButton.wasPressedThisFrame) IsGunAiming = true;
                 if (Mouse.current.rightButton.wasReleasedThisFrame) IsGunAiming = false;
             }
@@ -68,10 +74,24 @@ public class FatalFrameCameraController : MonoBehaviour
     {
         if (_tppPivot == null || _fppEyePosition == null || Mouse.current == null) return;
 
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-        _yaw += mouseDelta.x * _mouseSensitivity;
-        _pitch -= mouseDelta.y * _mouseSensitivity;
-        _pitch = Mathf.Clamp(_pitch, -40f, 60f);
+        // === จุดที่แก้ไข: ล็อกเมาส์ และบังคับก้มหน้า ===
+        if (!IsYantraAiming)
+        {
+            // ถ้าไม่ได้กางสมุด ให้ขยับกล้องด้วยเมาส์ได้ตามปกติ
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+            _yaw += mouseDelta.x * _mouseSensitivity;
+            _pitch -= mouseDelta.y * _mouseSensitivity;
+            _pitch = Mathf.Clamp(_pitch, -40f, 60f);
+        }
+        else
+        {
+            // ถ้ากางสมุดอยู่ (IsYantraAiming == true)
+            // บังคับก้มหน้าลง 45 องศา (เปลี่ยนตัวเลข 45f ได้ตามความเหมาะสม)
+            // ค่อยๆ ก้มลงอย่างสมูทด้วย Lerp
+            _pitch = Mathf.Lerp(_pitch, 50f, Time.deltaTime * 5f);
+
+            // หมายเหตุ: เราไม่ยุ่งกับ _yaw ผู้เล่นจะหันไปทางเดิมก่อนเปิดสมุด
+        }
 
         Quaternion targetRotation = Quaternion.Euler(_pitch, _yaw, 0f);
         Vector3 desiredPosition;
