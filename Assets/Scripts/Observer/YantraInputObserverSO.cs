@@ -19,6 +19,7 @@ public class YantraInputObserverSO : ScriptableObject
     public Action OnInteractionChannel;
     public Action OnPressQ_ButtonChannel;
     public Action OnPressF_ButtonChannel;
+    public Action OnPressCtalR_ButtonChannel;
 
     public Action OnPressAnyKeyChannel;
 
@@ -40,6 +41,8 @@ public class YantraInputObserverSO : ScriptableObject
     public void SendPressQ_ButtonSignal() => OnPressQ_ButtonChannel?.Invoke();
     
     public void SendPressF_ButtonSignal() => OnPressF_ButtonChannel?.Invoke();
+
+    public void SendPressCtalR_ButtonSignal() => OnPressCtalR_ButtonChannel?.Invoke();
 
     public void SendPressAnyKeySignal() => OnPressAnyKeyChannel?.Invoke();
 

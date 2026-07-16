@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Camera))]
 public class FatalFrameCameraController : MonoBehaviour
 {
+    [Header("Input Observer")]
+    [SerializeField] private YantraInputObserverSO _inputObserverChannel;
+
     [Header("Camera States")]
     public bool IsGunAiming = false;    // คลิกขวา (ปืน)
     public bool IsYantraAiming = false; // กด Q (ยันต์)
@@ -15,6 +18,8 @@ public class FatalFrameCameraController : MonoBehaviour
     [SerializeField] private Transform _fppEyePosition;
     [SerializeField] private Transform _otsPivot; // ✨ เพิ่มช่องสำหรับใส่จุดเล็งข้ามไหล่
     [SerializeField] private Transform _yantraPivot; // เพิ่มช่องสำหรับใส่จุดเล็งยันต์
+    [Tooltip("เพิ่มการก้มหน้า +ก้มลง -ก้มขึ้น")]
+    [SerializeField] private int _yantraOffsetRotationY;
 
     [Header("TPP Settings")]
     [SerializeField] private Vector3 _tppOffset = new Vector3(0.6f, 0.2f, -2.5f);
@@ -39,6 +44,8 @@ public class FatalFrameCameraController : MonoBehaviour
     private float _pitch = 0f;
     private float _yaw = 0f;
 
+    public bool _isFreeLookingInBook = false;
+
     private void Start()
     {
         _mainCamera = GetComponent<Camera>();
@@ -53,6 +60,24 @@ public class FatalFrameCameraController : MonoBehaviour
         {
             _pitch = 10f;
             _yaw = _tppPivot.eulerAngles.y;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (_inputObserverChannel != null)
+        {
+            _inputObserverChannel.OnPressCtalR_ButtonChannel += HandleLookAround;
+            _inputObserverChannel.OnPressQ_ButtonChannel += HandleQ;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_inputObserverChannel != null)
+        {
+            _inputObserverChannel.OnPressCtalR_ButtonChannel -= HandleLookAround;
+            _inputObserverChannel.OnPressQ_ButtonChannel -= HandleQ;
         }
     }
 
@@ -73,12 +98,22 @@ public class FatalFrameCameraController : MonoBehaviour
     {
         if (_tppPivot == null || _fppEyePosition == null || Mouse.current == null) return;
 
-        if (!IsYantraAiming)
+        if (!IsYantraAiming || _isFreeLookingInBook)
         {
+            // ถ้าไม่ได้กางสมุด ให้ขยับกล้องด้วยเมาส์ได้ตามปกติ
             Vector2 mouseDelta = Mouse.current.delta.ReadValue();
             _yaw += mouseDelta.x * _mouseSensitivity;
             _pitch -= mouseDelta.y * _mouseSensitivity;
             _pitch = Mathf.Clamp(_pitch, -40f, 60f);
+        }
+        else
+        {
+            // ถ้ากางสมุดอยู่ (IsYantraAiming == true)
+            // บังคับก้มหน้าลง 45 องศา (เปลี่ยนตัวเลข 45f ได้ตามความเหมาะสม)
+            // ค่อยๆ ก้มลงอย่างสมูทด้วย Lerp
+            Quaternion Rotation = Quaternion.LookRotation(_yantraPivot.position - transform.position);
+            _pitch = Mathf.Lerp(_pitch, Rotation.y + _yantraOffsetRotationY, Time.deltaTime * 5f);
+            // หมายเหตุ: เราไม่ยุ่งกับ _yaw ผู้เล่นจะหันไปทางเดิมก่อนเปิดสมุด
         }
 
         Quaternion targetRotation = Quaternion.Euler(_pitch, _yaw, 0f);
@@ -120,21 +155,17 @@ public class FatalFrameCameraController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _transitionSpeed);
         _mainCamera.fieldOfView = Mathf.Lerp(_mainCamera.fieldOfView, targetFOV, Time.deltaTime * _transitionSpeed);
         
+    }
+    
+    private void HandleLookAround()
+    {
+        bool freelook = _isFreeLookingInBook;
+        _isFreeLookingInBook = !freelook;
+        Debug.Log($"HandleLookAround called. IsYantraAiming: {IsYantraAiming}, _isFreeLookingInBook: {_isFreeLookingInBook}");
+    }
 
-        if (IsYantraAiming && Vector3.Distance(transform.position, _fppEyePosition.position) <= 0.1f)
-        {
-            _cameraAnimationController.OnDrawEvent(true);
-
-            targetRotation = Quaternion.LookRotation(_yantraPivot.position - transform.position);
-
-            if (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
-            {
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    targetRotation,
-                    Time.deltaTime * _transitionSpeed
-                );
-            }
-        }
+    private void HandleQ()
+    {
+        _isFreeLookingInBook = IsYantraAiming ? true : false; // ถ้ากำลังกางสมุดอยู่แล้วกด Q อีกครั้ง ให้ปิดโหมด Free Look
     }
 }

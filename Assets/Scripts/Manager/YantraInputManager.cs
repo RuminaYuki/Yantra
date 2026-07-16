@@ -166,4 +166,17 @@ public class YantraInputManager : MonoBehaviour
 
         InputObserver.SendPressF_ButtonSignal();
     }
+
+    public void OnPressCtalR_ButtonInput(InputAction.CallbackContext context)
+    {
+        if (InputObserver == null)
+        {
+#if UNITY_EDITOR
+            Debug.LogWarning("PressCtalR_ButtonInputSO is not Assign");
+#endif
+        }
+        if (!context.performed) return;
+
+        InputObserver.SendPressCtalR_ButtonSignal();
+    }
 }
