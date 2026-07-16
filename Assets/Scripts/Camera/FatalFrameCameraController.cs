@@ -166,6 +166,6 @@ public class FatalFrameCameraController : MonoBehaviour
 
     private void HandleQ()
     {
-        _isFreeLookingInBook = IsYantraAiming ? true : false; // ถ้ากำลังกางสมุดอยู่แล้วกด Q อีกครั้ง ให้ปิดโหมด Free Look
+        _isFreeLookingInBook = IsYantraAiming ? false : true; // ถ้ากำลังกางสมุดอยู่แล้วกด Q อีกครั้ง ให้ปิดโหมด Free Look
     }
 }

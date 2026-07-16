@@ -198,7 +198,6 @@ public class RinAnimationController : MonoBehaviour
 
         _animator.SetBool(_drawHash, _isDrawing);
         _animator.SetBool(_lampHash, _isLampOn);
-        _cameraAnimationController.OnDrawEvent(_isDrawing);
 
         if (_cameraController != null) _cameraController.IsYantraAiming = _isDrawing;
         if (!wasDrawing) return;
@@ -215,7 +214,6 @@ public class RinAnimationController : MonoBehaviour
         _isLampOn = !_isLampOn;
         _animator.SetBool(_lampHash, _isLampOn);
         _animator.SetBool(_drawHash, _isDrawing);
-        _cameraAnimationController.OnDrawEvent(_isDrawing);
 
         if (_lampObject != null) _lampObject.SetActive(_isLampOn);
     }
