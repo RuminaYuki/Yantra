@@ -27,7 +27,7 @@ public class CameraAnimationController : MonoBehaviour
 
     public void OnDrawEvent(bool isDrawing)
     {
-        Debug.Log($"OnDrawEvent called with isDrawing: {isDrawing}");
+        //Debug.Log($"OnDrawEvent called with isDrawing: {isDrawing}");
         if (!_isDrawing && Quaternion.Angle(transform.rotation, _targetToLook.rotation) <= 0.1f)
             return;
 

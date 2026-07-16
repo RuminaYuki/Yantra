@@ -18,10 +18,10 @@ public class RinAnimationController : MonoBehaviour
     [Header("Aiming & Camera System")]
     [Tooltip("ลาก Main Camera (ที่มีสคริปต์กล้อง) มาใส่ช่องนี้")]
     [SerializeField] private FatalFrameCameraController _cameraController;
-
+    
     [Tooltip("ลากโฟลเดอร์ TargetTracking (Rig) มาใส่ช่องนี้")]
-    [SerializeField] private UnityEngine.Animations.Rigging.Rig _aimRig;
-
+    [SerializeField] private UnityEngine.Animations.Rigging.Rig _aimRig; 
+    
     [Tooltip("ลาก Object เป้าหมาย (AimTarget_Point) ที่สร้างไว้มาใส่ช่องนี้")]
     [SerializeField] private Transform _aimTarget;
 
@@ -35,19 +35,16 @@ public class RinAnimationController : MonoBehaviour
     [Tooltip("ลากออบเจกต์ตะเกียง (Lamp) จากใน Hierarchy มาใส่ช่องนี้")]
     [SerializeField] private GameObject _lampObject;
 
-    [Header("Book System")]
-    [Tooltip("ลากออบเจกต์หนังสือ (Book) จากใน Hierarchy มาใส่ช่องนี้")]
-    [SerializeField] private GameObject _bookObject;
-
     [Header("Animation Settings")]
     [SerializeField] private float _dampTime = 0.1f;
     [SerializeField] private float _timeBeforeScared = 5f;
     private float _idleTimer = 0f;
 
     [Header("States")]
-    public bool _isDrawing;
-    public bool _isLampOn;
+    [SerializeField] private bool _isDrawing;
+    [SerializeField] private bool _isLampOn;
     private bool _isRunning;
+    private float _lastYRotation;
 
     private Vector3 _currentMoveInput;
 
@@ -92,18 +89,20 @@ public class RinAnimationController : MonoBehaviour
     }
 
     private void UpdateIdleTimer()
+{
+    // เพิ่ม && !_isDrawing เข้าไป : แปลว่า ถ้ายืนนิ่งๆ "และไม่ได้กางสมุดอยู่" ค่อยนับเวลาสั่น
+    if (_currentMoveInput.sqrMagnitude < 0.01f && !_isDrawing)
     {
-        if (_currentMoveInput.sqrMagnitude < 0.01f)
-        {
-            _idleTimer += Time.deltaTime;
-            if (_idleTimer >= _timeBeforeScared) _animator.SetBool(_isScaredHash, true);
-        }
-        else
-        {
-            _idleTimer = 0f;
-            _animator.SetBool(_isScaredHash, false);
-        }
+        _idleTimer += Time.deltaTime;
+        if (_idleTimer >= _timeBeforeScared) _animator.SetBool(_isScaredHash, true);
     }
+    else
+    {
+        // ถ้ากำลังเดิน หรือ กำลังถือสมุดอยู่ ให้รีเซ็ตเวลา และปิดท่าสั่น
+        _idleTimer = 0f;
+        _animator.SetBool(_isScaredHash, false);
+    }
+}
 
     // ==========================================
     // ระบบจัดการตอนคลิกขวาเล็งปืน
@@ -126,7 +125,7 @@ public class RinAnimationController : MonoBehaviour
         if (isGunAiming && _aimTarget != null && Camera.main != null)
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
-
+            
             // ใช้ _aimColliderMask บังคับให้ทะลุ Player ไปโดนฉากหรือศัตรูแทน
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, _aimColliderMask))
             {
@@ -156,8 +155,33 @@ public class RinAnimationController : MonoBehaviour
         Vector3 worldMoveDir = (camForward * _currentMoveInput.z + camRight * _currentMoveInput.x).normalized;
         Vector3 localDir = transform.InverseTransformDirection(worldMoveDir);
 
+        // === ✨ ระบบจำลองการก้าวเท้าตอนหันเป้าเล็ง ✨ ===
+        // 1. เช็คว่าเฟรมนี้ตัวละครหมุนไปกี่องศา
+        float currentY = transform.eulerAngles.y;
+        float deltaY = Mathf.DeltaAngle(_lastYRotation, currentY);
+        _lastYRotation = currentY;
+
+        float turnShuffleX = 0f;
+
+        // 2. ถ้ากำลังเล็งปืนอยู่ และ ไม่ได้กดปุ่มเดิน (ยืนอยู่กับที่)
+        if (_cameraController != null && _cameraController.IsGunAiming && _currentMoveInput.sqrMagnitude < 0.01f)
+        {
+            // เอาองศาที่หมุนมาคำนวณเป็นความเร็ว (องศาต่อวินาที)
+            float turnSpeed = deltaY / Time.deltaTime;
+
+            // แปลงความเร็วหมุน ให้กลายเป็นค่าน้ำหนักเดินซ้าย-ขวา (-1 ถึง 1)
+            // (เลข 120f คือตัวหารความสมูท: ถ้าอยากให้เท้าสับไวขึ้น ให้ลดเลขลง เช่น 90f)
+            turnShuffleX = Mathf.Clamp(turnSpeed / 120f, -1f, 1f);
+        }
+
+        // 3. เอาค่าขยับเท้าตอนหมุน ไปบวกรวมกับค่าเดินปกติ
+        float finalMoveX = Mathf.Clamp(localDir.x + turnShuffleX, -1f, 1f);
+        // ===============================================
+
         float speedMultiplier = _isRunning ? 1f : 0.5f;
-        _animator.SetFloat(_moveXHash, localDir.x * speedMultiplier, _dampTime, Time.deltaTime);
+
+        // โยนค่า finalMoveX ที่ผสมเสร็จแล้ว ส่งให้ Animator ดึงท่าขยับเท้ามาเล่น
+        _animator.SetFloat(_moveXHash, finalMoveX * speedMultiplier, _dampTime, Time.deltaTime);
         _animator.SetFloat(_moveZHash, localDir.z * speedMultiplier, _dampTime, Time.deltaTime);
     }
 
@@ -171,11 +195,10 @@ public class RinAnimationController : MonoBehaviour
 
         bool wasDrawing = _isDrawing;
         _isDrawing = !wasDrawing;
-        if (_bookObject != null) _bookObject.SetActive(_isDrawing);
 
         _animator.SetBool(_drawHash, _isDrawing);
         _animator.SetBool(_lampHash, _isLampOn);
-        //_cameraAnimationController.OnDrawEvent(_isDrawing);
+        _cameraAnimationController.OnDrawEvent(_isDrawing);
 
         if (_cameraController != null) _cameraController.IsYantraAiming = _isDrawing;
         if (!wasDrawing) return;
@@ -187,13 +210,12 @@ public class RinAnimationController : MonoBehaviour
     private void HandlePressFInput()
     {
         _isDrawing = false;
-        if (_bookObject != null) _bookObject.SetActive(_isDrawing);
         if (_cameraController != null) _cameraController.IsYantraAiming = false;
 
         _isLampOn = !_isLampOn;
         _animator.SetBool(_lampHash, _isLampOn);
         _animator.SetBool(_drawHash, _isDrawing);
-        //_cameraAnimationController.OnDrawEvent(_isDrawing);
+        _cameraAnimationController.OnDrawEvent(_isDrawing);
 
         if (_lampObject != null) _lampObject.SetActive(_isLampOn);
     }

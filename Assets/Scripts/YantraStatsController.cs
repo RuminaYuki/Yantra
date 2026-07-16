@@ -49,7 +49,7 @@ public class YantraStatsController : MonoBehaviour
         {
             if (_isMoving == value) return; // ป้องกันการส่ง Event รัวๆ
             _isMoving = value;
-            if (EventBus.Instance) EventBus.Instance.Publish(new PlayerMovingEvent(value));
+            //if (EventBus.Instance) EventBus.Instance.Publish(new PlayerMovingEvent(value));
         }
     }
 
@@ -61,7 +61,7 @@ public class YantraStatsController : MonoBehaviour
             if (_isRunning == value) return; // ป้องกันการส่ง Event รัวๆ
             _isRunning = value;
             SpeedManament(); // คำนวณความเร็วใหม่เฉพาะตอนสลับวิ่ง/เดิน
-            if (EventBus.Instance) EventBus.Instance.Publish(new PlayerRunningEvent(value));
+            //if (EventBus.Instance) EventBus.Instance.Publish(new PlayerRunningEvent(value));
         }
     }
     public bool IsJumping
