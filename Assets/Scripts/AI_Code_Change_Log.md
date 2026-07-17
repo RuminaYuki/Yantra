@@ -834,3 +834,50 @@ Changes:
 
 Notes:
 - Artists can add `GhostArtController` and an `AudioSource` to each ghost, then assign animation state names and sound clips per cue without editing AI logic.
+
+## 2026-07-16 - Procedural Tree Generator Tool (LOD + Wind Data)
+
+Touched files:
+- `Scripts/Tool/TreeGenerator/MinMaxRangeAttribute.cs` (new)
+- `Scripts/Tool/TreeGenerator/TreeRanges.cs` (new)
+- `Scripts/Tool/TreeGenerator/ProceduralTreeSettings.cs` (new)
+- `Scripts/Tool/TreeGenerator/TreeSkeleton.cs` (new)
+- `Scripts/Tool/TreeGenerator/TreeMeshBuilder.cs` (new)
+- `Scripts/Tool/TreeGenerator/ProceduralTree.cs` (new)
+- `Scripts/Tool/TreeGenerator/Editor/MinMaxRangeDrawer.cs` (new)
+- `Scripts/Tool/TreeGenerator/Editor/ProceduralTreeEditor.cs` (new)
+- `Scripts/AI_Code_Change_Log.md`
+
+Changes:
+- Added a procedural tree generator tool (namespace `TreeTool`) for HDRP, inspired by Unity's Tree Creator.
+- `ProceduralTree` component ([ExecuteAlways]) rebuilds the tree instantly in edit mode whenever an inspector value changes.
+- Three independent seeds: master (trunk/structure), branch seed and leaf seed - each reshuffles only its own part.
+- Min-max range sliders ([MinMaxRange] + FloatRange/IntRange) for height, radius, branch count/angle/length, leaf count/size, etc.
+- Configurable branch levels list (trunk -> main branches -> twigs -> ...), leaf shapes (Quad/Cross/TripleCross).
+- Generates one mesh per LOD level (radial resolution, max branch level, leaf density per LOD) and auto-configures a LODGroup with cross-fade.
+- Wind data baked into vertex colors for a future HDRP wind shader (R = main bend, G = branch sway, B = leaf flutter mask, A = phase).
+- Editor: seed dice buttons, per-LOD vertex/triangle/leaf stats, "Export Meshes To Assets" (freezes meshes into `Assets/GeneratedTrees/<name>/` for prefabs), and a `GameObject > 3D Object > Procedural Tree (Tool)` menu item.
+
+Notes:
+- Generated meshes are HideFlags.DontSave and regenerate on scene load, keeping scene files small; export meshes before prefabbing a final tree.
+- Placeholder HDRP/Lit materials are used until bark/leaf materials are assigned.
+
+## 2026-07-16 - Tree Tool: Custom Prefab Geometry Mode
+
+Touched files:
+- `Scripts/Tool/TreeGenerator/ProceduralTreeSettings.cs`
+- `Scripts/Tool/TreeGenerator/TreeSkeleton.cs`
+- `Scripts/Tool/TreeGenerator/TreeMeshBuilder.cs`
+- `Scripts/Tool/TreeGenerator/Editor/ProceduralTreeEditor.cs`
+- `Scripts/AI_Code_Change_Log.md`
+
+Changes:
+- Added `GeometrySourceSettings` with per-part source (Procedural / Prefabs) for trunk, branches and leaves.
+- Each part accepts a list of mesh prefabs (FBX); one variant is picked per trunk/branch/leaf using the existing seed streams (`variantRoll` on Branch/Leaf), so variant selection is deterministic and reshuffles with the same seed buttons.
+- Trunk/branch prefabs (modeled along +Y, pivot at base) are bent along the generated branch splines and scaled so the mesh base matches the spline radius (taper/root flare still apply).
+- Leaf prefabs (pivot at attach point, +Z outward, +Y normal) are placed at leaf positions and scaled by Leaf Size.
+- Custom geometry is baked into the same bark/leaf submeshes, so LOD levels, leaf density thinning, wind vertex colors and materials keep working unchanged.
+
+Notes:
+- Custom meshes ignore the per-LOD radial resolution (their vertex count is fixed); LOD branch-level culling and leaf density still reduce cost.
+- Adding a prefab variantRoll consumes one extra random value per branch/leaf, so trees generated before this change get a slightly different (still deterministic) layout for the same seed.
