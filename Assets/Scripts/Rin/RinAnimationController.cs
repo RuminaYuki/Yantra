@@ -188,7 +188,7 @@ public class RinAnimationController : MonoBehaviour
     private void HandleJumpInput() { _animator.SetTrigger(_jumpHash); }
     private void UpdateJumpAnimation() { if (_moveController) _animator.SetBool(_groundedHash, _moveController.IsGrounded); }
 
-    private void HandlePressQInput()
+    public void HandlePressQInput()
     {
         _isLampOn = false;
         if (_lampObject != null) _lampObject.SetActive(false);
@@ -196,7 +196,7 @@ public class RinAnimationController : MonoBehaviour
         bool wasDrawing = _isDrawing;
         _isDrawing = !wasDrawing;
 
-        _animator.SetBool(_drawHash, _isDrawing);
+        //_animator.SetBool(_drawHash, _isDrawing);
         _animator.SetBool(_lampHash, _isLampOn);
 
         if (_cameraController != null) _cameraController.IsYantraAiming = _isDrawing;
