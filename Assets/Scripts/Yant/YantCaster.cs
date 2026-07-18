@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UIEditor;
+using Kogetsu.Library.DesignPatternCore;
 
 [System.Serializable]
 public class YantPrefabBinding
@@ -29,19 +30,22 @@ public class YantCaster : MonoBehaviour
     [SerializeField] private float _maxAimDistance = 100f;
     [SerializeField] private LayerMask _aimMask = ~0;
 
+    public GameObject _lastSpawnedYant;
+
+
     private void OnValidate()
     {
         if (_matcher == null) _matcher = GetComponentInChildren<YantraShapeMatcher>();
         if (_stats == null) _stats = GetComponentInParent<YantraStatsController>();
         if (_playerRoot == null && _stats != null) _playerRoot = _stats.gameObject;
     }
-
-    public void AnalyzeAndCast()
+    #region Analyze Input
+    public void Analyze()
     {
-        TryAnalyzeAndCast();
+        TryAnalyze();
     }
 
-    public bool TryAnalyzeAndCast()
+    private bool TryAnalyze()
     {
         if (_matcher == null)
         {
@@ -60,11 +64,19 @@ public class YantCaster : MonoBehaviour
             return false;
         }
 
-        return SpawnYant(result.MatchedCategoryName);
+        bool FinalResult = SpawnYant(result);
+        if (FinalResult)
+        {
+            _matcher.ClearLastResult();
+        }
+
+        return FinalResult;
     }
 
-    private bool SpawnYant(string category)
+    private bool SpawnYant(ShapeMatchResult result)
     {
+        // Find the corresponding prefab for the matched category
+        string category = result.MatchedCategoryName;
         YantPrefabBinding binding = null;
         foreach (YantPrefabBinding b in _bindings)
         {
@@ -86,18 +98,9 @@ public class YantCaster : MonoBehaviour
         Quaternion spawnRot = paper.transform.rotation;
 
         GameObject yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot);
-        if (yantObj.TryGetComponent(out IYantEffect effect))
-        {
-            effect.Initialize(
-                _playerRoot != null ? _playerRoot : gameObject,
-                _stats,
-                GetAimDirection(spawnPos));
-        }
-        else
-        {
-            Debug.LogWarning($"<color=#00FFFF>[YantCaster]</color> Prefab '{binding.YantPrefab.name}' has no IYantEffect.");
-        }
+        _lastSpawnedYant = yantObj;
 
+        // Clear the drawing on the paper after casting
         DrawOn3DMesh drawOn3DMesh = paper.GetComponent<DrawOn3DMesh>();
         if (drawOn3DMesh != null)
         {
@@ -105,8 +108,40 @@ public class YantCaster : MonoBehaviour
         }
 
         Debug.Log($"<color=#00FFFF>[YantCaster]</color> Cast '{category}' successfully.");
+        //EventBus.Instance.Publish(new YantCastEvent(result, yantObj));
         return true;
     }
+    #endregion
+
+    #region Cast Yant on Input
+    public void tryCastYant()
+    {
+        CastYant();
+    }
+
+    private bool CastYant()
+    {
+        GameObject yant = _lastSpawnedYant;
+        if (yant == null)
+        {
+            Debug.LogWarning("<color=#00FFFF>[YantCaster]</color> No yant to cast.");
+            return false;
+        }
+        if (yant.TryGetComponent(out IYantEffect effect))
+        {
+            effect.Initialize(
+                _playerRoot != null ? _playerRoot : gameObject,
+                _stats,
+                GetAimDirection(yant.transform.position));
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning($"<color=#00FFFF>[YantCaster]</color> Prefab '{yant.name}' has no IYantEffect.");
+            return false;
+        }
+    }
+    #endregion
 
     private Vector3 GetAimDirection(Vector3 fromPosition)
     {

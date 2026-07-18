@@ -87,9 +87,9 @@ public class YantraInputManager : MonoBehaviour
         var mousePosition = Mouse.current.position.ReadValue();
         var isPressed = context.ReadValueAsButton();
 
-        Debug.Log($"Mouse Position: {mousePosition} | IsPressed: {isPressed}");
+        //Debug.Log($"Mouse Position: {mousePosition} | IsPressed: {isPressed}");
 
-        InputObserver.SendLeftClickSignal(mousePosition, isPressed);
+        InputObserver.SendLeftClickSignal(mousePosition, context);
     }
 
     public void OnRightClickInput(InputAction.CallbackContext context)
@@ -105,7 +105,7 @@ public class YantraInputManager : MonoBehaviour
         var mousePosition = Mouse.current.position.ReadValue();
         var isPressed = context.ReadValueAsButton();
 
-        InputObserver.SendRightClickSignal(mousePosition, isPressed);
+        InputObserver.SendRightClickSignal(mousePosition, context);
     }
 
     public void OnMiddleClickInput(InputAction.CallbackContext context)
@@ -121,7 +121,7 @@ public class YantraInputManager : MonoBehaviour
         var mousePosition = Mouse.current.position.ReadValue();
         var isPressed = context.ReadValueAsButton();
 
-        InputObserver.SendMiddleClickSignal(mousePosition, isPressed);
+        InputObserver.SendMiddleClickSignal(mousePosition, context);
     }
 
     public void OnInteractionInput(InputAction.CallbackContext context)
@@ -178,5 +178,18 @@ public class YantraInputManager : MonoBehaviour
         if (!context.performed) return;
 
         InputObserver.SendPressCtalR_ButtonSignal();
+    }
+
+    public void OnPressE_ButtonInput(InputAction.CallbackContext context)
+    {
+        if (InputObserver == null)
+        {
+#if UNITY_EDITOR
+            Debug.LogWarning("PressE_ButtonInputSO is not Assign");
+#endif
+        }
+        if (!context.performed) return;
+
+        InputObserver.SendPressE_ButtinSignal();
     }
 }

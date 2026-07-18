@@ -1,6 +1,7 @@
 using UnityEngine;
 using Kogetsu.Library.Core;
 using NaughtyAttributes;
+using UnityEngine.InputSystem;
 
 public class RinAnimationController : MonoBehaviour
 {
@@ -68,6 +69,8 @@ public class RinAnimationController : MonoBehaviour
         _inputObserver.OnRunChannel += HandleRunInput;
         _inputObserver.OnPressQ_ButtonChannel += HandlePressQInput;
         _inputObserver.OnPressF_ButtonChannel += HandlePressFInput;
+        _inputObserver.OnPressE_ButtonChannel += HandlePressEInput;
+        _inputObserver.OnLeftClickChannel += HandlePressLeftClickInput;
     }
 
     private void OnDisable()
@@ -78,6 +81,8 @@ public class RinAnimationController : MonoBehaviour
         _inputObserver.OnRunChannel -= HandleRunInput;
         _inputObserver.OnPressQ_ButtonChannel -= HandlePressQInput;
         _inputObserver.OnPressF_ButtonChannel -= HandlePressFInput;
+        _inputObserver.OnPressE_ButtonChannel -= HandlePressEInput;
+        _inputObserver.OnLeftClickChannel -= HandlePressLeftClickInput;
     }
 
     private void Update()
@@ -196,14 +201,18 @@ public class RinAnimationController : MonoBehaviour
         bool wasDrawing = _isDrawing;
         _isDrawing = !wasDrawing;
 
-        //_animator.SetBool(_drawHash, _isDrawing);
+        _animator.SetBool(_drawHash, _isDrawing);
         _animator.SetBool(_lampHash, _isLampOn);
 
         if (_cameraController != null) _cameraController.IsYantraAiming = _isDrawing;
         if (!wasDrawing) return;
 
-        bool castSucceeded = _yantCaster != null && _yantCaster.TryAnalyzeAndCast();
-        if (!castSucceeded && _drawOn3DMesh) _drawOn3DMesh.ClearDrawing();
+        // ถ้ากำลังวาดอยู่แล้วกด Q อีกครั้งเพื่อหยุดวาด เราจะเคลียร์การวาดบน Mesh
+        if (_drawOn3DMesh != null) _drawOn3DMesh.ClearDrawing();
+
+        //ถ้ากำลังวาดอยู่แล้วกด Q อีกครั้งเพื่อหยุดวาด เราจะเคลียร์การวิเคราะห์ของ YantCaster ด้วย
+        //bool castSucceeded = _yantCaster != null && _yantCaster.TryAnalyze();
+        //if (!castSucceeded && _drawOn3DMesh) _drawOn3DMesh.ClearDrawing();
     }
 
     private void HandlePressFInput()
@@ -217,4 +226,22 @@ public class RinAnimationController : MonoBehaviour
 
         if (_lampObject != null) _lampObject.SetActive(_isLampOn);
     }
+
+    private void HandlePressEInput()
+    {
+        if (_yantCaster != null)
+        {
+            _yantCaster.Analyze();
+        }
+    }
+
+
+    private void HandlePressLeftClickInput(Vector2 position, InputAction.CallbackContext context)
+    {
+        if(_yantCaster != null && context.started)
+        {
+            _yantCaster.tryCastYant();
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Kogetsu.Library.Core;
 using NaughtyAttributes;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// ควบคุมการเคลื่อนที่และหมุนตัวละคร รองรับระบบกล้องสไตล์ Fatal Frame
@@ -97,9 +98,9 @@ public class TPPMoveController3D : MonoBehaviour
         _statsController.Run(isRunning);
     }
 
-    private void HandleFreeLookInput(Vector2 mousePos, bool isPressed)
+    private void HandleFreeLookInput(Vector2 mousePos, InputAction.CallbackContext context)
     {
-        _isFreeLooking = isPressed; // ล็อกการหันตัวละครเมื่อกด Free Look[cite: 3]
+        _isFreeLooking = context.ReadValueAsButton(); // ล็อกการหันตัวละครเมื่อกด Free Look[cite: 3]
     }
 
     private void HandleJumpInput()
