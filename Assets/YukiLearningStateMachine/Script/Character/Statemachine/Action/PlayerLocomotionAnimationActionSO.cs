@@ -24,6 +24,8 @@ public class PlayerLocomotionAnimationAction : StateAction
 
     private float _dampTime;
 
+    private string _animationStateName;
+
     private string _nameparameterZ;
     private string _nameparameterx;
 
@@ -37,6 +39,8 @@ public class PlayerLocomotionAnimationAction : StateAction
     public PlayerLocomotionAnimationAction(float dampTime, LocomotionAnimationParameter locomotionAnimationParameter)
     {
         _dampTime = dampTime;
+
+        _animationStateName = locomotionAnimationParameter.AnimationStateName;
 
         _nameparameterZ = locomotionAnimationParameter.NameparameterZ;
         _nameparameterx = locomotionAnimationParameter.NameparameterX;
@@ -56,7 +60,7 @@ public class PlayerLocomotionAnimationAction : StateAction
 
     public override void OnStateEnter()
     {
-       _animator.Play("Locomotion",0);
+       _animator.Play(_animationStateName,0);
     }
 
     public override void OnUpdate()
@@ -76,6 +80,8 @@ public class PlayerLocomotionAnimationAction : StateAction
 [System.Serializable]
 public struct LocomotionAnimationParameter
 {
+    public string AnimationStateName;
+
     public string NameparameterZ;
     public string NameparameterX;
 

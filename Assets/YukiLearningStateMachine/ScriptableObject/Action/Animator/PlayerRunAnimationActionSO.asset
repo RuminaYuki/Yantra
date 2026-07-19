@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotionAnimationActionSO
   DampTime: 0.15
   locomotionAnimationParameter:
+    AnimationStateName: Locomotion by oat
     NameparameterZ: MoveZ
     NameparameterX: MoveX
-    MinparameterZ: -1
-    MinparameterX: -1
-    MaxparameterZ: 1
-    MaxparameterX: 1
+    MinparameterZ: -2
+    MinparameterX: -2
+    MaxparameterZ: 2
+    MaxparameterX: 2
