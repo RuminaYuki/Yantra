@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
 
     public void Update()
     {
-        rb.velocity = transform.forward * speed;
+        rb.linearVelocity = transform.forward * speed;
     }
 
     private void OnCollisionEnter(Collision collision)
