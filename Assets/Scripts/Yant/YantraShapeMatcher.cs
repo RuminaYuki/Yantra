@@ -409,5 +409,10 @@ namespace UIEditor
             foreach (var p in points) { sx += p.x; sy += p.y; }
             return new Vector2(sx / points.Count, sy / points.Count);
         }
+
+        public void ClearLastResult()
+        {
+            LastResult = null;
+        }
     }
 }

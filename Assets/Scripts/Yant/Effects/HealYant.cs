@@ -9,6 +9,11 @@ public class HealYant : MonoBehaviour, IYantEffect
     [Tooltip("หน่วงเวลาก่อนลบ prefab (ให้เวลา VFX เล่น)")]
     [SerializeField] private float _lifetime = 2f;
 
+    private void Start()
+    {
+        Destroy(gameObject, _lifetime);
+    }
+
     public void Initialize(GameObject playerRoot, YantraStatsController stats, Vector3 aimDirection)
     {
         if (stats != null)
@@ -20,7 +25,6 @@ public class HealYant : MonoBehaviour, IYantEffect
         {
             Debug.LogWarning("<color=#00FF88>[HealYant]</color> ไม่พบ YantraStatsController — ฮีลไม่ได้");
         }
-
-        Destroy(gameObject, _lifetime);
+        Destroy(gameObject);
     }
 }

@@ -60,9 +60,9 @@ public class DrawOn3DMesh : MonoBehaviour
         }
     }
 
-    private void OnLeftClickInput(Vector2 clickPos, bool isPressed)
+    private void OnLeftClickInput(Vector2 clickPos, InputAction.CallbackContext context)
     {
-        _isDrawing = isPressed;
+        _isDrawing = context.ReadValueAsButton();
 
         if (_isDrawing)
         {

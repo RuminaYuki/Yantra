@@ -59,8 +59,9 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void HandleFreeLook(Vector2 mousePos, bool isPressed)
+    private void HandleFreeLook(Vector2 mousePos, InputAction.CallbackContext context)
     {
+        bool isPressed = context.ReadValueAsButton();
         if (isPressed && !_isFreeLooking)
         {
             _lockedYRotation = _yRotation;
