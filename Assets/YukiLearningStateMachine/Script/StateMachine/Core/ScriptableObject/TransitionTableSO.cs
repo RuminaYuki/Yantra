@@ -13,16 +13,20 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
         private StateSO _initialState;
 
         [SerializeField]
-        private AnyTransitionItem[] _anyTransitions = Array.Empty<AnyTransitionItem>();
+        private AnyTransitionItem[] _anyTransitions =
+            Array.Empty<AnyTransitionItem>();
 
         [SerializeField]
-        private TransitionItem[] _transitions = Array.Empty<TransitionItem>();
+        private TransitionItem[] _transitions =
+            Array.Empty<TransitionItem>();
 
-        public State CreateInitialState(StateMachine stateMachine)
+        public State CreateInitialState(
+            StateMachine stateMachine)
         {
             if (stateMachine == null)
             {
-                throw new ArgumentNullException(nameof(stateMachine));
+                throw new ArgumentNullException(
+                    nameof(stateMachine));
             }
 
             if (_initialState == null)
@@ -31,9 +35,14 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
                     $"Transition table {name} does not have an initial state.");
             }
 
-            var runtimeStates = new Dictionary<StateSO, State>();
-            var transitionLists = new Dictionary<State, List<StateTransition>>();
-            var runtimeConditions = new Dictionary<StateConditionSO, Condition>();
+            var runtimeStates =
+                new Dictionary<StateSO, State>();
+
+            var transitionLists =
+                new Dictionary<State, List<StateTransition>>();
+
+            var runtimeConditions =
+                new Dictionary<StateConditionSO, Condition>();
 
             GetOrCreateState(
                 _initialState,
@@ -47,18 +56,23 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
                 transitionLists,
                 runtimeConditions);
 
-            foreach (KeyValuePair<State, List<StateTransition>> pair in transitionLists)
+            foreach (
+                KeyValuePair<State, List<StateTransition>> pair
+                in transitionLists)
             {
-                pair.Key.SetTransitions(pair.Value.ToArray());
+                pair.Key.SetTransitions(
+                    pair.Value.ToArray());
             }
 
-            StateTransition[] runtimeAnyTransitions = BuildAnyTransitions(
-                stateMachine,
-                runtimeStates,
-                transitionLists,
-                runtimeConditions);
+            StateTransition[] runtimeAnyTransitions =
+                BuildAnyTransitions(
+                    stateMachine,
+                    runtimeStates,
+                    transitionLists,
+                    runtimeConditions);
 
-            stateMachine.SetAnyTransitions(runtimeAnyTransitions);
+            stateMachine.SetAnyTransitions(
+                runtimeAnyTransitions);
 
             return runtimeStates[_initialState];
         }
@@ -69,7 +83,11 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
             Dictionary<State, List<StateTransition>> transitionLists,
             Dictionary<StateConditionSO, Condition> runtimeConditions)
         {
-            foreach (TransitionItem item in _transitions ?? Array.Empty<TransitionItem>())
+            TransitionItem[] usages =
+                _transitions ??
+                Array.Empty<TransitionItem>();
+
+            foreach (TransitionItem item in usages)
             {
                 State fromState = GetOrCreateState(
                     item.FromState,
@@ -83,12 +101,16 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
                     runtimeStates,
                     transitionLists);
 
-                StateCondition[][] conditionGroups = CreateConditionGroups(
-                    item.ConditionGroups,
-                    runtimeConditions);
+                StateCondition[][] conditionGroups =
+                    CreateConditionGroups(
+                        item.ConditionGroups,
+                        runtimeConditions,
+                        stateMachine);
 
                 transitionLists[fromState].Add(
-                    new StateTransition(toState, conditionGroups));
+                    new StateTransition(
+                        toState,
+                        conditionGroups));
             }
         }
 
@@ -99,9 +121,12 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
             Dictionary<StateConditionSO, Condition> runtimeConditions)
         {
             AnyTransitionItem[] usages =
-                _anyTransitions ?? Array.Empty<AnyTransitionItem>();
+                _anyTransitions ??
+                Array.Empty<AnyTransitionItem>();
 
-            var runtimeTransitions = new List<StateTransition>(usages.Length);
+            var runtimeTransitions =
+                new List<StateTransition>(
+                    usages.Length);
 
             foreach (AnyTransitionItem item in usages)
             {
@@ -111,12 +136,16 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
                     runtimeStates,
                     transitionLists);
 
-                StateCondition[][] conditionGroups = CreateConditionGroups(
-                    item.ConditionGroups,
-                    runtimeConditions);
+                StateCondition[][] conditionGroups =
+                    CreateConditionGroups(
+                        item.ConditionGroups,
+                        runtimeConditions,
+                        stateMachine);
 
                 runtimeTransitions.Add(
-                    new StateTransition(toState, conditionGroups));
+                    new StateTransition(
+                        toState,
+                        conditionGroups));
             }
 
             return runtimeTransitions.ToArray();
@@ -124,37 +153,53 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
 
         private StateCondition[][] CreateConditionGroups(
             ConditionGroupUsage[] groupUsages,
-            Dictionary<StateConditionSO, Condition> runtimeConditions)
+            Dictionary<StateConditionSO, Condition> runtimeConditions,
+            StateMachine stateMachine)
         {
             ConditionGroupUsage[] usages =
-                groupUsages ?? Array.Empty<ConditionGroupUsage>();
+                groupUsages ??
+                Array.Empty<ConditionGroupUsage>();
 
-            var runtimeGroups = new StateCondition[usages.Length][];
+            var runtimeGroups =
+                new StateCondition[usages.Length][];
 
-            for (int groupIndex = 0; groupIndex < usages.Length; groupIndex++)
+            for (int groupIndex = 0;
+                groupIndex < usages.Length;
+                groupIndex++)
             {
                 ConditionUsage[] conditionUsages =
-                    usages[groupIndex].Conditions ?? Array.Empty<ConditionUsage>();
+                    usages[groupIndex].Conditions ??
+                    Array.Empty<ConditionUsage>();
 
-                var runtimeGroup = new StateCondition[conditionUsages.Length];
+                var runtimeGroup =
+                    new StateCondition[
+                        conditionUsages.Length];
 
                 for (int conditionIndex = 0;
                     conditionIndex < conditionUsages.Length;
                     conditionIndex++)
                 {
-                    ConditionUsage usage = conditionUsages[conditionIndex];
-                    Condition runtimeCondition = GetOrCreateCondition(
-                        usage.Condition,
-                        runtimeConditions);
+                    ConditionUsage usage =
+                        conditionUsages[conditionIndex];
 
-                    bool expectedResult = usage.ExpectedResult == Result.True;
+                    Condition runtimeCondition =
+                        GetOrCreateCondition(
+                            usage.Condition,
+                            runtimeConditions,
+                            stateMachine);
 
-                    runtimeGroup[conditionIndex] = new StateCondition(
-                        runtimeCondition,
-                        expectedResult);
+                    bool expectedResult =
+                        usage.ExpectedResult ==
+                        Result.True;
+
+                    runtimeGroup[conditionIndex] =
+                        new StateCondition(
+                            runtimeCondition,
+                            expectedResult);
                 }
 
-                runtimeGroups[groupIndex] = runtimeGroup;
+                runtimeGroups[groupIndex] =
+                    runtimeGroup;
             }
 
             return runtimeGroups;
@@ -172,22 +217,37 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
                     $"Transition table {name} contains a transition with a missing state.");
             }
 
-            if (runtimeStates.TryGetValue(stateSO, out State existingState))
+            if (runtimeStates.TryGetValue(
+                stateSO,
+                out State existingState))
             {
                 return existingState;
             }
 
-            State newState = stateSO.CreateState(stateMachine);
+            State newState =
+                stateSO.CreateState(stateMachine);
 
-            runtimeStates.Add(stateSO, newState);
-            transitionLists.Add(newState, new List<StateTransition>());
+            if (newState == null)
+            {
+                throw new InvalidOperationException(
+                    $"State {stateSO.name} returned a null runtime state.");
+            }
+
+            runtimeStates.Add(
+                stateSO,
+                newState);
+
+            transitionLists.Add(
+                newState,
+                new List<StateTransition>());
 
             return newState;
         }
 
         private Condition GetOrCreateCondition(
             StateConditionSO conditionSO,
-            Dictionary<StateConditionSO, Condition> runtimeConditions)
+            Dictionary<StateConditionSO, Condition> runtimeConditions,
+            StateMachine stateMachine)
         {
             if (conditionSO == null)
             {
@@ -202,8 +262,26 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
                 return existingCondition;
             }
 
-            Condition newCondition = conditionSO.CreateCondition();
-            runtimeConditions.Add(conditionSO, newCondition);
+            Condition newCondition =
+                conditionSO.CreateCondition();
+
+            if (newCondition == null)
+            {
+                throw new InvalidOperationException(
+                    $"Condition {conditionSO.name} returned a null runtime condition.");
+            }
+
+            // Initialize the runtime Condition.
+            newCondition.Awake(stateMachine);
+
+            // StateMachine owns this runtime Condition
+            // and will dispose it when the controller is destroyed.
+            stateMachine.RegisterCondition(
+                newCondition);
+
+            runtimeConditions.Add(
+                conditionSO,
+                newCondition);
 
             return newCondition;
         }

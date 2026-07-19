@@ -74,6 +74,18 @@ public class YantraInputManager : MonoBehaviour
         InputObserver.SendRunSignal(context.performed);
     }
 
+    public void OnCrouchInput(InputAction.CallbackContext context)
+    {
+        if (InputObserver == null)
+        {
+#if UNITY_EDITOR
+            Debug.LogWarning("CrouchEventChannelSO is not Assign"); return;
+#endif
+        }
+
+        InputObserver.SendCrouchSignal(context.performed);
+    }
+
     public void OnLeftClickInput(InputAction.CallbackContext context)
     {
         if (InputObserver == null)

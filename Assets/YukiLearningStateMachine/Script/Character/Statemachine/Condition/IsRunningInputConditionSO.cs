@@ -18,6 +18,7 @@ public class IsRunningConditionSO : StateConditionSO
 public class IsRunningInputCondition : Condition
 {
     private bool _isRunning;
+    private YantraInputObserverSO _playerInput;
 
     public IsRunningInputCondition(YantraInputObserverSO playerInput)
     {
@@ -26,7 +27,13 @@ public class IsRunningInputCondition : Condition
             Debug.LogError("IsRunningCondition requires " + "YantraInputObserverSO.");
             return;
         }
-        playerInput.OnRunChannel += HandleRunInput;
+        _playerInput = playerInput;
+        _playerInput.OnRunChannel += HandleRunInput;
+    }
+    public override void Dispose()
+    {
+        if (_playerInput == null) return;
+        _playerInput.OnRunChannel -= HandleRunInput;
     }
     
     private void HandleRunInput(bool isRunning)

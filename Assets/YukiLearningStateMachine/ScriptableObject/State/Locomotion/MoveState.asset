@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7da57aa186da8c4a92fe7e1a7ef5add, type: 3}
-  m_Name: RunState
+  m_Name: MoveState
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.StateSO
   _actions:
-  - {fileID: 11400000, guid: e60a62da81ef2fe479c971e69125c730, type: 2}
+  - {fileID: 11400000, guid: c4e385234f070e54580d8cd1b3510f10, type: 2}
+  - {fileID: 11400000, guid: 8e4bc9c1f360d7a4f8e2078d5d3bf73c, type: 2}

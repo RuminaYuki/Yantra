@@ -9,7 +9,7 @@ public class StateMachineController : MonoBehaviour
 
     private StateMachine[] _stateMachines;
 
-    private void Awake()
+    private void Start()
     {
         _stateMachines =
             new StateMachine[_transitionTables.Length];
@@ -39,6 +39,18 @@ public class StateMachineController : MonoBehaviour
         foreach (StateMachine stateMachine in _stateMachines)
         {
             stateMachine.OnFixedUpdate();
+        }
+    }
+    private void OnDestroy()
+    {
+        if (_stateMachines == null)
+        {
+            return;
+        }
+
+        foreach (StateMachine stateMachine in _stateMachines)
+        {
+            stateMachine?.Dispose();
         }
     }
 }

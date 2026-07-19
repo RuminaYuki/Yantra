@@ -9,6 +9,7 @@ public class YantraInputObserverSO : ScriptableObject
     // ─── Movement ──────────────────────────────────────────────────────
     public Action<Vector3> OnMoveChannel;
     public Action<bool> OnRunChannel;
+    public Action<bool> OnCrouchChannel;
     public Action OnJumpChannel;
 
     // ─── Button ─────────────────────────────────────────────────────────
@@ -31,6 +32,7 @@ public class YantraInputObserverSO : ScriptableObject
     public void SendJumpSignal() => OnJumpChannel?.Invoke();
 
     public void SendRunSignal(bool isSprinting) => OnRunChannel?.Invoke(isSprinting);
+    public void SendCrouchSignal(bool isCrouch) => OnCrouchChannel?.Invoke(isCrouch);
 
     public void SendInteractionSignal() => OnInteractionChannel?.Invoke();
 

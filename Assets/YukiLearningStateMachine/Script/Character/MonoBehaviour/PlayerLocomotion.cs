@@ -23,13 +23,11 @@ public class PlayerLocomotion : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
 
-        _movement = new Movement(_rigidbody);
-        _rotation = new Rotation(_rigidbody);
-    }
-    void Start()
-    {
         _enableUseInputObserverSO = true;
         _faceMoveDirection = false;
+
+        _movement = new Movement(_rigidbody);
+        _rotation = new Rotation(_rigidbody);
     }
 
     void OnEnable()
@@ -48,7 +46,7 @@ public class PlayerLocomotion : MonoBehaviour
 
         _rotation.Rotate(_faceMoveDirection? 
         GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
-        GetCameraForwardFlat(), Time.deltaTime);
+        GetCameraForwardFlat(), Time.fixedDeltaTime);
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -100,7 +98,6 @@ public class PlayerLocomotion : MonoBehaviour
     public void StopMove()
     {
         _movement.Stop();
-        _directionMove = Vector3.zero;
     }
     // Speed move and rotate
     public void SetSpeedMove(float speed) => _movement.Speed = speed;

@@ -5,7 +5,9 @@ namespace Yuki.Learning.StateMachine
         private bool _isCached;
         private bool _cachedStatement;
 
+        public virtual void Awake(StateMachine stateMachine){}
         protected abstract bool Statement();
+        public virtual void Dispose(){}
 
         public bool GetStatement()
         {

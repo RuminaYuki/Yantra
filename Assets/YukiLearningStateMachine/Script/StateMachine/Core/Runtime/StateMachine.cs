@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Yuki.Learning.StateMachine
@@ -6,8 +7,16 @@ namespace Yuki.Learning.StateMachine
     public class StateMachine
     {
         private readonly GameObject _owner;
+
+        private readonly HashSet<Condition> _conditions =
+            new HashSet<Condition>();
+
         private State _currentState;
-        private StateTransition[] _anyTransitions = Array.Empty<StateTransition>();
+
+        private StateTransition[] _anyTransitions =
+            Array.Empty<StateTransition>();
+
+        private bool _isDisposed;
 
         public StateMachine(GameObject owner)
         {
@@ -21,9 +30,30 @@ namespace Yuki.Learning.StateMachine
             return _owner.GetComponent<T>();
         }
 
+        public void RegisterCondition(Condition condition)
+        {
+            if (condition == null)
+            {
+                Debug.LogError(
+                    $"StateMachine on {_owner.name} cannot register a null condition.",
+                    _owner);
+                return;
+            }
+
+            if (_isDisposed)
+            {
+                Debug.LogWarning(
+                    $"StateMachine on {_owner.name} is already disposed.",
+                    _owner);
+                return;
+            }
+
+            _conditions.Add(condition);
+        }
+
         public void OnUpdate()
         {
-            if (_currentState == null)
+            if (_isDisposed || _currentState == null)
             {
                 return;
             }
@@ -38,7 +68,7 @@ namespace Yuki.Learning.StateMachine
 
         public void OnFixedUpdate()
         {
-            if (_currentState == null)
+            if (_isDisposed || _currentState == null)
             {
                 return;
             }
@@ -48,6 +78,14 @@ namespace Yuki.Learning.StateMachine
 
         public void SetInitialState(State initialState)
         {
+            if (_isDisposed)
+            {
+                Debug.LogWarning(
+                    $"StateMachine on {_owner.name} is already disposed.",
+                    _owner);
+                return;
+            }
+
             if (initialState == null)
             {
                 Debug.LogError(
@@ -62,7 +100,9 @@ namespace Yuki.Learning.StateMachine
 
         public void ChangeState(State nextState)
         {
-            if (nextState == null || ReferenceEquals(_currentState, nextState))
+            if (_isDisposed ||
+                nextState == null ||
+                ReferenceEquals(_currentState, nextState))
             {
                 return;
             }
@@ -73,35 +113,74 @@ namespace Yuki.Learning.StateMachine
             _currentState.OnStateEnter();
         }
 
-        public void SetAnyTransitions(StateTransition[] transitions)
+        public void SetAnyTransitions(
+            StateTransition[] transitions)
         {
-            _anyTransitions = transitions ?? Array.Empty<StateTransition>();
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            _anyTransitions =
+                transitions ?? Array.Empty<StateTransition>();
         }
 
-        private bool TryGetNextState(out State nextState)
+        public void Dispose()
+        {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            _isDisposed = true;
+
+            _currentState?.OnStateExit();
+
+            foreach (Condition condition in _conditions)
+            {
+                condition.Dispose();
+            }
+
+            _conditions.Clear();
+
+            _currentState = null;
+            _anyTransitions =
+                Array.Empty<StateTransition>();
+        }
+
+        private bool TryGetNextState(
+            out State nextState)
         {
             if (TryGetAnyTransition(out nextState))
             {
                 return true;
             }
 
-            return _currentState.TryGetTransition(out nextState);
+            return _currentState.TryGetTransition(
+                out nextState);
         }
 
-        private bool TryGetAnyTransition(out State nextState)
+        private bool TryGetAnyTransition(
+            out State nextState)
         {
             nextState = null;
 
-            foreach (StateTransition transition in _anyTransitions)
+            foreach (
+                StateTransition transition
+                in _anyTransitions)
             {
                 if (transition == null ||
-                    !transition.TryGetNextState(out State candidate))
+                    !transition.TryGetNextState(
+                        out State candidate))
                 {
                     continue;
                 }
 
-                // Do not repeatedly enter the active state while its condition remains true.
-                if (ReferenceEquals(candidate, _currentState))
+                // Prevent re-entering the active state
+                // while its condition remains true.
+                if (ReferenceEquals(
+                    candidate,
+                    _currentState))
                 {
                     continue;
                 }
@@ -110,7 +189,9 @@ namespace Yuki.Learning.StateMachine
                 break;
             }
 
-            foreach (StateTransition transition in _anyTransitions)
+            foreach (
+                StateTransition transition
+                in _anyTransitions)
             {
                 transition?.ClearConditionsCache();
             }

@@ -1510,6 +1510,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: YantraInputManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3433972638773545791, guid: 445b14e16e8d1394bb055e8d57a897a6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3951756684740787569, guid: 445b14e16e8d1394bb055e8d57a897a6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1577,6 +1582,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
         type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
+        type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1584,6 +1594,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
         type: 3}
@@ -1597,6 +1612,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
         type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2087953894}
+    - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
+        type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2087953894}
@@ -1607,6 +1627,11 @@ PrefabInstance:
       objectReference: {fileID: 2087953894}
     - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
         type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
+        type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -1614,6 +1639,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnCrouchInput
       objectReference: {fileID: 0}
     - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
         type: 3}
@@ -1627,6 +1657,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
         type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: YantraInputManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
+        type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: YantraInputManager, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -1634,6 +1669,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: YantraInputManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7518681782051052792, guid: 445b14e16e8d1394bb055e8d57a897a6,
         type: 3}
@@ -3587,6 +3627,7 @@ GameObject:
   - component: {fileID: 1062817020}
   - component: {fileID: 1062817019}
   - component: {fileID: 1062817028}
+  - component: {fileID: 1062817029}
   m_Layer: 3
   m_Name: Rin StateMachine
   m_TagString: Player
@@ -3601,7 +3642,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062817018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c08d195007dc03458c7321b1921cbc5, type: 3}
   m_Name: 
@@ -3642,7 +3683,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062817018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0897940339f9d7248931aa2902fbc039, type: 3}
   m_Name: 
@@ -3680,7 +3721,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062817018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 972214f2f26332f4f82c62d41d898690, type: 3}
   m_Name: 
@@ -3709,7 +3750,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062817018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9667084462f1474abb599a29f6beb26, type: 3}
   m_Name: 
@@ -3876,7 +3917,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062817018}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0013567557, y: 0.71176594, z: -0.002020447, w: 0.7024126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3889,7 +3930,7 @@ Transform:
   - {fileID: 949986706}
   - {fileID: 1972669127}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0.056, y: 90.758, z: -0.273}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1062817028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3902,7 +3943,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd64ae5dcdd4a5542a58e4e5b15ca526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StateMachineController
-  _transitionTableSO: {fileID: 0}
+  _transitionTables:
+  - {fileID: 11400000, guid: 0034a1ad5b8d68c4ea9ca5b9510fb3cd, type: 2}
+--- !u!114 &1062817029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7955172d3062ea94e88e5c962ad6bcf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotion
+  _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
+  _referencePoint: {fileID: 320540217}
 --- !u!1 &1067269696
 GameObject:
   m_ObjectHideFlags: 0
@@ -7175,7 +7231,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4749740090139331172}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c08d195007dc03458c7321b1921cbc5, type: 3}
   m_Name: 
@@ -11109,7 +11165,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4749740090139331172}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b2699cd087bebb4594a95024e22f1cf, type: 3}
   m_Name: 

@@ -31410,7 +31410,7 @@ MeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 1124477253}
+  m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -32290,7 +32290,7 @@ MeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 869948875}
+  m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -35687,7 +35687,7 @@ MeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 869948875}
+  m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 2
@@ -35731,12 +35731,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1197123408242716998, guid: eed2fdbf9af040d488e1c08ffc194bc2,
     type: 3}
   m_PrefabInstance: {fileID: 1416372662}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &869948875 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4629762212066296492, guid: ed346373dcf8a604f8a0b1605e7664c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 4512280062356960867}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &871307472
 PrefabInstance:
@@ -39861,7 +39855,7 @@ MeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 1124477253}
+  m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -43736,12 +43730,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6832e5ca8003de742b8d5c4794112142, type: 3}
---- !u!4 &1124477253 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6425426951688739983, guid: ed346373dcf8a604f8a0b1605e7664c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 4512280062356960867}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1125536200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6523038379516585537, guid: 065ce4d62cb300843b463cb88561cd59,
@@ -48882,7 +48870,7 @@ MeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 1124477253}
+  m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -49456,7 +49444,7 @@ MeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 1124477253}
+  m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -80865,27 +80853,27 @@ PrefabInstance:
       addedObject: {fileID: 433396866}
     - targetCorrespondingSourceObject: {fileID: 2230625679162302319, guid: ed346373dcf8a604f8a0b1605e7664c7,
         type: 3}
-      insertIndex: 3
+      insertIndex: -1
       addedObject: {fileID: 1338357116}
     - targetCorrespondingSourceObject: {fileID: 2230625679162302319, guid: ed346373dcf8a604f8a0b1605e7664c7,
         type: 3}
-      insertIndex: 4
+      insertIndex: -1
       addedObject: {fileID: 770401593}
     - targetCorrespondingSourceObject: {fileID: 2230625679162302319, guid: ed346373dcf8a604f8a0b1605e7664c7,
         type: 3}
-      insertIndex: 5
+      insertIndex: -1
       addedObject: {fileID: 1009755488}
     - targetCorrespondingSourceObject: {fileID: 2230625679162302319, guid: ed346373dcf8a604f8a0b1605e7664c7,
         type: 3}
-      insertIndex: 6
+      insertIndex: -1
       addedObject: {fileID: 1314612300}
     - targetCorrespondingSourceObject: {fileID: 549243216055533900, guid: ed346373dcf8a604f8a0b1605e7664c7,
         type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 859434247}
     - targetCorrespondingSourceObject: {fileID: 549243216055533900, guid: ed346373dcf8a604f8a0b1605e7664c7,
         type: 3}
-      insertIndex: 4
+      insertIndex: -1
       addedObject: {fileID: 802932495}
     - targetCorrespondingSourceObject: {fileID: 1631649135526389784, guid: ed346373dcf8a604f8a0b1605e7664c7,
         type: 3}
