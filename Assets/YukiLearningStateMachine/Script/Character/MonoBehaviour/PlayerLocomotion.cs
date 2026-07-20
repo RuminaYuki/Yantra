@@ -42,11 +42,14 @@ public class PlayerLocomotion : MonoBehaviour
 
     void FixedUpdate()
     {
-        _movement.Move(GetWorldDirectionRelativeTo(_directionMove,_referencePoint));
+        //_movement.Move(GetWorldDirectionRelativeTo(_directionMove,_referencePoint));
 
-        _rotation.Rotate(_faceMoveDirection? 
-            GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
-            GetCameraForwardFlat(), Time.fixedDeltaTime);
+        bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
+        if(!hasMoveInput) return;
+        
+        // _rotation.Rotate(_faceMoveDirection? 
+        //     GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
+        //     GetCameraForwardFlat(), Time.fixedDeltaTime);
     }
 
     private void HandleMoveInput(Vector3 moveInput)
