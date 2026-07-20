@@ -1,0 +1,413 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace TreeTool
+{
+    /// <summary>
+    /// All authoring parameters of a procedural tree.
+    /// Every random decision is driven by the three seeds, so the same
+    /// settings always produce exactly the same tree.
+    /// </summary>
+    [Serializable]
+    public class ProceduralTreeSettings
+    {
+        [Header("Random Seeds")]
+        [Tooltip("Master seed. Controls the trunk shape and everything derived from it.")]
+        public int seed = 12345;
+
+        [Tooltip("Extra seed for branches only. Change it to reshuffle branches without touching the trunk.")]
+        public int branchSeed = 0;
+
+        [Tooltip("Extra seed for leaves only. Change it to reshuffle leaves without touching branches.")]
+        public int leafSeed = 0;
+
+        public GeometrySourceSettings geometry = new();
+
+        public TrunkSettings trunk = new();
+
+        [Tooltip("Branch groups. Element 0 grows on the trunk, element 1 grows on element 0 branches, and so on.")]
+        public List<BranchLevelSettings> branchLevels = new()
+        {
+            BranchLevelSettings.DefaultMainBranches(),
+            BranchLevelSettings.DefaultTwigs()
+        };
+
+        public LeafSettings leaves = new();
+        public MeshSettings mesh = new();
+        public WindSettings wind = new();
+        public LODSettings lods = new();
+
+        /// <summary>Keeps values sane when the user types numbers by hand.</summary>
+        public void Validate()
+        {
+            trunk.Validate();
+            if (branchLevels != null)
+                foreach (var level in branchLevels)
+                    level.Validate();
+            leaves.Validate();
+            lods.Validate();
+        }
+    }
+
+    public enum GeometrySource
+    {
+        Procedural,
+        Prefabs
+    }
+
+    /// <summary>
+    /// Where each tree part gets its geometry from.
+    /// Procedural = generated in Unity (tubes / cards).
+    /// Prefabs = your own modeled meshes; one prefab is picked at random
+    /// (seed-driven) per trunk / branch / leaf, and trunk/branch meshes are
+    /// bent along the generated branch splines.
+    /// </summary>
+    [Serializable]
+    public class GeometrySourceSettings
+    {
+        [Tooltip("Trunk geometry. Prefabs must be modeled growing along +Y with the pivot at the base.")]
+        public GeometrySource trunkSource = GeometrySource.Procedural;
+
+        [Tooltip("Trunk mesh prefabs (FBX). One is picked at random per tree. " +
+                 "The mesh is bent along the trunk spline and scaled to the trunk radius. " +
+                 "Rendered with the tree's Bark Material.")]
+        public List<GameObject> trunkPrefabs = new();
+
+        [Tooltip("Branch geometry. Prefabs must be modeled growing along +Y with the pivot at the base.")]
+        public GeometrySource branchSource = GeometrySource.Procedural;
+
+        [Tooltip("Branch mesh prefabs (FBX). One is picked at random per branch. " +
+                 "The mesh is bent along each branch spline and scaled to the branch radius. " +
+                 "Rendered with the tree's Bark Material.")]
+        public List<GameObject> branchPrefabs = new();
+
+        [Tooltip("Leaf geometry. Prefabs should have the pivot at the attach point and grow along +Z " +
+                 "(+Y = card normal), authored at roughly 1 unit size.")]
+        public GeometrySource leafSource = GeometrySource.Procedural;
+
+        [Tooltip("Leaf / leaf-cluster prefabs (FBX). One is picked at random per leaf and scaled by Leaf Size. " +
+                 "Rendered with the tree's Leaf Material.")]
+        public List<GameObject> leafPrefabs = new();
+    }
+
+    [Serializable]
+    public class TrunkSettings
+    {
+        [MinMaxRange(0.1f, 100f)]
+        [Tooltip("Trunk height in meters (random between min and max).")]
+        public FloatRange height = new(4.5f, 6f);
+
+        [MinMaxRange(0.01f, 10f)]
+        [Tooltip("Trunk radius at the base in meters.")]
+        public FloatRange radius = new(0.22f, 0.32f);
+
+        [Range(0f, 1f)]
+        [Tooltip("How much the trunk thins toward the top. 0 = cylinder, 1 = needle.")]
+        public float taper = 0.7f;
+
+        [Range(1f, 3f)]
+        [Tooltip("Extra thickness at the very bottom (root flare).")]
+        public float rootFlare = 1.5f;
+
+        [Range(0.01f, 0.5f)]
+        [Tooltip("How far up the trunk the root flare reaches (fraction of height).")]
+        public float rootFlareHeight = 0.12f;
+
+        [Range(2, 32)]
+        [Tooltip("Segments along the trunk. More segments = smoother bends.")]
+        public int segments = 10;
+
+        [Range(3, 64)]
+        [Tooltip("Sides around the trunk (this part only - each branch level has its own).")]
+        public int radialSegments = 8;
+
+        [Range(0f, 1f)]
+        [Tooltip("Random bending along the trunk.")]
+        public float crookedness = 0.18f;
+
+        [MinMaxRange(0f, 30f)]
+        [Tooltip("Random lean of the whole trunk in degrees.")]
+        public FloatRange lean = new(0f, 4f);
+
+        [FineRange(0f, 1f)]
+        [Tooltip("How much the trunk participates in wind sway (0 = rigid, 1 = normal). Keep this " +
+                 "very low - the trunk is thick wood and should barely move at all, even when " +
+                 "branches and leaves are swaying a lot. Baked into the wind vertex data - needs a " +
+                 "wind-aware shader to actually move.")]
+        public float windResponse = 0.05f;
+
+        public void Validate()
+        {
+            height.Sort();
+            radius.Sort();
+            lean.Sort();
+            segments = Mathf.Max(segments, 2);
+        }
+    }
+
+    [Serializable]
+    public class BranchLevelSettings
+    {
+        [Tooltip("Display name only.")]
+        public string name = "Branches";
+
+        public bool enabled = true;
+
+        [MinMaxRange(0, 100)]
+        [Tooltip("How many branches grow on each parent.")]
+        public IntRange count = new(7, 11);
+
+        [MinMaxRange(0f, 1f)]
+        [Tooltip("Where along the parent these branches may spawn (0 = base, 1 = tip).")]
+        public FloatRange spawnRange = new(0.3f, 0.95f);
+
+        [MinMaxRange(0f, 179f)]
+        [Tooltip("Angle away from the parent direction, in degrees.")]
+        public FloatRange angle = new(35f, 65f);
+
+        [Range(0f, 1f)]
+        [Tooltip("Random spin around the parent. 0 = perfectly even golden-angle spiral.")]
+        public float azimuthRandomness = 0.35f;
+
+        [MinMaxRange(0.01f, 3f)]
+        [Tooltip("Branch length relative to its parent's length.")]
+        public FloatRange lengthRatio = new(0.28f, 0.42f);
+
+        [Range(0f, 1f)]
+        [Tooltip("Branches near the parent's tip get shorter by up to this amount.")]
+        public float lengthFalloff = 0.35f;
+
+        [Range(0.01f, 2f)]
+        [Tooltip("Branch thickness relative to the parent thickness at the spawn point. Above 1 = thicker than the parent.")]
+        public float radiusRatio = 0.55f;
+
+        [Range(0.05f, 5f)]
+        [Tooltip("Extra thickness multiplier for THIS level only. Deeper levels inherit it " +
+                 "naturally because their Radius Ratio measures against this level's real thickness.")]
+        public float thicknessScale = 1f;
+
+        [Range(3, 48)]
+        [Tooltip("Sides around branches of this level (independent of trunk and other levels).")]
+        public int radialSegments = 6;
+
+        [Range(0f, 1f)]
+        [Tooltip("Fraction of the branch that curves smoothly out of the parent's direction " +
+                 "instead of jutting out at the full angle. Hides the joint.")]
+        public float jointSmoothing = 0.35f;
+
+        [Range(1f, 2.5f)]
+        [Tooltip("Extra thickness at the branch base, fading out over the joint - " +
+                 "blends the branch into its parent.")]
+        public float jointFlare = 1.4f;
+
+        [Range(0f, 1f)]
+        [Tooltip("How much the branch thins toward its tip.")]
+        public float taper = 0.85f;
+
+        [Range(-1f, 1f)]
+        [Tooltip("Positive = droop down, negative = curve up toward the sky.")]
+        public float gravity = -0.2f;
+
+        [Range(0f, 1f)]
+        [Tooltip("Random bending along the branch.")]
+        public float crookedness = 0.3f;
+
+        [Range(2, 32)]
+        [Tooltip("Segments along each branch.")]
+        public int segments = 6;
+
+        [FineRange(0f, 2f)]
+        [Tooltip("How much branches of THIS level participate in wind sway (0 = rigid, 1 = normal, " +
+                 "higher = floppier). Branches are still wood, not leaves - keep this low too " +
+                 "(main branches ~0.1-0.2, thin twigs ~0.3-0.5) and let the Leaves' own Wind Flutter " +
+                 "Response carry most of the visible motion. Baked into the wind vertex data - needs " +
+                 "a wind-aware shader to actually move.")]
+        public float windResponse = 0.15f;
+
+        public void Validate()
+        {
+            count.Sort();
+            spawnRange.Sort();
+            angle.Sort();
+            lengthRatio.Sort();
+            count.min = Mathf.Max(count.min, 0);
+            segments = Mathf.Max(segments, 2);
+        }
+
+        public static BranchLevelSettings DefaultMainBranches() => new()
+        {
+            name = "Main Branches",
+            count = new(7, 11),
+            spawnRange = new(0.3f, 0.95f),
+            angle = new(35f, 65f),
+            lengthRatio = new(0.28f, 0.42f),
+            radiusRatio = 0.55f,
+            gravity = -0.2f,
+            crookedness = 0.3f,
+            segments = 6,
+            radialSegments = 6,
+            windResponse = 0.15f
+        };
+
+        public static BranchLevelSettings DefaultTwigs() => new()
+        {
+            name = "Twigs",
+            count = new(3, 6),
+            spawnRange = new(0.25f, 1f),
+            angle = new(30f, 65f),
+            lengthRatio = new(0.35f, 0.55f),
+            radiusRatio = 0.5f,
+            gravity = 0.05f,
+            crookedness = 0.35f,
+            segments = 4,
+            radialSegments = 4,
+            windResponse = 0.4f
+        };
+    }
+
+    public enum LeafShape
+    {
+        Quad,
+        Cross,
+        TripleCross
+    }
+
+    [Serializable]
+    public class LeafSettings
+    {
+        public bool enabled = true;
+
+        [Tooltip("Quad = 1 card, Cross = 2 crossed cards, TripleCross = 3 cards. Use with a double-sided leaf material.")]
+        public LeafShape shape = LeafShape.Cross;
+
+        [MinMaxRange(0, 300)]
+        [Tooltip("How many leaves grow on each eligible branch.")]
+        public IntRange countPerBranch = new(10, 16);
+
+        [MinMaxRange(0.005f, 10f)]
+        [Tooltip("Leaf card size in meters.")]
+        public FloatRange size = new(0.35f, 0.55f);
+
+        [MinMaxRange(0f, 1f)]
+        [Tooltip("Where along the branch leaves may spawn (0 = base, 1 = tip).")]
+        public FloatRange spawnRange = new(0.35f, 1f);
+
+        [Range(0f, 1f)]
+        [Tooltip("0 = leaves follow the branch direction, 1 = fully random orientation.")]
+        public float orientationRandomness = 0.6f;
+
+        [MinMaxRange(-2f, 5f)]
+        [Tooltip("Distance from the branch surface, in meters (random between min and max). " +
+                 "Negative = sink into the branch, positive = float away from it.")]
+        public FloatRange surfaceOffset = new(0.02f, 0.05f);
+
+        [Tooltip("Extra rotation (degrees) applied to every leaf before the random tumble. " +
+                 "Pivot is the leaf stem corner, so this tilts/spins leaves around their attach point.")]
+        public Vector3 rotationOffset = Vector3.zero;
+
+        [FineRange(0f, 2f, 1.6f)]
+        [Tooltip("How much leaves flutter/twist on their own in the wind, independent of branch " +
+                 "movement (0 = still, 1 = normal, higher = more agitated). " +
+                 "Baked into the wind vertex data - needs a wind-aware shader to actually move.")]
+        public float windFlutterResponse = 1.5f;
+
+        [Min(0)]
+        [Tooltip("Leaves grow on branch levels >= this value (trunk = 0, first branch group = 1, ...).")]
+        public int minBranchLevel = 2;
+
+        public void Validate()
+        {
+            countPerBranch.Sort();
+            size.Sort();
+            spawnRange.Sort();
+            surfaceOffset.Sort();
+            countPerBranch.min = Mathf.Max(countPerBranch.min, 0);
+            minBranchLevel = Mathf.Max(minBranchLevel, 0);
+        }
+    }
+
+    [Serializable]
+    public class MeshSettings
+    {
+        // radial segment counts moved to TrunkSettings / BranchLevelSettings so
+        // each part of the tree controls its own side count independently
+        [Min(0.05f)]
+        [Tooltip("Vertical bark UV tiling per world meter.")]
+        public float barkUVTiling = 1.5f;
+
+        [Tooltip("Needed for normal maps on bark/leaf materials.")]
+        public bool generateTangents = true;
+    }
+
+    /// <summary>
+    /// Global wind toggles. Per-part response amounts live next to the part they
+    /// affect (TrunkSettings.windResponse, BranchLevelSettings.windResponse,
+    /// LeafSettings.windFlutterResponse) so "how much this part sways" is set
+    /// right where the part itself is authored.
+    /// </summary>
+    [Serializable]
+    public class WindSettings
+    {
+        [Tooltip("Bakes per-vertex wind weights into vertex colors, read by the TreeWind shader " +
+                 "function (see TreeWind.hlsl) which is driven by a real Unity WindZone at runtime " +
+                 "through TreeWindZoneDriver.\n" +
+                 "R = main bend x each part's Wind Response (0 at roots, 1 at the top)\n" +
+                 "G = local branch sway x that branch level's Wind Response (0 at base, 1 at tip)\n" +
+                 "B = leaf flutter x Leaf Wind Flutter Response (0 on bark, matches response on leaves)\n" +
+                 "A = random phase per branch / leaf, so parts don't sway in lockstep")]
+        public bool bakeWindData = true;
+
+        [Range(0.5f, 3f)]
+        [Tooltip("Curve of the main bend weight over tree height. Higher = only the top sways.")]
+        public float bendExponent = 1.3f;
+    }
+
+    [Serializable]
+    public class LODLevelSettings
+    {
+        [Range(0.001f, 1f)]
+        [Tooltip("This LOD stays visible until the tree covers less than this fraction of the screen. " +
+                 "Below the LAST level's value the tree is culled completely.")]
+        public float screenHeight = 0.45f;
+
+        [Range(0.1f, 1f)]
+        [Tooltip("Multiplier on radial segments for this LOD.")]
+        public float radialResolution = 1f;
+
+        [Min(0)]
+        [Tooltip("Highest branch level whose geometry is included (trunk = 0). " +
+                 "Leaves are kept regardless so the canopy silhouette survives.")]
+        public int maxBranchLevel = 10;
+
+        [Range(0f, 1f)]
+        [Tooltip("Fraction of leaves kept at this LOD.")]
+        public float leafDensity = 1f;
+    }
+
+    [Serializable]
+    public class LODSettings
+    {
+        [Tooltip("Off = only one full-detail mesh is generated (no LODGroup).")]
+        public bool generateLODGroup = true;
+
+        [Tooltip("Smooth cross-fade between LOD levels.")]
+        public bool crossFade = true;
+
+        [Tooltip("Scales the remaining leaves up on sparse LODs so the canopy doesn't look thin.")]
+        public bool compensateLeafSize = true;
+
+        public List<LODLevelSettings> levels = new()
+        {
+            new LODLevelSettings { screenHeight = 0.45f, radialResolution = 1f,    maxBranchLevel = 10, leafDensity = 1f },
+            new LODLevelSettings { screenHeight = 0.18f, radialResolution = 0.6f,  maxBranchLevel = 2,  leafDensity = 0.5f },
+            new LODLevelSettings { screenHeight = 0.05f, radialResolution = 0.35f, maxBranchLevel = 1,  leafDensity = 0.15f }
+        };
+
+        public void Validate()
+        {
+            if (levels == null) levels = new List<LODLevelSettings>();
+            if (levels.Count == 0) levels.Add(new LODLevelSettings());
+        }
+    }
+}
