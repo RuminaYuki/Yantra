@@ -16,6 +16,7 @@ Material:
   - _ALPHATEST_ON
   - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
+  - _WIND
   m_InvalidKeywords:
   - MAPFORMAT_HDRP
   - _NORMALMAP_TANGENT_SPACE
@@ -92,11 +93,14 @@ Material:
     - _AlphaDstBlend: 0
     - _AlphaSrcBlend: 1
     - _Alpha_Clip: 1
+    - _Alpha_Clip_Scale: 0
     - _AmbientOcclusionMaxScale: 1
     - _AmbientOcclusionMinScale: 0
     - _BlendMode: 0
     - _BranchAmplitude: 1
     - _BranchSpeed: 1.8
+    - _Branch_Move: 0.1
+    - _Branch_Stiffness: 0.1
     - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 0
     - _CullModeForward: 0
@@ -104,7 +108,7 @@ Material:
     - _DetailAlbedoStrength: 0
     - _DetailNormalStrength: 0.5
     - _DetailSmoothnessStrength: 0.3
-    - _DiffusionProfileHash: 3.4361327
+    - _DiffusionProfileHash: 0
     - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 2
@@ -117,6 +121,9 @@ Material:
     - _HeightScale: 0.02
     - _LeafAmplitude: 1
     - _LeafSpeed: 5
+    - _Leaf_Frequency: 0.3
+    - _Leaf_Speed: 0.177
+    - _Leaf_Wave: 0.2
     - _MainAmplitude: 1
     - _MainSpeed: 1
     - _MaterialID: 1
@@ -157,6 +164,9 @@ Material:
     - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 0
     - _UseShadowThreshold: 1
+    - _WIND: 1
+    - _Wind_Bend: 1
+    - _Wind_Offset: 0.109
     - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 3
     - _ZTestTransparent: 4
@@ -165,8 +175,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _DetailOffset: {r: 0, g: 0, b: 0, a: 0}
     - _DetailTiling: {r: 4, g: 4, b: 0, a: 0}
-    - _DiffusionProfileAsset: {r: 1.3400211e-27, g: 2.3624477e-36, b: 5.7992415e-24,
-        a: -9.157405e+18}
+    - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
@@ -202,5 +211,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEditor.Rendering.HighDefinition.MaterialExternalReferences
   m_DiffusionProfileReferences:
-  - {fileID: 11400000, guid: b755d4128ef94804e858e018472bfede, type: 2}
+  - {fileID: 0}
   m_MaterialReferences: []

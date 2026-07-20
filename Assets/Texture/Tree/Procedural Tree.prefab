@@ -134,17 +134,17 @@ MonoBehaviour:
       shape: 1
       countPerBranch:
         min: 1
-        max: 7
+        max: 15
       size:
         min: 1.6473708
-        max: 2.2865038
+        max: 1.6473708
       spawnRange:
         min: 0.6082159
         max: 0.826291
       orientationRandomness: 0.42
       surfaceOffset:
-        min: 0.02
-        max: 0.05
+        min: -0.30710283
+        max: -0.07813087
       rotationOffset: {x: 0, y: 0, z: 0}
       windFlutterResponse: 0.077
       minBranchLevel: 0
@@ -181,8 +181,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2904004185698296033}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.23257828, y: 7.499162, z: -0.4283061}
-  m_Size: 20.16838
+  m_LocalReferencePoint: {x: 0.29932404, y: 7.5611205, z: -0.4305086}
+  m_Size: 18.194786
   m_FadeMode: 1
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
@@ -240,7 +240,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3308898201076887352}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: 9f1298e80e2936d44b78cdde53456ac2, type: 2}
 --- !u!23 &773997786395050900
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -331,7 +331,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5880542903104505023}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: 1e7955e15e3f09d4ca7e4c6b7da87674, type: 2}
 --- !u!23 &3452231653698317432
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -422,7 +422,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8662292734688326699}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: cad5b895423b4f14182a4a699d2eea92, type: 2}
 --- !u!23 &1696488972539449533
 MeshRenderer:
   m_ObjectHideFlags: 0
