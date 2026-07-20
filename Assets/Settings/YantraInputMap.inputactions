@@ -248,6 +248,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Analyze",
+                    "type": "Button",
+                    "id": "6c35eb24-f326-4d03-bd23-7a4384738ed9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -589,6 +598,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Look Around",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50e57ca2-5c19-4739-90d7-a1321fcf13ae",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Analyze",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "YantraInputObserverSO", menuName = "Observer/YantraInputObserverSO")]
 public class YantraInputObserverSO : ScriptableObject
@@ -8,17 +9,19 @@ public class YantraInputObserverSO : ScriptableObject
     // ─── Movement ──────────────────────────────────────────────────────
     public Action<Vector3> OnMoveChannel;
     public Action<bool> OnRunChannel;
+    public Action<bool> OnCrouchChannel;
     public Action OnJumpChannel;
 
     // ─── Button ─────────────────────────────────────────────────────────
     
-    public Action<Vector2, bool> OnLeftClickChannel;
-    public Action<Vector2, bool> OnRightClickChannel;
-    public Action<Vector2, bool> OnMiddleClickChannel;
+    public Action<Vector2, InputAction.CallbackContext> OnLeftClickChannel;
+    public Action<Vector2, InputAction.CallbackContext> OnRightClickChannel;
+    public Action<Vector2, InputAction.CallbackContext> OnMiddleClickChannel;
 
     public Action OnInteractionChannel;
     public Action OnPressQ_ButtonChannel;
     public Action OnPressF_ButtonChannel;
+    public Action OnPressE_ButtonChannel;
     public Action OnPressCtalR_ButtonChannel;
 
     public Action OnPressAnyKeyChannel;
@@ -29,18 +32,21 @@ public class YantraInputObserverSO : ScriptableObject
     public void SendJumpSignal() => OnJumpChannel?.Invoke();
 
     public void SendRunSignal(bool isSprinting) => OnRunChannel?.Invoke(isSprinting);
+    public void SendCrouchSignal(bool isCrouch) => OnCrouchChannel?.Invoke(isCrouch);
 
     public void SendInteractionSignal() => OnInteractionChannel?.Invoke();
 
-    public void SendLeftClickSignal(Vector2 position, bool isPressed) => OnLeftClickChannel?.Invoke(position, isPressed);
+    public void SendLeftClickSignal(Vector2 position, InputAction.CallbackContext context) => OnLeftClickChannel?.Invoke(position, context);
 
-    public void SendRightClickSignal(Vector2 position, bool isPressed) => OnRightClickChannel?.Invoke(position, isPressed);
+    public void SendRightClickSignal(Vector2 position, InputAction.CallbackContext context) => OnRightClickChannel?.Invoke(position, context);
 
-    public void SendMiddleClickSignal(Vector2 position, bool isPressed) => OnMiddleClickChannel?.Invoke(position, isPressed);
+    public void SendMiddleClickSignal(Vector2 position, InputAction.CallbackContext context) => OnMiddleClickChannel?.Invoke(position, context);
 
     public void SendPressQ_ButtonSignal() => OnPressQ_ButtonChannel?.Invoke();
     
     public void SendPressF_ButtonSignal() => OnPressF_ButtonChannel?.Invoke();
+
+    public void SendPressE_ButtinSignal() => OnPressE_ButtonChannel?.Invoke();
 
     public void SendPressCtalR_ButtonSignal() => OnPressCtalR_ButtonChannel?.Invoke();
 

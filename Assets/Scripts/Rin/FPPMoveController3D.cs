@@ -1,6 +1,7 @@
 using UnityEngine;
 using Kogetsu.Library.Core;
 using NaughtyAttributes;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class FPPMoveController3D : MonoBehaviour
@@ -93,9 +94,9 @@ public class FPPMoveController3D : MonoBehaviour
         _statsController.Run(isRunning);
     }
 
-    private void HandleFreeLookInput(Vector2 mousePos, bool isPressed)
+    private void HandleFreeLookInput(Vector2 mousePos, InputAction.CallbackContext context)
     {
-        _isFreeLooking = isPressed;
+        _isFreeLooking = context.ReadValueAsButton();
     }
 
     private void HandleJumpInput()
