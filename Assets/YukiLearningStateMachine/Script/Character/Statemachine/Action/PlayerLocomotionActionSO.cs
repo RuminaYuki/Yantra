@@ -7,8 +7,6 @@ using Yuki.Learning.StateMachine;
     menuName = "YUKI Learning State Machine/Actions/Player/PlayerLocomotionAction")]
 public class PlayerLocomotionActionSO : StateActionSO
 {
-    [Header("MovementSystem")]
-    public float MoveSpeed;
 
     [Header("RotateSystem")]
     public float RotateSpeed;
@@ -19,7 +17,7 @@ public class PlayerLocomotionActionSO : StateActionSO
     public override StateAction CreateAction(StateMachine stateMachine)
     {
         
-        return new PlayerLocomotionAction(MoveSpeed,RotateSpeed,FaceMoveDirection);
+        return new PlayerLocomotionAction(RotateSpeed,FaceMoveDirection);
     }
 }
 
@@ -27,12 +25,10 @@ public class PlayerLocomotionAction : StateAction
 {
     private PlayerLocomotion _playerLocomotion;
 
-    private float _movespeed;
     private float _rotationspeed;
     private bool _faceMoveDirection;
-    public PlayerLocomotionAction(float movespeed, float rotationspeed,bool faceMoveDirection)
+    public PlayerLocomotionAction(float rotationspeed,bool faceMoveDirection)
     {
-        _movespeed = movespeed;
         _rotationspeed = rotationspeed;
         _faceMoveDirection = faceMoveDirection;
     }
@@ -43,7 +39,6 @@ public class PlayerLocomotionAction : StateAction
 
     public override void OnStateEnter()
     {
-        _playerLocomotion.SetSpeedMove(_movespeed);
         _playerLocomotion.SetSpeedRotation(_rotationspeed);
         _playerLocomotion.SetEnableFaceMoveDirection(_faceMoveDirection);
     }
@@ -52,6 +47,5 @@ public class PlayerLocomotionAction : StateAction
 
     public override void OnStateExit()
     {
-        _playerLocomotion.StopMove();
     }
 }

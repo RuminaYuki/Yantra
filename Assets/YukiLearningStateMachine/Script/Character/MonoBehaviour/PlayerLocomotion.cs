@@ -13,7 +13,6 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField] private Transform _referencePoint;
 
     //movesystem
-    private Movement _movement;
 
     //Rotate
     private Rotation _rotation;
@@ -26,7 +25,6 @@ public class PlayerLocomotion : MonoBehaviour
         _enableUseInputObserverSO = true;
         _faceMoveDirection = false;
 
-        _movement = new Movement(_rigidbody);
         _rotation = new Rotation(_rigidbody);
     }
 
@@ -47,9 +45,9 @@ public class PlayerLocomotion : MonoBehaviour
         bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
         if(!hasMoveInput) return;
         
-        // _rotation.Rotate(_faceMoveDirection? 
-        //     GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
-        //     GetCameraForwardFlat(), Time.fixedDeltaTime);
+         _rotation.Rotate(_faceMoveDirection? 
+             GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
+             GetCameraForwardFlat(), Time.fixedDeltaTime);
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -98,13 +96,6 @@ public class PlayerLocomotion : MonoBehaviour
     
     #region //API
     // Locomotion Function
-    public void StopMove()
-    {
-        _movement.Stop();
-    }
-    // Speed move and rotate
-    public void SetSpeedMove(float speed) => _movement.Speed = speed;
-    public float GetSpeedMove() => _movement.Speed;
     public void SetSpeedRotation(float speed) => _rotation.Speed = speed;
     public float GetSpeedRotation() => _rotation.Speed;
 
@@ -117,6 +108,7 @@ public class PlayerLocomotion : MonoBehaviour
     // Direction
     public void SetDirection(Vector3 direction) => _directionMove = direction;
     public Vector3 GetDirection() => _directionMove;
+    public Vector3 GetDirectionWithReferencePoint() => GetWorldDirectionRelativeTo(_directionMove,_referencePoint);
 
     #endregion
 }

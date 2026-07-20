@@ -6,9 +6,6 @@ using Yuki.Learning.StateMachine;
 menuName = "YUKI Learning State Machine/Actions/Player/PlayerLocomotionAnimationActionSO")]
 public class PlayerLocomotionAnimationActionSO : StateActionSO
 {
-    [Header("Player Input")]
-    public YantraInputObserverSO PlayerInput;
-
     [Header("Animation Setting")]
     public float DampTime;
     public float Multiply;
@@ -17,19 +14,14 @@ public class PlayerLocomotionAnimationActionSO : StateActionSO
 
     public override StateAction CreateAction(StateMachine stateMachine)
     {
-        return new PlayerLocomotionAnimationAction(PlayerInput,DampTime,Multiply ,locomotionAnimationParameter);
+        return new PlayerLocomotionAnimationAction(DampTime,Multiply ,locomotionAnimationParameter);
     }
 }
 
 public class PlayerLocomotionAnimationAction : StateAction
 {
-    //PlayerInput
-    private YantraInputObserverSO _playerInput;
-    private Vector3 _direction;
-
-
     private Animator _animator; 
-    
+    private PlayerLocomotion _playerLocomotion;
     private Transform _transform;
     
     private float _dampTime;
@@ -42,9 +34,8 @@ public class PlayerLocomotionAnimationAction : StateAction
 
     
 
-    public PlayerLocomotionAnimationAction(YantraInputObserverSO playerInput, float dampTime, float multiply, LocomotionAnimationParameter locomotionAnimationParameter)
+    public PlayerLocomotionAnimationAction(float dampTime, float multiply, LocomotionAnimationParameter locomotionAnimationParameter)
     {
-        _playerInput = playerInput;
 
         _dampTime = dampTime;
         _multiply = multiply;
@@ -58,34 +49,23 @@ public class PlayerLocomotionAnimationAction : StateAction
     public override void Awake(StateMachine stateMachine)
     {
          _animator = stateMachine.GetComponent<Animator>();
+         _playerLocomotion = stateMachine.GetComponent<PlayerLocomotion>();
          _transform = stateMachine.GetComponent<Transform>();
     }
 
     public override void OnStateEnter()
     {
-        _playerInput.OnMoveChannel += HandleMoveInput;
-
        _animator.Play(_animationStateName,0);
-    }
-
-     private void HandleMoveInput(Vector3 moveInput)
-    {
-        if(!_playerInput) return;
-        _direction = moveInput;
     }
 
     public override void OnUpdate()
     {
         
-        Vector3 localVelocity = _transform.InverseTransformDirection(_direction);
+        Vector3 localVelocity = _transform.InverseTransformDirection(_playerLocomotion.GetDirectionWithReferencePoint());
         float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
         float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
         _animator.SetFloat(_nameparameterZ, velocityZ * _multiply, _dampTime, Time.deltaTime);
         _animator.SetFloat(_nameparameterx, velocityX * _multiply, _dampTime, Time.deltaTime);
-    }
-    public override void OnStateExit()
-    {
-        _playerInput.OnMoveChannel -= HandleMoveInput;
     }
 }
 
