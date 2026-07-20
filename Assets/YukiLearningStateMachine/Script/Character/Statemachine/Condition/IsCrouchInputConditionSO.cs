@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "IsCrouchInputCondition",
-    menuName = "YUKI Learning State Machine/Conditions/Is Crouch Input")]
+    menuName = "YUKI Learning State Machine/Conditions/Player/Is Crouch Input")]
 public class IsCrouchInputConditionSO : StateConditionSO
 {
     [SerializeField] private YantraInputObserverSO _playerInput;

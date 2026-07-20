@@ -45,8 +45,8 @@ public class PlayerLocomotion : MonoBehaviour
         _movement.Move(GetWorldDirectionRelativeTo(_directionMove,_referencePoint));
 
         _rotation.Rotate(_faceMoveDirection? 
-        GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
-        GetCameraForwardFlat(), Time.fixedDeltaTime);
+            GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
+            GetCameraForwardFlat(), Time.fixedDeltaTime);
     }
 
     private void HandleMoveInput(Vector3 moveInput)

@@ -3,7 +3,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 using Yuki.Learning.StateMachine;
 
 [CreateAssetMenu(fileName = "PlayerLocomotionAnimationActionSO", 
-menuName = "YUKI Learning State Machine/Actions/PlayerLocomotionAnimationActionSO")]
+menuName = "YUKI Learning State Machine/Actions/Player/PlayerLocomotionAnimationActionSO")]
 public class PlayerLocomotionAnimationActionSO : StateActionSO
 {
     public float DampTime;
@@ -18,10 +18,10 @@ public class PlayerLocomotionAnimationActionSO : StateActionSO
 
 public class PlayerLocomotionAnimationAction : StateAction
 {
-    private Animator _animator;
+    private Animator _animator; 
     private Rigidbody _rigidbody;
     private Transform _transform;
-
+    
     private float _dampTime;
 
     private string _animationStateName;

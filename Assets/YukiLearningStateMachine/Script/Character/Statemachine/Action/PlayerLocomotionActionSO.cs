@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine;
 
 [CreateAssetMenu(
     fileName = "PlayerLocomotionAction", 
-    menuName = "YUKI Learning State Machine/Actions/PlayerLocomotionAction")]
+    menuName = "YUKI Learning State Machine/Actions/Player/PlayerLocomotionAction")]
 public class PlayerLocomotionActionSO : StateActionSO
 {
     [Header("MovementSystem")]
