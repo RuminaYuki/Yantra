@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5492ed31ba40b643aaf3d94f1de0aa7, type: 3}
   m_Name: PlayerUpperActionTransitionTable
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
-  _initialState: {fileID: 11400000, guid: 5de3439416a151d438fc4a8517cf7236, type: 2}
+  _initialState: {fileID: 11400000, guid: 8638098175bb3e14b8013b14c2f7601f, type: 2}
   _anyTransitions: []
   _transitions:
-  - FromState: {fileID: 11400000, guid: 5de3439416a151d438fc4a8517cf7236, type: 2}
+  - FromState: {fileID: 11400000, guid: 8638098175bb3e14b8013b14c2f7601f, type: 2}
     ConditionGroups:
     - Conditions:
       - Condition: {fileID: 11400000, guid: 19e49e29d02156c4c8ba8038f6364e69, type: 2}
@@ -24,6 +24,6 @@ MonoBehaviour:
   - FromState: {fileID: 11400000, guid: 0608f48372d577e42bc04ce1441c5060, type: 2}
     ConditionGroups:
     - Conditions:
-      - Condition: {fileID: 11400000, guid: 19e49e29d02156c4c8ba8038f6364e69, type: 2}
+      - Condition: {fileID: 11400000, guid: e995be57c7552e248a69841f5d271c51, type: 2}
         ExpectedResult: 0
-    ToState: {fileID: 11400000, guid: 5de3439416a151d438fc4a8517cf7236, type: 2}
+    ToState: {fileID: 11400000, guid: 8638098175bb3e14b8013b14c2f7601f, type: 2}
