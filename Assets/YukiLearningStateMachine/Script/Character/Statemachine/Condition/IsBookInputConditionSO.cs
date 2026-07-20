@@ -8,6 +8,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 public class IsBookInputConditionSO : StateConditionSO
 {
     [SerializeField] private YantraInputObserverSO _playerInput;
+
     public override Condition CreateCondition()
     {
         return new IsBookInputCondition(_playerInput);
@@ -21,7 +22,7 @@ public class IsBookInputCondition : Condition
 
     public override void Awake(StateMachine stateMachine)
     {
-        _isBook = false;
+        
     }
     public IsBookInputCondition(YantraInputObserverSO playerInput)
     {
@@ -30,13 +31,13 @@ public class IsBookInputCondition : Condition
             Debug.LogError("IsCrouchCondition requires " + "YantraInputObserverSO.");
             return;
         }
+
         _playerInput = playerInput;
         _playerInput.OnPressQ_ButtonChannel += HandleBookInput;
     }
     public override void Dispose()
     {
         if (_playerInput == null) return;
-        _isBook = false;
         _playerInput.OnPressQ_ButtonChannel -= HandleBookInput;
     }
 
@@ -47,6 +48,10 @@ public class IsBookInputCondition : Condition
 
     protected override bool Statement()
     {
-        return _isBook;
+        bool result = _isBook;
+
+        _isBook = false;
+
+        return result;
     }
 }
