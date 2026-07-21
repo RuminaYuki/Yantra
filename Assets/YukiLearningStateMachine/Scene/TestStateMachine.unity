@@ -1044,7 +1044,7 @@ MonoBehaviour:
   _audioSource: {fileID: 1079900824}
   _voiceSource: {fileID: 881577814}
   _interruptCurrentVoice: 1
-  _statsController: {fileID: 1062817023}
+  _statsController: {fileID: 0}
   _raycastPos: {fileID: 1062817027}
   _soundAndTags:
   - Tag: Mud
@@ -2665,7 +2665,7 @@ Transform:
   m_GameObject: {fileID: 691087590}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0064583775, y: 0.000000029802319, z: -0.0000002494198, w: 0.99997914}
-  m_LocalPosition: {x: -0.001671332, y: -0.024905981, z: -0.018082779}
+  m_LocalPosition: {x: -0.001671332, y: 1.015007, z: -0.018082779}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2752,7 +2752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YantCaster
   _matcher: {fileID: 1170216748}
-  _stats: {fileID: 1062817023}
+  _stats: {fileID: 0}
   _aimCamera: {fileID: 320540217}
   _playerRoot: {fileID: 1062817018}
   _yantPaper: {fileID: 1170216746}
@@ -2852,7 +2852,7 @@ MonoBehaviour:
   _audioSource: {fileID: 1390032286}
   _voiceSource: {fileID: 1338452418}
   _interruptCurrentVoice: 1
-  _statsController: {fileID: 1062817023}
+  _statsController: {fileID: 0}
   _raycastPos: {fileID: 1062817027}
   _soundAndTags:
   - Tag: Mud
@@ -2920,7 +2920,7 @@ Transform:
   m_GameObject: {fileID: 820876753}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3606,12 +3606,7 @@ GameObject:
   - component: {fileID: 1062817027}
   - component: {fileID: 1062817026}
   - component: {fileID: 1062817025}
-  - component: {fileID: 1062817024}
-  - component: {fileID: 1062817023}
-  - component: {fileID: 1062817022}
-  - component: {fileID: 1062817021}
-  - component: {fileID: 1062817020}
-  - component: {fileID: 1062817019}
+  - component: {fileID: 1062817030}
   - component: {fileID: 1062817028}
   - component: {fileID: 1062817029}
   m_Layer: 3
@@ -3621,174 +3616,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1062817019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062817018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c08d195007dc03458c7321b1921cbc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EmergencyAimFix
-  chestBone: {fileID: 1232541170}
-  rightArmBone: {fileID: 833259653}
-  aimTarget: {fileID: 129257618}
-  cameraController: {fileID: 320540216}
-  chestOffset: {x: 0, y: 0, z: 0}
-  armOffset: {x: 90, y: 0, z: 0}
---- !u!136 &1062817020
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062817018}
-  m_Material: {fileID: 13400000, guid: 257582b7d6a906f42b7ec5a3ed61ceb0, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.7854178
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.894189, z: 0}
---- !u!114 &1062817021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062817018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0897940339f9d7248931aa2902fbc039, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupDetector
-  raycastCamera: {fileID: 0}
-  pickupDistance: 3
-  raycastLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  pickupTag: Pickup
-  pickupKey: 19
-  pickupKeyDisplayName: E
-  promptText: {fileID: 0}
-  defaultPromptText: Press {0} to pick up
-  hideObjectOnPickup: 1
-  onPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1062817022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062817018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 972214f2f26332f4f82c62d41d898690, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationController
-  _animator: {fileID: 1062817026}
-  _cameraAnimationController: {fileID: 0}
-  _inputObserver: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
-  _drawOn3DMesh: {fileID: 1170216749}
-  _yantCaster: {fileID: 729452278}
-  _moveController: {fileID: 0}
-  _cameraController: {fileID: 320540216}
-  _aimRig: {fileID: 0}
-  _aimTarget: {fileID: 129257618}
-  _aimColliderMask:
-    serializedVersion: 2
-    m_Bits: 247
-  _lampObject: {fileID: 1057094334}
-  _dampTime: 0.1
-  _timeBeforeScared: 5
-  _isDrawing: 0
-  _isLampOn: 0
---- !u!114 &1062817023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062817018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9667084462f1474abb599a29f6beb26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YantraStatsController
-  _moveController: {fileID: 0}
-  yantCount: 0
-  StatsData: {fileID: 11400000, guid: dfb92f83c1a01054d8b8ad55f0cf0f76, type: 2}
-  CurrentMoveSpeed: 0
-  CurrectJumpForce: 0
-  CurrentHp: 0
-  MinHp: 0
-  CurrentStamina: 0
-  MinStamina: 0
-  _isHurt: 0
-  _isMoving: 0
-  _isRunning: 0
-  _isJumping: 0
-  _isGrounded: 0
-  _staminaRegenRateNormal: 30
-  _staminaRegenRateBad: 20
-  _runStaminaCost: 20
-  _jumpStaminaCost: 25
-  _regenStaminaDelay: 0.3
-  _currentRegenStaminaDelay: 0
-  _staminaLowPercent: 0.3
---- !u!54 &1062817024
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062817018}
-  serializedVersion: 5
-  m_Mass: 50
-  m_LinearDamping: 1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
-  m_CollisionDetection: 2
 --- !u!114 &1062817025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3946,6 +3773,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotion
   _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   _referencePoint: {fileID: 320540217}
+--- !u!143 &1062817030
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1.26, z: 0}
 --- !u!1 &1067269696
 GameObject:
   m_ObjectHideFlags: 0
