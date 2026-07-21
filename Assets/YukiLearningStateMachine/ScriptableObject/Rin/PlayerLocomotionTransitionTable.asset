@@ -32,21 +32,3 @@ MonoBehaviour:
       - Condition: {fileID: 11400000, guid: 1750a0499b1a9854e9b159b22883ac54, type: 2}
         ExpectedResult: 1
     ToState: {fileID: 11400000, guid: ff9edf3420fed03478a5b5cd64d9b6aa, type: 2}
-  - FromState: {fileID: 11400000, guid: ff9edf3420fed03478a5b5cd64d9b6aa, type: 2}
-    ConditionGroups:
-    - Conditions:
-      - Condition: {fileID: 11400000, guid: 5f21fd51b42bc804ab5886bc22b51a68, type: 2}
-        ExpectedResult: 0
-    ToState: {fileID: 11400000, guid: 055ec584200da184ca05414ac468594d, type: 2}
-  - FromState: {fileID: 11400000, guid: 6c9979a729660014b90292c993fb4272, type: 2}
-    ConditionGroups:
-    - Conditions:
-      - Condition: {fileID: 11400000, guid: 5f21fd51b42bc804ab5886bc22b51a68, type: 2}
-        ExpectedResult: 0
-    ToState: {fileID: 11400000, guid: 055ec584200da184ca05414ac468594d, type: 2}
-  - FromState: {fileID: 11400000, guid: 055ec584200da184ca05414ac468594d, type: 2}
-    ConditionGroups:
-    - Conditions:
-      - Condition: {fileID: 11400000, guid: 5f21fd51b42bc804ab5886bc22b51a68, type: 2}
-        ExpectedResult: 1
-    ToState: {fileID: 11400000, guid: ff9edf3420fed03478a5b5cd64d9b6aa, type: 2}
