@@ -39,15 +39,15 @@ public class PlayerLocomotion : MonoBehaviour
     {
 
         bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
-        if(!hasMoveInput) return;
-        
-         //_rotation.Rotate(_faceMoveDirection? 
-         //    GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
-         //    GetCameraForwardFlat(), Time.fixedDeltaTime);
+        if (!hasMoveInput) return;
+        Rotate(_faceMoveDirection ?
+            GetWorldDirectionRelativeTo(_directionMove, _referencePoint) :
+            GetCameraForwardFlat());
     }
     private void OnAnimatorMove()
     {
         _characterController.Move(_animator.deltaPosition);
+        
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -90,7 +90,23 @@ public class PlayerLocomotion : MonoBehaviour
 
         return flatForward.normalized;
     }
-    
+
+    //for test
+    public void Rotate(Vector3 direction)
+    {
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.0001f) return;
+
+        Quaternion targetRotation =
+            Quaternion.LookRotation(direction, Vector3.up);
+
+        Quaternion nextRotation = Quaternion.Slerp(transform.rotation,
+            targetRotation, Time.deltaTime);
+
+        transform.rotation = targetRotation;
+    }
+
     #region //API
 
     // Enable function
