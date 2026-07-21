@@ -32,11 +32,19 @@ public class PlayerBookUpperAnimationAction : StateAction
 
     public override void OnStateEnter()
     {
-        _animator.Play(_animationStateName, 3);
+        _animator.CrossFadeInFixedTime(_animationStateName, 3);
     }
 
     public override void OnUpdate()
     {
         // Implement the logic for the PlayerBookUpperAnimationAction here
+    }
+
+    [System.Serializable]
+    public struct AnimationStateSetting
+    {
+        public string NameState;
+        public float BlendTime;
+        public float Layer;
     }
 }

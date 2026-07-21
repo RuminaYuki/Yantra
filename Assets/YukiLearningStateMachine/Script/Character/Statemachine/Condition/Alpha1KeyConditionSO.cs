@@ -16,7 +16,6 @@ public class Alpha1KeyCondition : Condition
 {
     protected override bool Statement()
     {
-        Debug.Log("Alpha1KeyCondition: Checking if Alpha1 key is pressed.");
         return Input.GetKeyDown(KeyCode.Alpha1);
     }
 }

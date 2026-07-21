@@ -72,10 +72,7 @@ public class PlayerLocomotion : MonoBehaviour
         referenceForward.Normalize();
         referenceRight.Normalize();
 
-        return Vector3.ClampMagnitude(
-            referenceForward * inputDirection.z +
-            referenceRight * inputDirection.x,
-            1f);
+        return referenceForward * inputDirection.z + referenceRight * inputDirection.x;
     }
 
     private Vector3 GetCameraForwardFlat()
