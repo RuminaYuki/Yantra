@@ -39,7 +39,7 @@ public class PlayerLocomotionAction : StateAction
 
     public override void OnStateEnter()
     {
-        _playerLocomotion.SetSpeedRotation(_rotationspeed);
+        //_playerLocomotion.SetSpeedRotation(_rotationspeed);
         _playerLocomotion.SetEnableFaceMoveDirection(_faceMoveDirection);
     }
 

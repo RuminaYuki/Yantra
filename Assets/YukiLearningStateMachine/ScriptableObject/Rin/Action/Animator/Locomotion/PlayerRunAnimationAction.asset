@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d221c4a6e2501249ad5833608e7494c, type: 3}
-  m_Name: PlayerWalkAnimationActionSO
+  m_Name: PlayerRunAnimationAction
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotionAnimationActionSO
   PlayerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   DampTime: 0.15
-  Multiply: 0.5
+  Multiply: 2
   locomotionAnimationParameter:
     AnimationStateName: Locomotion by oat
     NameparameterZ: MoveZ

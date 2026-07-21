@@ -6,7 +6,8 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField] private YantraInputObserverSO _playerInput;
     private bool _enableUseInputObserverSO;
 
-    private Rigidbody _rigidbody;
+    private CharacterController _charactorController;
+    private Animator _animator;
     private Vector3 _directionMove;
 
     [Header("ReferencePoint")]
@@ -20,12 +21,13 @@ public class PlayerLocomotion : MonoBehaviour
 
     void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _charactorController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
 
         _enableUseInputObserverSO = true;
         _faceMoveDirection = false;
 
-        _rotation = new Rotation(_rigidbody);
+        //_rotation = new Rotation(_rigidbody);
     }
 
     void OnEnable()
@@ -45,10 +47,14 @@ public class PlayerLocomotion : MonoBehaviour
         bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
         if(!hasMoveInput) return;
         
-         _rotation.Rotate(_faceMoveDirection? 
-             GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
-             GetCameraForwardFlat(), Time.fixedDeltaTime);
+         //_rotation.Rotate(_faceMoveDirection? 
+             //GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
+             //GetCameraForwardFlat(), Time.fixedDeltaTime);
     }
+    // private void OnAnimatorMove()
+    // {
+    //     _charactorController.Move(_animator.deltaPosition);
+    // }
 
     private void HandleMoveInput(Vector3 moveInput)
     {
@@ -93,8 +99,8 @@ public class PlayerLocomotion : MonoBehaviour
     
     #region //API
     // Locomotion Function
-    public void SetSpeedRotation(float speed) => _rotation.Speed = speed;
-    public float GetSpeedRotation() => _rotation.Speed;
+    //public void SetSpeedRotation(float speed) => _rotation.Speed = speed;
+    //public float GetSpeedRotation() => _rotation.Speed;
 
     // Enable function
     public void SetEnableUseInputObserverSO(bool enable) => _enableUseInputObserverSO = enable;
