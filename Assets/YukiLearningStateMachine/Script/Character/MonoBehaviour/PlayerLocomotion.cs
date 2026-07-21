@@ -6,26 +6,23 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField] private YantraInputObserverSO _playerInput;
     private bool _enableUseInputObserverSO;
 
-    private Rigidbody _rigidbody;
+    private CharacterController _characterController;
+    private Animator _animator;
     private Vector3 _directionMove;
 
     [Header("ReferencePoint")]
     [SerializeField] private Transform _referencePoint;
 
-    //movesystem
-
-    //Rotate
-    private Rotation _rotation;
+    
     private bool _faceMoveDirection;
 
     void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
 
         _enableUseInputObserverSO = true;
         _faceMoveDirection = false;
-
-        _rotation = new Rotation(_rigidbody);
     }
 
     void OnEnable()
@@ -40,14 +37,17 @@ public class PlayerLocomotion : MonoBehaviour
 
     void FixedUpdate()
     {
-        //_movement.Move(GetWorldDirectionRelativeTo(_directionMove,_referencePoint));
 
         bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
         if(!hasMoveInput) return;
         
-         _rotation.Rotate(_faceMoveDirection? 
-             GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
-             GetCameraForwardFlat(), Time.fixedDeltaTime);
+         //_rotation.Rotate(_faceMoveDirection? 
+         //    GetWorldDirectionRelativeTo(_directionMove,_referencePoint):
+         //    GetCameraForwardFlat(), Time.fixedDeltaTime);
+    }
+    private void OnAnimatorMove()
+    {
+        _characterController.Move(_animator.deltaPosition);
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -92,9 +92,6 @@ public class PlayerLocomotion : MonoBehaviour
     }
     
     #region //API
-    // Locomotion Function
-    public void SetSpeedRotation(float speed) => _rotation.Speed = speed;
-    public float GetSpeedRotation() => _rotation.Speed;
 
     // Enable function
     public void SetEnableUseInputObserverSO(bool enable) => _enableUseInputObserverSO = enable;
