@@ -111,11 +111,12 @@ public class PlayerLocomotion : MonoBehaviour
     {
         bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
         if (!hasMoveInput) return;
-        Rotate(GetCameraForwardFlat());
+        //Rotate(GetCameraForwardFlat());
     }
     private void OnAnimatorMove()
     {
         _characterController.Move(_animator.deltaPosition);
+        transform.rotation *= _animator.deltaRotation;
     }
 
     private void HandleMoveInput(Vector3 moveInput)
