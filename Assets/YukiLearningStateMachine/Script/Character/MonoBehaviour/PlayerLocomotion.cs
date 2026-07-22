@@ -2,28 +2,46 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController),typeof(Animator))]
 public class PlayerLocomotion : MonoBehaviour
 {
+    private CharacterController _characterController;
+    private Animator _animator;
+    private Vector3 _directionMove;
+
+    
     [Header("Player Input")]
     [SerializeField] private YantraInputObserverSO _playerInput;
     private bool _enableUseInputObserverSO;
 
+    //===================== Camera ============================
     [Header("ReferencePoint")]
     [SerializeField] private Transform _referencePoint;
 
-
+    //================Locomotion Animatiton====================
     [Header("Locomotion Animatiton Setting")]
     [SerializeField] private float _dampTime = 0.1f;
+    //====================Walk and Run=========================
+    [Header("Walk and Run Setting")]
     private float _multiply;
     [SerializeField] private string _nameParameterMoveZ;
     [SerializeField] private string _nameParameterMoveX;
+
+    private int _moveZ; //Set parameter
+    private int _moveX; //Set parameter
+
+    //========================Turn=============================
+    [Header("Turn Setting")]
     [SerializeField] private string _nameParameterTurn;
+    [SerializeField] private float _minimumTurnAngle = 5f;
+    [SerializeField] private float _stopTurnAngle = 2f;
+    private int _turn; //Set parameter
 
-    private int _moveZ;
-    private int _moveParameterX;
-    // private int _turn;
+    private Vector3 _lockedDirection;
+    private float _lockedTurn; // Value to key parameter
+    private bool _isTurning;
 
-    private CharacterController _characterController;
-    private Animator _animator;
-    private Vector3 _directionMove;
+    
+    
+
+    
 
 
     void Awake()
@@ -33,8 +51,8 @@ public class PlayerLocomotion : MonoBehaviour
 
         //Hash Sring
         _moveZ = Animator.StringToHash(_nameParameterMoveZ);
-        _moveParameterX = Animator.StringToHash(_nameParameterMoveX);
-        // _turn = Animator.StringToHash(_nameParameterTurn);
+        _moveX = Animator.StringToHash(_nameParameterMoveX);
+        _turn = Animator.StringToHash(_nameParameterTurn);
 
         _enableUseInputObserverSO = true;
     }
@@ -52,21 +70,41 @@ public class PlayerLocomotion : MonoBehaviour
     {
         // set Animation
         Vector3 direction = GetDirectionWithReferencePoint();
+
+        // Set walk run Animation
         Vector3 localVelocity = transform.InverseTransformDirection(direction);
         float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
         float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
-        // float turn = 0f;
-        // if (direction.sqrMagnitude > 0.01f)
-        // {
-        //     float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
-        //     turn = Mathf.Clamp(angle / 90f, -1f, 1f);
-        // }
-
-
 
         _animator.SetFloat(_moveZ, velocityZ * _multiply, _dampTime, Time.deltaTime);
-        _animator.SetFloat(_moveParameterX, velocityX * _multiply, _dampTime, Time.deltaTime);
-        //_animator.SetFloat(_turn, turn, _dampTime, Time.deltaTime);
+        _animator.SetFloat(_moveX, velocityX * _multiply, _dampTime, Time.deltaTime);
+
+        // Set Turn Animation
+        if (!_isTurning && direction.sqrMagnitude > 0.01f)
+        {
+            float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+
+            if (Mathf.Abs(angle) > _minimumTurnAngle)
+            {
+                _lockedDirection = direction.normalized;
+                _lockedTurn = angle;
+                _isTurning = true;
+            }
+        }
+        else if (_isTurning)
+        {
+            float currentAngle = Vector3.SignedAngle(transform.forward, _lockedDirection, Vector3.up);
+            bool reachedTarget = Mathf.Abs(currentAngle) <= _stopTurnAngle;
+            bool passedTarget = Mathf.Sign(currentAngle) != Mathf.Sign(_lockedTurn);
+
+            if (reachedTarget || passedTarget)
+            {
+                _lockedTurn = 0f;
+                _isTurning = false;
+            }
+        }
+
+        _animator.SetFloat(_turn, _lockedTurn, _dampTime, Time.deltaTime);
     }
 
     void FixedUpdate()
