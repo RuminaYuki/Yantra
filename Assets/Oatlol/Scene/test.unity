@@ -2718,10 +2718,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b56def9e10fad724e83b5b262afb40ec,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2039743221}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b56def9e10fad724e83b5b262afb40ec,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2039743218}
   m_SourcePrefab: {fileID: 100100000, guid: b56def9e10fad724e83b5b262afb40ec, type: 3}
 --- !u!4 &1887736833 stripped
@@ -2901,24 +2897,6 @@ MonoBehaviour:
   - {fileID: 2136920610}
   - {fileID: 727626509}
   - {fileID: 1805306126}
---- !u!114 &2039743221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039743215}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3828dc0a37ed6b84c8e099224d56409a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FootIk
-  ikWeight: 1
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  raycastDistance: 1
-  footOffsetY: 0.1
 --- !u!4 &2136920610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7275098384956357083, guid: b56def9e10fad724e83b5b262afb40ec,
