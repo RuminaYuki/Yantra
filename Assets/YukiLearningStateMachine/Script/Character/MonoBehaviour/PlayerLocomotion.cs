@@ -19,7 +19,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     private int _moveZ;
     private int _moveParameterX;
-    private int _turn;
+    // private int _turn;
 
     private CharacterController _characterController;
     private Animator _animator;
@@ -34,7 +34,7 @@ public class PlayerLocomotion : MonoBehaviour
         //Hash Sring
         _moveZ = Animator.StringToHash(_nameParameterMoveZ);
         _moveParameterX = Animator.StringToHash(_nameParameterMoveX);
-        _turn = Animator.StringToHash(_nameParameterTurn);
+        // _turn = Animator.StringToHash(_nameParameterTurn);
 
         _enableUseInputObserverSO = true;
     }
@@ -55,30 +55,29 @@ public class PlayerLocomotion : MonoBehaviour
         Vector3 localVelocity = transform.InverseTransformDirection(direction);
         float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
         float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
-        float turn = 0f;
-        if (direction.sqrMagnitude > 0.01f)
-        {
-            float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
-            turn = Mathf.Clamp(angle / 90f, -1f, 1f);
-        }
+        // float turn = 0f;
+        // if (direction.sqrMagnitude > 0.01f)
+        // {
+        //     float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+        //     turn = Mathf.Clamp(angle / 90f, -1f, 1f);
+        // }
 
 
 
         _animator.SetFloat(_moveZ, velocityZ * _multiply, _dampTime, Time.deltaTime);
         _animator.SetFloat(_moveParameterX, velocityX * _multiply, _dampTime, Time.deltaTime);
-        _animator.SetFloat(_turn, turn, _dampTime, Time.deltaTime);
+        //_animator.SetFloat(_turn, turn, _dampTime, Time.deltaTime);
     }
 
     void FixedUpdate()
     {
         bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
         if (!hasMoveInput) return;
-        //Rotate(GetCameraForwardFlat());
+        Rotate(GetCameraForwardFlat());
     }
     private void OnAnimatorMove()
     {
         _characterController.Move(_animator.deltaPosition);
-        transform.rotation *= _animator.deltaRotation;
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -123,6 +122,21 @@ public class PlayerLocomotion : MonoBehaviour
             return transform.forward;
 
         return flatForward.normalized;
+    }
+
+    public void Rotate(Vector3 direction)
+    {
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.0001f) return;
+
+        Quaternion targetRotation =
+            Quaternion.LookRotation(direction, Vector3.up);
+
+        Quaternion nextRotation = Quaternion.Slerp(transform.rotation,
+            targetRotation, Time.deltaTime);
+
+        transform.rotation = targetRotation;
     }
     #endregion
 
