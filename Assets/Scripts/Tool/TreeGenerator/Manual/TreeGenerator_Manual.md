@@ -1,529 +1,358 @@
 # Procedural Tree Generator — คู่มือการใช้งาน
 
-**เวอร์ชัน:** 1.3.5 (2026-07-20)
+**เวอร์ชัน:** 2.0.2 (2026-07-23)
 **สภาพแวดล้อม:** Unity 6000.3+ / HDRP 17.x
 **ตำแหน่งโค้ด:** `Assets/Scripts/Tool/TreeGenerator/` (namespace `TreeTool`)
 
-> **แก้ไข v1.3.5:** ชื่อ Reference ในตารางข้อ 8 ปรับให้ตรงกับที่ใช้จริงใน
-> `Tree-HDRP-Lit-PBR.shadergraph` (ไม่ใช่ชื่อที่เสนอไว้ตอนแรกใน v1.3.2-1.3.4) —
-> `_AmbientOcclusionMap` (แทน `_OcclusionMap`), `_SmoothnessMinScale`/`_SmoothnessMaxScale`
-> (แทน `_SmoothnessRemapMin/Max`), `_AmbientOcclusionMinScale`/`_AmbientOcclusionMaxScale`
-> (แทน `_AORemapMin/Max`), และ Keyword Reference `MAPFORMAT` (ไม่มี underscore นำหน้า แทน
-> `_MapFormat`) — อัพเดท `Editor/TreeWindShaderGUI.cs` ให้ค้นหาด้วยชื่อจริงเหล่านี้แล้ว
-> (แก้ script ให้ตรงกับกราฟที่มีอยู่ เพราะกราฟ wiring ถูกต้องอยู่แล้ว ไม่ต้องแก้กราฟใหม่)
+เครื่องมือนี้เสร็จสมบูรณ์แล้ว ไม่ต้องตั้งค่า Shader หรือต่อโหนดใดๆ เองอีก — คู่มือนี้จึงพูดถึง
+**การใช้งานเครื่องมือเท่านั้น** ตั้งแต่สร้างต้นไม้จนได้ผลลัพธ์พร้อมใช้ในเกม
 
 ---
 
 ## สารบัญ
 
 1. [ภาพรวม](#1-ภาพรวม)
-2. [เริ่มต้นใช้งาน](#2-เริ่มต้นใช้งาน)
-3. [ระบบ Seed (การสุ่ม)](#3-ระบบ-seed-การสุ่ม)
-4. [โหมด Geometry: Procedural กับ Prefabs](#4-โหมด-geometry-procedural-กับ-prefabs)
-5. [พารามิเตอร์ทั้งหมด](#5-พารามิเตอร์ทั้งหมด)
-6. [ระบบ LOD](#6-ระบบ-lod)
-7. [Material](#7-material)
-8. [ระบบลม: ใช้งานได้จริงกับ WindZone ของ Unity](#8-ระบบลม-ใช้งานได้จริงกับ-windzone-ของ-unity)
-9. [การ Export เป็น Mesh Asset / ทำ Prefab](#9-การ-export-เป็น-mesh-asset--ทำ-prefab)
-10. [ข้อจำกัดและ Tips](#10-ข้อจำกัดและ-tips)
+2. [เริ่มต้นใช้งาน (Step by Step)](#2-เริ่มต้นใช้งาน-step-by-step)
+3. [ระบบลม: Fake Wind กับ True Wind](#3-ระบบลม-fake-wind-กับ-true-wind)
+4. [ระบบ Seed (การสุ่ม)](#4-ระบบ-seed-การสุ่ม)
+5. [Manual Number Entry (พิมพ์ค่าเองได้ทุกช่อง)](#5-manual-number-entry-พิมพ์ค่าเองได้ทุกช่อง)
+6. [โหมด Geometry: Procedural กับ Prefabs](#6-โหมด-geometry-procedural-กับ-prefabs)
+7. [พารามิเตอร์ทั้งหมด (ค่าเริ่มต้น + ช่วงปรับได้)](#7-พารามิเตอร์ทั้งหมด-ค่าเริ่มต้น--ช่วงปรับได้)
+8. [ระบบ LOD](#8-ระบบ-lod)
+9. [การ Export: ทุกต้นมีโฟลเดอร์ของตัวเอง](#9-การ-export-ทุกต้นมีโฟลเดอร์ของตัวเอง)
+10. [เพนต้นไม้ลง Terrain](#10-เพนต้นไม้ลง-terrain)
+11. [เทคนิคและแก้ปัญหา](#11-เทคนิคและแก้ปัญหา)
 
 ---
 
 ## 1. ภาพรวม
 
-Procedural Tree Generator เป็นเครื่องมือสร้างต้นไม้แบบ procedural ภายใน Unity
-แนวคิดเดียวกับ Tree Creator ของ Unity แต่ออกแบบมาสำหรับ **HDRP** และเพิ่มความสามารถ:
+Procedural Tree Generator คือเครื่องมือสร้างต้นไม้แบบ procedural ภายใน Unity สำหรับ HDRP
+ใส่ component เดียวบน GameObject แล้วปรับค่าใน Inspector — โมเดลอัพเดทสดให้เห็นผลทันที
 
-- ปรับค่าใน Inspector แล้ว **โมเดลอัพเดททันทีใน Edit Mode** (ลาก slider ดูแบบ real-time —
-  ระหว่างลากระบบ rebuild เฉพาะ LOD0 แบบเบา ๆ ให้ลื่น แล้วค่อย rebuild ครบทุก LOD อัตโนมัติเมื่อปล่อยมือ)
-- ค่าเกือบทั้งหมดเป็น **ช่วงสุ่ม (min–max range)** ลากปรับได้
-- ระบบ **seed แยก 3 ตัว** — สุ่มทรงต้น / กิ่ง / ใบ แยกกันได้อิสระ
-- สร้าง **LOD หลายระดับ + LODGroup อัตโนมัติ** พร้อม cross-fade
-- รองรับ 2 โหมด: สร้าง geometry เองทั้งหมด หรือใช้ **prefab (FBX) ที่ปั้นมาเอง** สำหรับลำต้น กิ่ง ใบ (ใส่ได้หลาย variant แล้วสุ่มเลือก)
-- **ระบบลมใช้งานได้จริง** ขับเคลื่อนจาก **WindZone ตัวจริงของ Unity** — ปรับได้ทีละส่วนว่าลำต้น/กิ่งแต่ละชั้น/ใบ จะฟริ้วกับลมมากแค่ไหน
+ความสามารถหลัก:
 
-องค์ประกอบหลัก:
+- สร้างต้นไม้ทั้งต้น (ลำต้น, กิ่งหลายชั้น, ราก, ใบ) จากค่าที่ปรับในอินสเปกเตอร์ ไม่ต้องปั้นโมเดลเอง
+- ระบบลมสำเร็จรูป **2 แบบ** ให้เลือก (ดูข้อ 3) — ไม่ต้องตั้งค่า Shader เอง
+- **ระบบราก** เปิด/ปิดได้ เลือกได้ 2 ทรง (รากพูพอนขนาดใหญ่ / รากหายใจแบบโกงกาง) พร้อมรากฝอยแตกย่อย
+- **LOD หลายระดับ + LODGroup** สร้างให้อัตโนมัติ พร้อม cross-fade
+- **Seed แยก 4 ตัว** — สุ่มทรงต้น/กิ่ง/ใบ/ราก อิสระจากกัน
+- **Export ต้นไม้แต่ละต้นแยกโฟลเดอร์ของตัวเอง** พร้อม Material/Texture สำเนาของตัวเอง และ Prefab ที่แก้ไขย้อนกลับได้เสมอ (ดูข้อ 9)
+- ปุ่มเดียวจบ: **Export & Add To Terrain** เพนต้นไม้ลง Terrain ได้ทันที (ดูข้อ 10)
+
+องค์ประกอบหลัก (ไม่ต้องเข้าไปแก้ไขเอง แค่ให้รู้ว่าไฟล์ไหนทำหน้าที่อะไร):
 
 | ไฟล์ | หน้าที่ |
 |---|---|
 | `ProceduralTree.cs` | Component หลัก วางบน GameObject |
 | `ProceduralTreeSettings.cs` | พารามิเตอร์ทั้งหมด |
-| `TreeSkeleton.cs` | สุ่มโครงต้นไม้ (เส้น spline ของลำต้น/กิ่ง + ตำแหน่งใบ) |
-| `TreeMeshBuilder.cs` | แปลงโครงเป็น mesh ต่อ LOD (bake ข้อมูลลมลง vertex color ด้วย) |
-| `TreeWindZoneDriver.cs` | อ่าน WindZone จริงในฉาก ส่งเป็น global shader property |
-| `TreeWind.hlsl` | ฟังก์ชันคำนวณการขยับ vertex ตามลม ใช้กับ Shader Graph (Custom Function Node) |
-| `Editor/ProceduralTreeEditor.cs` | Inspector, ปุ่มสุ่ม seed, stats, export, ปุ่มเพิ่ม Wind Zone |
-| `Editor/TreeWindShaderGUI.cs` | Material Inspector ของ wind shader — dropdown สลับ HDRP/URP texture format |
-| `Editor/MinMaxRangeDrawer.cs` | slider แบบ min–max |
+| `TreeSkeleton.cs` | สุ่มโครงต้นไม้ (ลำต้น/กิ่ง/ราก + ตำแหน่งใบ) |
+| `TreeMeshBuilder.cs` | แปลงโครงเป็น mesh ต่อ LOD |
+| `Editor/ProceduralTreeEditor.cs` | หน้า Inspector, ปุ่มสุ่ม seed, Export |
+| `Shader/FakeWind/` | Shader ของโหมด Fake Wind (ค่าเริ่มต้น) |
+| `Shader/TrueWind/` | Shader ของโหมด True Wind |
 
 ---
 
-## 2. เริ่มต้นใช้งาน
+## 2. เริ่มต้นใช้งาน (Step by Step)
 
-1. คลิกขวาใน **Hierarchy → 3D Object → Procedural Tree (Tool)**
-   (หรือสร้าง GameObject เปล่าแล้ว Add Component → `Tools/Procedural Tree`)
-2. ต้นไม้จะถูก generate ทันที เป็นลูก `LOD0`, `LOD1`, `LOD2` + `LODGroup` บนตัวแม่
-3. เลือกตัวแม่ (ที่มี component `ProceduralTree`) แล้วปรับค่าใน Inspector — โมเดลจะอัพเดททันทีทุกครั้งที่ค่าเปลี่ยน
-4. ใส่ Material จริงในช่อง **Bark Material** / **Leaf Material** (ก่อนใส่จะเป็นสี placeholder น้ำตาล/เขียว)
-5. พอใจแล้วกด **Export Meshes To Assets** ถ้าต้องการทำเป็น prefab (ดูข้อ 9)
+**ขั้นที่ 1 — สร้างต้นไม้**
+คลิกขวาใน Hierarchy → **3D Object → Procedural Tree (Tool)**
+ต้นไม้ต้นแรกจะถูกสร้างทันที (ทรงเริ่มต้น ใช้ Fake Wind, ยังไม่มีราก)
 
-> ปุ่มใน Inspector: **Rebuild Now** = บังคับ generate ใหม่, **Export Meshes To Assets** = freeze mesh เป็นไฟล์ asset
+**ขั้นที่ 2 — เลือกระบบลม**
+เลือกตัวต้นไม้ที่สร้าง แล้วดูหัวข้อ **Wind Mode** บนสุดของ Inspector — ค่าเริ่มต้นคือ **Fake Wind**
+(ใช้ได้เลย ไม่ต้องทำอะไรเพิ่ม) ถ้าอยากได้ลมที่ขับเคลื่อนจาก WindZone จริงในฉาก ให้เปลี่ยนเป็น **True Wind**
+(ดูรายละเอียดความต่างที่ข้อ 3)
 
-ด้านล่าง Inspector มีกล่อง **stats** แสดงจำนวนกิ่ง และ vertex / triangle / ใบ ของแต่ละ LOD
+**ขั้นที่ 3 — ปรับทรงต้นไม้**
+ลากปรับค่าต่างๆ ในหมวด **Structure** (ลำต้น/กิ่ง/ราก) และ **Foliage** (ใบ) — โมเดลจะอัพเดทให้เห็นทันที
+ไม่พอใจทรง ก็กด **New Tree** ที่แถว Seed บนสุดเพื่อสุ่มใหม่ทั้งต้น (ดูข้อ 4)
+
+**ขั้นที่ 4 — (ถ้าต้องการ) เปิดระบบราก**
+เปิดหมวด **Structure → Roots**, ติ๊ก **Enabled**, เลือก **Type** เป็น Buttress (รากพูพอนใหญ่)
+หรือ Pneumatophore (รากหายใจแบบโกงกาง) แล้วปรับค่าตามชอบ
+
+**ขั้นที่ 5 — ใส่ Material ของตัวเอง (ถ้ามี)**
+ถ้าไม่ใส่อะไร เครื่องมือจะเลือก Material เริ่มต้นให้อัตโนมัติตามระบบลมที่เลือกในขั้นที่ 2
+อยากใช้เท็กซ์เจอร์ของตัวเอง ก็ลาก Material ใส่ช่อง **Bark Material** / **Leaf Material** ท้าย Inspector ได้เลย
+
+**ขั้นที่ 6 — Export**
+พอใจกับทรงต้นไม้แล้ว กด **Export Meshes To Assets** (เก็บไว้ทำ Prefab ใช้งานทั่วไป)
+หรือกด **Export & Add To Terrain As Paintable Tree** (ถ้าอยากเพนต้นไม้ลงพื้น Terrain ทันที)
+ทั้งสองปุ่มจะสร้างโฟลเดอร์ของต้นไม้ต้นนี้ให้เองที่ `Assets/GeneratedTrees/<ชื่อต้นไม้>/` (ดูข้อ 9)
+
+จบแล้ว — ต้นไม้ต้นนี้พร้อมใช้งาน และยังกลับมาแก้ไขต่อได้เสมอ (ดูข้อ 9)
+
+> ปุ่มอื่นๆ ที่มี: **Rebuild Now** = บังคับ generate โมเดลใหม่ทันที (ปกติไม่ต้องกด อัพเดทให้อัตโนมัติอยู่แล้ว)
+> ด้านล่างสุดของ Inspector มีกล่อง **Stats** บอกจำนวนกิ่ง/verts/tris/ใบของแต่ละ LOD ให้ดูด้วย
 
 ---
 
-## 3. ระบบ Seed (การสุ่ม)
+## 3. ระบบลม: Fake Wind กับ True Wind
 
-ทุกการสุ่มในระบบเป็น **deterministic** — settings เดิม + seed เดิม ได้ต้นเดิมเป๊ะ 100%
+เลือกได้จาก dropdown **Wind Mode → Mode** บนสุดของ Inspector ทุกครั้งที่สลับ ระบบจะเปลี่ยน
+**Leaf Material เริ่มต้นให้อัตโนมัติ** ตามโหมดที่เลือก (ถ้าไม่ได้ใส่ Leaf Material เองในช่องท้าย Inspector)
+
+### Fake Wind (ค่าเริ่มต้น)
+- ลมแบบสำเร็จรูปในตัว Material เอง ไม่ต้องมีอะไรในฉากเพิ่ม เปิดใช้ได้ทันที
+- ใช้ Material: `Assets/Texture/Tree/Leaf.mat` (shader อยู่ที่ `Shader/FakeWind/`)
+- ไม่มีปุ่มสร้าง Wind Zone และไม่มีหมวด **Wind Response** โผล่มาให้เห็นเลย เพราะไม่มีผลกับโหมดนี้
+
+### True Wind (ขับเคลื่อนจาก WindZone จริง)
+- ลมมาจาก component `WindZone` ตัวจริงของ Unity ในฉาก — ทิศทาง/ความแรง/turbulence มีผลจริง
+- ใช้ Material ที่สร้างจาก shader ใน `Shader/TrueWind/` (สร้างให้อัตโนมัติครั้งแรกที่เลือกโหมดนี้)
+- เลือกโหมดนี้ปุ๊บ จะมีหมวด **Wind Response** โผล่ขึ้นมาทันที**ติดกับ Wind Mode ด้านบนสุดเลย**
+  (ไม่ต้องเลื่อนหาไกล) รวมทุกส่วนของต้นไม้ไว้ที่เดียว — ลำต้น, กิ่งทุกชั้น (รวมชั้นที่เพิ่มเองทีหลังด้วย
+  จะโผล่มาในลิสต์นี้ให้ปรับได้อัตโนมัติ), ราก, ใบ — ปรับได้ครบในหมวดเดียวไม่ต้องไล่หาทีละส่วน
+- ในหมวดเดียวกันนี้จะมีปุ่ม **Add Wind Zone To Scene** โผล่ขึ้นมาด้วยถ้ายังไม่มี WindZone ในฉาก
+  กดปุ่มเดียวสร้าง WindZone + ตัวขับเคลื่อนให้พร้อมใช้ทันที
+
+> สลับโหมดไปมาได้ตลอดเวลา ไม่กระทบทรงต้นไม้ (ทรง/กิ่ง/ราก/ใบ ไม่เปลี่ยน) กระทบแค่ material/ลมเท่านั้น
+
+---
+
+## 4. ระบบ Seed (การสุ่ม)
+
+ทุกการสุ่มเป็น **deterministic** — settings เดิม + seed เดิม ได้ต้นเดิมเป๊ะ 100%
 
 | Seed | ควบคุม | ปุ่ม |
 |---|---|---|
-| `Seed` | ทรงลำต้นและทุกอย่างที่ต่อยอดจากมัน (seed หลักของทั้งต้น) | **New Tree** — สุ่มต้นใหม่ทั้งต้น |
-| `Branch Seed` | เฉพาะกิ่ง — สลับตำแหน่ง/มุม/ความยาวกิ่งใหม่ **โดยลำต้นไม่เปลี่ยน** | **Shuffle** |
-| `Leaf Seed` | เฉพาะใบ — สลับตำแหน่ง/ขนาด/การหมุนของใบ **โดยกิ่งไม่เปลี่ยน** | **Shuffle** |
+| Seed | ทรงลำต้นและทุกอย่างที่ต่อยอดจากมัน (seed หลักของทั้งต้น) | **New Tree** |
+| Branch Seed | เฉพาะกิ่ง — สลับตำแหน่ง/มุม/ความยาวกิ่งใหม่ โดยลำต้นไม่เปลี่ยน | **Shuffle** |
+| Leaf Seed | เฉพาะใบ — สลับตำแหน่ง/ขนาด/การหมุนของใบ โดยกิ่งไม่เปลี่ยน | **Shuffle** |
+| Root Seed | เฉพาะราก — สลับรูปทรง/ตำแหน่งรากใหม่ โดยลำต้น/กิ่ง/ใบไม่เปลี่ยน | **Shuffle** |
 
-การใช้งานจริง: กด New Tree จนได้โครงที่ชอบ → Shuffle กิ่งจนพุ่มสวย → Shuffle ใบเก็บรายละเอียด
-
-ค่าที่เป็นช่วง (min–max slider) ทั้งหมดคือ "ขอบเขตการสุ่ม" เช่น Height 4.5–6 หมายถึงแต่ละต้น (ตาม seed) จะสูงค่าใดค่าหนึ่งในช่วงนี้
+Workflow แนะนำ: กด **New Tree** จนได้โครงที่ชอบ → **Shuffle** กิ่งจนพุ่มสวย → **Shuffle** รากจนดูเป็นธรรมชาติ → **Shuffle** ใบเก็บรายละเอียด
 
 ---
 
-## 4. โหมด Geometry: Procedural กับ Prefabs
+## 5. Manual Number Entry (พิมพ์ค่าเองได้ทุกช่อง)
 
-Section **Geometry** เลือก source แยกได้ 3 ส่วน: Trunk / Branch / Leaf (ผสมกันได้)
+ติ๊กช่อง **Manual Number Entry** ใต้หัวข้อ Wind Mode — เมื่อเปิด สไลเดอร์/แถบช่วงค่า (min–max)
+**ทุกช่องในเครื่องมือทั้งหมด** จะเปลี่ยนเป็นช่องพิมพ์ตัวเลขล้วนๆ ทันที พิมพ์ค่าอะไรก็ได้แม้เกินช่วงที่ตั้งไว้
+ปิดติ๊กกลับเมื่อไหร่ ทุกช่องกลับเป็นสไลเดอร์ตามเดิม (ค่าที่พิมพ์ไว้ไม่หาย)
+
+---
+
+## 6. โหมด Geometry: Procedural กับ Prefabs
+
+หมวด **Geometry Source** เลือก source แยกได้ 3 ส่วน: Trunk / Branch / Leaf (ผสมกันได้)
 
 ### โหมด Procedural (ค่าเริ่มต้น)
-สร้าง geometry ใน Unity ทั้งหมด — ลำต้น/กิ่งเป็นท่อตามเส้น spline, ใบเป็น card (Quad / Cross / TripleCross) ใช้ texture + alpha clip ทำรูปใบ
+สร้าง geometry ในตัวเองทั้งหมด — ลำต้น/กิ่ง/รากเป็นท่อ, ใบเป็น card (Quad/Cross/TripleCross)
 
-Inspector จะ**ซ่อน field ที่ไม่เกี่ยวกับโหมดที่เลือกให้อัตโนมัติ** (v1.1):
-โหมด Procedural ซ่อนช่องใส่ prefab / โหมด Prefabs ซ่อน field ฝั่ง procedural
-(เช่น Leaf Shape, Radial Segments, Bark UV Tiling)
+### โหมด Prefabs (ใช้โมเดลที่ปั้นเอง)
+ใส่ FBX ได้หลายอันต่อช่อง ระบบสุ่มเลือก variant ให้ (ผูกกับ Seed เดิม):
 
-### โหมด Prefabs (ใช้ FBX ที่ปั้นเอง)
-ใส่ prefab ได้**หลายอันต่อช่อง** ระบบจะสุ่มเลือก variant ให้:
+| ส่วน | แกนการปั้น | Pivot |
+|---|---|---|
+| ลำต้น / กิ่ง | ยืดตามแกน **+Y** | ที่โคน |
+| ใบ / ช่อใบ | ยื่นตามแกน **+Z** (+Y = ด้านหน้าใบ) ขนาด ~1 unit | จุดเสียบกิ่ง |
 
-- ลำต้น: สุ่ม 1 อันต่อต้น
-- กิ่ง: สุ่มต่อกิ่ง (แต่ละกิ่งใช้ variant ต่างกันได้)
-- ใบ: สุ่มต่อใบ
-
-การสุ่ม variant ผูกกับ seed เดิม (Branch Seed / Leaf Seed สลับ variant ได้ด้วย)
-
-**กติกาการปั้น FBX:**
-
-| ส่วน | แกนการปั้น | Pivot | หมายเหตุ |
-|---|---|---|---|
-| ลำต้น / กิ่ง | ยืดตามแกน **+Y** | ที่โคน | ควรมี segment ตามแนวยาวพอสมควร เพื่อให้ดัดโค้งสวย |
-| ใบ / ช่อใบ | ยื่นออกตามแกน **+Z** (+Y = ด้านหน้าใบ) | ที่จุดเสียบกิ่ง | ปั้นขนาดราว 1 unit แล้วให้ค่า Leaf Size เป็นตัวสเกล |
-
-พฤติกรรมสำคัญของโหมด Prefabs:
-
-- Mesh ลำต้น/กิ่งจะถูก **ดัดโค้งตามเส้น spline** ที่สุ่มไว้ และสเกลหน้าตัดให้ตรงกับรัศมีกิ่งจุดนั้น ๆ (taper / root flare มีผลทับรูปที่ปั้น) — FBX ก้อนเดียวได้ต้นไม่ซ้ำกันทุกต้น
-- Mesh ทั้งหมดถูก bake รวมเป็น mesh เดียวต่อ LOD (ไม่ใช่ instantiate prefab) เพื่อประหยัด draw call
-- จึง**ใช้ Material ของ tree ไม่ใช่ของ prefab** — เอา material เปลือกไม้/ใบของ FBX มาใส่ช่อง Bark/Leaf Material แทน
+โมเดลที่ใส่จะถูก**ดัดโค้งตามทรงที่สุ่มไว้อัตโนมัติ** และ bake รวมเป็น mesh เดียวต่อ LOD (ประหยัด
+draw call) — ใช้ Material ของต้นไม้ ไม่ใช่ของ FBX ที่ใส่เข้ามา
 
 ---
 
-## 5. พารามิเตอร์ทั้งหมด
+## 7. พารามิเตอร์ทั้งหมด (ค่าเริ่มต้น + ช่วงปรับได้)
+
+ทุกช่องด้านล่างปรับผ่านสไลเดอร์ปกติได้ตามช่วงที่ระบุ หรือพิมพ์ค่าอิสระได้ถ้าเปิด **Manual Number Entry** (ข้อ 5)
 
 ### Trunk (ลำต้น)
 
-| ค่า | ความหมาย |
-|---|---|
-| Height | ความสูง (เมตร) — ช่วงสุ่ม |
-| Radius | รัศมีโคนต้น (เมตร) — ช่วงสุ่ม |
-| Taper | ความเรียวปลาย (0 = ทรงกระบอก, 1 = แหลม) |
-| Root Flare / Root Flare Height | โคนบานพิเศษ + ระยะที่บานขึ้นไป |
-| Segments | จำนวนท่อนตามความสูง (มาก = โค้งเนียน) |
-| Radial Segments | จำนวนเหลี่ยมรอบลำต้น — **เฉพาะลำต้น** (สูงสุด 64) แยกจากกิ่งแต่ละชั้น |
-| Crookedness | ความคดเคี้ยว |
-| Lean | องศาเอียงทั้งต้น — ช่วงสุ่ม |
-| Wind Response | ลำต้นจะฟริ้วตามลมแค่ไหน (0 = แข็งนิ่ง, 1 = ปกติ) — default ต่ำ (0.25) เพราะลำต้นควรนิ่งกว่ากิ่ง |
+| ค่า | ช่วงปรับได้ | ค่าเริ่มต้น |
+|---|---|---|
+| Height | 0.1 – 300 ม. | 4.5 – 6 ม. |
+| Radius | 0.01 – 30 ม. | 0.22 – 0.32 ม. |
+| Taper | 0 – 1 | 0.7 |
+| Root Flare | 1 – 6 | 1.5 |
+| Root Flare Height | 0.01 – 1 | 0.12 |
+| Segments | 2 – 64 | 10 |
+| Sides | 3 – 128 | 8 |
+| Crookedness | 0 – 2 | 0.18 |
+| Lean | 0 – 90° | 0 – 4° |
+| Wind Response *(True Wind เท่านั้น)* | 0 – 1 | 0.05 |
 
-### Branch Levels (ชั้นกิ่ง — เป็น list เพิ่ม/ลดชั้นได้)
+### Branch Levels (ชั้นกิ่ง — เพิ่ม/ลดชั้นได้เอง)
 
-ชั้นที่ 0 งอกจากลำต้น, ชั้นที่ 1 งอกจากชั้นที่ 0, ต่อไปเรื่อย ๆ (default: Main Branches → Twigs)
+ค่าเริ่มต้นมี 2 ชั้น: **Main Branches** และ **Twigs** (ชั้น 0 งอกจากลำต้น, ชั้นถัดไปงอกจากชั้นก่อนหน้า)
 
-| ค่า | ความหมาย |
-|---|---|
-| Enabled | เปิด/ปิดชั้นนี้ |
-| Count | จำนวนกิ่งต่อกิ่งแม่ — ช่วงสุ่ม |
-| Spawn Range | ตำแหน่งบนกิ่งแม่ที่งอกได้ (0 = โคน, 1 = ปลาย) |
-| Angle | มุมกางออกจากกิ่งแม่ (องศา) — ช่วงสุ่ม |
-| Azimuth Randomness | ความสุ่มของการหมุนรอบกิ่งแม่ (0 = เรียงเกลียว golden angle เป๊ะ) |
-| Length Ratio | ความยาวเทียบกิ่งแม่ — ช่วงสุ่ม |
-| Length Falloff | กิ่งที่งอกใกล้ปลายแม่จะสั้นลงเท่านี้ |
-| Radius Ratio | ความหนาเทียบกิ่งแม่ ณ จุดงอก (เกิน 1 = หนากว่าแม่ได้) |
-| Thickness Scale | **ตัวคูณความหนาเฉพาะชั้นนี้** — ปรับชั้นเดียวไม่กระทบชั้นบน แต่ส่งต่อให้ชั้นลูกตามลำดับชั้นโดยธรรมชาติ (ลูกวัด Radius Ratio จากความหนาจริงของชั้นนี้) |
-| Radial Segments | จำนวนเหลี่ยมของกิ่ง**ชั้นนี้** (แยกอิสระจากลำต้นและชั้นอื่น) |
-| Joint Smoothing | สัดส่วนช่วงต้นกิ่งที่**โค้งออกจากทิศกิ่งแม่แบบสมูท** แทนที่จะหักมุมทันที — ช่วยซ่อนรอยต่อ |
-| Joint Flare | ความหนาพิเศษที่โคนกิ่ง ค่อย ๆ จางไปตามช่วงรอยต่อ — กลืนโคนกิ่งเข้ากับกิ่งแม่ |
-| Taper | ความเรียวปลายกิ่ง |
-| Gravity | + = ห้อยลง, − = เชิดขึ้นหาแสง |
-| Crookedness | ความคดของกิ่ง |
-| Segments | จำนวนท่อนต่อกิ่ง |
-| Wind Response | กิ่งชั้นนี้ฟริ้วตามลมแค่ไหน (0 = แข็ง, 1 = ปกติ, สูงกว่า = พลิ้วมาก) — default ชั้นกิ่งใหญ่ 1.0, ชั้นกิ่งฝอย 1.8 (ยิ่งเล็กยิ่งพลิ้ว) |
+| ค่า | ช่วงปรับได้ | Main Branches | Twigs |
+|---|---|---|---|
+| Count | 0 – 300 | 7 – 11 | 3 – 6 |
+| Spawn Range | 0 – 1 | 0.3 – 0.95 | 0.25 – 1 |
+| Angle | 0 – 179° | 35 – 65° | 30 – 65° |
+| Spin Randomness | 0 – 1 | 0.35 | 0.35 |
+| Length Ratio | 0.01 – 8 | 0.28 – 0.42 | 0.35 – 0.55 |
+| Length Falloff | 0 – 1 | 0.35 | 0.35 |
+| Radius Ratio | 0.01 – 5 | 0.55 | 0.5 |
+| Thickness Scale | 0.05 – 15 | 1 | 1 |
+| Sides | 3 – 128 | 6 | 4 |
+| Joint Smoothing | 0 – 1 | 0.35 | 0.35 |
+| Joint Flare | 1 – 6 | 1.4 | 1.4 |
+| Taper | 0 – 1 | 0.85 | 0.85 |
+| Gravity | -3 – 3 | -0.2 | 0.05 |
+| Crookedness | 0 – 2 | 0.3 | 0.35 |
+| Segments | 2 – 64 | 6 | 4 |
+| Wind Response *(True Wind เท่านั้น)* | 0 – 2 | 0.15 | 0.4 |
+
+### Roots (ราก) — Enabled ปิดอยู่โดยค่าเริ่มต้น
+
+| ค่า | ช่วงปรับได้ | ค่าเริ่มต้น |
+|---|---|---|
+| Type | Buttress / Pneumatophore | Buttress |
+| Sides | 3 – 64 | 6 |
+| Segments | 2 – 24 | 5 |
+| Wind Response *(True Wind เท่านั้น)* | 0 – 1 | 0.02 |
+
+**Buttress (รากพูพอนใหญ่ — ไทร/ซีบา/บายัน):**
+
+| ค่า | ช่วงปรับได้ | ค่าเริ่มต้น |
+|---|---|---|
+| Buttress Count | 2 – 30 | 4 – 7 |
+| Buttress Length | 0.4 – 15 ม. | 0.9 – 1.7 ม. |
+| Root Start Height | 0.02 – 3 ม. | 0.1 – 0.25 ม. |
+| Buttress Flare | 1 – 6 | 1.8 |
+| Buttress Taper | 0 – 1 | 0.85 |
+| Buttress Droop | 0 – 90° | 22° |
+| Buttress Crookedness | 0 – 2 | 0.15 |
+
+**Pneumatophore (รากหายใจ — โกงกาง/แสม/บาลด์ไซเปรส):**
+
+| ค่า | ช่วงปรับได้ | ค่าเริ่มต้น |
+|---|---|---|
+| Pneumatophore Count | 6 – 200 | 18 – 30 |
+| Pneumatophore Height | 0.08 – 3 ม. | 0.15 – 0.35 ม. |
+| Pneumatophore Radius | 0.01 – 0.4 ม. | 0.02 – 0.045 ม. |
+| Pneumatophore Spread | 0.3 – 15 ม. | 0.6 – 2.4 ม. |
+| Pneumatophore Lean | 0 – 2 | 0.25 |
+
+**Fine Roots (รากฝอย — งอกแตกจากรากหลักด้านบน แบบเดียวกับกิ่งที่งอกจากลำต้น) — Enabled ปิดอยู่โดยค่าเริ่มต้น:**
+
+| ค่า | ช่วงปรับได้ | ค่าเริ่มต้น |
+|---|---|---|
+| Count | 0 – 40 | 3 – 6 |
+| Length Ratio (เทียบรากหลัก) | 0.05 – 1 | 0.15 – 0.35 |
+| Radius Ratio | 0.02 – 1 | 0.25 |
+| Angle | 0 – 179° | 20 – 70° |
+| Crookedness | 0 – 2 | 0.4 |
+| Segments | 2 – 16 | 3 |
+| Sides | 3 – 16 | 4 |
 
 ### Leaves (ใบ)
 
-| ค่า | ความหมาย |
-|---|---|
-| Enabled | เปิด/ปิดใบ |
-| Shape | Quad / Cross / TripleCross (แสดงเฉพาะโหมด Procedural) |
-| Count Per Branch | จำนวนใบต่อกิ่ง — ช่วงสุ่ม (สูงสุด 300) |
-| Size | ขนาดใบ (เมตร) — ช่วงสุ่ม สูงสุด 10 ม. (สเกล prefab ด้วยถ้าใช้โหมด Prefabs) |
-| Spawn Range | ตำแหน่งบนกิ่งที่ใบเกิดได้ |
-| Orientation Randomness | 0 = ใบเรียงตามกิ่ง, 1 = หมุนมั่วเต็มที่ |
-| Surface Offset | ระยะห่างใบจากผิวกิ่ง (เมตร) — **ช่วงสุ่ม ปรับได้ −2 ถึง +5** (ติดลบ = จมเข้ากิ่ง) |
-| Rotation Offset | หมุนใบเพิ่มทุกใบ (องศา XYZ) ก่อนสุ่ม — จุดหมุนคือโคนใบที่ปักกับกิ่ง |
-| Wind Flutter Response | ใบสั่น/บิดเองในลมแค่ไหน (แยกจากการแกว่งของกิ่งที่ใบเกาะอยู่) — default 1.5 |
-| Min Branch Level | ใบเกิดบนกิ่งชั้นนี้ขึ้นไป (ลำต้น = 0) |
-
-> **ทิศทางใบ (v1.1):** จุดปัก (pivot) ของ card คือ **มุมล่างซ้ายของ texture (UV 0,0)** = โคน/ก้านใบ
-> ปักติดกับกิ่งเสมอ และ card ถูกหมุนให้ **แนวทแยงชี้ออกจากกิ่ง** — ดังนั้นให้วาด texture ใบแบบ
-> โคนอยู่มุมล่างซ้าย ปลายใบอยู่มุมบนขวา จะได้ทิศถูกต้องอัตโนมัติ
+| ค่า | ช่วงปรับได้ | ค่าเริ่มต้น |
+|---|---|---|
+| Shape | Quad / Cross / TripleCross | Cross |
+| Count Per Branch | 0 – 800 | 10 – 16 |
+| Size | 0.005 – 25 ม. | 0.35 – 0.55 ม. |
+| Spawn Range | 0 – 1 | 0.35 – 1 |
+| Random Rotation | 0 – 1 | 0.6 |
+| Surface Offset | -5 – 10 ม. | 0.02 – 0.05 ม. |
+| Rotation Offset | องศา XYZ อิสระ | (0, 0, 0) |
+| Wind Flutter Response *(True Wind เท่านั้น)* | 0 – 2 | 1.5 |
+| Min Branch Level | 0 ขึ้นไป | 2 |
 
 ### Mesh
 
-| ค่า | ความหมาย |
-|---|---|
-| Bark UV Tiling | ความถี่ UV แนวตั้งของเปลือกต่อเมตร |
-| Generate Tangents | เปิดไว้ถ้าใช้ normal map |
+| ค่า | ช่วงปรับได้ | ค่าเริ่มต้น |
+|---|---|---|
+| Bark Texture Tiling | 0.05 ขึ้นไป | 1.5 |
+| Generate Tangents | เปิด/ปิด | เปิด |
 
-> **v1.2:** ค่าเหลี่ยม (Radial Segments) ย้ายไปอยู่กับ**แต่ละส่วน** — ลำต้นอยู่ใน Trunk,
-> กิ่งแต่ละชั้นอยู่ใน Branch Level นั้น ๆ ปรับแยกอิสระได้เลย (ใบไม่มีเหลี่ยม เป็น card/prefab)
+### Wind Settings *(แสดงเฉพาะโหมด True Wind)*
+
+| ค่า | ช่วงปรับได้ | ค่าเริ่มต้น |
+|---|---|---|
+| Bake Wind Data | เปิด/ปิด | เปิด |
+| Sway Curve | 0.1 – 6 | 1.3 |
 
 ---
 
-## 6. ระบบ LOD
+## 8. ระบบ LOD
 
-Section **Lods** สร้าง mesh แยกต่อระดับ + ตั้ง LODGroup ให้อัตโนมัติ
+หมวด **Level Of Detail** สร้าง mesh แยกต่อระดับ + ตั้ง LODGroup ให้อัตโนมัติ ค่าเริ่มต้นมี 3 ระดับ:
 
-| ค่า | ความหมาย |
-|---|---|
-| Generate LOD Group | ปิด = สร้าง LOD0 เต็มรายละเอียดอันเดียว |
-| Cross Fade | เฟดนุ่ม ๆ ตอนสลับ LOD |
-| Compensate Leaf Size | LOD ไกล ๆ ใบเหลือน้อย → ขยายใบที่เหลือชดเชยให้พุ่มไม่โหรงเหรง |
-| Levels (ต่อระดับ) | ดูตารางล่าง |
+| ค่า | ช่วงปรับได้ | LOD0 | LOD1 | LOD2 |
+|---|---|---|---|---|
+| Visible Until (Screen Size) | 0.001 – 1 | 0.45 | 0.18 | 0.05 |
+| Detail Level | 0.1 – 1 | 1 | 0.6 | 0.35 |
+| Max Branch Depth | 0 ขึ้นไป | 10 | 2 | 1 |
+| Leaf Density | 0 – 1 | 1 | 0.5 | 0.15 |
 
-ต่อ LOD level:
+ตัวเลือกรวม: **Generate LOD Group** (ปิด = สร้าง LOD0 เต็มรายละเอียดอันเดียว, ค่าเริ่มต้นเปิด),
+**Cross Fade** (เฟดนุ่มตอนสลับ LOD, ค่าเริ่มต้นเปิด), **Compensate Leaf Size** (ขยายใบชดเชยที่ LOD ไกล,
+ค่าเริ่มต้นเปิด)
 
-| ค่า | ความหมาย |
-|---|---|
-| Screen Height | LOD นี้แสดงจนกว่าต้นไม้จะเล็กกว่าสัดส่วนหน้าจอนี้ — **ค่าของระดับสุดท้ายคือจุด cull ทั้งต้น** |
-| Radial Resolution | ตัวคูณจำนวนเหลี่ยม (ลด poly ระยะไกล) |
-| Max Branch Level | ตัด geometry กิ่งชั้นลึกกว่านี้ทิ้ง (ใบยังอยู่ เพื่อรักษา silhouette พุ่ม) |
-| Leaf Density | สัดส่วนใบที่เหลือ (การสุ่มตัดใบ deterministic — rebuild แล้วใบชุดเดิมหาย/อยู่เหมือนเดิม) |
-
-ค่า default: 3 ระดับ (0.45 / 0.18 / 0.05)
-
-> **Sync สองทาง (v1.1):** ถ้าไปลากปรับระยะบน **LODGroup component โดยตรง** ค่าจะถูกดึงกลับเข้า
-> settings ของ tool ให้อัตโนมัติ — rebuild ครั้งถัดไปจะไม่เขียนทับค่าที่ปรับไว้
+> ลากปรับระยะบน **LODGroup component โดยตรง** ได้เหมือนกัน ค่าจะถูกดึงกลับเข้ามาใน Inspector ของเครื่องมือให้เอง
 
 ---
 
-## 7. Material
+## 9. การ Export: ทุกต้นมีโฟลเดอร์ของตัวเอง
 
-- **Bark Material** — เปลือกไม้ HDRP/Lit ปกติ (มี UV + tangent รองรับ normal map)
-- **Leaf Material** — ควรเป็น HDRP/Lit ที่เปิด **Double-Sided** + **Alpha Clipping** ใส่ texture ใบไม้
-- ปล่อยว่าง = ใช้ placeholder อัตโนมัติ (น้ำตาล/เขียว) — ใช้ชั่วคราวเท่านั้น อย่าลืมใส่ของจริง
-- Mesh มี 2 submesh เสมอ: submesh 0 = เปลือก, submesh 1 = ใบ
+กด **Export Meshes To Assets** หรือ **Export & Add To Terrain As Paintable Tree** เมื่อไหร่ก็ตาม
+เครื่องมือจะสร้างโฟลเดอร์ให้ต้นไม้ต้นนี้ **โดยเฉพาะ** ที่:
+
+```
+Assets/GeneratedTrees/<ชื่อ GameObject>/
+    Texture/      สำเนาเท็กซ์เจอร์ของต้นนี้เท่านั้น ตั้งชื่อ <ชื่อต้นไม้>_Bark_...  / <ชื่อต้นไม้>_Leaf_...
+    Material/     สำเนา Material ของต้นนี้เท่านั้น  <ชื่อต้นไม้>_Bark.mat / <ชื่อต้นไม้>_Leaf.mat
+    TreePrefab/   ไฟล์ mesh ของทุก LOD + Prefab
+    Backup/       สำเนาการ Export ครั้งก่อนหน้า (มีเฉพาะถ้าเคย Export ต้นนี้มาก่อน)
+```
+
+**ทำไมต้องสำเนา Material/Texture แยกต่อต้น** — ถ้าทุกต้นใช้ Material ใบเดียวกันตรงๆ พอแก้สีต้นเดียว
+ต้นอื่นที่ใช้ Material เดียวกันจะเปลี่ยนตามไปหมด เครื่องมือเลยสำเนา Material (และเท็กซ์เจอร์ที่มันอ้างถึง)
+มาเป็นของต้นไม้ต้นนั้นเองทุกครั้งที่ Export แก้ไขสำเนานี้ได้อิสระ ไม่กระทบต้นอื่นหรือ Material ต้นฉบับ
+
+**แก้ไขย้อนกลับได้เสมอ** — ใน `TreePrefab/` จะมีไฟล์ `<ชื่อต้นไม้>_Source.prefab` ซึ่งยังมี component
+ของเครื่องมืออยู่ครบ (ไม่ใช่โมเดลนิ่งแบบ export ทั่วไป) และตัว GameObject ในฉากจะถูกเชื่อมเป็น
+**Prefab Instance** ของไฟล์นี้ให้อัตโนมัติ หมายความว่า:
+- แก้ไขต้นไม้ต่อในฉากได้ตามปกติ (ปรับ Seed, ทรง, ราก, ใบ ฯลฯ) แล้วกด Export ซ้ำเมื่อไหร่ก็ได้เพื่ออัพเดททุกอย่าง
+- หรือเปิดไฟล์ `_Source.prefab` ในหน้าต่าง Project โดยตรงก็แก้ไขได้เหมือนกัน
+
+**Export ซ้ำ (เปลี่ยนชื่อ/แก้ไขแล้ว export อีกครั้ง)** — ถ้าเปลี่ยนชื่อ GameObject ของต้นไม้แล้ว Export
+ใหม่ โฟลเดอร์เดิมจะถูกเปลี่ยนชื่อให้ตรงกับชื่อใหม่อัตโนมัติ (ไม่สร้างโฟลเดอร์ซ้ำซ้อน) ส่วนไฟล์ชุดเดิม
+(TreePrefab/Material/Texture) จะถูกย้ายเก็บไว้ใน `Backup/<วันที่-เวลา>/` ก่อนเขียนชุดใหม่ทับ กู้คืนได้เสมอ
+ถ้าจำเป็น
 
 ---
 
-## 8. ระบบลม: ใช้งานได้จริงกับ WindZone ของ Unity
+## 10. เพนต้นไม้ลง Terrain
 
-ต้นไม้จาก tool นี้ **ใช้งานลมได้จริงแล้ว** ขับเคลื่อนจาก **component `WindZone` ตัวจริงของ Unity**
-(อันเดียวกับที่ลาก Direction / Wind Main / Turbulence / Pulse ในฉาก) — ไม่ต้องตั้งค่าลมแยกทีละ material
+**ขั้นที่ 1** ปรับต้นไม้ในฉากให้ได้ทรงที่ต้องการ (ดูข้อ 2, 7)
 
-> **หมายเหตุความถูกต้อง:** ระบบลมภายในของ Unity ที่ใช้กับ SpeedTree เป็น pipeline ปิด
-> (proprietary) ที่ bake ข้อมูล vertex เฉพาะรูปแบบของตัวเอง mesh ที่ tool นี้สร้างเองจึงต่อเข้า
-> pipeline นั้นตรง ๆ ไม่ได้ — สิ่งที่ทำได้คือ**อ่านค่าจริงจาก component `WindZone`** (ทิศทาง,
-> ความแรง, turbulence, pulse) แล้วคำนวณการขยับ vertex ด้วยสูตรของเราเอง ผลคือ artist ยังคง
-> ใช้ workflow เดิม (ลาก WindZone ลงฉาก ปรับค่าที่นั่นที่เดียว) ต้นไม้ทุกต้นในฉากขยับตาม
+**ขั้นที่ 2** ต้องมี Terrain อยู่ในฉากก่อน (ถ้ายังไม่มี สร้างจาก GameObject → 3D Object → Terrain)
 
-### วิธีเปิดใช้งาน (3 ขั้นตอน)
+**ขั้นที่ 3** กด **Export & Add To Terrain As Paintable Tree** ที่ Inspector ของต้นไม้
+เครื่องมือจะ Export ให้ครบ (ดูข้อ 9) แล้วเพิ่มต้นไม้เป็น Tree Prototype บน Terrain ให้อัตโนมัติ
 
-1. ในฉากต้องมี **`Tree Wind Zone Driver`** (Add Component → `Tools/Tree Wind Zone Driver`) —
-   หรือกดปุ่ม **"Add Wind Zone To Scene"** ที่ขึ้นเตือนใต้ section Wind ใน `ProceduralTree`
-   inspector เมื่อยังไม่มี (จะสร้าง `WindZone` + `Tree Wind Zone Driver` ให้พร้อมกันในคลิกเดียว)
-2. ปรับค่าลมที่ **component `WindZone`** ตามปกติ (Mode, Wind Main, Turbulence, Pulse Magnitude/Frequency)
-   — เหมือนตั้งค่าลมให้ต้นไม้ปกติของ Unity ทุกประการ
-3. ทำ material เปลือก/ใบด้วย **HDRP Shader Graph** ที่มี node **Custom Function** ชี้ไปที่ไฟล์
-   `TreeWind.hlsl` ฟังก์ชัน `TreeWindDisplacement_float` แล้วบวกผลลัพธ์เข้ากับตำแหน่ง vertex
-   (ดูรายละเอียด node ด้านล่าง) — ใส่ material นี้ในช่อง Bark/Leaf Material ของต้นไม้
+**ขั้นที่ 4** เปิด Component **Terrain** → แปรง **Paint Trees** → **Edit Trees...** จะเห็นต้นไม้ต้นนี้
+อยู่ในลิสต์ เลือกแล้วเพนลงพื้นได้เลย
 
-Component `Tree Wind Zone Driver` จะหา `WindZone` ที่ enable อยู่ตัวแรกในฉากให้อัตโนมัติ
-(หรือ assign เจาะจงเองในช่อง `Wind Zone` ก็ได้) แล้วส่งค่าออกเป็น **global shader property**
-ทุกเฟรม จึง**ไม่ต้อง assign อะไรเพิ่มที่ material แต่ละอัน**
-
-### ข้อมูลที่ bake ไว้ใน vertex color (ทำอัตโนมัติ ไม่ต้องทำเอง)
-
-เมื่อเปิด **Wind → Bake Wind Data** (default เปิด) ทุก vertex จะมีน้ำหนักลมอยู่ใน vertex color
-โดยคูณด้วยค่า **Wind Response ของส่วนนั้น ๆ** ที่ตั้งไว้ตอนสร้างต้นไม้ (ข้อ 5) เรียบร้อยแล้ว:
-
-| Channel | ข้อมูล | มาจาก |
-|---|---|---|
-| **R** | Main bend: โค้งตามความสูง (Bend Exponent) × Wind Response ของส่วนนั้น | Trunk/Branch Level `Wind Response` |
-| **G** | Local sway: 0 ที่โคนกิ่ง → 1 ที่ปลายกิ่ง × Wind Response ของกิ่งนั้น (ลำต้น = 0, ใบรับค่าจากกิ่งที่เกาะ) | Branch Level `Wind Response` |
-| **B** | Leaf flutter: ความสั่น/บิดของใบเอง (เปลือก = 0) | Leaves `Wind Flutter Response` |
-| **A** | Random phase ต่อกิ่ง/ต่อใบ (0–1) | สุ่มอัตโนมัติ ไม่ต้องตั้ง |
-
-**นี่คือจุดที่ตอบคำถาม "set แต่ละส่วนว่าจะฟริ้วแค่ไหน"** — ปรับ `Wind Response` ที่ Trunk /
-ที่แต่ละ Branch Level / `Wind Flutter Response` ที่ Leaves ตอนสร้างต้นไม้ได้เลย ไม่ต้องไปนั่งแก้ shader
-เช่น ลำต้นแทบไม่ขยับ (0.25) → กิ่งใหญ่ขยับปานกลาง (1.0) → กิ่งฝอยขยับเยอะ (1.8) → ใบสั่นเร็วสุด (1.5)
-
-### Custom Function node (Shader Graph) — ต่อครั้งเดียวจบ
-
-`TreeWind.hlsl` เขียนสูตรลมทั้งหมดไว้ในฟังก์ชันเดียวแล้ว (main bend + local sway + leaf flutter +
-turbulence) ไม่ต้องต่อ node เองทีละเส้น:
-
-1. ใน HDRP Lit Shader Graph เพิ่ม node **Custom Function**, ตั้ง Type = **File**, ชี้ไปที่ `TreeWind.hlsl`,
-   ช่อง **Name** ใส่ `TreeWindDisplacement`
-   > **สำคัญ:** ห้ามใส่ `_float` ต่อท้ายใน Name field — Shader Graph เติม `_float`/`_half`
-   > ให้เองอัตโนมัติตอน generate โค้ดตาม precision ของกราฟ ถ้าใส่ `_float` เองด้วยจะกลายเป็น
-   > เรียกหาฟังก์ชันชื่อ `TreeWindDisplacement_float_float` ซึ่งไม่มีจริง แล้วขึ้น error
-   > `undeclared identifier` สีแดงตรงจุดต่อ Add
-2. ตั้ง Input ของ node ตามลำดับนี้ (ชื่อ/ชนิดต้องตรง):
-   `PositionWS (Vector3)`, `VertexColor (Vector4)`, `MainAmplitude (Float)`, `BranchAmplitude (Float)`,
-   `LeafAmplitude (Float)`, `MainSpeed (Float)`, `BranchSpeed (Float)`, `LeafSpeed (Float)`
-   และ Output หนึ่งช่อง: `PositionOffsetWS (Vector3)`
-3. เพิ่ม node **Position** ตั้ง Space = **World** → ต่อเข้า `PositionWS`, และ **Vertex Color** → ต่อเข้า `VertexColor`
-4. Amplitude/Speed ให้ **Expose เป็น material property** แล้วตั้งค่าเริ่มต้นแนะนำ:
-   MainAmplitude ≈ 0.15–0.3, BranchAmplitude ≈ 0.1–0.2, LeafAmplitude ≈ 0.05–0.1,
-   MainSpeed ≈ 0.6, BranchSpeed ≈ 1.8, LeafSpeed ≈ 5 (ปรับตามสเกลต้นไม้ได้)
-5. **แปลงเฉพาะ offset กลับเป็น Object Space** (อย่าแปลงตำแหน่งรวมทั้งก้อน เพราะเสี่ยงพลาดง่ายกว่าและ
-   แม่นยำน้อยกว่า): เพิ่ม node **Transform** ตั้ง Type = **Direction**, From = **World**, To = **Object**
-   แล้วต่อ `PositionOffsetWS` เข้า node นี้
-6. เพิ่ม node **Position** อีกตัว ตั้ง Space = **Object** แล้วใช้ **Add**: `A` = Position (Object) ตัวนี้,
-   `B` = output จาก Transform ข้อ 5 (**ห้ามต่อ Vertex Color เข้า Add โดยตรง** — เป็นข้อผิดพลาดที่พบบ่อย
-   เพราะ node หน้าตาคล้าย Position จนสับสน แต่ Vertex Color คือน้ำหนักลม ไม่ใช่ตำแหน่ง)
-7. ต่อ `Add.Out(3)` เข้า **Vertex Position** ใน Master Stack
-
-ทำ shader graph นี้ 2 อัน (bark, leaf — ของใบเปิด Double-Sided + Alpha Clipping) แล้วใส่ในช่อง
-Bark Material / Leaf Material ตามปกติ ต้นไม้ทุกต้นที่ใช้ material นี้จะพลิ้วตาม WindZone ทันที
-
-### Fragment stage: PBR เต็มรูปแบบ + สลับ Texture Format ได้ (HDRP / URP)
-
-ขั้นตอนข้างบนต่อแค่ **Vertex stage (ลม)** เท่านั้น — Shader Graph เปล่า ๆ ไม่มีช่อง Base Color /
-Normal Map / Mask Map ให้เหมือน HDRP/Lit อัตโนมัติ ต้องต่อ node ฝั่ง **Fragment** เพิ่มเอง (คนละ
-stage กับ Vertex ที่ทำไปแล้ว ไม่กระทบกัน)
-
-Material ยังคง**เป็น HDRP เต็มรูปแบบ** (render ด้วย HDRP Lit target) — แค่ **เลือกได้ว่า texture
-ที่ป้อนเข้ามาเป็น texture ที่แพ็คแบบ HDRP (Mask Map) หรือแบบ URP (Metallic + Occlusion แยกไฟล์)**
-ผ่าน dropdown บน Inspector ของ material เอง เลือกโหมดไหน อีกโหมดจะ**ซ่อนช่องใส่และไม่ถูกนำไปคำนวณเลย**
-(ตัด branch ที่ไม่ได้ใช้ออกตอน compile shader ด้วย Shader Feature keyword ไม่ใช่แค่ซ่อน UI เฉย ๆ)
-
-**1. เพิ่ม Property ใน Blackboard** (คลิก `+` มุมบนซ้าย) — ตั้งชื่อ **Reference ให้ตรงตามตารางนี้เป๊ะ**
-(ตัวพิมพ์เล็ก/ใหญ่มีผล) เพราะ script `TreeWindShaderGUI.cs` จะค้นหาด้วยชื่อนี้:
-
-| Reference | Type | ใช้ทำ |
-|---|---|---|
-| `_BaseColor` | Color | สีปรับโทนคูณกับ Base Map |
-| `_BaseMap` | Texture2D | สี/ลายเปลือกไม้หรือใบ |
-| `_NormalMap` | Texture2D | normal map — ตั้ง Mode = **Bump** ในกล่อง property (ไม่ใช่ Default) |
-| `_NormalScale` | Float | ความแรง normal map (default 1) |
-| `_Tiling` | Vector2 | default (1, 1) |
-| `_MaskMap` | Texture2D | **HDRP format**: Metallic(R) / AO(G) / Detail(B) / Smoothness(A) |
-| `_MetallicGlossMap` | Texture2D | **URP format**: Metallic(R) / Smoothness(A) |
-| `_AmbientOcclusionMap` | Texture2D | **URP format**: AO (อ่านช่อง G ตาม convention ของ URP/Standard) |
-| `_MetallicScale` | Float | คูณกับค่า Metallic ที่อ่านได้ — ปรับความเป็นโลหะขึ้น/ลงโดยไม่ต้องแก้ texture |
-| `_SmoothnessMinScale` / `_SmoothnessMaxScale` | Float ทั้งคู่ | remap ค่า Smoothness ที่อ่านได้จาก [0,1] เดิม ไปเป็น [Min,Max] — ชื่อ/พฤติกรรมตรงกับ **Smoothness Remapping** ของ HDRP Material จริง |
-| `_AmbientOcclusionMinScale` / `_AmbientOcclusionMaxScale` | Float ทั้งคู่ | remap ค่า AO เหมือนกัน — ตรงกับ **Ambient Occlusion Remapping** ของ HDRP Material จริง |
-
-**2. เพิ่ม Keyword แบบ Enum ใน Blackboard** (คลิก `+` → Keyword → Enum):
-
-- ตั้งชื่อ (Name) = `Map Format`, **Reference** = `MAPFORMAT` (พิมพ์ตรง ๆ ห้ามให้ Shader Graph auto-gen)
-- Entries: เพิ่ม 2 อัน ชื่อ `HDRP` (index 0) แล้ว `URP` (index 1) — **เรียงลำดับนี้เท่านั้น** ต้องตรงกับ script
-- Definition = **Shader Feature** (ไม่ใช่ Global/Multi Compile — ทำให้ Unity คอมไพล์แยก variant ต่อ
-  material จริง ๆ ไม่ใช่แค่ if ตอน runtime)
-
-**3. ต่อ node ฝั่ง Fragment:**
-
-```
-UV(0) ──► Tiling And Offset (Tile = _Tiling) ──► ป้อนเข้า Sample Texture 2D ทุกตัวด้านล่าง
-
-Sample Texture 2D (_BaseMap)                     → RGB × _BaseColor.rgb → Base Color
-                                                  → A                    → Alpha
-
-Sample Texture 2D (_NormalMap, Type = Normal)    → Normal Strength(_NormalScale) → Normal (Tangent Space)
-
-Sample Texture 2D (_MaskMap)          .R ─┐
-Sample Texture 2D (_MetallicGlossMap) .R ─┴─► Keyword node #1 (ลาก MAPFORMAT จาก Blackboard มาวาง)
-    ช่อง "HDRP" ← MaskMap.R   ช่อง "URP" ← MetallicGlossMap.R   → Out × _MetallicScale ─► Metallic
-
-Sample Texture 2D (_MaskMap)          .G ─┐
-Sample Texture 2D (_AmbientOcclusionMap)     .G ─┴─► Keyword node #2 (ลาก MAPFORMAT มาอีกตัว)
-    ช่อง "HDRP" ← MaskMap.G   ช่อง "URP" ← OcclusionMap.G
-    → Out → Lerp(A=_AmbientOcclusionMinScale, B=_AmbientOcclusionMaxScale, T=Out) ─► Ambient Occlusion
-
-Sample Texture 2D (_MaskMap)          .A ─┐
-Sample Texture 2D (_MetallicGlossMap) .A ─┴─► Keyword node #3 (ลาก MAPFORMAT มาอีกตัว)
-    ช่อง "HDRP" ← MaskMap.A   ช่อง "URP" ← MetallicGlossMap.A
-    → Out → Lerp(A=_SmoothnessMinScale, B=_SmoothnessMaxScale, T=Out) ─► Smoothness
-```
-
-> **เพิ่มปรับค่าแต่ละ Map ได้แบบ HDRP Material จริง:** `_MetallicScale` คูณตรง ๆ กับ Metallic,
-> ส่วน Smoothness/AO ใช้ **Lerp node** (T = ค่าที่อ่านจาก map, A = ...RemapMin, B = ...RemapMax) —
-> นี่คือกลไกเดียวกับที่ Inspector ของ HDRP Material เรียกว่า "Smoothness Remapping" /
-> "Ambient Occlusion Remapping" ทุกประการ ไม่ใช่แค่ตั้งชื่อให้คล้าย
-
-> **หมายเหตุ:** ลาก node **Keyword** จาก Blackboard (ไม่ใช่ Branch node) — Keyword node ที่มาจาก
-> Enum keyword จะมีช่อง input ชื่อตรงกับ entry ที่ตั้งไว้ (`HDRP` / `URP`) ให้อัตโนมัติ ลาก `MAPFORMAT`
-> มาวางในกราฟ 3 ครั้งสำหรับ Metallic / AO / Smoothness (จะได้ node แยกกัน 3 ตัว ใช้ keyword เดียวกัน)
->
-> **จุดพลาดบ่อย:** node Sample Texture 2D ของ `_NormalMap` ต้องตั้ง dropdown ภายใน node เป็น
-> **Type = Normal** (ไม่ใช่ Default) ไม่งั้นสีปกติ (normal) จะเพี้ยน
-
-**4. เฉพาะ material ใบ (Leaf):**
-
-- **Graph Settings** (มุมขวาบนของหน้าต่าง Shader Graph) → เปิด **Alpha Clipping** และตั้ง **Double-Sided**
-- `_BaseMap.A` ต่อเข้า **Alpha** ของ Fragment ด้วย (ไม่ใช่แค่ Base Color) เพื่อให้ใบโปร่งใสตาม texture ได้
-
-**5. Detail Map** (ลายละเอียดซ้อนทับ เช่น รอยแตกเปลือกไม้ระยะใกล้ — ใช้ convention เดียวกันทั้ง
-HDRP/URP ไม่ต้องมี dropdown แยก) เพิ่ม Property:
-
-| Reference | Type | ใช้ทำ |
-|---|---|---|
-| `_DetailMap` | Texture2D | R = Detail Albedo (overlay, 0.5 = ไม่มีผล) / G = Detail Normal Y / B = Detail Smoothness (overlay) / A = Detail Normal X |
-| `_DetailMask` | Texture2D | grayscale, default ขาวล้วน = ใส่ detail เต็มที่ทุกจุด |
-| `_DetailTiling` | Vector2 | tiling แยกของ detail (ปกติถี่กว่า `_Tiling` หลายเท่า) |
-| `_DetailAlbedoStrength` | Float | 0–2 |
-| `_DetailNormalStrength` | Float | 0–2 |
-| `_DetailSmoothnessStrength` | Float | 0–2 |
-
-ต่อ node:
-```
-UV(0) ──► Tiling And Offset (Tile = _DetailTiling) ──► Sample Texture 2D (_DetailMap, Type=Default)
-Sample Texture 2D (_DetailMask) → R → mask
-
-DetailAlbedo   = (_DetailMap.r − 0.5) × 2 × _DetailAlbedoStrength × mask
-                 → Add เข้ากับ Base Color ที่ต่อไว้ในข้อ 3 (ก่อนออก Fragment.Base Color)
-
-DetailNormalTS = Normalize( float3(_DetailMap.a×2−1, _DetailMap.g×2−1, 1) )
-                 → Normal Blend node (Base Normal จากข้อ 3, Detail Normal นี้, Strength=_DetailNormalStrength×mask)
-                 → Out ─► Normal (Tangent Space)  (แทนที่ output เดิมจาก _NormalMap อย่างเดียว)
-
-DetailSmoothness = (_DetailMap.b − 0.5) × 2 × _DetailSmoothnessStrength × mask
-                 → Add เข้ากับ Smoothness ที่ต่อไว้ในข้อ 3 ก่อนออก Fragment.Smoothness
-```
-
-**6. Height Map** (นูน/ยุบผิวเปลือกแบบเบา ๆ ผ่านการขยับ vertex ตามแนว normal — ไม่ใช้ Pixel/Parallax
-Occlusion Mapping เพราะกิ่ง/ใบมีจำนวน vertex และ instance เยอะมาก POM ต่อพิกเซลจะแพงเกินจำเป็นสำหรับพืช):
-
-| Reference | Type | ใช้ทำ |
-|---|---|---|
-| `_HeightMap` | Texture2D | grayscale height (0 = ยุบ, 1 = นูน) |
-| `_HeightScale` | Float | ระยะยุบ/นูนสูงสุด (เมตร) |
-
-ต่อใน **Vertex stage** (ต่อจากผลลัพธ์ Add ของข้อลม ที่ทำไว้แล้วในหัวข้อ Custom Function ก่อนหน้า):
-```
-Sample Texture 2D LOD (_HeightMap, LOD = 0) → R → height   ⚠ ต้องใช้ "Sample Texture 2D LOD"
-    ไม่ใช่ "Sample Texture 2D" ธรรมดา — vertex shader ไม่มี mip derivative ใช้ node ปกติไม่ได้
-
-HeightOffset = (height − 0.5) × _HeightScale
-Position (Object Space) → Normal (Object Space) × HeightOffset → Add ตัวใหม่:
-    A = ผลลัพธ์ Add เดิม (ตำแหน่งหลังใส่ลมแล้ว), B = Normal(Object)×HeightOffset
-    → Out ─► ต่อเข้า Vertex Position แทนที่ Add เดิม (เอา Add ใหม่นี้เป็นตัวสุดท้ายก่อนเข้า Master Stack)
-```
-
-**7. Emission** (จุดเรืองแสง เช่น ใบไม้เรืองแสงเวทมนตร์/ยันต์ ถ้าไม่ใช้ก็เว้น Emission Color ไว้ที่ดำ):
-
-| Reference | Type | ใช้ทำ |
-|---|---|---|
-| `_EmissionMap` | Texture2D | RGB emission (default ดำ = ไม่เรือง) |
-| `_EmissionColor` | Color (HDR) | สี |
-| `_EmissionIntensity` | Float (nits) | ตัวคูณความแรงแยกจากสี — วิธีเดียวกับที่ HDRP Material ใช้จริง (สี + Intensity แยกช่อง) |
-
-ต่อ: `Sample Texture 2D (_EmissionMap).RGB × _EmissionColor × _EmissionIntensity` → **Emission** ใน Fragment
-(อย่าลืมเปิด **Emission** ใน Graph Settings ถ้า Shader Graph ซ่อน slot นี้ไว้โดย default)
-
-**8. ค่าเริ่มต้นแนะนำทั้งหมด (Recommended Defaults)**
-
-ตั้งค่า default บน node/property ในกราฟให้ตรงตารางนี้ตั้งแต่แรก จะได้ material ที่ดูสมเหตุสมผลทันที
-โดยไม่ต้องลองผิดลองถูก (ปรับต่อได้เสมอจาก material ที่ export ออกมา):
-
-| Property | ค่าเริ่มต้นแนะนำ | เหตุผล |
-|---|---|---|
-| `_BaseColor` | ขาวล้วน (1,1,1,1) | ให้ texture คุมสีเต็มที่ ไม่มีสีทับ |
-| `_NormalScale` | 1 | ความแรง normal ตามที่ปั้นมาเป๊ะ |
-| `_Tiling` | (1, 1) | ไม่ทำซ้ำ ใช้ตาม UV ที่ปั้นมา |
-| `_MetallicScale` | 1 (เปลือกไม้/ใบ) หรือ 0.3–0.5 ถ้าอยากลดความมันวาวแบบโลหะ | พืชแทบไม่เป็นโลหะ ปกติ Mask Map ควรมี Metallic ต่ำอยู่แล้ว |
-| `_SmoothnessMinScale` / `Max` | 0.0 / 0.6 | เปลือก/ใบไม่ควรมันวาวเกิน (ค่าเต็ม 1 จะดูเหมือนพลาสติก) |
-| `_AmbientOcclusionMinScale` / `Max` | 0.0 / 1.0 | ใช้ค่า AO ตรงจาก texture เต็มช่วง ไม่บีบ |
-| `_DetailAlbedoStrength` | 0.5–1 | ให้เห็น texture รายละเอียดแต่ไม่กลบสีหลัก |
-| `_DetailNormalStrength` | 0.5–1 | นูนพอสังเกตได้ ไม่ล้นจน normal เพี้ยน |
-| `_DetailSmoothnessStrength` | 0.3 | ผิวสัมผัส detail ปกติควรบางเบากว่า albedo/normal |
-| `_DetailTiling` | (4, 4) ถึง (8, 8) | ถี่กว่า `_Tiling` หลักหลายเท่า ให้เห็นเป็น "รายละเอียดระยะใกล้" |
-| `_HeightScale` | 0.01–0.02 (1–2 ซม.) | ผิวเปลือกไม้นูนเบา ๆ ค่าสูงกว่านี้จะดูเป็นก้อนเกินจริง |
-| `_EmissionColor` | ดำ (0,0,0) | ปิด emission ไว้ก่อน จนกว่าจะต้องใช้ (ยันต์เรืองแสง ฯลฯ) |
-| `_EmissionIntensity` | 0 | คู่กับข้างบน — เปิดใช้ค่อยปรับขึ้น |
-| `MainAmplitude` (ลม) | 0.15–0.3 | ดูหัวข้อ Custom Function ด้านบน |
-| `BranchAmplitude` (ลม) | 0.1–0.2 | ดูหัวข้อ Custom Function ด้านบน |
-| `LeafAmplitude` (ลม) | 0.05–0.1 | ดูหัวข้อ Custom Function ด้านบน |
-
-**9. ตั้ง Custom Editor GUI ให้ได้ dropdown ที่ซ่อนช่องอัตโนมัติ:**
-
-ที่ **Graph Settings → Custom Editor GUI** ใส่ชื่อคลาส:
-```
-TreeTool.EditorTools.TreeWindShaderGUI
-```
-(มาจากไฟล์ `Editor/TreeWindShaderGUI.cs` ที่เพิ่มมาให้แล้ว) พอตั้งแล้ว material ที่ใช้ shader graph นี้
-จะมี dropdown **"Texture Source"** ที่ด้านบนสุดของ Inspector — เลือก **HDRP (Mask Map)** จะซ่อนช่อง
-Metallic/Occlusion Map ของ URP ไปเลย และกลับกัน ค่า map ของโหมดที่ไม่ได้เลือกจะไม่ถูกเอาไปคำนวณ (ทั้ง
-ระดับ UI และระดับ shader compile เพราะเป็น Shader Feature)
-
-> **ข้อแลกเปลี่ยนที่ควรรู้:** การตั้ง Custom Editor GUI เอง จะ**แทนที่ Inspector มาตรฐานของ HDRP ทั้งหมด**
-> (เสีย foldout สวย ๆ อย่าง Surface Options/Advanced Options ของ HDRP ไป) `TreeWindShaderGUI` วาด field
-> ที่จำเป็นให้ครบ (Base/Normal/Format dropdown/Emission/field อื่น ๆ ที่ expose ไว้ + Render Queue/GPU
-> Instancing) แต่หน้าตาจะเรียบง่ายกว่า HDRP Lit ปกติ ถ้าไม่ต้องการ dropdown ซ่อนช่อง สามารถเว้นช่อง
-> Custom Editor GUI ว่างไว้ได้ — Map Format ยังสลับได้ปกติ (Unity สร้าง dropdown enum ให้อัตโนมัติจาก
-> Blackboard keyword) แค่ทั้งสองชุด field จะโชว์พร้อมกันเฉย ๆ (ค่าที่ไม่ได้เลือกก็ยังไม่ถูกใช้เหมือนเดิม)
-
-หลังต่อครบทั้ง Vertex (ลม) และ Fragment (texture + format switch) แล้ว ลาก texture จริงใส่ที่ material
-asset ใน Project window ตามปกติ — ทั้งสอง stage ทำงานแยกกันคนละส่วน ไม่กระทบการต่อ Vertex/ลมที่ทำไว้ก่อนหน้าเลย
-
-### ข้อจำกัด
-
-- Custom Function อ่านค่า global ที่ `Tree Wind Zone Driver` ตั้งไว้ — **ถ้าไม่มี driver ในฉาก ต้นไม้จะนิ่ง**
-  (inspector ของ `ProceduralTree` จะเตือนพร้อมปุ่มเพิ่มให้อัตโนมัติ)
-- ระหว่าง Edit Mode (ไม่ได้กด Play) การขยับจะอัพเดทเป็นช่วง ๆ ตามที่ editor repaint ไม่ liquid เท่า Play Mode — เข้า Play Mode เพื่อดูผลลื่นที่สุด
-- ค่า Wind Response ที่ bake ไว้เป็นแค่ "น้ำหนัก" ไม่ใช่ระยะจริง (เมตร) — ระยะจริงคุมที่ Amplitude บน material
+> ต้นไม้ที่เพนแต่ละจุดจะหน้าตาเหมือนกันหมด (มาจาก Seed เดียวกัน) อยากได้ความหลากหลาย ให้กลับไป
+> Shuffle Seed ต่างๆ (ข้อ 4) ในต้นไม้เดิม แล้ว Export & Add To Terrain ซ้ำอีกครั้ง — จะได้ Prototype
+> ต้นใหม่เพิ่มในลิสต์ Paint Trees ให้แปรงสุ่มเลือกใช้ผสมกันได้
 
 ---
 
-## 9. การ Export เป็น Mesh Asset / ทำ Prefab
-
-Mesh ที่ generate ปกติจะ**ไม่ถูก save ลง scene** (ไฟล์ scene ไม่บวม) และ regenerate เองตอนโหลด scene
-ถ้าต้องการต้นไม้ "นิ่ง" สำหรับทำ prefab / ส่งต่อ:
-
-1. ตั้งชื่อ GameObject ให้สื่อ (ชื่อนี้ใช้ตั้งชื่อไฟล์)
-2. กด **Export Meshes To Assets**
-3. Mesh ทุก LOD จะถูกบันทึกไปที่ `Assets/GeneratedTrees/<ชื่อต้น>/` และ MeshFilter จะชี้ไปที่ asset ทันที
-4. ลาก GameObject ลง Project เป็น prefab ได้เลย
-
-> หลัง export ถ้าแก้ค่าใด ๆ อีก ระบบจะ generate mesh ชั่วคราวมาแทน (ไฟล์ asset เดิมยังอยู่บนดิสก์) — แก้เสร็จก็ export ทับใหม่
-
----
-
-## 10. ข้อจำกัดและ Tips
+## 11. เทคนิคและแก้ปัญหา
 
 **ข้อจำกัด**
-
-- โหมด Prefabs: จำนวน vertex ของ mesh ตายตัวตามที่ปั้น — `Radial Resolution` ต่อ LOD ไม่มีผล (แต่ Max Branch Level กับ Leaf Density ยังช่วยลด poly ระยะไกลได้)
-- ยังไม่มี billboard LOD ระดับสุดท้าย (ใช้การ cull แทน)
-- ยังไม่สร้าง collider ให้ (แนะนำใส่ Capsule Collider ที่ลำต้นเองตามขนาดจริง)
-- Prefab ที่ใส่ต้องมี MeshFilter (mesh ธรรมดา ไม่รองรับ SkinnedMeshRenderer)
-- ยังไม่มี Shader Graph asset สำเร็จรูปให้ลากใช้เลย ต้องต่อ Custom Function node เอง 1 ครั้งตามข้อ 8
-  (เหตุผล: ไฟล์ `.shadergraph` เป็น JSON ที่เปราะบางมากถ้าสร้างโดยไม่ผ่าน Shader Graph editor)
+- โหมด Prefabs: จำนวน vertex ตายตัวตามที่ปั้นมา ค่า Detail Level ต่อ LOD ไม่มีผล (แต่ Max Branch Depth
+  และ Leaf Density ยังช่วยลด poly ระยะไกลได้)
+- ยังไม่มี billboard LOD ระดับสุดท้าย (ใช้การ cull แทน) และไม่สร้าง collider ให้อัตโนมัติ
+  (แนะนำใส่ Capsule Collider ที่ลำต้นเองตามขนาดจริง)
+- Prefab ที่ใส่ในโหมด Prefabs ต้องมี MeshFilter ธรรมดา ไม่รองรับ SkinnedMeshRenderer
+- Fine Roots รองรับทั้งราก Buttress และ Pneumatophore แต่ทั้งระบบราก (ทุกแบบ) รองรับเฉพาะโหมด
+  Procedural เท่านั้น ยังไม่รองรับโหมด Prefabs
 
 **Tips**
-
-- ต้นไกล ๆ จำนวนมาก: ลด `Count` ของ Twigs แล้วเพิ่ม `Count Per Branch` ของใบแทน — ได้พุ่มแน่นใน poly ที่ถูกกว่า
-- อยากได้ป่าหลากหลาย: ใช้ settings เดียวกันแล้วเปลี่ยนแค่ `Seed` ต่อต้น
-- ต้นสน/ต้นทรงเฉพาะ: เพิ่ม Branch Level ชั้นเดียว count เยอะ ๆ, Angle แคบ, Gravity บวก
-- ถ้า scene มีต้นไม้เยอะแล้วเปิด Unity ช้าลง: export mesh เป็น asset จะไม่ต้อง regenerate ตอนโหลด
+- ต้นไกลๆ จำนวนมาก: ลด Count ของ Twigs แล้วเพิ่ม Count Per Branch ของใบแทน — ได้พุ่มแน่นในต้นทุน poly ที่ถูกกว่า
+- อยากได้ป่าหลากหลาย: ใช้ settings เดียวกันแล้วเปลี่ยนแค่ Seed ต่อต้น แล้ว Export แยกกันเป็นคนละ Prototype
+- ต้นสน/ต้นทรงเฉพาะ: เพิ่ม Branch Level ชั้นเดียว count เยอะๆ, Angle แคบ, Gravity เป็นบวก
+- ถ้า scene มีต้นไม้เยอะแล้วเปิด Unity ช้าลง: กด Export Meshes To Assets ไว้ก่อน จะไม่ต้อง regenerate ตอนโหลด scene
+- สลับดู Fake Wind กับ True Wind ได้ตลอดเวลาโดยไม่กระทบทรงต้นไม้ ลองทั้งสองแบบดูว่าแบบไหนเข้ากับฉากมากกว่า
 
 ---
-
-*สร้างโดย Tree Generator Tool — Yantra Project*

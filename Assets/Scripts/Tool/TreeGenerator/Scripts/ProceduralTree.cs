@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace TreeTool
 {
@@ -38,10 +41,22 @@ namespace TreeTool
         [System.NonSerialized] public readonly List<LODStats> Stats = new();
         [System.NonSerialized] public int BranchCount;
 
+        [HideInInspector]
+        [Tooltip("Name this tree had the last time it was exported - lets the export folder be " +
+                 "renamed instead of orphaned when the tree is renamed and exported again.")]
+        public string exportedFolderName;
+
         bool _rebuildQueued;
 
         static Material s_defaultBark;
-        static Material s_defaultLeaf;
+        static Material s_placeholderLeaf;
+        static Material s_fakeWindLeaf;
+        static Material s_trueWindLeaf;
+
+        const string FakeWindLeafMaterialPath = "Assets/Texture/Tree/Leaf.mat";
+        const string TrueWindLeafShaderGraphPath = "Assets/Scripts/Tool/TreeGenerator/Shader/TrueWind/Leaf-HDRP-Lit-PBR.shadergraph";
+        const string TrueWindLeafMaterialPath = "Assets/Texture/Tree/Leaf_TrueWind.mat";
+        const string LeafBaseTexturePath = "Assets/Texture/Tree/foliage_56.png";
 
         void OnEnable()
         {
@@ -106,10 +121,10 @@ namespace TreeTool
                 TreeMeshBuilder.ClearPrefabCache();
 
             var skeleton = TreeSkeletonGenerator.Generate(settings);
-            BranchCount = skeleton.Branches.Count;
+            BranchCount = skeleton.Branches.Count + skeleton.Roots.Count;
 
             Material bark = barkMaterial != null ? barkMaterial : GetDefaultBark();
-            Material leaf = leafMaterial != null ? leafMaterial : GetDefaultLeaf();
+            Material leaf = leafMaterial != null ? leafMaterial : GetDefaultLeaf(settings.windMode);
 
             List<LODLevelSettings> levels =
                 settings.lods.generateLODGroup && settings.lods.levels.Count > 0
@@ -259,13 +274,70 @@ namespace TreeTool
             return s_defaultBark;
         }
 
-        static Material GetDefaultLeaf()
+        /// <summary>
+        /// Default leaf material depends on Wind Mode: Fake Wind (default) uses the project's
+        /// real Leaf.mat (self-contained material effect, no scene setup needed). True Wind uses
+        /// a material generated from the TrueWind leaf shader graph (driven by TreeWindZoneDriver),
+        /// created once and cached on disk next to Leaf.mat the first time it's needed. Falls back
+        /// to a plain colored placeholder if those project assets can't be found (or in a player
+        /// build, where AssetDatabase isn't available).
+        /// </summary>
+        static Material GetDefaultLeaf(WindMode mode)
         {
-            if (s_defaultLeaf == null)
-                s_defaultLeaf = CreateDefaultMaterial("TreeTool_DefaultLeaf",
-                    new Color(0.2f, 0.45f, 0.18f), true);
-            return s_defaultLeaf;
+#if UNITY_EDITOR
+            if (mode == WindMode.Fake)
+            {
+                if (s_fakeWindLeaf == null)
+                    s_fakeWindLeaf = AssetDatabase.LoadAssetAtPath<Material>(FakeWindLeafMaterialPath);
+                if (s_fakeWindLeaf != null)
+                    return s_fakeWindLeaf;
+            }
+            else
+            {
+                if (s_trueWindLeaf == null)
+                    s_trueWindLeaf = LoadOrCreateTrueWindLeaf();
+                if (s_trueWindLeaf != null)
+                    return s_trueWindLeaf;
+            }
+#endif
+            return GetPlaceholderLeaf();
         }
+
+        static Material GetPlaceholderLeaf()
+        {
+            if (s_placeholderLeaf == null)
+                s_placeholderLeaf = CreateDefaultMaterial("TreeTool_DefaultLeaf",
+                    new Color(0.2f, 0.45f, 0.18f), true);
+            return s_placeholderLeaf;
+        }
+
+#if UNITY_EDITOR
+        static Material LoadOrCreateTrueWindLeaf()
+        {
+            var existing = AssetDatabase.LoadAssetAtPath<Material>(TrueWindLeafMaterialPath);
+            if (existing != null)
+                return existing;
+
+            Shader shader = AssetDatabase.LoadAssetAtPath<Shader>(TrueWindLeafShaderGraphPath);
+            if (shader == null)
+                return null;
+
+            var mat = new Material(shader) { name = "Leaf_TrueWind" };
+            if (mat.HasProperty("_BaseMap"))
+                mat.SetTexture("_BaseMap", AssetDatabase.LoadAssetAtPath<Texture>(LeafBaseTexturePath));
+            if (mat.HasProperty("_AlphaCutoffEnable")) mat.SetFloat("_AlphaCutoffEnable", 1f);
+            if (mat.HasProperty("_DoubleSidedEnable")) mat.SetFloat("_DoubleSidedEnable", 1f);
+            mat.EnableKeyword("_DOUBLESIDED_ON");
+            if (mat.HasProperty("_CullMode")) mat.SetFloat("_CullMode", (float)UnityEngine.Rendering.CullMode.Off);
+            if (mat.HasProperty("_CullModeForward")) mat.SetFloat("_CullModeForward", (float)UnityEngine.Rendering.CullMode.Off);
+            if (mat.HasProperty("_SmoothnessMinScale")) mat.SetFloat("_SmoothnessMinScale", 0f);
+            if (mat.HasProperty("_SmoothnessMaxScale")) mat.SetFloat("_SmoothnessMaxScale", 0.6f);
+
+            AssetDatabase.CreateAsset(mat, TrueWindLeafMaterialPath);
+            AssetDatabase.SaveAssets();
+            return mat;
+        }
+#endif
 
         static Material CreateDefaultMaterial(string matName, Color color, bool doubleSided)
         {

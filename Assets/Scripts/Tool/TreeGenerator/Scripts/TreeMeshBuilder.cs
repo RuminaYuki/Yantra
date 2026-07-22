@@ -68,6 +68,21 @@ namespace TreeTool
                                 verts, normals, uvs, colors, barkTris);
             }
 
+            // ---- roots (optional, same tube pipeline as bark) ----
+            if (s.roots.enabled)
+            {
+                int rootRadial = Mathf.Max(3, Mathf.RoundToInt(s.roots.radialSegments * lod.radialResolution));
+                foreach (var root in sk.Roots)
+                {
+                    // fine roots carry their own (usually thinner) side count via radialOverride
+                    int radial = root.radialOverride > 0
+                        ? Mathf.Max(3, Mathf.RoundToInt(root.radialOverride * lod.radialResolution))
+                        : rootRadial;
+                    BuildBranchTube(root, radial, s.mesh.barkUVTiling, totalHeight, bendExp,
+                                    s.roots.windResponse, wind, verts, normals, uvs, colors, barkTris);
+                }
+            }
+
             // ---- leaves ----
             leafCount = 0;
             if (s.leaves.enabled && lod.leafDensity > 0f)

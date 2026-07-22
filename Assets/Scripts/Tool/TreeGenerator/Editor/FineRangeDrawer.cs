@@ -20,13 +20,24 @@ namespace TreeTool.EditorTools
 
             var range = (FineRangeAttribute)attribute;
             float value = property.floatValue;
+            bool manual = ManualEntry.IsOn(property);
+
+            label = EditorGUI.BeginProperty(position, label, property);
+
+            if (manual)
+            {
+                // plain typed field, no curve, no clamp
+                value = EditorGUI.FloatField(position, label, value);
+                property.floatValue = value;
+                EditorGUI.EndProperty();
+                return;
+            }
 
             // slider position t in [0,1] <-> real value: value = Min + (Max-Min) * t^power,
             // so t = ((value-Min)/(Max-Min)) ^ (1/power)
             float normalized = Mathf.Clamp01((value - range.Min) / (range.Max - range.Min));
             float t = Mathf.Pow(normalized, 1f / range.Power);
 
-            label = EditorGUI.BeginProperty(position, label, property);
             Rect content = EditorGUI.PrefixLabel(position, label);
             int indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;

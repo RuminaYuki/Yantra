@@ -1225,3 +1225,213 @@ Root cause: `leafOffset` was already correctly gated to zero at the stem via `st
 
 Changes:
 - Split the turbulence gate: bark (R+G) keeps its original ungated weight (no stem concept), leaf (B) is now multiplied by the same `stemWeight` used for `leafOffset`, so a leaf's stem vertex gets zero turbulence just like it already gets zero flutter. The arm-bend `flex` value (used to size the anti-stretch virtual arm) was switched to reuse this same stem-aware weight for consistency, though it was not strictly a visible bug on its own since the arm math naturally collapses to ~0 offset when windOffset is already ~0.
+
+## 2026-07-22 - Tree Tool v1.4.9: Optional Root System (Buttress / Pneumatophore), Own Seed, Full LOD Support
+
+Touched files:
+- `Scripts/Tool/TreeGenerator/ProceduralTreeSettings.cs`
+- `Scripts/Tool/TreeGenerator/TreeSkeleton.cs`
+- `Scripts/Tool/TreeGenerator/TreeMeshBuilder.cs`
+- `Scripts/Tool/TreeGenerator/ProceduralTree.cs`
+- `Scripts/Tool/TreeGenerator/Editor/ProceduralTreeEditor.cs`
+
+User request: add a root system with an on/off toggle, its own random seed, and LOD support, selectable between two types via a dropdown - large buttress-style surface roots (fig/ceiba/banyan) and mangrove-style "breathing root" spikes (pneumatophores).
+
+Design:
+- Roots reuse the exact same spline-growth (`Grow`) and tube-meshing (`BuildBranchTube`) pipeline as branches, so they inherit LOD (`radialResolution`), wind-vertex-color baking, and radial-segment control for free instead of needing a parallel mesh path. They're stored in a new `TreeSkeleton.Roots` list (separate from `Branches`) purely so leaves never try to spawn on them and so `TreeMeshBuilder` can build them as their own pass driven by `RootSettings` instead of a `BranchLevelSettings` entry.
+- New `ProceduralTreeSettings.roots` (`RootSettings`, class) holds: `enabled` toggle, `type` (`RootType.Buttress` / `RootType.Pneumatophore` dropdown), shared `radialSegments`/`segments`/`windResponse` (defaults to 0.02, near-zero on purpose - roots are grounded wood and shouldn't sway), plus separate field groups for each type (`buttressCount/Length/StartHeight/Flare/Taper/Droop/Crookedness` and `pneumatophoreCount/Height/Radius/Spread/Lean`). New `rootSeed` field on `ProceduralTreeSettings`, independent of `seed`/`branchSeed`/`leafSeed`, so reshuffling roots never moves the trunk/branches/leaves.
+- `TreeSkeletonGenerator.GenerateRoots` (new, called right after the trunk is grown, before branch levels): Buttress mode samples a point partway up the trunk (`buttressStartHeight`), then grows `buttressCount` ridges outward and downward (`buttressDroop` tips them into the ground) with `curveFrom`/`curveBlend` set so each ridge starts along the trunk's own direction and curves into its own, hiding the trunk joint the same way branch `jointSmoothing` does. Pneumatophore mode scatters `pneumatophoreCount` short spikes randomly (not evenly spaced, unlike branches) in an annulus around the trunk base and grows each one nearly straight up with a small random lean.
+- Roots use `level = 0` deliberately: `BuildBranchTube` already forces the local branch-sway (vertex color G channel) to 0 for level-0 parts, which is exactly the right wind behavior for roots - only the same negligible whole-tree main-bend (R) a trunk gets, no local whip.
+- `TreeMeshBuilder.Build` adds one more pass after the existing bark loop: if `s.roots.enabled`, builds every `TreeSkeleton.Roots` entry through `BuildBranchTube` with `s.roots.radialSegments` (scaled by the current LOD's `radialResolution`, same as bark) and `s.roots.windResponse`. `ProceduralTree.BranchCount` now includes `skeleton.Roots.Count` so the inspector's part-count stat stays accurate.
+- `ProceduralTreeEditor` adds a `rootSeed` row (Shuffle button) next to the existing seed rows, a `DrawRootsSection()` foldout (same collapsible-group pattern as Geometry/Leaves/Mesh) placed between Branch Levels and Leaves, and hides whichever type's fields don't apply (`ButtressOnlyFields`/`PneumatophoreOnlyFields`) based on the selected `type`, exactly like the existing prefab-source field hiding.
+
+Notes:
+- Roots only use the procedural tube pipeline - they don't currently support the custom-prefab geometry mode that trunk/branch/leaf parts have.
+- Off by default (`enabled = false`), so existing trees are unaffected until a user explicitly turns roots on.
+
+## 2026-07-23 - Tree Tool v2.0: Wind Mode Switch (Fake/True), Manual Entry Toggle, Fine Roots, Per-Tree Export Folders, Editable Source Prefab, Full Manual Rewrite
+
+Touched files:
+- `Scripts/Tool/TreeGenerator/ToolRangeAttribute.cs` (new)
+- `Scripts/Tool/TreeGenerator/Editor/ToolRangeDrawer.cs` (new)
+- `Scripts/Tool/TreeGenerator/Editor/ManualEntry.cs` (new)
+- `Scripts/Tool/TreeGenerator/Editor/MinMaxRangeDrawer.cs`
+- `Scripts/Tool/TreeGenerator/Editor/FineRangeDrawer.cs`
+- `Scripts/Tool/TreeGenerator/ProceduralTreeSettings.cs`
+- `Scripts/Tool/TreeGenerator/TreeSkeleton.cs`
+- `Scripts/Tool/TreeGenerator/TreeMeshBuilder.cs`
+- `Scripts/Tool/TreeGenerator/ProceduralTree.cs`
+- `Scripts/Tool/TreeGenerator/Editor/ProceduralTreeEditor.cs`
+- `Scripts/Tool/TreeGenerator/Manual/TreeGenerator_Manual.md` / `.pdf`
+
+Context: the user built their own simplified "Fake Wind" Shader Graph system (`Shader/FakeWind/` -
+a self-contained per-object sway effect, no WindZone needed) alongside the existing hand-wired
+wind system from earlier versions, now relocated to `Shader/TrueWind/`. This entry wires the tool
+to understand and switch between both, plus a large batch of authoring/export UX requests bundled
+into the same session.
+
+**1. Wind Mode switch (Fake / True)**
+- New `WindMode` enum (`Fake` default, `True`) + `ProceduralTreeSettings.windMode`.
+- `ProceduralTree.GetDefaultLeaf(WindMode)`: Fake mode loads `Assets/Texture/Tree/Leaf.mat` (the
+  user's own Fake Wind material) as the default when the Leaf Material field is empty; True mode
+  loads-or-creates `Assets/Texture/Tree/Leaf_TrueWind.mat` from `Shader/TrueWind/Leaf-HDRP-Lit-PBR.shadergraph`
+  the first time it's needed (base texture reused from the Fake material for a consistent look),
+  cached after that. Trunk default is unchanged (still the plain HDRP/Lit placeholder) per explicit
+  instruction - only the leaf default depends on Wind Mode.
+- Editor: new "Wind Mode" section at the top of the inspector with the mode dropdown + an inline
+  explanation of what's active. Per-part Wind Response fields (Trunk/Roots/Leaves - directly, via
+  `DrawGroup`'s hidden-field list) and the whole Wind Settings block + "Add Wind Zone" hint are
+  hidden entirely in Fake mode and shown only in True mode. (Branch Levels' per-item Wind Response
+  is drawn through Unity's own array/list drawer, not `DrawGroup`, so it isn't hidden per-mode -
+  left visible with its existing "[True Wind only]" tooltip instead of writing a full custom
+  `BranchLevelSettings` PropertyDrawer just for this.)
+
+**2. Parameter rework: wider ranges, Manual Number Entry, simpler labels, categorization**
+- New `[ToolRange(min,max)]` attribute + `ToolRangeDrawer`, a drop-in replacement for Unity's
+  built-in `[Range]` used throughout `ProceduralTreeSettings.cs` now. New `ManualEntry.cs` helper
+  (`property.serializedObject.FindProperty("settings.manualNumberEntry")` - always resolves to the
+  root `ProceduralTree` instance regardless of how deeply nested the field is) shared by
+  `ToolRangeDrawer`, `MinMaxRangeDrawer`, and `FineRangeDrawer`. New `ProceduralTreeSettings.manualNumberEntry`
+  bool + inspector checkbox: when on, every slider/min-max-range/fine-range field in the whole tool
+  switches at once to a plain typed number field with no clamp (any value, even outside the
+  declared range) - one checkbox for everything, not per-field.
+- Numeric bounds widened across the board (examples: Trunk Height 100->300m, Radius 10->30m,
+  Branch Count 100->300, Leaf Count Per Branch 300->800, Leaf Size 10->25m; full new bounds listed
+  in the manual's parameter tables). Crookedness-type fields (Trunk/Branch/Buttress/Pneumatophore)
+  widened from 0-1 to 0-2 specifically per request for more available waviness.
+- `[InspectorName(...)]` applied to jargon-y field/enum labels (e.g. `radialSegments` -> "Sides",
+  `azimuthRandomness` -> "Spin Randomness", `bendExponent` -> "Sway Curve", LOD `screenHeight` ->
+  "Visible Until (Screen Size)", `RootType`/`WindMode` enum values get descriptive labels) - this
+  only changes the displayed label, not the serialized field name, so existing tuned values on
+  live trees are unaffected.
+- Editor reorganized into bold category headers (Wind Mode, Random Seeds, Geometry Source,
+  Structure, Foliage, Rendering, Level Of Detail, Materials) instead of a flat list of foldouts.
+
+**3. Root system upgrade**
+- New `FineRootSettings` (off by default): thin fibrous roots spawned along each generated root
+  (Buttress ridge or Pneumatophore spike), same recursive spawn-along-a-parent-spline idea
+  `BranchLevelSettings` uses off the trunk. New `TreeSkeleton.Branch.radialOverride` field lets fine
+  roots carry their own (thinner) side count independent of the parent root's, read by
+  `TreeMeshBuilder`'s root-building loop.
+- `RootSettings.buttressStartHeight` changed from a single float to a `FloatRange`, sampled per-root
+  inside the generation loop instead of once for the whole set - ridges now break away from the
+  trunk at slightly different heights instead of all lining up identically, and (being a normal
+  serialized field going through the same live-rebuild pipeline as everything else) updates
+  immediately when dragged, same as every other parameter.
+- Crookedness ranges widened for both root types (see item 2).
+
+**4. Export overhaul: per-tree folders, material/texture duplication, editable Source prefab**
+- Both export buttons now go through a shared `DoCoreExport`: resolves/creates
+  `Assets/GeneratedTrees/<tree.name>/` with `Texture/`, `Material/`, `TreePrefab/` subfolders;
+  duplicates whatever Bark/Leaf materials are currently active (`Object.Instantiate` + `AssetDatabase.CreateAsset`,
+  named `<name>_Bark.mat` / `<name>_Leaf.mat`) so editing one tree's material copy never affects
+  another tree or the shared source material; duplicates every texture the shader exposes
+  (`shader.GetPropertyType(i) == ShaderPropertyType.Texture`, walked via `Shader.GetPropertyCount`)
+  into `Texture/` renamed `<name>_<suffix>_<mapName>.<ext>` and repoints the duplicated material at
+  the copies; freezes LOD meshes into `TreePrefab/`; saves the live tree via
+  `PrefabUtility.SaveAsPrefabAssetAndConnect` as `<name>_Source.prefab` - this both creates an
+  editable prefab (keeps the `ProceduralTree` component, unlike a frozen static export) and converts
+  the scene GameObject into a connected Prefab Instance of it, so editing either one and exporting
+  again keeps both in sync automatically.
+- New `ProceduralTree.exportedFolderName` (hidden serialized field) + `ResolveTreeFolder`: if the
+  tree's GameObject was renamed since the last export, the existing `Assets/GeneratedTrees/` folder
+  is renamed (`AssetDatabase.MoveAsset`) to match instead of creating an orphaned duplicate.
+- New `BackupIfExists`: before a re-export overwrites `TreePrefab/`/`Material/`/`Texture/`, their
+  current contents are moved wholesale into a timestamped `Backup/<yyyy-MM-dd_HH-mm-ss>/` subfolder
+  first (folder-level `AssetDatabase.MoveAsset`, not per-file), so nothing from a previous export is
+  ever silently lost.
+- `ExportAndAddToTerrain` still additionally saves a SEPARATE script-stripped static clone for
+  Terrain's prototype system (unchanged reasoning from v1.4.5/v1.4.6 - Terrain's bounds-probing
+  can't tolerate the live `[ExecuteAlways] ProceduralTree` component) - this is now clearly a second,
+  Terrain-only artifact alongside the always-editable `_Source.prefab` from the shared core export.
+
+**5. Manual rewritten as an end-user step-by-step guide (v2.0)**
+- Removed every "what's new in vX.X" version-history callout and the entire Shader Graph
+  node-wiring walkthrough (Custom Function setup, Fragment stage PBR wiring) - no longer relevant
+  now that both wind systems are fully self-contained and switched with one dropdown.
+- Rewritten around a numbered 6-step "create a tree to finished result" quick start, a dedicated
+  side-by-side Fake Wind vs True Wind section, a full parameter reference table (default value +
+  min-max range for every field, matching item 2's widened bounds), and a walkthrough of the new
+  per-tree export folder layout and Terrain painting flow.
+- Regenerated via the established scratchpad-HTML-mirror -> headless Edge `--print-to-pdf` pipeline;
+  synced `.md`/`.pdf` to both the tool folder and `Manual/`.
+
+Notes:
+- Fake Wind's own material-level knobs (Wind/Branch Move/Branch Stiffness/Leaf Frequency/Leaf Speed,
+  already present on `Leaf.mat`) are intentionally left as plain material properties, not exposed as
+  new per-tree fields in `ProceduralTreeSettings` - they're a self-contained material effect, edited
+  directly on the material like any other HDRP material property, not per-branch baked data the way
+  True Wind's response values are.
+
+## 2026-07-23 - Tree Tool v2.0.1: Fix Root Settings Reshuffling Branch/Leaf Positions
+
+Touched files:
+- `Scripts/Tool/TreeGenerator/TreeSkeleton.cs`
+
+User-reported symptom: adjusting root settings (or just toggling Roots on/off) also moved branches
+and leaves that had nothing to do with roots - "เวลาผมแก้ระยยรากช่วยดูให้หน่อยมันไปเปลี่ยนตำแหน่งใบ
+ตำแหน่งกิ่งอะไรแบบนี้ด้วยตอน เปิดรากใบก็เปลี่ยนเหมือนกัน".
+
+Root cause: `TreeSkeletonGenerator.Generate()` uses one shared `int nextId` counter for every
+`Branch.id` it hands out (trunk, then roots, then branch levels). Branch generation seeds its RNG
+stream from `CreateRand(..., parent.id)` and leaf generation from `CreateRand(..., b.id)` - so a
+branch/leaf's shape depends on its parent branch's *id*, not just on Branch Seed/Leaf Seed. Root
+generation ran right after the trunk and consumed `nextId` for every root (and every fine root) it
+created *before* the branch-levels loop started, so enabling roots or changing how many get
+generated shifted the id every later branch received, which reseeded its RNG stream and moved it -
+even though nothing about that branch's own settings changed. This is exactly the kind of coupling
+the file's own doc comment says shouldn't exist ("changing leafSeed never moves a branch, and
+changing branchSeed never bends the trunk" - roots quietly broke that guarantee for the seed-less
+case of "no seed changed at all, just root settings").
+
+Fix: roots now get their own local `int rootId` counter, entirely separate from the trunk/branch
+`nextId` sequence (`GenerateRoots(..., ref int nextId)` -> `GenerateRoots(...)` with a local
+`int rootId = 0;` inside; `GenerateFineRoots` takes `ref int rootId` instead of `ref int nextId`).
+Nothing outside the root system ever looks up a root by id (roots don't grow branches or leaves, and
+`TreeMeshBuilder` iterates `sk.Roots` directly rather than by id), so this is a pure decoupling with
+no other behavior change - root ids can now overlap with branch ids without any collision risk.
+Root/branch/leaf shapes no longer shift when only root settings change.
+
+## 2026-07-23 - Tree Tool v2.0.2: Consolidated Wind Response Panel, Moved Up Top
+
+Touched files:
+- `Scripts/Tool/TreeGenerator/Editor/ProceduralTreeEditor.cs`
+- `Scripts/Tool/TreeGenerator/Editor/BranchLevelSettingsDrawer.cs` (new)
+- `Manual/TreeGenerator_Manual.md` / `.pdf`
+
+User feedback (with an inspector screenshot): the "no WindZone in the scene, click to create one"
+warning sat too far down the inspector (after Rendering); Fake Wind mode should show neither that
+button nor any per-part wind settings at all; and every part's Wind Response field (Trunk, each
+Branch Level, Roots, Leaves) should be pulled out of their own sections and consolidated into one
+shared category, specifically so a Branch Level added later (or a fine-root/sub-level) is still
+reachable there instead of only living inline wherever it happens to be nested.
+
+Changes:
+- New `ProceduralTreeEditor.DrawWindResponseSection()`, called immediately after `DrawWindModeSection()`
+  (right at the top of the inspector, directly under the Wind Mode dropdown) - only renders in True
+  Wind mode. Draws `trunk.windResponse`, then loops `branchLevels` live (`arraySize`-driven, so a
+  level added or removed later is picked up automatically next repaint) drawing each level's
+  `windResponse` labeled with that level's own `name`, then `roots.windResponse` and
+  `leaves.windFlutterResponse`, then the existing `WindSettings` block and `DrawWindZoneHint()`
+  (the "Add Wind Zone To Scene" warning/button) - all in this one place now instead of scattered
+  through Structure/Foliage/Rendering and stranded at the bottom of the inspector.
+- `DrawGroup` calls for Trunk/Roots/Leaves now unconditionally hide `windResponse` /
+  `windFlutterResponse` (previously only hidden in Fake Wind mode) since those fields are shown
+  exclusively in the new consolidated section regardless of mode - removed the now-unused `fakeWind`
+  parameter from `DrawRootsSection`/`DrawLeavesSection`.
+- New `[CustomPropertyDrawer(typeof(BranchLevelSettings))]` (`BranchLevelSettingsDrawer.cs`) so each
+  Branch Levels list element can skip `windResponse` too - Unity's default array/list rendering
+  doesn't support hiding a named child field the way the hand-rolled `DrawGroup` foldout does, so
+  this was the one spot that couldn't just reuse the existing hidden-fields mechanism. Preserves the
+  existing look exactly: each element's foldout is still labeled with that level's own `name` value
+  (matching Unity's default behavior for this field) and every other field renders unchanged, height
+  calculation included (`GetPropertyHeight` sums each visible child's own height).
+- `DrawWindModeSection`'s help text updated to describe the new layout (Wind Response panel sits
+  directly below the mode dropdown; nothing wind-related shows at all in Fake Wind).
+- Manual's Wind section (3) rewritten to describe the single consolidated panel instead of fields
+  "appearing/disappearing" scattered across other sections.
+
+Notes:
+- Fake Wind mode now shows zero wind-related UI anywhere in the inspector, exactly matching the "no
+  WindZone button, no per-part settings" request - confirmed by `DrawWindResponseSection` returning
+  immediately (`if (!IsTrueWind()) return;`) before drawing anything, including the WindZone hint.
