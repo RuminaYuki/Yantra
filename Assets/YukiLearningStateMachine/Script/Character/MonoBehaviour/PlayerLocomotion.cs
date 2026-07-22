@@ -31,7 +31,7 @@ public class PlayerLocomotion : MonoBehaviour
     [Header("Turn Setting")]
     [SerializeField] private string _nameParameterTurn;
     [SerializeField] private float _minimumTurnAngle = 5f;
-    [SerializeField] private float _stopTurnAngle = 2f;
+    [SerializeField] private float _stopTurnAngle = 10f;
     private int _turn; //Set parameter
 
     private Vector3 _lockedDirection;

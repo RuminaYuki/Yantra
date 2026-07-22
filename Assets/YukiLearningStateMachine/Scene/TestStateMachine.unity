@@ -1895,6 +1895,8 @@ MonoBehaviour:
   _nameParameterMoveZ: VelocityZ
   _nameParameterMoveX: VelocityX
   _nameParameterTurn: Turn
+  _minimumTurnAngle: 5
+  _stopTurnAngle: 10
 --- !u!143 &1062817030
 CharacterController:
   m_ObjectHideFlags: 0
