@@ -27,6 +27,14 @@ public class PlayerLocomotion : MonoBehaviour
     private int _moveZ; //Set parameter
     private int _moveX; //Set parameter
 
+    [Header("Walk and Run Setting")]
+    [SerializeField] private string _nameTurnAngle;
+    [SerializeField] private string _nameStartTurn;
+    [SerializeField] private float _angleTurn = 45;
+    private int _startTurnAngle;
+    private int _startTurnTrigger;
+    private bool _wasMoving;
+
     void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -35,6 +43,9 @@ public class PlayerLocomotion : MonoBehaviour
         //Hash Sring
         _moveZ = Animator.StringToHash(_nameParameterMoveZ);
         _moveX = Animator.StringToHash(_nameParameterMoveX);
+
+        _startTurnAngle = Animator.StringToHash(_nameTurnAngle);
+        _startTurnTrigger = Animator.StringToHash(_nameStartTurn); 
 
         _enableUseInputObserverSO = true;
     }
@@ -52,14 +63,8 @@ public class PlayerLocomotion : MonoBehaviour
     {
         // set Animation
         Vector3 direction = GetDirectionWithReferencePoint();
-
-        // Set walk run Animation
-        Vector3 localVelocity = transform.InverseTransformDirection(direction);
-        float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
-        float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
-
-        _animator.SetFloat(_moveZ, velocityZ * _multiply, _dampTime, Time.deltaTime);
-        _animator.SetFloat(_moveX, velocityX * _multiply, _dampTime, Time.deltaTime);
+        MoveAnimation(direction);
+        TurnAnimation(direction);
     }
 
     void FixedUpdate()
@@ -79,7 +84,36 @@ public class PlayerLocomotion : MonoBehaviour
         _directionMove = moveInput;
     }
 
-    
+    #region SetAnimation
+    private void MoveAnimation(Vector3 direction)
+    {
+        Vector3 localVelocity = transform.InverseTransformDirection(direction);
+        float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
+        float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
+
+        _animator.SetFloat(_moveZ, velocityZ * _multiply, _dampTime, Time.deltaTime);
+        _animator.SetFloat(_moveX, velocityX * _multiply, _dampTime, Time.deltaTime);
+    }
+    private void TurnAnimation(Vector3 direction)
+    {
+        bool isMoving = direction.sqrMagnitude > 0.01f;
+        bool justStartedMoving = isMoving && !_wasMoving;
+
+        if (justStartedMoving)
+        {
+            float angle = Vector3.SignedAngle(transform.forward,direction,Vector3.up);
+
+            if (Mathf.Abs(angle) >= _angleTurn)
+            {
+                _animator.SetFloat(_startTurnAngle, angle);
+                _animator.SetTrigger(_startTurnTrigger);
+            }
+        }
+
+        _wasMoving = isMoving;
+    }
+
+    #endregion
 
     #region HelperMethod
     private Vector3 GetWorldDirectionRelativeTo(

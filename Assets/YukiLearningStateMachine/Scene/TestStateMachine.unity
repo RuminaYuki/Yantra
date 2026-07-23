@@ -596,8 +596,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 981399299}
+  m_Children: []
   m_Father: {fileID: 1273965141}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &320540218
@@ -1752,37 +1751,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1062817027}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &981399298
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 981399299}
-  m_Layer: 3
-  m_Name: AimTarget_Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &981399299
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 981399298}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.0023880429, y: 0.9999752, z: -0.0004693006, w: -0.0066138497}
-  m_LocalPosition: {x: 0.00034308436, y: -0.73657584, z: -2.8552554}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 320540217}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1005892062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3077976645811817217, guid: f09e097e7032d164583e76b3e608032a,
@@ -1809,6 +1777,7 @@ GameObject:
   - component: {fileID: 1062817030}
   - component: {fileID: 1062817028}
   - component: {fileID: 1062817029}
+  - component: {fileID: 1062817031}
   m_Layer: 3
   m_Name: Rin StateMachine
   m_TagString: Player
@@ -1954,6 +1923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateMachineController
   _transitionTables:
   - {fileID: 11400000, guid: 0034a1ad5b8d68c4ea9ca5b9510fb3cd, type: 2}
+  - {fileID: 11400000, guid: e935fce6c7d8b584582c951a55f80415, type: 2}
 --- !u!114 &1062817029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1968,7 +1938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotion
   _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   _referencePoint: {fileID: 320540217}
-  _dampTime: 0.1
+  _dampTime: 0.25
   _nameParameterMoveZ: VelocityZ
   _nameParameterMoveX: VelocityX
 --- !u!143 &1062817030
@@ -1996,6 +1966,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.09, z: 0}
+--- !u!114 &1062817031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497dce66a87167b44b13abc0d4c3bf0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAim
+  cameraController: {fileID: 320540216}
 --- !u!4 &1091021679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4713043083974578609, guid: f09e097e7032d164583e76b3e608032a,
@@ -2990,7 +2973,7 @@ Transform:
   m_GameObject: {fileID: 4749740090139331172}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0013567557, y: 0.71176594, z: -0.002020447, w: 0.7024126}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.625, y: -0.002, z: -0.021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6436,7 +6419,7 @@ Transform:
   m_GameObject: {fileID: 8398562899817614130}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.76, z: 0}
+  m_LocalPosition: {x: 1.625, y: 1.758, z: -0.021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

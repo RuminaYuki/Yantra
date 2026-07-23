@@ -168,4 +168,7 @@ public class FatalFrameCameraController : MonoBehaviour
     {
         _isFreeLookingInBook = IsYantraAiming ? false : true; // ถ้ากำลังกางสมุดอยู่แล้วกด Q อีกครั้ง ให้ปิดโหมด Free Look
     }
+
+    //API
+    public Vector2 CameraRotation => new Vector2(_yaw, _pitch);
 }

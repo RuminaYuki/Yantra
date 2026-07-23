@@ -17,7 +17,7 @@ public class IdleAction : StateAction
 {
     public override void OnStateEnter()
     {
-        Debug.Log("เข้า Idle");
+        
     }
 
     public override void OnUpdate()
@@ -27,7 +27,7 @@ public class IdleAction : StateAction
 
     public override void OnStateExit()
     {
-        Debug.Log("ออกจาก Idle");
+        
     }
 }
 
