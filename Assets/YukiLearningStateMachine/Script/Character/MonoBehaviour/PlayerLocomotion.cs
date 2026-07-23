@@ -27,23 +27,6 @@ public class PlayerLocomotion : MonoBehaviour
     private int _moveZ; //Set parameter
     private int _moveX; //Set parameter
 
-    //========================Turn=============================
-    // [Header("Turn Setting")]
-    // [SerializeField] private string _nameParameterTurn;
-    // [SerializeField] private float _minimumTurnAngle = 5f;
-    // [SerializeField] private float _stopTurnAngle = 10f;
-    // private int _turn; //Set parameter
-
-    // private Vector3 _lockedDirection;
-    // private float _lockedTurn; // Value to key parameter
-    // private bool _isTurning;
-
-    
-    
-
-    
-
-
     void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -52,7 +35,6 @@ public class PlayerLocomotion : MonoBehaviour
         //Hash Sring
         _moveZ = Animator.StringToHash(_nameParameterMoveZ);
         _moveX = Animator.StringToHash(_nameParameterMoveX);
-        // _turn = Animator.StringToHash(_nameParameterTurn);
 
         _enableUseInputObserverSO = true;
     }
@@ -78,33 +60,6 @@ public class PlayerLocomotion : MonoBehaviour
 
         _animator.SetFloat(_moveZ, velocityZ * _multiply, _dampTime, Time.deltaTime);
         _animator.SetFloat(_moveX, velocityX * _multiply, _dampTime, Time.deltaTime);
-
-        // Set Turn Animation
-        // if (!_isTurning && direction.sqrMagnitude > 0.01f)
-        // {
-        //     float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
-
-        //     if (Mathf.Abs(angle) > _minimumTurnAngle)
-        //     {
-        //         _lockedDirection = direction.normalized;
-        //         _lockedTurn = angle;
-        //         _isTurning = true;
-        //     }
-        // }
-        // else if (_isTurning)
-        // {
-        //     float currentAngle = Vector3.SignedAngle(transform.forward, _lockedDirection, Vector3.up);
-        //     bool reachedTarget = Mathf.Abs(currentAngle) <= _stopTurnAngle;
-        //     bool passedTarget = Mathf.Sign(currentAngle) != Mathf.Sign(_lockedTurn);
-
-        //     if (reachedTarget || passedTarget)
-        //     {
-        //         _lockedTurn = 0f;
-        //         _isTurning = false;
-        //     }
-        // }
-
-        // _animator.SetFloat(_turn, _lockedTurn, _dampTime, Time.deltaTime);
     }
 
     void FixedUpdate()
@@ -116,7 +71,6 @@ public class PlayerLocomotion : MonoBehaviour
     private void OnAnimatorMove()
     {
         _characterController.Move(_animator.deltaPosition);
-        // transform.rotation *= _animator.deltaRotation;
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -173,9 +127,9 @@ public class PlayerLocomotion : MonoBehaviour
             Quaternion.LookRotation(direction, Vector3.up);
 
         Quaternion nextRotation = Quaternion.Slerp(transform.rotation,
-            targetRotation, Time.deltaTime);
+            targetRotation, Time.fixedDeltaTime);
 
-        transform.rotation = targetRotation;
+        transform.rotation = nextRotation;
     }
     #endregion
 
