@@ -334,8 +334,8 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: YawY
-  m_BlendParameterY: PitchX
+  m_BlendParameter: MouseX
+  m_BlendParameterY: MouseY
   m_MinThreshold: 0
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 1
@@ -671,13 +671,13 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: YawY
+  - m_Name: MouseX
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: PitchX
+  - m_Name: MouseY
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0

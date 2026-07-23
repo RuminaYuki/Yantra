@@ -1941,6 +1941,9 @@ MonoBehaviour:
   _dampTime: 0.25
   _nameParameterMoveZ: VelocityZ
   _nameParameterMoveX: VelocityX
+  _nameTurnAngle: StartTurnAngle
+  _nameStartTurn: StartTurn
+  _angleTurn: 45
 --- !u!143 &1062817030
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1979,6 +1982,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAim
   cameraController: {fileID: 320540216}
+  playerRoot: {fileID: 0}
+  maxYawAngle: 60
+  maxPitchUp: 60
+  maxPitchDown: 40
+  smoothSpeed: 10
 --- !u!4 &1091021679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4713043083974578609, guid: f09e097e7032d164583e76b3e608032a,
