@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d48b03d16d09bc14e8331bf650642277, type: 3}
-  m_Name: Book PlaceholderAnimatorActionSO
+  m_Name: SetFlashLightfalse
   m_EditorClassIdentifier: Assembly-CSharp::SetParameterAnimatorActionSO
   ParameterSetting:
     ParameterType: 0
-    ParameterName: Draw
+    ParameterName: IsFlashLight
     Value: 0

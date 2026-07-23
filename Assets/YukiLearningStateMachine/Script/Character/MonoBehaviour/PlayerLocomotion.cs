@@ -27,10 +27,11 @@ public class PlayerLocomotion : MonoBehaviour
     private int _moveZ; //Set parameter
     private int _moveX; //Set parameter
 
-    [Header("Walk and Run Setting")]
+    [Header("Turn Setting")]
     [SerializeField] private string _nameTurnAngle;
     [SerializeField] private string _nameStartTurn;
     [SerializeField] private float _angleTurn = 45;
+    [SerializeField] private bool _turnbyCamera;
     private int _startTurnAngle;
     private int _startTurnTrigger;
     private bool _wasMoving;
@@ -64,13 +65,18 @@ public class PlayerLocomotion : MonoBehaviour
         // set Animation
         Vector3 direction = GetDirectionWithReferencePoint();
         MoveAnimation(direction);
-        TurnAnimation(direction);
+        if (_turnbyCamera)
+            TurnByCamera(direction);
+        else
+            TurnAnimation(direction);
+
+
     }
 
     void FixedUpdate()
     {
         bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
-        if (!hasMoveInput) return;
+        if (!hasMoveInput && !_turnbyCamera) return;
         Rotate(GetCameraForwardFlat());
     }
     private void OnAnimatorMove()
@@ -111,6 +117,19 @@ public class PlayerLocomotion : MonoBehaviour
         }
 
         _wasMoving = isMoving;
+    }
+    private void TurnByCamera(Vector3 direction)
+    {
+        Vector3 playerForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
+        Vector3 cameraForward = Vector3.ProjectOnPlane(_referencePoint.forward, Vector3.up).normalized;
+
+        float angle = Vector3.SignedAngle(playerForward, cameraForward, Vector3.up);
+
+        if (Mathf.Abs(angle) >= 60f && !(direction.sqrMagnitude > 0.01f))
+        {
+            _animator.SetFloat(_startTurnAngle, angle);
+            _animator.SetTrigger(_startTurnTrigger);
+        }
     }
 
     #endregion
@@ -181,7 +200,9 @@ public class PlayerLocomotion : MonoBehaviour
     //Animaiton
     // Get,Set Mutiply
     public float GetMutiply() => _multiply;
-    public void  SetMuitply(float multiply) => _multiply = multiply;
+    public void SetMuitply(float multiply) => _multiply = multiply;
+    public bool GetTurnByCamera() => _turnbyCamera;
+    public void SetTurnByCamera(bool value) => _turnbyCamera = value;
 
     #endregion
 }
