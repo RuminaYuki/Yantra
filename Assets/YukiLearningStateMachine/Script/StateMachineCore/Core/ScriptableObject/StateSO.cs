@@ -4,7 +4,7 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
 {
     [CreateAssetMenu(
         fileName = "NewState",
-        menuName = "YUKI Learning State Machine/State")]
+        menuName = "YUKI Learning State Machine/StateMachine/State")]
     public class StateSO : ScriptableObject
     {
         [SerializeField]
