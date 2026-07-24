@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01fdba5d7f32bbd48875a3ab7fbda341, type: 3}
-  m_Name: IsBookInputCondition
-  m_EditorClassIdentifier: Assembly-CSharp::IsBookInputConditionSO
-  _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
+  m_Name: FlashInputCondition
+  m_EditorClassIdentifier: Assembly-CSharp::InputActionConditionSO
+  _inputAction: {fileID: 602503290912242401, guid: db0e9067649de694aba4b3fc8b88612f,
+    type: 3}
+  _checkType: 0

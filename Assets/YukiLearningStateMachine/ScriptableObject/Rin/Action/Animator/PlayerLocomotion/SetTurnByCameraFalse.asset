@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c86427ab5d45784a877af2f6d96c4d3, type: 3}
-  m_Name: LeftShiftKeyCondition
-  m_EditorClassIdentifier: Assembly-CSharp::LeftShiftKeyConditionSO
+  m_Script: {fileID: 11500000, guid: de7029ecbd4958246a83f8b1e365984f, type: 3}
+  m_Name: SetTurnByCameraFalse
+  m_EditorClassIdentifier: Assembly-CSharp::SetTurnByCameraActionSO
+  _enabled: 0

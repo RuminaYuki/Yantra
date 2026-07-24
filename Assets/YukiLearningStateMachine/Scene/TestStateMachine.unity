@@ -221,7 +221,8 @@ PrefabInstance:
       propertyPath: m_CullingMode
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: f09e097e7032d164583e76b3e608032a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -578,6 +579,8 @@ MonoBehaviour:
   _otsFOV: 50
   _mouseSensitivity: 0.15
   _transitionSpeed: 12
+  _minPitch: -40
+  _maxPitch: 60
   _collisionMask:
     serializedVersion: 2
     m_Bits: 73
@@ -1945,6 +1948,7 @@ MonoBehaviour:
   _nameStartTurn: StartTurn
   _angleTurn: 45
   _turnbyCamera: 0
+  _angleTurnbyCamera: 60
 --- !u!143 &1062817030
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1983,10 +1987,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAim
   cameraController: {fileID: 320540216}
-  playerRoot: {fileID: 0}
+  playerRoot: {fileID: 1062817027}
   maxYawAngle: 60
-  maxPitchUp: 60
-  maxPitchDown: 40
   smoothSpeed: 10
 --- !u!4 &1091021679 stripped
 Transform:
@@ -4012,6 +4014,8 @@ MonoBehaviour:
   _otsFOV: 50
   _mouseSensitivity: 0.15
   _transitionSpeed: 12
+  _minPitch: -40
+  _maxPitch: 60
   _collisionMask:
     serializedVersion: 2
     m_Bits: 73

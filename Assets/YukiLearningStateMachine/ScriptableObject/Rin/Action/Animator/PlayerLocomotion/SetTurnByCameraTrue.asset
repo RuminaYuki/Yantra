@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4091a0efb7efddc4cae061b68dd93da0, type: 3}
-  m_Name: IsRunningInputCondition
-  m_EditorClassIdentifier: Assembly-CSharp::IsRunningConditionSO
-  _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
+  m_Script: {fileID: 11500000, guid: de7029ecbd4958246a83f8b1e365984f, type: 3}
+  m_Name: SetTurnByCameraTrue
+  m_EditorClassIdentifier: Assembly-CSharp::SetTurnByCameraActionSO
+  _enabled: 1

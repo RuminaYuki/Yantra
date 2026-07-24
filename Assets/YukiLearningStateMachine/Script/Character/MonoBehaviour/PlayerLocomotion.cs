@@ -1,4 +1,5 @@
 using UnityEngine;
+using NaughtyAttributes;
 [RequireComponent(typeof(CharacterController),typeof(Animator))]
 public class PlayerLocomotion : MonoBehaviour
 {
@@ -31,7 +32,9 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField] private string _nameTurnAngle;
     [SerializeField] private string _nameStartTurn;
     [SerializeField] private float _angleTurn = 45;
+    [ReadOnly]
     [SerializeField] private bool _turnbyCamera;
+    [SerializeField] private float _angleTurnbyCamera = 60;
     private int _startTurnAngle;
     private int _startTurnTrigger;
     private bool _wasMoving;
@@ -105,31 +108,32 @@ public class PlayerLocomotion : MonoBehaviour
         bool isMoving = direction.sqrMagnitude > 0.01f;
         bool justStartedMoving = isMoving && !_wasMoving;
 
-        if (justStartedMoving)
+        if (justStartedMoving && Mathf.Abs(GetSignedAngleToCamera()) >= _angleTurn)
         {
             float angle = Vector3.SignedAngle(transform.forward,direction,Vector3.up);
-
-            if (Mathf.Abs(angle) >= _angleTurn)
-            {
-                _animator.SetFloat(_startTurnAngle, angle);
-                _animator.SetTrigger(_startTurnTrigger);
-            }
+            _animator.SetFloat(_startTurnAngle, angle);
+            _animator.SetTrigger(_startTurnTrigger);
         }
 
         _wasMoving = isMoving;
     }
     private void TurnByCamera(Vector3 direction)
     {
-        Vector3 playerForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
-        Vector3 cameraForward = Vector3.ProjectOnPlane(_referencePoint.forward, Vector3.up).normalized;
+        float angle = GetSignedAngleToCamera();
 
-        float angle = Vector3.SignedAngle(playerForward, cameraForward, Vector3.up);
-
-        if (Mathf.Abs(angle) >= 60f && !(direction.sqrMagnitude > 0.01f))
+        if (Mathf.Abs(angle) >= _angleTurnbyCamera && !(direction.sqrMagnitude > 0.01f))
         {
             _animator.SetFloat(_startTurnAngle, angle);
             _animator.SetTrigger(_startTurnTrigger);
         }
+    }
+
+    private float GetSignedAngleToCamera()
+    {
+        Vector3 playerForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
+        Vector3 cameraForward = Vector3.ProjectOnPlane(_referencePoint.forward, Vector3.up).normalized;
+
+        return Vector3.SignedAngle(playerForward, cameraForward, Vector3.up );
     }
 
     #endregion

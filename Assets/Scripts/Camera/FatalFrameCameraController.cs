@@ -32,6 +32,8 @@ public class FatalFrameCameraController : MonoBehaviour
     [Header("Controls")]
     [SerializeField] private float _mouseSensitivity = 0.15f;
     [SerializeField] private float _transitionSpeed = 12f;
+    [SerializeField] private float _minPitch = -40f;
+    [SerializeField] private float _maxPitch = 60f;
 
     [Header("Camera Collision")]
     [SerializeField] private LayerMask _collisionMask;
@@ -104,7 +106,7 @@ public class FatalFrameCameraController : MonoBehaviour
             Vector2 mouseDelta = Mouse.current.delta.ReadValue();
             _yaw += mouseDelta.x * _mouseSensitivity;
             _pitch -= mouseDelta.y * _mouseSensitivity;
-            _pitch = Mathf.Clamp(_pitch, -40f, 60f);
+            _pitch = Mathf.Clamp(_pitch, _minPitch, _maxPitch);
         }
         else
         {
@@ -171,4 +173,6 @@ public class FatalFrameCameraController : MonoBehaviour
 
     //API
     public Vector2 CameraRotation => new Vector2(_yaw, _pitch);
+    public float MinPitch => _minPitch;
+    public float MaxPitch => _maxPitch;
 }

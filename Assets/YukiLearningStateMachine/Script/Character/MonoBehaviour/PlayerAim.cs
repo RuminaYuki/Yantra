@@ -5,8 +5,6 @@ public class PlayerAim : MonoBehaviour
     [SerializeField] private FatalFrameCameraController cameraController;
     [SerializeField] private Transform playerRoot;
     [SerializeField] private float maxYawAngle = 60f;
-    [SerializeField] private float maxPitchUp = 60f;
-    [SerializeField] private float maxPitchDown = 40f;
     [SerializeField] private float smoothSpeed = 10f;
 
     private Animator animator;
@@ -28,7 +26,9 @@ public class PlayerAim : MonoBehaviour
         float relativeYaw = Mathf.DeltaAngle(playerRoot.eulerAngles.y, cameraRotation.x);
         float targetYaw = Mathf.Clamp(relativeYaw / maxYawAngle, -1f, 1f) * 2f;
 
-        float pitchLimit = cameraRotation.y >= 0f ? maxPitchUp : maxPitchDown;
+        float pitchLimit = cameraRotation.y >= 0f
+            ? cameraController.MaxPitch
+            : -cameraController.MinPitch;
         float targetPitch = Mathf.Clamp(cameraRotation.y / pitchLimit, -1f, 1f) * 2f;
 
         currentYaw = Mathf.Lerp(currentYaw, targetYaw, Time.deltaTime * smoothSpeed);
