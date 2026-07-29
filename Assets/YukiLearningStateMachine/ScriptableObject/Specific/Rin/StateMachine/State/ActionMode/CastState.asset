@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7da57aa186da8c4a92fe7e1a7ef5add, type: 3}
-  m_Name: ThirdPersonState
+  m_Name: CastState
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.StateSO
   _actions:
-  - {fileID: 11400000, guid: e4ce3483afc79a04b88f29be0ab7a77d, type: 2}
-  - {fileID: 11400000, guid: 0da293a8cd4b52442a2141d34b4ed018, type: 2}
+  - {fileID: 11400000, guid: ce98c7e2cd65cbe468a003cab9e460b0, type: 2}

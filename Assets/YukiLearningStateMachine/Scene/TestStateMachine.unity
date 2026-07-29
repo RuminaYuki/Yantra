@@ -2215,8 +2215,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StateMachineController
   _transitionTables:
-  - {fileID: 11400000, guid: 0034a1ad5b8d68c4ea9ca5b9510fb3cd, type: 2}
+  - {fileID: 11400000, guid: aabbe1a9ca9926346aeb75a676f6139f, type: 2}
   - {fileID: 11400000, guid: e935fce6c7d8b584582c951a55f80415, type: 2}
+  - {fileID: 11400000, guid: 0034a1ad5b8d68c4ea9ca5b9510fb3cd, type: 2}
 --- !u!114 &1062817029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2294,6 +2295,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateFlags
   flags:
   - Flag: {fileID: 11400000, guid: d545a50a8cd742744abe9b237285767b, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: cbd2ad8135331254ba2b65379fc3d549, type: 2}
     InitialValue: 0
     runtimeValue: 0
 --- !u!114 &1062817033
@@ -2431,9 +2435,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1273965141}
   - component: {fileID: 1273965143}
-  - component: {fileID: 1273965142}
   - component: {fileID: 1273965144}
   - component: {fileID: 1273965145}
+  - component: {fileID: 1273965142}
   m_Layer: 0
   m_Name: MainCamera StateMachine
   m_TagString: Untagged

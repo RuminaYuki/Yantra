@@ -85,15 +85,15 @@ public class FatalFrameCameraController : MonoBehaviour
 
     private void Update()
     {
-        if (Mouse.current != null)
-        {
-            // บังคับว่าถ้ากางยันต์อยู่ จะห้ามเล็งปืนซ้อน
-            if (!IsYantraAiming)
-            {
-                if (Mouse.current.rightButton.wasPressedThisFrame) IsGunAiming = true;
-                if (Mouse.current.rightButton.wasReleasedThisFrame) IsGunAiming = false;
-            }
-        }
+        // if (Mouse.current != null)
+        // {
+        //     // บังคับว่าถ้ากางยันต์อยู่ จะห้ามเล็งปืนซ้อน
+        //     if (!IsYantraAiming)
+        //     {
+        //         if (Mouse.current.rightButton.wasPressedThisFrame) IsGunAiming = true;
+        //         if (Mouse.current.rightButton.wasReleasedThisFrame) IsGunAiming = false;
+        //     }
+        // }
     }
 
     private void LateUpdate()
