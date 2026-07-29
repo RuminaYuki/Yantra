@@ -34,6 +34,9 @@ MonoBehaviour:
     - Conditions:
       - Condition: {fileID: 11400000, guid: b7c3fcf14645925478ed05062faf0101, type: 2}
         ExpectedResult: 1
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 4539198e221616146b9cb8b40cc4bf85, type: 2}
+        ExpectedResult: 0
     ToState: {fileID: 11400000, guid: ff9edf3420fed03478a5b5cd64d9b6aa, type: 2}
   - FromState: {fileID: 11400000, guid: 6c9979a729660014b90292c993fb4272, type: 2}
     ConditionGroups:
