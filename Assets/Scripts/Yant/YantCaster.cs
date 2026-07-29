@@ -39,6 +39,7 @@ public class YantCaster : MonoBehaviour
         if (_stats == null) _stats = GetComponentInParent<YantraStatsController>();
         if (_playerRoot == null && _stats != null) _playerRoot = _stats.gameObject;
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
     #region Analyze Input
     public void Analyze()
     {
@@ -96,8 +97,23 @@ public class YantCaster : MonoBehaviour
         GameObject paper = _yantPaper != null ? _yantPaper : (_matcher != null ? _matcher.gameObject : gameObject);
         Vector3 spawnPos = paper.transform.position;
         Quaternion spawnRot = paper.transform.rotation;
+        GameObject yantObj = null;
 
-        GameObject yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot);
+
+        if (binding.YantPrefab.TryGetComponent<YantEffectController>(out YantEffectController yantEffectController))
+        {
+            yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot);
+            yantEffectController.SetDefaultValue(
+                _playerRoot != null ? _playerRoot : gameObject,
+                _stats,
+                GetAimDirection(yantObj.transform.position));
+        }
+        else
+        {
+            Debug.LogWarning("ไม่เจอ YantEffectController ใน yant ที่ Instantiate");
+            return false;
+        }
+
         _lastSpawnedYant = yantObj;
 
         // Clear the drawing on the paper after casting
@@ -112,14 +128,15 @@ public class YantCaster : MonoBehaviour
         return true;
     }
     #endregion
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
     #region Cast Yant on Input
-    public void tryCastYant()
+    //เปลี่ยนไปสั่งใน YantEffectController
+    public void tryCastYant(float holdTime)
     {
-        CastYant();
+        CastYant(holdTime);
     }
 
-    private bool CastYant()
+    private bool CastYant(float holdTime)
     {
         GameObject yant = _lastSpawnedYant;
         if (yant == null)
@@ -127,12 +144,9 @@ public class YantCaster : MonoBehaviour
             Debug.LogWarning("<color=#00FFFF>[YantCaster]</color> No yant to cast.");
             return false;
         }
-        if (yant.TryGetComponent(out IYantEffect effect))
+        if (yant.TryGetComponent(out YantEffectController effect))
         {
-            effect.Initialize(
-                _playerRoot != null ? _playerRoot : gameObject,
-                _stats,
-                GetAimDirection(yant.transform.position));
+            effect.TryInitialize(holdTime);
             return true;
         }
         else

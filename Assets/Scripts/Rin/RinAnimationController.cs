@@ -240,7 +240,7 @@ public class RinAnimationController : MonoBehaviour
     {
         if(_yantCaster != null && context.started)
         {
-            _yantCaster.tryCastYant();
+            //_yantCaster.tryCastYant();
         }
     }
 

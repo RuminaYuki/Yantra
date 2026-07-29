@@ -2070,6 +2070,7 @@ GameObject:
   - component: {fileID: 1062817033}
   - component: {fileID: 1062817029}
   - component: {fileID: 1062817031}
+  - component: {fileID: 1062817034}
   m_Layer: 3
   m_Name: Rin StateMachine
   m_TagString: Player
@@ -2308,6 +2309,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimatorProvider
   animatorAnchor: {fileID: 11400000, guid: 3ebfec1f5b2213643b5f53ca5fa476f1, type: 2}
+--- !u!114 &1062817034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1e4699c2ab2974fb6f09a1ca355b43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantController
+  _yantCaster: {fileID: 1175156751}
+  _bookRef: {fileID: 1175156750}
+  _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
+  _holdTime: 0
 --- !u!4 &1091021679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4713043083974578609, guid: f09e097e7032d164583e76b3e608032a,
