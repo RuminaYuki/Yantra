@@ -44,7 +44,8 @@ public class PlayerLocomotion : MonoBehaviour
     private int _startTurnTrigger;
     private bool _wasMoving;
 
-    //================Locomotion Animatiton====================
+    //================Gravity====================
+    [Header("Gravity")]
     [SerializeField] private float gravityMultiplier = 3;
     private float _gravity = -9.81f;
     private float _velocityY;
