@@ -18,15 +18,13 @@ public class SetParameterAnimatorAction : StateAction
 {
     private Animator _animator;
 
-    private ParameterType _parameterType;
-    private string _parameterName;
-    private bool _value;
+    private readonly ParameterType _parameterType;
+    private readonly string _parameterName;
 
     public SetParameterAnimatorAction(ParameterSetting parameterSetting)
     {
         _parameterType = parameterSetting.ParameterType;
         _parameterName = parameterSetting.ParameterName;
-        _value = parameterSetting.Value;
     }
     public override void Awake(StateMachine stateMachine)
     {
@@ -37,13 +35,22 @@ public class SetParameterAnimatorAction : StateAction
         switch (_parameterType)
         {
             case ParameterType.Bool:
-                _animator.SetBool(_parameterName,_value);
+                _animator.SetBool(_parameterName, true);
                 break;
             case ParameterType.Trigger:
                 _animator.SetTrigger(_parameterName);
                 break;
         }
     }
+
+    public override void OnStateExit()
+    {
+        if (_animator == null || _parameterType != ParameterType.Bool)
+            return;
+
+        _animator.SetBool(_parameterName, false);
+    }
+
     public override void OnUpdate(){}
 }
 
@@ -52,7 +59,6 @@ public struct ParameterSetting
 {
     public ParameterType ParameterType;
     public string ParameterName;
-    public bool Value;
 }
 
 public enum ParameterType

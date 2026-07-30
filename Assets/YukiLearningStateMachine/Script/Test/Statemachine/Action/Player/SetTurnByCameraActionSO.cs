@@ -37,5 +37,12 @@ public class SetTurnByCameraAction : StateAction
         _playerLocomotion.SetTurnByCamera(_enabled);
     }
 
+    public override void OnStateExit()
+    {
+        if (_playerLocomotion == null) return;
+
+        _playerLocomotion.SetTurnByCamera(false);
+    }
+
     public override void OnUpdate() { }
 }

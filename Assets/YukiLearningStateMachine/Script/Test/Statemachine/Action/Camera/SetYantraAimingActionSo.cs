@@ -44,5 +44,12 @@ public class SetYantraAimingAction : StateAction
         if (cameraController == null) return;
         cameraController.IsYantraAiming = isAiming;
     }
+
+    public override void OnStateExit()
+    {
+        if (cameraController == null) return;
+        cameraController.IsYantraAiming = false;
+    }
+
     public override void OnUpdate(){}
 }

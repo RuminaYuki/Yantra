@@ -36,7 +36,7 @@ public class SetGunAimingAction : StateAction
             cameraController = Object.FindFirstObjectByType<FatalFrameCameraController>();
 
         if (cameraController == null)
-            Debug.LogError("SetYantraAimingAction cannot find FatalFrameCameraController.");
+            Debug.LogError("SetGunAimingAction cannot find FatalFrameCameraController.");
     }
 
     public override void OnStateEnter()
@@ -44,5 +44,12 @@ public class SetGunAimingAction : StateAction
         if (cameraController == null) return;
         cameraController.IsGunAiming = isAiming;
     }
+
+    public override void OnStateExit()
+    {
+        if (cameraController == null) return;
+        cameraController.IsGunAiming = false;
+    }
+
     public override void OnUpdate(){}
 }

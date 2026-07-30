@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d48b03d16d09bc14e8331bf650642277, type: 3}
-  m_Name: SetFlashLightFalse
-  m_EditorClassIdentifier: Assembly-CSharp::SetParameterAnimatorActionSO
+  m_Name: SetIsCrouch
+  m_EditorClassIdentifier: Assembly-CSharp::SetAnimatorParameterActionSO
   ParameterSetting:
     ParameterType: 0
-    ParameterName: IsFlashLight
-    Value: 0
+    ParameterName: IsCrouch

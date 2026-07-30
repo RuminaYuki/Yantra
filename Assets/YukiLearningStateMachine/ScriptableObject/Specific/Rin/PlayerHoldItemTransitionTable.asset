@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: PlayerHoldItemTransitionTable
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
   _initialState: {fileID: 11400000, guid: 8638098175bb3e14b8013b14c2f7601f, type: 2}
-  _anyTransitions: []
+  _anyTransitions:
+  - ToState: {fileID: 11400000, guid: 86291982355116a4698df2353a2ca431, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 47094f64a36a9b448944f1faa868d74b, type: 2}
+        ExpectedResult: 0
   _transitions:
   - FromState: {fileID: 11400000, guid: 8638098175bb3e14b8013b14c2f7601f, type: 2}
     ConditionGroups:
@@ -40,5 +45,11 @@ MonoBehaviour:
         ExpectedResult: 0
     - Conditions:
       - Condition: {fileID: 11400000, guid: 4539198e221616146b9cb8b40cc4bf85, type: 2}
+        ExpectedResult: 1
+    ToState: {fileID: 11400000, guid: 8638098175bb3e14b8013b14c2f7601f, type: 2}
+  - FromState: {fileID: 11400000, guid: 86291982355116a4698df2353a2ca431, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 47094f64a36a9b448944f1faa868d74b, type: 2}
         ExpectedResult: 1
     ToState: {fileID: 11400000, guid: 8638098175bb3e14b8013b14c2f7601f, type: 2}
