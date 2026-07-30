@@ -85,40 +85,43 @@ public class FatalFrameCameraController : MonoBehaviour
 
     private void Update()
     {
-        // if (Mouse.current != null)
-        // {
-        //     // บังคับว่าถ้ากางยันต์อยู่ จะห้ามเล็งปืนซ้อน
-        //     if (!IsYantraAiming)
-        //     {
-        //         if (Mouse.current.rightButton.wasPressedThisFrame) IsGunAiming = true;
-        //         if (Mouse.current.rightButton.wasReleasedThisFrame) IsGunAiming = false;
-        //     }
-        // }
+        if (Mouse.current != null)
+        {
+            // บังคับว่าถ้ากางยันต์อยู่ จะห้ามเล็งปืนซ้อน
+            if (!IsYantraAiming)
+            {
+                if (Mouse.current.rightButton.wasPressedThisFrame) IsGunAiming = true;
+                if (Mouse.current.rightButton.wasReleasedThisFrame) IsGunAiming = false;
+            }
+        }
     }
 
     private void LateUpdate()
     {
         if (_tppPivot == null || _fppEyePosition == null || Mouse.current == null) return;
 
-        if (!IsYantraAiming || _isFreeLookingInBook)
+        Quaternion targetRotation;
+
+        if (!IsYantraAiming)
         {
             // ถ้าไม่ได้กางสมุด ให้ขยับกล้องด้วยเมาส์ได้ตามปกติ
             Vector2 mouseDelta = Mouse.current.delta.ReadValue();
             _yaw += mouseDelta.x * _mouseSensitivity;
             _pitch -= mouseDelta.y * _mouseSensitivity;
             _pitch = Mathf.Clamp(_pitch, _minPitch, _maxPitch);
+            targetRotation = Quaternion.Euler(_pitch, _yaw, 0f);
         }
         else
         {
             // ถ้ากางสมุดอยู่ (IsYantraAiming == true)
             // บังคับก้มหน้าลง 45 องศา (เปลี่ยนตัวเลข 45f ได้ตามความเหมาะสม)
             // ค่อยๆ ก้มลงอย่างสมูทด้วย Lerp
-            Quaternion Rotation = Quaternion.LookRotation(_yantraPivot.position - transform.position);
-            _pitch = Mathf.Lerp(_pitch, Rotation.y + _yantraOffsetRotationY, Time.deltaTime * 5f);
+            targetRotation = Quaternion.LookRotation(_yantraPivot.position - transform.position);
+            //_pitch = Mathf.Lerp(_pitch, Rotation.y + _yantraOffsetRotationY, Time.deltaTime * 5f);
             // หมายเหตุ: เราไม่ยุ่งกับ _yaw ผู้เล่นจะหันไปทางเดิมก่อนเปิดสมุด
         }
 
-        Quaternion targetRotation = Quaternion.Euler(_pitch, _yaw, 0f);
+        
         Vector3 desiredPosition;
         float targetFOV;
 
@@ -171,8 +174,9 @@ public class FatalFrameCameraController : MonoBehaviour
         _isFreeLookingInBook = IsYantraAiming ? false : true; // ถ้ากำลังกางสมุดอยู่แล้วกด Q อีกครั้ง ให้ปิดโหมด Free Look
     }
 
-    //API
+    #region API
     public Vector2 CameraRotation => new Vector2(_yaw, _pitch);
     public float MinPitch => _minPitch;
     public float MaxPitch => _maxPitch;
+    #endregion
 }

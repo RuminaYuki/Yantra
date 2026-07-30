@@ -4,18 +4,19 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "SetEnableYantControllerAction",
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/Set Enable Yant Controller")]
-public class SetEnableYantControllerActionSO : StateActionSO
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Set Yant Controller Draw")]
+public class SetYantControllerDrawActionSO : StateActionSO
 {
     public override StateAction CreateAction(StateMachine stateMachine)
     {
-        return new SetEnableYantControllerAction();
+        return new SetYantControllerDrawAction();
     }
 }
 
-public class SetEnableYantControllerAction : StateAction
+public class SetYantControllerDrawAction : StateAction
 {
     private YantController _yantController;
+    private DrawOn3DMesh _drawOn3DMesh;
 
     public override void Awake(StateMachine stateMachine)
     {
@@ -24,12 +25,12 @@ public class SetEnableYantControllerAction : StateAction
 
     public override void OnStateEnter()
     {
-        _yantController.SetEnableUseInputObserverSO(true);
+        _yantController.SetDrawInputObserverSO(true);
     }
 
     public override void OnStateExit()
     {
-        _yantController.SetEnableUseInputObserverSO(false);
+        _yantController.SetDrawInputObserverSO(false);
     }
 
     public override void OnUpdate() { }

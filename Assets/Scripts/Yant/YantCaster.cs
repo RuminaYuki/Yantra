@@ -43,7 +43,8 @@ public class YantCaster : MonoBehaviour
     #region Analyze Input
     public void Analyze()
     {
-        TryAnalyze();
+        Debug.Log("Analyze : " + TryAnalyze());
+        
     }
 
     private bool TryAnalyze()
@@ -133,6 +134,7 @@ public class YantCaster : MonoBehaviour
     //เปลี่ยนไปสั่งใน YantEffectController
     public void tryCastYant(float holdTime)
     {
+        Debug.Log("try Cast");
         CastYant(holdTime);
     }
 

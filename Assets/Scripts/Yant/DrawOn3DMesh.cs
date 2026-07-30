@@ -27,7 +27,7 @@ public class DrawOn3DMesh : MonoBehaviour
     private Vector2 _lastMousePos;  
 
     // เก็บรายการเส้นทั้งหมดที่วาดใน Session นี้
-    private List<LineRenderer> _allStrokes = new List<LineRenderer>();
+    [SerializeField]private List<LineRenderer> _allStrokes = new List<LineRenderer>();
 
     private void OnEnable()
     {
@@ -52,6 +52,7 @@ public class DrawOn3DMesh : MonoBehaviour
     {
         if (_isDrawing && _currentLine)
         {
+            //Debug.Log("Is Drawing");
             Vector2 currentMousePos = Mouse.current.position.ReadValue();
             if (Vector2.Distance(currentMousePos, _lastMousePos) >= _minMouseDistance)
             {
@@ -67,8 +68,8 @@ public class DrawOn3DMesh : MonoBehaviour
         if (_isDrawing)
         {
             // เริ่ม stroke แรกของการวาดรอบนี้ → เล่นเสียงพากย์ "ขณะวาด" ครั้งเดียว
-            if (_allStrokes.Count == 0)
-                PlayerVoice.Publish(PlayerVoice.WhileDrawing);
+            /*if (_allStrokes.Count == 0)
+                PlayerVoice.Publish(PlayerVoice.WhileDrawing);*/
 
             // สร้างเส้นใหม่ทุกครั้งที่คลิกใหม่เพื่อไม่ให้เชื่อมกับเส้นเดิม
             CreateNewLine(clickPos);
@@ -99,6 +100,19 @@ public class DrawOn3DMesh : MonoBehaviour
 
     private void AddPointToLine(Vector2 screenPos)
     {
+        /*Ray ray = _mainCamera.ScreenPointToRay(screenPos);
+
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 2);
+
+        RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
+
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        foreach (var h in hits)
+        {
+            Debug.Log($"{h.collider.name} | Layer : {LayerMask.LayerToName(h.collider.gameObject.layer)} | Dist : {h.distance}");
+        }*/
+
         Ray ray = _mainCamera.ScreenPointToRay(screenPos);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _drawableLayer))
         {

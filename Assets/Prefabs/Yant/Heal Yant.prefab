@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7169445688084817901}
   - component: {fileID: 1625883414680777010}
   - component: {fileID: 5018629197499477566}
+  - component: {fileID: 5026725452132445807}
   - component: {fileID: -6395405659944346907}
   m_Layer: 7
   m_Name: Heal Yant
@@ -113,6 +114,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10.000001, y: 0.0000013411045, z: 10.000008}
   m_Center: {x: 0, y: 0, z: -0.000061035156}
+--- !u!114 &5026725452132445807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867824720623061172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02643e0e27c3c5b46a059694c4dceeef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
+  _yantLifeTime: 10
+  _effectSettings:
+  - _yantReferences: {fileID: -6395405659944346907}
+    _effectType: 0
+    _effectDuration: 1
+    _holdDuration: 0
 --- !u!114 &-6395405659944346907
 MonoBehaviour:
   m_ObjectHideFlags: 0
