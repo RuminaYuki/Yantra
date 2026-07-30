@@ -10913,7 +10913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b01bff10f4e4a14aae31ee1e29ad1f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimatorProvider
-  animatorAnchor: {fileID: 11400000, guid: 3ebfec1f5b2213643b5f53ca5fa476f1, type: 2}
+  Anchors:
+  - {fileID: 11400000, guid: 3ebfec1f5b2213643b5f53ca5fa476f1, type: 2}
 --- !u!114 &1062817034
 MonoBehaviour:
   m_ObjectHideFlags: 0

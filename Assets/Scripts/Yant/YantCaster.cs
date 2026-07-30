@@ -43,7 +43,7 @@ public class YantCaster : MonoBehaviour
     #region Analyze Input
     public void Analyze()
     {
-        Debug.Log("Analyze : " + TryAnalyze());
+        TryAnalyze();
         
     }
 
@@ -100,18 +100,20 @@ public class YantCaster : MonoBehaviour
         Quaternion spawnRot = paper.transform.rotation;
         GameObject yantObj = null;
 
+        yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot);
 
-        if (binding.YantPrefab.TryGetComponent<YantEffectController>(out YantEffectController yantEffectController))
+        if (yantObj.TryGetComponent<YantEffectController>(out YantEffectController yantEffectController))
         {
-            yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot);
             yantEffectController.SetDefaultValue(
                 _playerRoot != null ? _playerRoot : gameObject,
                 _stats,
                 GetAimDirection(yantObj.transform.position));
+            Debug.Log(_playerRoot + " " + _stats + " " + GetAimDirection(yantObj.transform.position));
         }
         else
         {
             Debug.LogWarning("ไม่เจอ YantEffectController ใน yant ที่ Instantiate");
+            Destroy(yantObj);
             return false;
         }
 
@@ -134,7 +136,6 @@ public class YantCaster : MonoBehaviour
     //เปลี่ยนไปสั่งใน YantEffectController
     public void tryCastYant(float holdTime)
     {
-        Debug.Log("try Cast");
         CastYant(holdTime);
     }
 

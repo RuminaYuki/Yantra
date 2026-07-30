@@ -10,7 +10,7 @@ namespace Yuki.Learning.StateMachine
 
     public bool IsSet => _value != null;
 
-    public void Provide(T value)
+    protected void Provide(T value)
     {
         if (value == null)
         {
