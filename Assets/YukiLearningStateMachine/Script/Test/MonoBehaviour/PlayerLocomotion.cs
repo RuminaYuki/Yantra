@@ -19,7 +19,8 @@ public class PlayerLocomotion : MonoBehaviour
     //================Locomotion Animatiton====================
     [Header("Locomotion Animatiton Setting")]
     [SerializeField] private float _dampTime = 0.1f;
-    //====================Walk and Run=========================
+
+    //Walk Run and Turn Setting
     [Header("Walk and Run Setting")]
     private float _multiply;
     [SerializeField] private string _nameParameterMoveZ;
@@ -42,6 +43,11 @@ public class PlayerLocomotion : MonoBehaviour
     private int _startTurnAngle;
     private int _startTurnTrigger;
     private bool _wasMoving;
+
+    //================Locomotion Animatiton====================
+    [SerializeField] private float gravityMultiplier = 3;
+    private float _gravity = -9.81f;
+    private float _velocityY;
 
     void Awake()
     {
@@ -93,7 +99,7 @@ public class PlayerLocomotion : MonoBehaviour
     }
     private void OnAnimatorMove()
     {
-        _characterController.Move(_animator.deltaPosition);
+        _characterController.Move(_animator.deltaPosition + Gravity());
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -197,6 +203,22 @@ public class PlayerLocomotion : MonoBehaviour
 
         transform.rotation = nextRotation;
     }
+
+    public Vector3 Gravity()
+    {
+        if (_characterController.isGrounded && _velocityY < 0.0f)
+        {
+            _velocityY = -1.0f;
+        }
+        else
+        {
+            _velocityY += _gravity * gravityMultiplier * Time.deltaTime;
+        }
+        
+        Vector3 vector3 = Vector3.zero;
+        vector3.y = _velocityY;
+        return vector3;
+    } 
     #endregion
 
     #region //API
