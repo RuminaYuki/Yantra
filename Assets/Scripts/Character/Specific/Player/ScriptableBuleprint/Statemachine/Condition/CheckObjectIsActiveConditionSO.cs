@@ -31,7 +31,7 @@ public class CheckObjectIsActiveCondition : Condition
         if (objectAnchor.Value == null) return false;
 
         bool value = objectAnchor.Value.activeSelf; 
-        Debug.Log(value);
+        //Debug.Log(value);
         return value;
     }
 }

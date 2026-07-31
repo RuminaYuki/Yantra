@@ -12,7 +12,11 @@ public class DrawOn3DMesh : MonoBehaviour
     [SerializeField] private YantraInputObserverSO _inputObserver;
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private LayerMask _drawableLayer;
-    [SerializeField] private float _minMouseDistance = 0.01f;
+    private Vector3 _lastLocalPoint;
+    private bool _hasLastPoint = false;
+
+    [SerializeField]
+    private float _minPointDistance = 0.002f; // ระยะขั้นต่ำระหว่าง Point บนกระดาษ
 
     [Header("Drawing Setup")]
     [Tooltip("วัตถุหลัก (กระดาษ) ที่จะให้เส้นทั้งหมดเข้าไปอยู่เป็นลูก")]
@@ -50,15 +54,10 @@ public class DrawOn3DMesh : MonoBehaviour
 
     private void Update()
     {
-        if (_isDrawing && _currentLine)
-        {
-            //Debug.Log("Is Drawing");
-            Vector2 currentMousePos = Mouse.current.position.ReadValue();
-            if (Vector2.Distance(currentMousePos, _lastMousePos) >= _minMouseDistance)
-            {
-                AddPointToLine(currentMousePos);
-            }
-        }
+        if (!_isDrawing || _currentLine == null)
+            return;
+
+        AddPointToLine(Mouse.current.position.ReadValue());
     }
 
     private void OnLeftClickInput(Vector2 clickPos, InputAction.CallbackContext context)
@@ -77,6 +76,7 @@ public class DrawOn3DMesh : MonoBehaviour
         else
         {
             _currentLine = null;
+            _hasLastPoint = false;
         }
     }
 
@@ -84,49 +84,48 @@ public class DrawOn3DMesh : MonoBehaviour
     {
         _currentLine = Instantiate(_linePrefab);
 
-        // ตั้งค่า Parent ก่อนที่จะกำหนดตำแหน่งจุด
         if (_paperParent != null)
         {
-            _currentLine.transform.SetParent(_paperParent, false); // ใส่ false เพื่อ Reset ให้มันอ้างอิงจาก Parent ทันที
+            _currentLine.transform.SetParent(_paperParent, false);
         }
 
         _currentLine.useWorldSpace = false;
         _currentLine.positionCount = 0;
 
         _allStrokes.Add(_currentLine);
+
         _lastMousePos = startPos;
+
+        // รีเซ็ตข้อมูลของเส้นใหม่
+        _hasLastPoint = false;
+
         AddPointToLine(startPos);
-    }   
+    }
 
     private void AddPointToLine(Vector2 screenPos)
     {
-        /*Ray ray = _mainCamera.ScreenPointToRay(screenPos);
-
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 2);
-
-        RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
-
-        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-
-        foreach (var h in hits)
-        {
-            Debug.Log($"{h.collider.name} | Layer : {LayerMask.LayerToName(h.collider.gameObject.layer)} | Dist : {h.distance}");
-        }*/
-
         Ray ray = _mainCamera.ScreenPointToRay(screenPos);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _drawableLayer))
+
+        if (!Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _drawableLayer))
+            return;
+
+        Vector3 worldPoint = hitInfo.point + hitInfo.normal * _surfaceOffset;
+        Vector3 localPoint = _paperParent.InverseTransformPoint(worldPoint);
+
+        // เช็คระยะจาก Point ก่อนหน้าใน Local Space
+        if (_hasLastPoint)
         {
-            // คำนวณตำแหน่ง World
-            Vector3 worldPoint = hitInfo.point + (hitInfo.normal * _surfaceOffset);
-
-            // แปลง World Point เป็น Local Point ของกระดาษ
-            Vector3 localPoint = _paperParent.InverseTransformPoint(worldPoint);
-
-            _currentLine.positionCount++;
-            _currentLine.SetPosition(_currentLine.positionCount - 1, localPoint);
-
-            _lastMousePos = screenPos;
+            if (Vector3.Distance(_lastLocalPoint, localPoint) < _minPointDistance)
+                return;
         }
+
+        _currentLine.positionCount++;
+        _currentLine.SetPosition(_currentLine.positionCount - 1, localPoint);
+
+        _lastLocalPoint = localPoint;
+        _hasLastPoint = true;
+
+        _lastMousePos = screenPos;
     }
 
     /// <summary>
