@@ -17,6 +17,8 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField] private Transform _referencePoint;
 
     //================Locomotion Animatiton====================
+    private LocomotionAnim locomotionAnim;
+
     [Header("Locomotion Animatiton Setting")]
     [SerializeField] private float _dampTime = 0.1f; //Initial
 
@@ -25,9 +27,8 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField] private float _multiply; //Initial
     [SerializeField] private string _nameParameterMoveZ;
     [SerializeField] private string _nameParameterMoveX;
-
-    private LocomotionAnim locomotionAnim;
-
+    
+    //Turn
     [Header("Turn Animation Setting")]
     [SerializeField] private string _nameTurnAngle;
     [SerializeField] private string _nameStartTurn;
@@ -44,14 +45,14 @@ public class PlayerLocomotion : MonoBehaviour
     private bool _wasMoving;
 
     //================Gravity====================
+    private GravityCharacterCon _gravityCharacterCon;
+
     [Header("Gravity")]
     [SerializeField] private float gravityMultiplier = 3;
-    private float _gravity = -9.81f;
-    private float _velocityY;
 
 
     //================Rotate Transform===============
-    private Rotation _rotation;
+    private RotationTransform _rotation;
     private float _rotateSpeed = 1;
 
     void Awake()
@@ -66,6 +67,9 @@ public class PlayerLocomotion : MonoBehaviour
 
         //Rotatetion
         _rotation = new(transform,_rotateSpeed);
+
+        //Gravity
+        _gravityCharacterCon = new(_characterController,gravityMultiplier);
 
         _startTurnAngle = Animator.StringToHash(_nameTurnAngle);
         _startTurnTrigger = Animator.StringToHash(_nameStartTurn);
@@ -101,7 +105,7 @@ public class PlayerLocomotion : MonoBehaviour
     }
     private void OnAnimatorMove()
     {
-        _characterController.Move(_animator.deltaPosition + Gravity());
+        _characterController.Move(_animator.deltaPosition + _gravityCharacterCon.Gravity());
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -189,22 +193,6 @@ public class PlayerLocomotion : MonoBehaviour
 
         return flatForward.normalized;
     }
-
-    public Vector3 Gravity()
-    {
-        if (_characterController.isGrounded && _velocityY < 0.0f)
-        {
-            _velocityY = -1.0f;
-        }
-        else
-        {
-            _velocityY += _gravity * gravityMultiplier * Time.deltaTime;
-        }
-        
-        Vector3 vector3 = Vector3.zero;
-        vector3.y = _velocityY;
-        return vector3;
-    } 
     #endregion
 
     #region //API

@@ -1,11 +1,11 @@
 using UnityEngine;
-public class Rotation
+public class RotationTransform
 {
     private readonly Transform _transform;
 
     private float _speed;
 
-    public Rotation(Transform transform, float speed = 1)
+    public RotationTransform(Transform transform, float speed = 1)
     {
         _transform = transform;
         _speed = speed;
