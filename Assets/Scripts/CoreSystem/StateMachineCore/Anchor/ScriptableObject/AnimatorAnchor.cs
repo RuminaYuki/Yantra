@@ -4,4 +4,23 @@ using Yuki.Learning.StateMachine;
     fileName = "AnimatorAnchor",
     menuName = "YUKI Learning State Machine/Anchor/AnimatorAnchor")]
 
-public class AnimatorAnchor : RuntimeAnchorBase<Animator> { }
+public class AnimatorAnchor : RuntimeAnchorBase<Animator> , IRuntimeAnchorBase
+{
+    public void IProvide(GameObject player)
+    {
+        Animator value = player.GetComponent<Animator>();
+
+        base.Provide(value);
+    }
+
+    public void IUnset()
+    {
+        base.Unset();
+    }
+}
+
+public interface IRuntimeAnchorBase
+{
+    void IProvide(GameObject player);
+    void IUnset();
+}

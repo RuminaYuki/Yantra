@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5018629197499477566}
   - component: {fileID: 5026725452132445807}
   - component: {fileID: -6395405659944346907}
+  - component: {fileID: -8560688348446518912}
   m_Layer: 7
   m_Name: Heal Yant
   m_TagString: Untagged
@@ -145,4 +146,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealYant
   _healAmount: 25
-  _lifetime: 5
+--- !u!114 &-8560688348446518912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867824720623061172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Provider
+  Anchors:
+  - {fileID: 11400000, guid: 2aa02c22bc949974d8a7630d7b6d24e5, type: 2}

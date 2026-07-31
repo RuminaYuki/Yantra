@@ -10665,8 +10665,8 @@ GameObject:
   - component: {fileID: 1062817030}
   - component: {fileID: 1062817028}
   - component: {fileID: 1062817032}
-  - component: {fileID: 1062817033}
   - component: {fileID: 1062817029}
+  - component: {fileID: 1062817037}
   - component: {fileID: 1062817031}
   - component: {fileID: 1062817034}
   - component: {fileID: 1062817035}
@@ -10901,19 +10901,6 @@ MonoBehaviour:
   - Flag: {fileID: 11400000, guid: cbd2ad8135331254ba2b65379fc3d549, type: 2}
     InitialValue: 0
     runtimeValue: 0
---- !u!114 &1062817033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062817018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b01bff10f4e4a14aae31ee1e29ad1f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimatorProvider
-  animatorAnchor: {fileID: 11400000, guid: 3ebfec1f5b2213643b5f53ca5fa476f1, type: 2}
 --- !u!114 &1062817034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10971,6 +10958,20 @@ MonoBehaviour:
     m_Bits: 64
   raycastDistance: 1.5
   footOffsetY: 0.04
+--- !u!114 &1062817037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Provider
+  Anchors:
+  - {fileID: 11400000, guid: 3ebfec1f5b2213643b5f53ca5fa476f1, type: 2}
 --- !u!4 &1091021679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4713043083974578609, guid: f09e097e7032d164583e76b3e608032a,
@@ -11283,10 +11284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861ed556e8246da44859cfa58e6c90cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MouseFollow
-  mainCamera: {fileID: 55483018}
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!135 &1164789134
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -19034,52 +19031,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f44e542b033a04d996efffc75dcad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RinAudioController
-  _audioSource: {fileID: 933451696323776577}
-  _voiceSource: {fileID: 321087945176717250}
-  _interruptCurrentVoice: 1
-  _statsController: {fileID: 4408576543807160817}
-  _raycastPos: {fileID: 864638638873972381}
-  _soundAndTags:
-  - Tag: Mud
-    FootstepSounds:
-    - {fileID: 8300000, guid: 5a025bf71434c71428521082edf046b7, type: 3}
-    RunSounds:
-    - {fileID: 8300000, guid: 1df6050681024a242b83495637fa0d86, type: 3}
-    JumpLandSounds:
-    - {fileID: 8300000, guid: 556a7dc387c182d40bc4383682047351, type: 3}
-    - {fileID: 8300000, guid: 252087f9838eab04286ab29170ea4c28, type: 3}
-    - {fileID: 8300000, guid: 3069158b50ec1324599a626d23486544, type: 3}
-  _damageSounds:
-  - {fileID: 8300000, guid: 242f22f898bf3bf428d5184468aa8c86, type: 3}
-  - {fileID: 8300000, guid: 0d38abd9c1be78b489d698a320626a80, type: 3}
-  - {fileID: 8300000, guid: cdbb1426f1e59a64299f57cc44311f89, type: 3}
-  - {fileID: 8300000, guid: 544332beb0c422449b6f292ceabf6db6, type: 3}
-  _lowHpThreshold: 0.5
-  _lowHp:
-  - {fileID: 8300000, guid: 75f0660529eca5b4892d05173e515eae, type: 3}
-  - {fileID: 8300000, guid: 301074ed90df968498df0b8e44fbe12a, type: 3}
-  _staminaLow:
-  - {fileID: 8300000, guid: 6a3501dba29606d468d17fa58c0cfd77, type: 3}
-  _staminaDepleted:
-  - {fileID: 8300000, guid: b6356a62ad37bfb4e8c669b7db02ebee, type: 3}
-  _whileDrawing:
-  - {fileID: 8300000, guid: 47f15a6ab39ac7e438c1caab1c784753, type: 3}
-  _enterVillage:
-  - {fileID: 8300000, guid: 85cb09f7631fd9f4a99801b8eb5ea004, type: 3}
-  _findFatherClue:
-  - {fileID: 8300000, guid: 5d29c3fbac960e64982e22799b65ae41, type: 3}
-  _walkingToVillageCenter:
-  - {fileID: 8300000, guid: 7463c74dbb6f1ed4f9552c1a6ffe3a29, type: 3}
-  _firstGhostEncounter:
-  - {fileID: 8300000, guid: b166a0362ddad9d449f08dcc8dd696e5, type: 3}
-  _enterYantraHouse:
-  - {fileID: 8300000, guid: e2a4efc84fff2f8489f7f84f04d2ed77, type: 3}
-  _findCave:
-  - {fileID: 8300000, guid: a0eb06068b34aa947870e1f9ca4e7fe5, type: 3}
-  _findSculptureRoom:
-  - {fileID: 0}
-  _afterLeaveYantraHouse:
-  - {fileID: 0}
 --- !u!1 &6001044910611471666
 GameObject:
   m_ObjectHideFlags: 0
@@ -20534,52 +20485,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f44e542b033a04d996efffc75dcad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RinAudioController
-  _audioSource: {fileID: 2762971786869894502}
-  _voiceSource: {fileID: 3375727902107118309}
-  _interruptCurrentVoice: 1
-  _statsController: {fileID: 4408576543807160817}
-  _raycastPos: {fileID: 864638638873972381}
-  _soundAndTags:
-  - Tag: Mud
-    FootstepSounds:
-    - {fileID: 8300000, guid: 5a025bf71434c71428521082edf046b7, type: 3}
-    RunSounds:
-    - {fileID: 8300000, guid: 1df6050681024a242b83495637fa0d86, type: 3}
-    JumpLandSounds:
-    - {fileID: 8300000, guid: 556a7dc387c182d40bc4383682047351, type: 3}
-    - {fileID: 8300000, guid: 252087f9838eab04286ab29170ea4c28, type: 3}
-    - {fileID: 8300000, guid: 3069158b50ec1324599a626d23486544, type: 3}
-  _damageSounds:
-  - {fileID: 8300000, guid: 242f22f898bf3bf428d5184468aa8c86, type: 3}
-  - {fileID: 8300000, guid: 0d38abd9c1be78b489d698a320626a80, type: 3}
-  - {fileID: 8300000, guid: cdbb1426f1e59a64299f57cc44311f89, type: 3}
-  - {fileID: 8300000, guid: 544332beb0c422449b6f292ceabf6db6, type: 3}
-  _lowHpThreshold: 0.5
-  _lowHp:
-  - {fileID: 8300000, guid: 75f0660529eca5b4892d05173e515eae, type: 3}
-  - {fileID: 8300000, guid: 301074ed90df968498df0b8e44fbe12a, type: 3}
-  _staminaLow:
-  - {fileID: 8300000, guid: 6a3501dba29606d468d17fa58c0cfd77, type: 3}
-  _staminaDepleted:
-  - {fileID: 8300000, guid: b6356a62ad37bfb4e8c669b7db02ebee, type: 3}
-  _whileDrawing:
-  - {fileID: 8300000, guid: 47f15a6ab39ac7e438c1caab1c784753, type: 3}
-  _enterVillage:
-  - {fileID: 8300000, guid: 85cb09f7631fd9f4a99801b8eb5ea004, type: 3}
-  _findFatherClue:
-  - {fileID: 8300000, guid: 5d29c3fbac960e64982e22799b65ae41, type: 3}
-  _walkingToVillageCenter:
-  - {fileID: 8300000, guid: 7463c74dbb6f1ed4f9552c1a6ffe3a29, type: 3}
-  _firstGhostEncounter:
-  - {fileID: 8300000, guid: b166a0362ddad9d449f08dcc8dd696e5, type: 3}
-  _enterYantraHouse:
-  - {fileID: 8300000, guid: e2a4efc84fff2f8489f7f84f04d2ed77, type: 3}
-  _findCave:
-  - {fileID: 8300000, guid: a0eb06068b34aa947870e1f9ca4e7fe5, type: 3}
-  _findSculptureRoom:
-  - {fileID: 0}
-  _afterLeaveYantraHouse:
-  - {fileID: 0}
 --- !u!1 &8833028212346638874
 GameObject:
   m_ObjectHideFlags: 0
