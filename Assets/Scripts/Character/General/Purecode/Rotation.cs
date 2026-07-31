@@ -1,17 +1,17 @@
 using UnityEngine;
 public class Rotation
 {
-    private readonly Rigidbody _rb;
+    private readonly Transform _transform;
 
-    public float Speed { get; set; }
+    private float _speed;
 
-    public Rotation(Rigidbody rb, float speed = 0)
+    public Rotation(Transform transform, float speed = 1)
     {
-        _rb = rb;
-        Speed = speed;
+        _transform = transform;
+        _speed = speed;
     }
 
-    public void Rotate(Vector3 direction, float deltaTime)
+    public void Rotate(Vector3 direction)
     {
         direction.y = 0f;
 
@@ -20,9 +20,13 @@ public class Rotation
         Quaternion targetRotation =
             Quaternion.LookRotation(direction, Vector3.up);
 
-        Quaternion nextRotation = Quaternion.Slerp(_rb.rotation,
-            targetRotation,Speed * deltaTime);
+        Quaternion nextRotation = Quaternion.Slerp(_transform.rotation,
+            targetRotation,_speed * Time.fixedDeltaTime);
 
-        _rb.MoveRotation(nextRotation);
+        _transform.rotation = nextRotation;
     }
+
+    #region Secondary API
+    public float Speed{get=>_speed; set => _speed = value;}
+    #endregion
 }
