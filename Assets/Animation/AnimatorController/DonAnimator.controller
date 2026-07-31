@@ -226,6 +226,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 6480452767047942637}
     m_Position: {x: 1006.10925, y: 23.484085, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8714232007174339922}
+    m_Position: {x: 61.007263, y: 272.56287, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -235,7 +238,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: -150, y: 170, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -2172236324368675966}
+  m_DefaultState: {fileID: 8714232007174339922}
 --- !u!1102 &-2172236324368675966
 AnimatorState:
   serializedVersion: 6
@@ -581,6 +584,33 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 983595125227713948, guid: 711714f26800c04469fd411115722355, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &8714232007174339922
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GotSlap
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -4310615215352070099, guid: 8f9b3babfc763ae4a8c67f0167390ac7,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
