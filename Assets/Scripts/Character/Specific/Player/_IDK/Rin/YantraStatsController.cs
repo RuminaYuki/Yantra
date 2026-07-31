@@ -71,7 +71,7 @@ public class YantraStatsController : MonoBehaviour
         {
             if (_isJumping == value) return; // ป้องกันการส่ง Event รัวๆ
             _isJumping = value;
-            if (EventBus.Instance) EventBus.Instance.Publish(new PlayerJumpingEvent(value));
+            // if (EventBus.Instance) EventBus.Instance.Publish(new PlayerJumpingEvent(value));
         }
     }
     public bool IsGrounded
@@ -81,7 +81,7 @@ public class YantraStatsController : MonoBehaviour
         {
             if (_isGrounded == value) return; // ป้องกันการส่ง Event รัวๆ
             _isGrounded = value;
-            if (EventBus.Instance) EventBus.Instance.Publish(new PlayerGroundEvent(value));
+            // if (EventBus.Instance) EventBus.Instance.Publish(new PlayerGroundEvent(value));
         }
     }
 
@@ -158,22 +158,22 @@ public class YantraStatsController : MonoBehaviour
 
     protected void OnEnable()
     {
-        if (!EventBus.Instance) return;
-        EventBus.Instance.Subscribe<DealDamageEvent>(OnTakeDamage);
+        // if (!EventBus.Instance) return;
+        // EventBus.Instance.Subscribe<DealDamageEvent>(OnTakeDamage);
     }
 
     protected void OnDisable()
     {
-        if (!EventBus.Instance) return;
-        EventBus.Instance.Unsubscribe<DealDamageEvent>(OnTakeDamage);
+        // if (!EventBus.Instance) return;
+        // EventBus.Instance.Unsubscribe<DealDamageEvent>(OnTakeDamage);
     }
 
     public void TakeDamage(float damage)
     {
         CurrentHp = Mathf.Clamp(CurrentHp - damage, MinHp, MaxHp);
 
-        if (EventBus.Instance)
-            EventBus.Instance.Publish(new PlayerTakeDamageEvent(damage, CurrentHp));
+        // if (EventBus.Instance)
+            // EventBus.Instance.Publish(new PlayerTakeDamageEvent(damage, CurrentHp));
     }
 
     public void Heal(float healAmount)
@@ -235,7 +235,7 @@ public class YantraStatsController : MonoBehaviour
     protected void OnTakeDamage(DealDamageEvent data)
     {
         TakeDamage(data.Damage);
-        if (EventBus.Instance) EventBus.Instance.Publish(new TakeDamageEvent(data.Damage, CurrentHp));
+        // if (EventBus.Instance) EventBus.Instance.Publish(new TakeDamageEvent(data.Damage, CurrentHp));
     }
 
     public int GetYantCount()
