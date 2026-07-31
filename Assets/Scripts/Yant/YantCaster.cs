@@ -24,7 +24,7 @@ public class YantCaster : MonoBehaviour
 
     [Header("Matching")]
     [SerializeField, Range(0f, 100f)] private float _minSimilarityPercent = 50f;
-    [SerializeField] private List<YantPrefabBinding> _bindings = new List<YantPrefabBinding>();
+    [SerializeField] private List<YantPrefabBinding> _bindings = new();
 
     [Header("Aim")]
     [SerializeField] private float _maxAimDistance = 100f;
