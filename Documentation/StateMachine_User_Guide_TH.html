@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <title>คู่มือการใช้งาน YUKI Learning State Machine</title>
+  <style>
+    @page { size: A4; margin: 16mm 16mm 17mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: #172033;
+      font: 10.5pt/1.55 "Leelawadee UI", Tahoma, sans-serif;
+      background: white;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.25; color: #152b4f; }
+    h1 { font-size: 27pt; }
+    h2 {
+      margin-top: 5mm;
+      padding-bottom: 1.5mm;
+      border-bottom: 1.5px solid #6b8fc8;
+      font-size: 17pt;
+    }
+    h3 { margin-top: 4mm; font-size: 12.5pt; }
+    p { margin: 2mm 0; }
+    ul, ol { margin: 2mm 0 3mm 6mm; padding-left: 5mm; }
+    li { margin: 1mm 0; }
+    code {
+      padding: .2mm 1mm;
+      border-radius: 2px;
+      color: #163e68;
+      background: #edf3fa;
+      font-family: Consolas, monospace;
+      font-size: 9pt;
+    }
+    .cover {
+      min-height: 245mm;
+      padding: 22mm 15mm;
+      color: white;
+      background: linear-gradient(145deg, #11284a 0%, #225a8a 68%, #2b87a2 100%);
+      page-break-after: always;
+    }
+    .cover h1 { max-width: 145mm; color: white; }
+    .cover .eyebrow { margin-bottom: 5mm; font-size: 11pt; letter-spacing: 1px; color: #bceaff; }
+    .cover .subtitle { margin-top: 7mm; max-width: 135mm; font-size: 14pt; color: #e7f6ff; }
+    .cover .source { margin-top: 12mm; padding: 5mm; border-left: 4px solid #6ee7d8; background: #ffffff16; }
+    .cover .warning {
+      margin-top: 22mm;
+      padding: 7mm;
+      border: 3px solid #ffd45c;
+      border-radius: 5px;
+      color: #fff8df;
+      background: #581d28;
+      font-size: 17pt;
+      font-weight: bold;
+      text-align: center;
+    }
+    .warning {
+      margin: 4mm 0;
+      padding: 4mm 5mm;
+      border-left: 5px solid #cf2e3e;
+      background: #fff0f1;
+      color: #791c28;
+      font-weight: bold;
+    }
+    .note {
+      margin: 3mm 0;
+      padding: 3mm 4mm;
+      border-left: 4px solid #2b77b8;
+      background: #edf6ff;
+    }
+    .flow {
+      margin: 4mm 0;
+      padding: 5mm;
+      border-radius: 6px;
+      background: #eff5fb;
+      text-align: center;
+      font-weight: bold;
+      color: #183e68;
+    }
+    .arrow { padding: 0 2mm; color: #2c80a1; }
+    table { width: 100%; margin: 3mm 0 5mm; border-collapse: collapse; font-size: 9.6pt; }
+    th, td { padding: 2.2mm 2.5mm; border: 1px solid #b9c8d8; vertical-align: top; }
+    th { color: white; background: #2d5f8d; text-align: left; }
+    tr:nth-child(even) td { background: #f4f7fa; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "□"; padding-right: 2mm; color: #245f94; font-weight: bold; }
+    .page-break { page-break-before: always; }
+    .keep { break-inside: avoid; }
+    .footer-note { margin-top: 8mm; color: #667386; font-size: 8.5pt; }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div class="eyebrow">YANTRA • UNITY 6000.3.15f1</div>
+    <h1>คู่มือการใช้งาน<br>YUKI Learning State Machine</h1>
+    <p class="subtitle">แนวทางสร้าง State, Action, Condition และ Transition Table โดยอ้างอิงตัวอย่าง Rin ใน Scene <b>TestStateMachine</b></p>
+    <div class="source">
+      ตัวอย่างอ้างอิง: <b>Assets/YukiLearningStateMachine/Scene/TestStateMachine.unity</b><br>
+      ชุดข้อมูลตัวอย่าง: <b>Assets/YukiLearningStateMachine/ScriptableObject/Rin</b>
+    </div>
+    <div class="warning">คำเตือนสำคัญ<br>ห้ามแก้โค้ดทุกไฟล์ในโฟลเดอร์ StateMachine เด็ดขาด</div>
+  </section>
+
+  <h2>1. ขอบเขตและกฎสำคัญ</h2>
+  <p>State Machine ชุดนี้แยก “ระบบแกนกลาง” ออกจาก “พฤติกรรมเฉพาะตัวละคร” ผู้ใช้งานควรสร้าง Action และ Condition ของตนเอง แล้วนำมาเชื่อมกันผ่าน ScriptableObject ใน Inspector</p>
+
+  <div class="warning">
+    ห้ามแก้ไข เพิ่มโค้ด หรือลบโค้ดภายใน <code>Assets/YukiLearningStateMachine/Script/StateMachine</code> เด็ดขาด
+    โฟลเดอร์นี้เป็นระบบแกนกลาง การแก้ไขอาจทำให้ State Machine ทุกตัวในโปรเจกต์เสียพร้อมกัน
+  </div>
+
+  <p>สิ่งที่ทำได้อย่างปลอดภัย:</p>
+  <ul>
+    <li>สร้างคลาส Action/Condition ใหม่ไว้นอกโฟลเดอร์ <code>StateMachine</code> เช่นโฟลเดอร์ของ Character หรือ Feature ที่รับผิดชอบ</li>
+    <li>สร้างและตั้งค่าไฟล์ <code>StateSO</code>, Action, Condition และ <code>TransitionTableSO</code> ผ่านเมนู Create และ Inspector</li>
+    <li>นำ <code>StateMachineController</code> ไปใส่ GameObject และกำหนด Transition Table</li>
+  </ul>
+
+  <h2>2. ภาพรวมการทำงาน</h2>
+  <div class="flow">
+    Input / Gameplay Data <span class="arrow">→</span> Condition
+    <span class="arrow">→</span> Transition Table
+    <span class="arrow">→</span> State
+    <span class="arrow">→</span> Action
+  </div>
+
+  <table>
+    <thead><tr><th>ส่วนประกอบ</th><th>หน้าที่</th><th>ตัวอย่าง Rin</th></tr></thead>
+    <tbody>
+      <tr><td><b>StateMachineController</b></td><td>สร้างและอัปเดต State Machine จาก Transition Table ที่กำหนด</td><td>Component บน GameObject <code>Rin StateMachine</code></td></tr>
+      <tr><td><b>TransitionTableSO</b></td><td>กำหนด Initial State, Any State และ Local Transition</td><td><code>PlayerLocomotionTransitionTable</code></td></tr>
+      <tr><td><b>StateSO</b></td><td>รวม Action ที่ต้องทำขณะอยู่ใน State</td><td><code>MoveState</code>, <code>RunState</code>, <code>IdleState</code></td></tr>
+      <tr><td><b>StateActionSO</b></td><td>สร้างพฤติกรรม Runtime เช่นปรับ animation multiplier</td><td><code>PlayerWalkAnimationAction</code></td></tr>
+      <tr><td><b>StateConditionSO</b></td><td>ตรวจเงื่อนไขและคืนค่า true/false</td><td><code>IsRunningInputCondition</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>หนึ่ง Controller ใช้หลาย Transition Table ได้</b> แต่ละ Table จะกลายเป็น State Machine แยกชุดและทำงานพร้อมกัน เหมาะกับการแยก Locomotion กับ Upper Action</div>
+
+  <h2>3. ศึกษาตัวอย่าง Rin</h2>
+  <ol>
+    <li>เปิด Scene <code>Assets/YukiLearningStateMachine/Scene/TestStateMachine.unity</code></li>
+    <li>เลือก GameObject ชื่อ <code>Rin StateMachine</code> ใน Hierarchy</li>
+    <li>ดู Component <code>StateMachineController</code> ช่อง <b>Transition Tables</b></li>
+    <li>เปิด asset <code>PlayerLocomotionTransitionTable</code> เพื่อดู Initial State และ Transition</li>
+    <li>เปิด State และ Action/Condition ที่ถูกอ้างอิงต่อเนื่อง เพื่อเห็นการประกอบระบบครบสาย</li>
+  </ol>
+
+  <p>โครงสร้าง Locomotion ในตัวอย่าง:</p>
+  <table>
+    <thead><tr><th>ประเภท</th><th>จาก</th><th>เงื่อนไข</th><th>ไป</th></tr></thead>
+    <tbody>
+      <tr><td>Initial</td><td>เริ่มระบบ</td><td>—</td><td><code>MoveState</code></td></tr>
+      <tr><td>Any State</td><td>State ใดก็ได้</td><td><code>Alpha1KeyCondition = true</code></td><td><code>IdleState</code></td></tr>
+      <tr><td>Local</td><td><code>MoveState</code></td><td><code>IsRunningInputCondition = true</code></td><td><code>RunState</code></td></tr>
+      <tr><td>Local</td><td><code>RunState</code></td><td><code>IsRunningInputCondition = false</code></td><td><code>MoveState</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">ตัวอย่างยังมี <code>PlayerUpperActionTransitionTable</code> สำหรับสลับ <code>UpperIdleState</code> ↔ <code>BookState</code> ด้วย <code>IsBookInputCondition</code> แสดงวิธีแยก State Machine คนละ layer ของพฤติกรรม</div>
+
+  <div class="page-break"></div>
+  <h2>4. วิธีสร้าง State Machine ชุดใหม่</h2>
+
+  <h3>ขั้นที่ 1 — สร้าง Action</h3>
+  <p>Action คือสิ่งที่ State ต้องทำ เช่น ตั้งค่า Animator, ปรับความเร็ว, เล่นเสียง หรือเรียก logic ของ Component ให้สร้างคลาสใหม่ไว้นอกโฟลเดอร์ StateMachine โดยสืบทอดจาก <code>StateActionSO</code> และสร้าง Runtime Action ที่สืบทอดจาก <code>StateAction</code></p>
+  <ul>
+    <li><code>Awake(StateMachine)</code>: หา Component/เตรียม reference</li>
+    <li><code>OnStateEnter()</code>: ทำครั้งเดียวเมื่อเข้า State</li>
+    <li><code>OnUpdate()</code>: ทำทุกเฟรมขณะอยู่ใน State</li>
+    <li>ใช้ callback อื่นตามที่ base class รองรับเมื่อต้องการ FixedUpdate, Exit หรือ Dispose</li>
+  </ul>
+  <p>อ้างอิงรูปแบบจาก <code>PlayerLocomotionAnimationActionSO.cs</code>: SO เก็บค่าจาก Inspector และ Runtime Action เรียก <code>PlayerLocomotion.SetMuitply(...)</code> เมื่อเข้า State</p>
+
+  <h3>ขั้นที่ 2 — สร้าง Condition</h3>
+  <p>Condition ต้องตอบว่าเงื่อนไข “ผ่านหรือไม่ผ่าน” ให้สร้างคลาส SO ที่สืบทอดจาก <code>StateConditionSO</code> และ Runtime Condition ที่สืบทอดจาก <code>Condition</code></p>
+  <ul>
+    <li><code>CreateCondition()</code>: สร้าง instance สำหรับ Runtime</li>
+    <li><code>Statement()</code>: คืนค่า true/false</li>
+    <li>หาก subscribe event ต้อง unsubscribe ใน <code>Dispose()</code></li>
+    <li>ตรวจ null และแจ้ง Error/Warning ที่อธิบายสาเหตุได้ชัดเจน</li>
+  </ul>
+  <p>อ้างอิงจาก <code>IsRunningInputConditionSO.cs</code>: Condition ฟัง event การวิ่งจาก Input Observer เก็บค่าไว้ และคืนค่าผ่าน <code>Statement()</code></p>
+
+  <h3>ขั้นที่ 3 — สร้าง Asset ของ Action และ Condition</h3>
+  <ol>
+    <li>ใน Project window คลิกขวาที่โฟลเดอร์ ScriptableObject ของ feature</li>
+    <li>เลือก <b>Create → YUKI Learning State Machine → Actions/…</b> หรือ <b>Conditions/…</b></li>
+    <li>ตั้งชื่อให้สื่อความหมายและกำหนด reference/parameter ใน Inspector ให้ครบ</li>
+  </ol>
+
+  <h3>ขั้นที่ 4 — สร้าง State</h3>
+  <ol>
+    <li>เลือก <b>Create → YUKI Learning State Machine → State</b></li>
+    <li>ตั้งชื่อ เช่น <code>WalkState</code>, <code>AttackState</code> หรือ <code>StunnedState</code></li>
+    <li>เพิ่ม Action assets ในรายการ <b>Actions</b> ตามลำดับที่ต้องการ</li>
+  </ol>
+  <div class="note">State หนึ่งตัวใส่หลาย Action ได้ เช่น ตั้ง animation พร้อมเปิดเสียงและปรับ movement แต่ควรให้ Action แต่ละตัวมีหน้าที่ชัดเจน</div>
+
+  <h3>ขั้นที่ 5 — สร้าง Transition Table</h3>
+  <ol>
+    <li>เลือก <b>Create → YUKI Learning State Machine → Transition Table</b></li>
+    <li>กำหนด <b>Initial State</b> ซึ่งเป็น State แรกตอน Controller เริ่มทำงาน</li>
+    <li>เพิ่ม <b>Any State Transition</b> สำหรับเงื่อนไขที่ต้องตรวจจากทุก State</li>
+    <li>เพิ่ม <b>Local Transition</b> แล้วกำหนด From, To และ Condition Group</li>
+  </ol>
+
+  <h2>5. วิธีอ่าน AND / OR / Expected</h2>
+  <table>
+    <thead><tr><th>Inspector</th><th>ความหมาย</th></tr></thead>
+    <tbody>
+      <tr><td>หลาย Condition ในกลุ่มเดียว</td><td>เชื่อมแบบ <b>AND</b> — ทุกข้อในกลุ่มต้องผ่าน</td></tr>
+      <tr><td>หลาย Condition Group</td><td>เชื่อมแบบ <b>OR</b> — ผ่านกลุ่มใดกลุ่มหนึ่งก็เปลี่ยน State ได้</td></tr>
+      <tr><td>Expected เปิด</td><td>Condition ต้องคืนค่า <b>true</b></td></tr>
+      <tr><td>Expected ปิด</td><td>Condition ต้องคืนค่า <b>false</b></td></tr>
+    </tbody>
+  </table>
+  <p>ตัวอย่าง: เปลี่ยนไป Run เมื่อ <code>มี input เคลื่อนที่ AND กดวิ่ง</code> หรือ <code>เปิดโหมด Auto Run</code> ให้สร้าง 2 กลุ่ม: กลุ่มแรกมี 2 Conditions และกลุ่มที่สองมี Auto Run Condition หนึ่งข้อ</p>
+
+  <div class="warning">Transition ที่ไม่มี Condition Group หรือมีกลุ่ม AND ว่างจะไม่ทำงาน ต้องเพิ่ม Condition อย่างน้อยหนึ่งตัวในกลุ่ม</div>
+
+  <div class="page-break"></div>
+  <h2>6. ลำดับความสำคัญของ Transition</h2>
+  <ol>
+    <li>ระบบตรวจ <b>Any State Transitions ก่อน Local Transitions</b></li>
+    <li>ภายในแต่ละรายการ ระบบตรวจจากบนลงล่าง</li>
+    <li>Transition แรกที่ผ่านจะถูกเลือกเพียงรายการเดียวในรอบนั้น</li>
+  </ol>
+  <p>ใช้ปุ่ม <b>Up</b> และ <b>Down</b> ใน Inspector เพื่อจัด Priority ควรวาง Transition ฉุกเฉิน เช่น Death, Stun หรือ Cutscene ไว้เหนือ Transition ทั่วไปเมื่อการออกแบบต้องการให้มีสิทธิ์สูงกว่า</p>
+
+  <h2>7. นำไปใช้กับ GameObject</h2>
+  <ol>
+    <li>เลือก GameObject ที่เป็นเจ้าของพฤติกรรม</li>
+    <li>Add Component <code>StateMachineController</code></li>
+    <li>กำหนดขนาดรายการ <b>Transition Tables</b></li>
+    <li>ลาก Transition Table ที่สร้างไว้ใส่แต่ละช่อง</li>
+    <li>ตรวจว่า Component ที่ Action ต้องใช้ อยู่บน GameObject เดียวกัน เพราะ Action ตัวอย่างเรียก <code>stateMachine.GetComponent&lt;T&gt;()</code></li>
+    <li>เข้า Play Mode และทดสอบทุกเส้นทางเข้า/ออกของ State</li>
+  </ol>
+  <div class="note">หากต้องการ Locomotion และ Upper Body ทำงานคู่กัน ให้ใส่ Transition Table สองชุดใน Controller เดียวกันตามแนวคิดของ Rin แต่ตรวจว่าทั้งสองชุดไม่สั่ง property เดียวกันจนขัดแย้ง</div>
+
+  <h2>8. Checklist ก่อนส่งงาน</h2>
+  <ul class="checklist">
+    <li>ไม่ได้แก้ไฟล์ใด ๆ ใน <code>Script/StateMachine</code></li>
+    <li>Initial State ถูกกำหนดและไม่เป็น None</li>
+    <li>From State, To State และ Condition ของทุก Transition ไม่เป็น None</li>
+    <li>ทุก Condition Group มี Condition อย่างน้อยหนึ่งตัว</li>
+    <li>Priority ของ Any State และ Local Transition เรียงถูกต้อง</li>
+    <li>Action/Condition มี reference ใน Inspector ครบและตรวจ null แล้ว</li>
+    <li>Event ที่ subscribe ถูก unsubscribe ใน Dispose</li>
+    <li>GameObject มี Component ที่ Action เรียกใช้</li>
+    <li>ทดสอบ Play Mode ครบทุก State และไม่พบ Error ใน Console</li>
+  </ul>
+
+  <h2>9. ปัญหาที่พบบ่อย</h2>
+  <table>
+    <thead><tr><th>อาการ</th><th>ตรวจสอบ</th></tr></thead>
+    <tbody>
+      <tr><td>เริ่ม Play แล้ว Error ทันที</td><td>ตรวจ Initial State, ช่อง Transition Table และ reference ที่ Action/Condition ต้องใช้</td></tr>
+      <tr><td>ไม่เปลี่ยน State</td><td>ตรวจ Condition Group ว่าง, Expected true/false, ค่า input และลำดับ Priority</td></tr>
+      <tr><td>เข้า State ผิดตัว</td><td>Any State มีสิทธิ์ก่อน Local; ตรวจรายการด้านบนที่อาจผ่านตลอดเวลา</td></tr>
+      <tr><td>NullReference ใน Action</td><td>Component ที่เรียกผ่าน GetComponent อาจไม่ได้อยู่บน GameObject เดียวกับ Controller</td></tr>
+      <tr><td>Event ทำงานซ้ำหลังเปลี่ยน Scene</td><td>ตรวจว่าถอด event listener ใน Dispose แล้ว</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warning">หากพบข้อจำกัดของระบบแกนกลาง ให้แจ้งผู้ดูแลระบบก่อน ห้ามแก้โค้ดในโฟลเดอร์ StateMachine เพื่อแก้เฉพาะหน้า</div>
+  <p class="footer-note">เอกสารนี้จัดทำจากโครงสร้างและ asset ที่อยู่ในโปรเจกต์ Yantra ณ วันที่ 23 กรกฎาคม 2026 โดยอ้างอิง Scene TestStateMachine และตัวอย่าง Rin</p>
+</body>
+</html>
