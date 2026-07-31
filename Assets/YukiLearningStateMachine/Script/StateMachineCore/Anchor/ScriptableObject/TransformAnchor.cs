@@ -6,14 +6,14 @@ using Yuki.Learning.StateMachine;
     menuName = "YUKI Learning State Machine/Anchor/TransformAnchor")]
 public class TransformAnchor : RuntimeAnchorBase<Transform>, IRuntimeAnchorBase
 {
-    public void Provide(GameObject gameObject)
+    public void IProvide(GameObject gameObject)
     {
         Transform value = gameObject.transform.GetComponent<Transform>();
 
         base.Provide(value);
     }
 
-    public void Unset()
+    public void IUnset()
     {
         base.Unset();
     }

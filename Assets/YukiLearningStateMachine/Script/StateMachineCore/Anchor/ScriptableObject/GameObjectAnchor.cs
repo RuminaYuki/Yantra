@@ -5,12 +5,15 @@ using Yuki.Learning.StateMachine;
     menuName = "YUKI Learning State Machine/Anchor/GameObjectAnchor")]
 public class GameObjectAnchor : RuntimeAnchorBase<GameObject>, IRuntimeAnchorBase
 {
-    public void Provide(GameObject gameObject)
+    public GameObject gameObject;
+    public void IProvide(GameObject gameObject)
     {
+        Debug.Log("here " + gameObject.name);
+        this.gameObject = gameObject;
         base.Provide(gameObject);
     }
 
-    public void Unset()
+    public void IUnset()
     {
         base.Unset();
     }

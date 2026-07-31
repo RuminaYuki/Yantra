@@ -27,7 +27,7 @@ public class YantController : MonoBehaviour
 
     [ReadOnly][SerializeField] private bool _isCasting = false;
 
-    private void Awake()
+    private void Start()
     {
         _bookRef.SetActive(false);
     }

@@ -6,14 +6,14 @@ using Yuki.Learning.StateMachine;
 
 public class AnimatorAnchor : RuntimeAnchorBase<Animator> , IRuntimeAnchorBase
 {
-    public void Provide(GameObject player)
+    public void IProvide(GameObject player)
     {
         Animator value = player.GetComponent<Animator>();
 
         base.Provide(value);
     }
 
-    public void Unset()
+    public void IUnset()
     {
         base.Unset();
     }
@@ -21,6 +21,6 @@ public class AnimatorAnchor : RuntimeAnchorBase<Animator> , IRuntimeAnchorBase
 
 public interface IRuntimeAnchorBase
 {
-    void Provide(GameObject player);
-    void Unset();
+    void IProvide(GameObject player);
+    void IUnset();
 }

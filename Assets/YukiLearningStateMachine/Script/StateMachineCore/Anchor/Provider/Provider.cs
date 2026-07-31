@@ -24,7 +24,7 @@ public class Provider : MonoBehaviour
                 continue;
             }
 
-            anchor.Provide(gameObject);
+            anchor.IProvide(this.gameObject);
             runtimeAnchorBases.Add(anchor);
         }
     }
@@ -33,7 +33,7 @@ public class Provider : MonoBehaviour
     {
         for (int i = runtimeAnchorBases.Count - 1; i >= 0; i--)
         {
-            runtimeAnchorBases[i].Unset();
+            runtimeAnchorBases[i].IUnset();
         }
     }
 }

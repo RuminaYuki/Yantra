@@ -103,7 +103,7 @@ public class YantEffectController : MonoBehaviour
                 }
             }
 
-            Debug.Log("try Cast");
+            //Debug.Log("try Cast");
             setting._yantEffect.Initialize(
                 _playerRoot,
                 _stats,

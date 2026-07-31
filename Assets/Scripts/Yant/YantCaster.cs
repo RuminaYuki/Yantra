@@ -108,7 +108,7 @@ public class YantCaster : MonoBehaviour
                 _playerRoot != null ? _playerRoot : gameObject,
                 _stats,
                 GetAimDirection(yantObj.transform.position));
-            Debug.Log(_playerRoot + " " + _stats + " " + GetAimDirection(yantObj.transform.position));
+            //Debug.Log(_playerRoot + " " + _stats + " " + GetAimDirection(yantObj.transform.position));
         }
         else
         {
