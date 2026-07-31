@@ -52,6 +52,9 @@ MonoBehaviour:
     seed: 911464
     branchSeed: 0
     leafSeed: 0
+    rootSeed: 0
+    windMode: 0
+    manualNumberEntry: 0
     geometry:
       trunkSource: 0
       trunkPrefabs: []
@@ -129,6 +132,53 @@ MonoBehaviour:
       crookedness: 0.35
       segments: 6
       windResponse: 0.037
+    roots:
+      enabled: 0
+      type: 0
+      radialSegments: 6
+      segments: 5
+      windResponse: 0.02
+      buttressCount:
+        min: 4
+        max: 7
+      buttressLength:
+        min: 0.9
+        max: 1.7
+      buttressStartHeight:
+        min: 0.1
+        max: 0.25
+      buttressFlare: 1.8
+      buttressTaper: 0.85
+      buttressDroop: 22
+      buttressCrookedness: 0.15
+      pneumatophoreCount:
+        min: 18
+        max: 30
+      pneumatophoreHeight:
+        min: 0.15
+        max: 0.35
+      pneumatophoreRadius:
+        min: 0.02
+        max: 0.045
+      pneumatophoreSpread:
+        min: 0.6
+        max: 2.4
+      pneumatophoreLean: 0.25
+      fineRoots:
+        enabled: 0
+        count:
+          min: 3
+          max: 6
+        lengthRatio:
+          min: 0.15
+          max: 0.35
+        radiusRatio: 0.25
+        angle:
+          min: 20
+          max: 70
+        crookedness: 0.4
+        segments: 3
+        radialSegments: 4
     leaves:
       enabled: 1
       shape: 1
@@ -173,6 +223,7 @@ MonoBehaviour:
         leafDensity: 0.109
   barkMaterial: {fileID: 2100000, guid: 6f242ce55f0e92847acde02520557459, type: 2}
   leafMaterial: {fileID: 2100000, guid: 6b9c80ca113cf994ca3fff9c30c5a4b2, type: 2}
+  exportedFolderName: 
 --- !u!205 &5692242471129412597
 LODGroup:
   m_ObjectHideFlags: 0
