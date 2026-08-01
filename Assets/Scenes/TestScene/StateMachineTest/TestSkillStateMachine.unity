@@ -10371,8 +10371,8 @@ MonoBehaviour:
   _shapeCategories:
   - CategoryName: Heal Yant
     Templates:
-    - {fileID: 11400000, guid: 26f22d6bc0f36304a96e30822b4804f3, type: 2}
-    - {fileID: 11400000, guid: b7445af4623dc6147b5cdf5dde0fb602, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 11400000, guid: fd05e570ada0f1e44bd2135525f175a2, type: 2}
     - {fileID: 11400000, guid: cd6d1b36d1581aa43a6b5896755d1112, type: 2}
     - {fileID: 11400000, guid: c74daf01bf2aac2419e7efa68ff6e462, type: 2}
@@ -10393,9 +10393,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 960d15ab477f19e4a96e7674bbf7021c, type: 2}
     - {fileID: 11400000, guid: 5b9ba7430ec93ef45a2c399ca25c47f6, type: 2}
     - {fileID: 11400000, guid: d40627c795da1c94ba845d64dc839c92, type: 2}
-  - CategoryName: Push Yant
+  - CategoryName: Blast Yant
     Templates:
-    - {fileID: 11400000, guid: 8ed3cae9e6283404ca9b53fe31dbc99c, type: 2}
+    - {fileID: 11400000, guid: 26f22d6bc0f36304a96e30822b4804f3, type: 2}
     - {fileID: 11400000, guid: 3e43967a73971064ebf6fd8851de5b96, type: 2}
     - {fileID: 11400000, guid: 118250faef5632346ad8e9d26610c9b6, type: 2}
     - {fileID: 11400000, guid: 2dec409e4dbed2d40b6a3898f65e7456, type: 2}
@@ -11015,6 +11015,7 @@ MonoBehaviour:
   _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   _referencePoint: {fileID: 320540217}
   _dampTime: 0.25
+  _multiply: 0
   _nameParameterMoveZ: VelocityZ
   _nameParameterMoveX: VelocityX
   _nameTurnAngle: StartTurnAngle
@@ -11473,11 +11474,11 @@ MonoBehaviour:
   - CategoryName: Heal Yant
     YantPrefab: {fileID: 8867824720623061172, guid: df9a28f72795a534f8058f9c3d952aa9,
       type: 3}
-  - CategoryName: Push Yant
-    YantPrefab: {fileID: 9117980074068866131, guid: 62b274d37cdd5094e83398579c31526e,
-      type: 3}
   - CategoryName: Vanish Yant
     YantPrefab: {fileID: 8867824720623061172, guid: 8ef584bf25d00c74eb9d4d861d13e50b,
+      type: 3}
+  - CategoryName: Blast Yant
+    YantPrefab: {fileID: 9117980074068866131, guid: 62b274d37cdd5094e83398579c31526e,
       type: 3}
   _maxAimDistance: 100
   _aimMask:

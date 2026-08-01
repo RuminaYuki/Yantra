@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// ติดบน Push Yantra prefab — ปา YantProjectile ไปในทิศที่เล็ง
 /// </summary>
-public class PushYant : MonoBehaviour, IYantEffect
+public class BlastYant : MonoBehaviour, IYantEffect
 {
     [Header("Projectile")]
     [SerializeField] private YantProjectile _projectilePrefab;
@@ -22,7 +22,7 @@ public class PushYant : MonoBehaviour, IYantEffect
     {
         if (_projectilePrefab == null)
         {
-            Debug.LogWarning("<color=#FFAA00>[PushYant]</color> ยังไม่ได้ใส่ Projectile Prefab");
+            Debug.LogWarning("<color=#FFAA00>[BlastYant]</color> ยังไม่ได้ใส่ Projectile Prefab");
             Destroy(gameObject);
             return;
         }
@@ -47,7 +47,5 @@ public class PushYant : MonoBehaviour, IYantEffect
             playerRoot);
 
         Debug.Log($"<color=#FFAA00>[PushYant]</color> ปา projectile ไปทาง {launchDir:F2}");
-
-        Destroy(gameObject, 0.1f);
     }
 }

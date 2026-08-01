@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.089596, y: 0.089596, z: 0.089596}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2568030386955828209}
@@ -108,7 +108,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -121,9 +121,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2568030386955828209}
+  - component: {fileID: -2280239117422937287}
+  - component: {fileID: 2431005053422005515}
   - component: {fileID: -4835576268701899843}
   m_Layer: 0
-  m_Name: Push Yant
+  m_Name: Blast Yant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,6 +147,38 @@ Transform:
   - {fileID: 2348961796562133278}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2280239117422937287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117980074068866131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02643e0e27c3c5b46a059694c4dceeef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
+  _yantLifeTime: 10
+  _effectSettings:
+  - _yantReferences: {fileID: -4835576268701899843}
+    _effectType: 4
+    _effectDuration: 2
+    _holdDuration: 1
+--- !u!114 &2431005053422005515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117980074068866131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Provider
+  Anchors:
+  - {fileID: 11400000, guid: 2aa02c22bc949974d8a7630d7b6d24e5, type: 2}
 --- !u!114 &-4835576268701899843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,8 +194,8 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 6588264149580857337, guid: 3fe96d87f8e50c24896afa9cf11dd78e,
     type: 3}
   _throwSpeed: 18
-  _initialAngleDeg: 8
-  _useGravity: 1
+  _initialAngleDeg: 0
+  _useGravity: 0
   _projectileLifetime: 6
   _pushAcceleration: 6
   _pushLifetime: 1.5
