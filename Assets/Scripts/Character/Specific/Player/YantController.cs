@@ -49,15 +49,9 @@ public class YantController : MonoBehaviour
 
     private void Update()
     {
-        if (_holding && _isCasting)
+        if (_holding)
         {
             _holdTime += Time.deltaTime;
-            Debug.Log($"<color=#00FFFF>[YantController]</color> Holding right click for {_holdTime} seconds.");
-        }
-        else
-        {
-            _holdTime = 0;
-            _holding = false;
         }
     }
 
