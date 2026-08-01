@@ -31,6 +31,15 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
 
         Gravity = new GravityCharacterCon(CharacterController,_gravityMultiplier);
     }
+    protected virtual void OnAnimatorMove()
+    {
+        CharacterController.Move(Animator.deltaPosition + Gravity.Gravity());
+        if (IsMovementLocked)
+        {
+            transform.rotation *= Animator.deltaRotation;
+            
+        }   
+    }
 
     private readonly HashSet<object> _movementLockOwners = new();
     public bool IsMovementLocked =>_movementLockOwners.Count > 0;

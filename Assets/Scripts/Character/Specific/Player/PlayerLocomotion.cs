@@ -83,10 +83,6 @@ public class PlayerLocomotion : BaseLocomotion
         if (!hasMoveInput && !_turnbyCamera) return;
         Rotation.Rotate(GetCameraForwardFlat());
     }
-    private void OnAnimatorMove()
-    {
-        CharacterController.Move(Animator.deltaPosition + Gravity.Gravity());
-    }
 
     private void HandleMoveInput(Vector3 moveInput)
     {

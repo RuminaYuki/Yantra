@@ -24,11 +24,11 @@ public class EnemyLocomotion : BaseLocomotion
     }
     private void FixedUpdate()
     {
+        if (IsMovementLocked)
+        {
+            Rotation.Rotate(Vector3.zero);
+            return;
+        }
         Rotation.Rotate(transform.forward);
-    }
-
-    private void OnAnimatorMove()
-    {
-        CharacterController.Move(Animator.deltaPosition + Gravity.Gravity());
     }
 }

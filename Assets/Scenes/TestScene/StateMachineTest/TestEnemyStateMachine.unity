@@ -1003,7 +1003,7 @@ GameObject:
   - component: {fileID: 599703874}
   - component: {fileID: 599703873}
   - component: {fileID: 599703872}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1594,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a8231f06415f05c48b7538df79ca5739, type: 3}
   m_Controller: {fileID: 9100000, guid: de4cdb1de29c64146b23ead7e16d4482, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -1614,7 +1614,7 @@ Transform:
   m_GameObject: {fileID: 733027343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 3.11}
+  m_LocalPosition: {x: 0, y: 0, z: 3.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2024,12 +2024,13 @@ GameObject:
   - component: {fileID: 1062817030}
   - component: {fileID: 1062817028}
   - component: {fileID: 1062817032}
+  - component: {fileID: 1062817038}
   - component: {fileID: 1062817037}
   - component: {fileID: 1062817029}
   - component: {fileID: 1062817031}
   - component: {fileID: 1062817034}
   - component: {fileID: 1062817035}
-  - component: {fileID: 1062817038}
+  - component: {fileID: 1062817039}
   m_Layer: 3
   m_Name: Mawin(player)
   m_TagString: Player
@@ -2327,6 +2328,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38420767fc21b8f4e9ea5bf2a7a03eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+--- !u!114 &1062817039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3828dc0a37ed6b84c8e099224d56409a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootIk
+  IkWeight: 1
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  RaycastDistance: 1.2
+  FootOffsetY: 0.1
+  SphereCastRadius: 0.05
+  LiftThreshold: 0.2
+  PositionSmoothSpeed: 15
+  RotationSmoothSpeed: 15
+  MaxSlopeAngle: 45
+  FixFootOverlap: 1
+  FootRadius: 0.08
+  AdjustPelvis: 1
+  PelvisOffsetSpeed: 10
+  MaxPelvisOffset: 0.6
 --- !u!1 &1146423103
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,7 +2645,7 @@ Transform:
   m_GameObject: {fileID: 1314175998}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2682,6 +2711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f5a09bb3627b240a9becac5489b2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PairedAnimationManager
+  _warpDuration: 0.15
 --- !u!4 &1813501388
 Transform:
   m_ObjectHideFlags: 0
