@@ -1,10 +1,8 @@
 using UnityEngine;
 using NaughtyAttributes;
 [RequireComponent(typeof(CharacterController),typeof(Animator))]
-public class PlayerLocomotion : MonoBehaviour
+public class PlayerLocomotion : BaseLocomotion
 {
-    private CharacterController _characterController;
-    private Animator _animator;
     private Vector3 _directionMove;
 
     
@@ -16,15 +14,8 @@ public class PlayerLocomotion : MonoBehaviour
     [Header("ReferencePoint")]
     [SerializeField] private Transform _referencePoint;
 
-    //================Locomotion Animatiton====================
-    private LocomotionAnim locomotionAnim;
-
-    [Header("Locomotion Animatiton Setting")]
-    [SerializeField] private float _dampTime = 0.1f; //Initial
-
     //Walk Run and Turn Setting
     [Header("Walk and Run Setting")]
-    [SerializeField] private float _multiply; //Initial
     [SerializeField] private string _nameParameterMoveZ;
     [SerializeField] private string _nameParameterMoveX;
     
@@ -44,35 +35,15 @@ public class PlayerLocomotion : MonoBehaviour
     private int _startTurnTrigger;
     private bool _wasMoving;
 
-    //================Gravity====================
-    private GravityCharacterCon _gravityCharacterCon;
-
-    [Header("Gravity")]
-    [SerializeField] private float gravityMultiplier = 3;
-
-
-    //================Rotate Transform===============
-    private RotationTransform _rotation;
-    private float _rotateSpeed = 1;
-
-    void Awake()
+    protected override void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
-
-        _animator = GetComponent<Animator>();
+        base.Awake();
 
         //Set LocomotionAnim
-        locomotionAnim = new(_animator, _dampTime, _multiply);
-        locomotionAnim.SetParameter(_nameParameterMoveX,_nameParameterMoveZ);
+        LocomotionAnim.SetParameter(_nameParameterMoveX,_nameParameterMoveZ);
 
-        //Rotatetion
-        _rotation = new(transform,_rotateSpeed);
-
-        //Gravity
-        _gravityCharacterCon = new(_characterController,gravityMultiplier);
-
-        _startTurnAngle = Animator.StringToHash(_nameTurnAngle);
-        _startTurnTrigger = Animator.StringToHash(_nameStartTurn);
+        _startTurnAngle = UnityEngine.Animator.StringToHash(_nameTurnAngle);
+        _startTurnTrigger = UnityEngine.Animator.StringToHash(_nameStartTurn);
 
         _enableUseInputObserverSO = true;
     }
@@ -88,6 +59,12 @@ public class PlayerLocomotion : MonoBehaviour
     }
     void Update()
     {
+        if (IsMovementLocked)
+        {
+            LocomotionAnim.SetMove(0f, 0f);
+            return;
+        }
+
         // set Animation
         Vector3 direction = GetDirectionWithReferencePoint();
         MoveAnimation(direction);
@@ -99,13 +76,16 @@ public class PlayerLocomotion : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (IsMovementLocked)
+            return;
+
         bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
         if (!hasMoveInput && !_turnbyCamera) return;
-        _rotation.Rotate(GetCameraForwardFlat());
+        Rotation.Rotate(GetCameraForwardFlat());
     }
     private void OnAnimatorMove()
     {
-        _characterController.Move(_animator.deltaPosition + _gravityCharacterCon.Gravity());
+        CharacterController.Move(Animator.deltaPosition + Gravity.Gravity());
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -121,7 +101,7 @@ public class PlayerLocomotion : MonoBehaviour
         float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
         float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
 
-        locomotionAnim.SetMove(velocityX,velocityZ);
+        LocomotionAnim.SetMove(velocityX,velocityZ);
     }
     private void TurnAnimation(Vector3 direction)
     {
@@ -131,8 +111,8 @@ public class PlayerLocomotion : MonoBehaviour
         if (justStartedMoving && Mathf.Abs(GetSignedAngleToCamera()) >= _angleTurn)
         {
             float angle = Vector3.SignedAngle(transform.forward,direction,Vector3.up);
-            _animator.SetFloat(_startTurnAngle, angle);
-            _animator.SetTrigger(_startTurnTrigger);
+            Animator.SetFloat(_startTurnAngle, angle);
+            Animator.SetTrigger(_startTurnTrigger);
         }
 
         _wasMoving = isMoving;
@@ -143,8 +123,8 @@ public class PlayerLocomotion : MonoBehaviour
 
         if (Mathf.Abs(angle) >= _angleTurnbyCamera && !(direction.sqrMagnitude > 0.01f))
         {
-            _animator.SetFloat(_startTurnAngle, angle);
-            _animator.SetTrigger(_startTurnTrigger);
+            Animator.SetFloat(_startTurnAngle, angle);
+            Animator.SetTrigger(_startTurnTrigger);
         }
     }
 
@@ -208,14 +188,14 @@ public class PlayerLocomotion : MonoBehaviour
 
     //Animaiton
     // Get,Set Mutiply
-    public float GetMutiply() => locomotionAnim.Multiply;
-    public void SetMuitply(float multiply) => locomotionAnim.Multiply = multiply;
+    public float GetMutiply() => LocomotionAnim.Multiply;
+    public void SetMuitply(float multiply) => LocomotionAnim.Multiply = multiply;
     // Get,Set TurnbyCamera
     public bool GetTurnByCamera() => _turnbyCamera;
     public void SetTurnByCamera(bool value) => _turnbyCamera = value;
     // Get,Set TurnSmoothSpeed
-    public float GetTurnSmoothSpeed() => _rotation.Speed;
-    public void SetTurnSmoothSpeed(float value) => _rotation.Speed = value;
+    public float GetTurnSmoothSpeed() => Rotation.Speed;
+    public void SetTurnSmoothSpeed(float value) => Rotation.Speed = value;
 
     #endregion
 }

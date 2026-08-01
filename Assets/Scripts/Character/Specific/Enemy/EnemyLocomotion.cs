@@ -1,54 +1,34 @@
 using UnityEngine;
+using System.Collections;
 [RequireComponent(typeof(CharacterController),typeof(Animator))]
-public class EnemyLocomotion : MonoBehaviour
+public class EnemyLocomotion : BaseLocomotion
 {
-    private CharacterController _characterController;
-    private Animator _animator;
     private Vector3 _directionMove;
 
-    //================Locomotion Animatiton====================
-    private LocomotionAnim locomotionAnim;
-
-    [Header("Locomotion Animatiton Setting")]
-    [SerializeField] private float _dampTime = 0.1f; //Initial
-
-    [Header("Walk and Run Setting")]
-    [SerializeField] private float _multiply; //Initial
+    [Header("Locomotion Anim Parameter")]
     [SerializeField] private string _nameParameterMoveZ;
 
-    //================Rotate Transform===============
-    private RotationTransform _rotation;
-    [Header("RotationSetting")]
-    [SerializeField] private float _rotateSpeed = 1; //Initial
-
-    //================Gravity====================
-    private GravityCharacterCon _gravityCharacterCon;
-
-    [Header("Gravity")]
-    [SerializeField] private float gravityMultiplier = 1;
-
-    private void Awake()
+    protected override void Awake()
     {
-        _animator = GetComponent<Animator>();
-        _characterController = GetComponent<CharacterController>();
-
-        locomotionAnim = new(_animator,_dampTime,_multiply);
-        locomotionAnim.SetParameter(_nameParameterMoveZ);
-        _rotation = new(transform,_rotateSpeed);
-        _gravityCharacterCon = new(_characterController,gravityMultiplier);
-
+        base.Awake();
+        LocomotionAnim.SetParameter(_nameParameterMoveZ);
     }
     private void Update()
     {
-        locomotionAnim.SetMove(transform.forward.z);
+        if (IsMovementLocked)
+        {
+            LocomotionAnim.SetMove(0f);
+            return;
+        }
+        LocomotionAnim.SetMove(1f);
     }
     private void FixedUpdate()
     {
-        _rotation.Rotate(transform.forward);
+        Rotation.Rotate(transform.forward);
     }
 
     private void OnAnimatorMove()
     {
-        _characterController.Move(_animator.deltaPosition + _gravityCharacterCon.Gravity());
+        CharacterController.Move(Animator.deltaPosition + Gravity.Gravity());
     }
 }
