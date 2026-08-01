@@ -29,7 +29,9 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _BACK_LAYER_FLOW_MODE_OUTWARD
   - _ENABLE_FOG_ON_TRANSPARENT
+  - _FONT_LAYER_FLOW_MODE_INWARD
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _DISABLE_SSR_TRANSPARENT
@@ -56,8 +58,20 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2fe31a8312ab8524ebd8601be367f0c8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FlowMapTime_92c7b68c844a4d45b45286b4c74aa90e_PhaseOffsetMask_835282005_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2fe31a8312ab8524ebd8601be367f0c8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _NoiseMap:
         m_Texture: {fileID: 2800000, guid: c499ae7ea10e6f94b87fb2756cd4eda0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Map:
+        m_Texture: {fileID: 2800000, guid: c499ae7ea10e6f94b87fb2756cd4eda0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_0e161d7202e5426ca94327570e8cc7d7_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2fe31a8312ab8524ebd8601be367f0c8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -78,13 +92,20 @@ Material:
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 10
     - _AlphaSrcBlend: 1
+    - _BACK_LAYER_FLOW_MODE: 0
+    - _Back_Layer_Distortion_Direction: 0.815
     - _BlendMode: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 0
     - _CullModeForward: 0
     - _DIstortionSpeed: 0.315
-    - _DIstortionStrength: 0.495
+    - _DIstortionStrength: 0.604
+    - _DIstortion_Strength: 0.71
     - _DepthOffsetEnable: 0
+    - _DistortionSpeed: 0.2
+    - _Distortion_Back_Layer_Distance: 0
+    - _Distortion_Font_Layer_Distance: 0
+    - _Distortion_Speed: 0.402
     - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 2
@@ -93,8 +114,13 @@ Material:
     - _EnableBlendModePreserveSpecularLighting: 0
     - _EnableFogOnTransparent: 1
     - _ExcludeFromTUAndAA: 0
+    - _FLOWMODE: 0
+    - _FONT_LAYER_FLOW_MODE: 1
     - _FlowSpeed: 0.088
-    - _Opacity: 0.35
+    - _Font_Layer_Distortion_Direction: 0
+    - _NoiseScale: 10
+    - _Noise_Scale: 5
+    - _Opacity: 1
     - _OpaqueCullMode: 2
     - _PerPixelSorting: 0
     - _RenderQueueType: 4
@@ -121,7 +147,8 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 10.295432, g: 5.5238204, b: 1.2140838, a: 1}
-    - _DistortionDirection: {r: 0, g: 1, b: 0, a: 0}
+    - _DistortionDirection: {r: 0, g: 0, b: 0, a: 0}
+    - _DistortionScale: {r: 0, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
