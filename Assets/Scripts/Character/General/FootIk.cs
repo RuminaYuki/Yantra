@@ -190,7 +190,14 @@ public class FootIk : MonoBehaviour
 
     private void DrawFootGizmo(AvatarIKGoal goal, Color color)
     {
-        Vector3 footPos = anim.GetIKPosition(goal);
+        // 🛠 FIX ERROR: ใช้ GetBoneTransform แทน GetIKPosition เพื่อหลีกเลี่ยง Warning นอก OnAnimatorIK
+        Transform footBone = goal == AvatarIKGoal.LeftFoot ?
+                             anim.GetBoneTransform(HumanBodyBones.LeftFoot) :
+                             anim.GetBoneTransform(HumanBodyBones.RightFoot);
+
+        if (footBone == null) return;
+
+        Vector3 footPos = footBone.position;
         Vector3 rayOrigin = footPos + Vector3.up * (RaycastDistance / 2f);
 
         Gizmos.color = color;
@@ -207,8 +214,10 @@ public class FootIk : MonoBehaviour
 
         if (FixFootOverlap)
         {
-            Vector3 hipPos = anim.bodyPosition;
+            // 🛠 FIX ERROR: ใช้ตำแหน่งกระดูกสะโพก (Hips) แทนคำสั่ง anim.bodyPosition
+            Vector3 hipPos = anim.GetBoneTransform(HumanBodyBones.Hips).position;
             Vector3 target = new Vector3(footPos.x, hit.point.y + FootOffsetY, footPos.z);
+
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(hipPos, target);
         }
