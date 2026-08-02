@@ -1,80 +1,125 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PairedAnimationActor))]
 public class AttackSystem : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private PairedAnimationManager _pairedManager;
-    [SerializeField] private PairedAnimationActor _attacker;
-    [SerializeField] private PairedAnimationActor _target;
+    [SerializeField] private PairedAnimationActor _victim;
 
-    [Header("Condition")]
-    [SerializeField] private float _activationDistance = 0.5f;
+    private PairedAnimationManager _manager;
+    private PairedAnimationActor _attacker;
 
-    private ISnapPointSelector _snapPointSelector;
+    [Header("Attack Prefabs")]
+    [SerializeField] private GameObject[] _attackPrefabs;
+    [SerializeField] private GameObject _defaultAttackPrefab;
+
+    private GameObject _currentPrefab;
+    private IAttackStrategy _currentAttack;
 
     private void Awake()
     {
-        _snapPointSelector = GetComponent<ISnapPointSelector>();
+        _attacker = GetComponent<PairedAnimationActor>();
 
-        if (_snapPointSelector == null)
-        {
+        GameObject gameManager =
+            GameObject.FindGameObjectWithTag("GameManager");
+
+        if (gameManager != null)
+            _manager = gameManager.GetComponent<PairedAnimationManager>();
+
+        if (_manager == null)
             Debug.LogError(
-                "Snap Point Selector must implement ISnapPointSelector.",
+                "AttackSystem cannot find PairedAnimationManager on GameManager.",
                 this);
-        }
-    }
-    
-    //============================TEST===============================
-    private bool _isPlayed;
 
-    private void Update()
-    {
-        if (_isPlayed)
-            return;
-
-        if (!AttackDistance())
-            return;
-
-        TryAttack();
-        _isPlayed = true;
-    }
-    //================================================================
-
-    public void TryAttack()
-    {
-        if (_pairedManager == null || _attacker == null ||
-            _target == null || _snapPointSelector == null)
-        {
-            Debug.LogWarning("Attack setup is missing.", this);
-            return;
-        }
-
-        PairedSnapPoint snapPoint = 
-        _snapPointSelector.Select(_attacker.transform.position);
-
-        if (snapPoint == null)
-            return;
-
-        _pairedManager.TryStart(
-            attacker: _attacker,
-            victim: _target,
-            attackerSnapPoint: snapPoint.AttackerPoint,
-            victimSnapPoint: snapPoint.VictimPoint,
-            animationId: snapPoint.AnimationId);
+        if (_defaultAttackPrefab != null)
+            SetAttack(_defaultAttackPrefab);
     }
 
-    public bool AttackDistance()
+    public bool SetAttack(GameObject attackPrefab)
     {
-        if (_attacker == null || _target == null)
+        if (attackPrefab == null)
             return false;
 
-        Vector3 offset =
-            _target.transform.position -
-            _attacker.transform.position;
+        if (!ContainsPrefab(attackPrefab))
+        {
+            Debug.LogWarning(
+                $"{attackPrefab.name} is not registered.",
+                this);
+            return false;
+        }
 
-        offset.y = 0f;
+        if (_currentPrefab == attackPrefab &&
+            _currentAttack != null)
+        {
+            return true;
+        }
 
-        return offset.sqrMagnitude <=
-               _activationDistance * _activationDistance;
+        IAttackStrategy strategy =
+            FindStrategy(attackPrefab);
+
+        if (strategy == null)
+        {
+            Debug.LogError(
+                $"{attackPrefab.name} does not contain IAttackStrategy.",
+                this);
+            return false;
+        }
+
+        _currentPrefab = attackPrefab;
+        _currentAttack = strategy;
+        return true;
+    }
+
+    public bool TryAttack()
+    {
+        if (_currentAttack == null)
+        {
+            Debug.LogWarning("Current attack is missing.", this);
+            return false;
+        }
+
+        if (_manager == null || _attacker == null || _victim == null)
+        {
+            Debug.LogWarning( "AttackSystem references are missing.", this);
+            return false;
+        }
+
+        return _currentAttack.TryAttack(
+            _manager,
+            _attacker,
+            _victim);
+    }
+
+    public void SetVictim(PairedAnimationActor victim)
+    {
+        _victim = victim;
+    }
+
+    private bool ContainsPrefab(GameObject attackPrefab)
+    {
+        if (_attackPrefabs == null)
+            return false;
+
+        foreach (GameObject prefab in _attackPrefabs)
+        {
+            if (prefab == attackPrefab)
+                return true;
+        }
+
+        return false;
+    }
+
+    private IAttackStrategy FindStrategy(GameObject attackObject)
+    {
+        MonoBehaviour[] components =
+            attackObject.GetComponentsInChildren<MonoBehaviour>(true);
+
+        foreach (MonoBehaviour component in components)
+        {
+            if (component is IAttackStrategy strategy)
+                return strategy;
+        }
+
+        return null;
     }
 }

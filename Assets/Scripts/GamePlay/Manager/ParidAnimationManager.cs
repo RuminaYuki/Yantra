@@ -13,33 +13,57 @@ public class PairedAnimationManager : MonoBehaviour
         Transform victimSnapPoint,
         PairedAnimationId animationId)
     {
-        if (_isPlaying || attacker == null || victim == null)
-            return false;
-
-        if (animationId == null)
-        {
-            Debug.LogWarning("Paired Animation: Animation type is missing.");
-            return false;
-        }
-
-        if (!attacker.CanPlay(animationId) ||
-            !victim.CanPlay(animationId))
-        {
-            Debug.LogWarning("Paired Animation: Actor does not support this animation.");
-            return false;
-        }
-
         if (attackerSnapPoint == null || victimSnapPoint == null)
         {
             Debug.LogWarning("Paired Animation: Snap Point is missing.");
             return false;
         }
 
+        Pose attackerPose = new Pose(
+            attackerSnapPoint.position,
+            attackerSnapPoint.rotation);
+
+        Pose victimPose = new Pose(
+            victimSnapPoint.position,
+            victimSnapPoint.rotation);
+
+        return TryStart(
+            attacker,
+            victim,
+            attackerPose,
+            victimPose,
+            animationId);
+    }
+
+    public bool TryStart(
+        IPairedAnimationActor attacker,
+        IPairedAnimationActor victim,
+        Pose attackerSnapPose,
+        Pose victimSnapPose,
+        PairedAnimationId animationId)
+    {
+        if (_isPlaying || attacker == null || victim == null)
+            return false;
+
+        if (animationId == null)
+        {
+            Debug.LogWarning("Paired Animation ID is missing.");
+            return false;
+        }
+
+        if (!attacker.CanPlay(animationId) ||
+            !victim.CanPlay(animationId))
+        {
+            Debug.LogWarning(
+                "Actor does not support this paired animation.");
+            return false;
+        }
+
         StartCoroutine(PlayRoutine(
             attacker,
             victim,
-            attackerSnapPoint,
-            victimSnapPoint,
+            attackerSnapPose,
+            victimSnapPose,
             animationId));
 
         return true;
@@ -48,8 +72,8 @@ public class PairedAnimationManager : MonoBehaviour
     private IEnumerator PlayRoutine(
         IPairedAnimationActor attacker,
         IPairedAnimationActor victim,
-        Transform attackerSnapPoint,
-        Transform victimSnapPoint,
+        Pose attackerSnapPose,
+        Pose victimSnapPose,
         PairedAnimationId animationId)
     {
         _isPlaying = true;
@@ -60,8 +84,8 @@ public class PairedAnimationManager : MonoBehaviour
         yield return WarpActors(
             attacker,
             victim,
-            attackerSnapPoint,
-            victimSnapPoint);
+            attackerSnapPose,
+            victimSnapPose);
 
         attacker.PlayAnimation(animationId);
         victim.PlayAnimation(animationId);
@@ -83,8 +107,8 @@ public class PairedAnimationManager : MonoBehaviour
     private IEnumerator WarpActors(
         IPairedAnimationActor attacker,
         IPairedAnimationActor victim,
-        Transform attackerSnapPoint,
-        Transform victimSnapPoint)
+        Pose attackerSnapPose,
+        Pose victimSnapPose)
     {
         Transform attackerTransform = attacker.GetTransform();
         Transform victimTransform = victim.GetTransform();
@@ -95,11 +119,8 @@ public class PairedAnimationManager : MonoBehaviour
         Quaternion attackerStartRotation = attackerTransform.rotation;
         Quaternion victimStartRotation = victimTransform.rotation;
 
-        Vector3 attackerTargetPosition = attackerSnapPoint.position;
-        Vector3 victimTargetPosition = victimSnapPoint.position;
-
-        Quaternion attackerTargetRotation = attackerSnapPoint.rotation;
-        Quaternion victimTargetRotation = victimSnapPoint.rotation;
+        Vector3 attackerTargetPosition = attackerSnapPose.position;
+        Vector3 victimTargetPosition = victimSnapPose.position;
 
         attackerTargetPosition.y = attackerStartPosition.y;
         victimTargetPosition.y = victimStartPosition.y;
@@ -122,7 +143,7 @@ public class PairedAnimationManager : MonoBehaviour
                     t),
                 Quaternion.Slerp(
                     attackerStartRotation,
-                    attackerTargetRotation,
+                    attackerSnapPose.rotation,
                     t));
 
             victimTransform.SetPositionAndRotation(
@@ -132,7 +153,7 @@ public class PairedAnimationManager : MonoBehaviour
                     t),
                 Quaternion.Slerp(
                     victimStartRotation,
-                    victimTargetRotation,
+                    victimSnapPose.rotation,
                     t));
 
             yield return null;
@@ -140,10 +161,10 @@ public class PairedAnimationManager : MonoBehaviour
 
         attackerTransform.SetPositionAndRotation(
             attackerTargetPosition,
-            attackerTargetRotation);
+            attackerSnapPose.rotation);
 
         victimTransform.SetPositionAndRotation(
             victimTargetPosition,
-            victimTargetRotation);
+            victimSnapPose.rotation);
     }
 }
