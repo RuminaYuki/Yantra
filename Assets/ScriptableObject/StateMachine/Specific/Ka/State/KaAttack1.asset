@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7da57aa186da8c4a92fe7e1a7ef5add, type: 3}
   m_Name: KaAttack1
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.StateSO
-  _actions: []
+  _actions:
+  - {fileID: 11400000, guid: bf9fe4e6f5e18644eb961efabcbf6452, type: 2}
+  - {fileID: 11400000, guid: 664963cf5359ee24680fb6f52bcd3085, type: 2}

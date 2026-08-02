@@ -35,13 +35,13 @@ public class ExecuteAttackAction : StateAction
 
     public override void OnStateEnter()
     {
-        if (_attackSystem == null || _attackPrefab == null)
+        if (_attackSystem == null ||
+            _attackPrefab == null)
+        {
             return;
+        }
 
-        if (!_attackSystem.SetAttack(_attackPrefab))
-            return;
-
-        _attackSystem.TryAttack();
+        _attackSystem.TryAttack(_attackPrefab);
     }
 
     public override void OnUpdate() { }
