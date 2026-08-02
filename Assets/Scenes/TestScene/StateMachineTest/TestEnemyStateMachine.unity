@@ -1065,7 +1065,7 @@ MeshCollider:
   m_Mesh: {fileID: 664059300}
 --- !u!33 &599703873
 MeshFilter:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1643,6 +1643,7 @@ GameObject:
   - component: {fileID: 733027346}
   - component: {fileID: 733027349}
   - component: {fileID: 733027348}
+  - component: {fileID: 733027351}
   m_Layer: 0
   m_Name: Ka(enemy)
   m_TagString: Untagged
@@ -1744,10 +1745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Attack
   _pairedManager: {fileID: 1813501387}
   _attacker: {fileID: 733027349}
-  _victim: {fileID: 1062817038}
-  _attackerSnapPoint: {fileID: 1314175999}
-  _victimSnapPoint: {fileID: 1062817027}
-  _animationId: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
+  _target: {fileID: 1062817038}
   _activationDistance: 2
 --- !u!114 &733027349
 MonoBehaviour:
@@ -1778,6 +1776,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateMachineController
   _transitionTables:
   - {fileID: 11400000, guid: de948cb50bdad5344a7838108f6701c9, type: 2}
+--- !u!114 &733027351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733027343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8556c02da9deb0947ba2af140f9b5874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SingleSnapPointSelector
+  _snapPoint:
+    _animationId: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
+    _attackerPoint: {fileID: 1314175999}
+    _victimPoint: {fileID: 1062817027}
 --- !u!1 &791131676
 GameObject:
   m_ObjectHideFlags: 0
