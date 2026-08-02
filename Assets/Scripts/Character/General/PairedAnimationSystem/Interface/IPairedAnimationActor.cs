@@ -9,4 +9,7 @@ public interface IPairedAnimationActor
     void PlayAnimation(string animationName);
 
     void UnlockMovement();
+
+    bool IsInAnimation(string animationName);
+    bool IsAnimationFinished(string animationName);
 }

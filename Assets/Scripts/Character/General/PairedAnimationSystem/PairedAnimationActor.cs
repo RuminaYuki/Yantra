@@ -31,4 +31,28 @@ public class PairedAnimationActor : MonoBehaviour,IPairedAnimationActor
     {
         _movementLock?.UnlockMovement(this);
     }
+    public bool IsInAnimation(string stateName)
+    {
+        if (_animator == null || _animator.IsInTransition(0))
+            return false;
+
+        AnimatorStateInfo stateInfo =
+            _animator.GetCurrentAnimatorStateInfo(0);
+
+        return stateInfo.IsName(stateName);
+    }
+
+    public bool IsAnimationFinished(string stateName)
+    {
+        if (_animator == null)
+        return false;
+
+        AnimatorStateInfo stateInfo =
+            _animator.GetCurrentAnimatorStateInfo(0);
+
+        if (!stateInfo.IsName(stateName))
+            return true;
+
+        return stateInfo.normalizedTime >= 0.95f;
+    }
 }

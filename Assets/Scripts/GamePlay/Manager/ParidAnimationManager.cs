@@ -46,7 +46,16 @@ public class PairedAnimationManager : MonoBehaviour
 
         attacker.PlayAnimation(attackerAnimation);
         victim.PlayAnimation(victimAnimation);
-        yield return new WaitForSeconds(1.5f);
+        
+        // ยืนยันว่าเข้า state แล้วก่อน
+        yield return new WaitUntil(() =>
+            attacker.IsInAnimation(attackerAnimation) &&
+            victim.IsInAnimation(victimAnimation));
+
+        // หลังจากเข้าแล้ว การออกจาก state จึงหมายถึงจบ
+        yield return new WaitUntil(() =>
+            attacker.IsAnimationFinished(attackerAnimation) &&
+            victim.IsAnimationFinished(victimAnimation));
 
         attacker.UnlockMovement();
         victim.UnlockMovement();
