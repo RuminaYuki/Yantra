@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6360807977658749456
+--- !u!1 &2487585531411130527
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2348961796562133278}
-  - component: {fileID: 7650198777237613190}
-  - component: {fileID: 797829609162809824}
-  - component: {fileID: 5826888191823210359}
+  - component: {fileID: 3627542115039573518}
+  - component: {fileID: 673077354513149036}
+  - component: {fileID: 2357118513751833426}
+  - component: {fileID: 777699034574312159}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -19,36 +19,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2348961796562133278
+--- !u!4 &3627542115039573518
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6360807977658749456}
+  m_GameObject: {fileID: 2487585531411130527}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.089596, y: 0.089596, z: 0.089596}
+  m_LocalScale: {x: 0.089600004, y: 0.0896, z: 0.089600004}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2568030386955828209}
+  m_Father: {fileID: 437274781670913072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7650198777237613190
+--- !u!33 &673077354513149036
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6360807977658749456}
+  m_GameObject: {fileID: 2487585531411130527}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &797829609162809824
+--- !u!23 &2357118513751833426
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6360807977658749456}
+  m_GameObject: {fileID: 2487585531411130527}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -91,13 +91,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5826888191823210359
+--- !u!135 &777699034574312159
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6360807977658749456}
+  m_GameObject: {fileID: 2487585531411130527}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -112,7 +112,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &9117980074068866131
+--- !u!1 &5867655530286610227
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,83 +120,71 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2568030386955828209}
-  - component: {fileID: -2280239117422937287}
-  - component: {fileID: 2431005053422005515}
-  - component: {fileID: -1819665770508358220}
+  - component: {fileID: 437274781670913072}
+  - component: {fileID: 9167213980437685040}
+  - component: {fileID: 1835492911981352639}
   m_Layer: 0
-  m_Name: Blast Yant
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2568030386955828209
+--- !u!4 &437274781670913072
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117980074068866131}
+  m_GameObject: {fileID: 5867655530286610227}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.056443956, z: -0, w: 0.99840575}
-  m_LocalPosition: {x: -63.446648, y: 0.18744993, z: 91.703064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.00044, y: -0.012, z: 0.07457}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2348961796562133278}
+  - {fileID: 3627542115039573518}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2280239117422937287
+--- !u!54 &9167213980437685040
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5867655530286610227}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1835492911981352639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117980074068866131}
+  m_GameObject: {fileID: 5867655530286610227}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02643e0e27c3c5b46a059694c4dceeef, type: 3}
+  m_Script: {fileID: 11500000, guid: 5526845c92c85a543b8f48f8dfd8923b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
-  _yantLifeTime: 10
-  _effectSettings:
-  - _yantReferences: {fileID: -1819665770508358220}
-    _effectType: 4
-    _effectDuration: 2
-    _holdDuration: 1
---- !u!114 &2431005053422005515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117980074068866131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Provider
-  Anchors:
-  - {fileID: 11400000, guid: 2aa02c22bc949974d8a7630d7b6d24e5, type: 2}
---- !u!114 &-1819665770508358220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117980074068866131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3043cae583940c24ab5b524c9863bc01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BlastYant
-  _projectilePrefab: {fileID: 1835492911981352639, guid: 87aa2a20926f24b469e17a3a1a84bda1,
-    type: 3}
-  _throwSpeed: 18
-  _initialAngleDeg: 8
-  _useGravity: 1
-  _projectileLifetime: 6
-  _pushAcceleration: 6
-  _pushLifetime: 1.5
-  _pushAwayFromImpact: 1
+  m_EditorClassIdentifier: Assembly-CSharp::YantProjectile
+  _rb: {fileID: 9167213980437685040}
+  _hitVfxPrefab: {fileID: 0}
+  _destroyOnHit: 1

@@ -20,6 +20,7 @@ public class YantCaster : MonoBehaviour
     [SerializeField] private YantraStatsController _stats;
     [SerializeField] private Transform _aimCamera;
     [SerializeField] private GameObject _playerRoot;
+    [SerializeField] private Transform _yantSpawnPoint;
     [SerializeField] private GameObject _yantPaper;
 
     [Header("Matching")]
@@ -96,11 +97,11 @@ public class YantCaster : MonoBehaviour
         }
 
         GameObject paper = _yantPaper != null ? _yantPaper : (_matcher != null ? _matcher.gameObject : gameObject);
-        Vector3 spawnPos = paper.transform.position;
-        Quaternion spawnRot = paper.transform.rotation;
+        Vector3 spawnPos = _yantSpawnPoint.transform.position;
+        Quaternion spawnRot = _yantSpawnPoint.transform.rotation;
         GameObject yantObj = null;
 
-        yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot);
+        yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot, _yantSpawnPoint);
 
         if (yantObj.TryGetComponent<YantEffectController>(out YantEffectController yantEffectController))
         {
