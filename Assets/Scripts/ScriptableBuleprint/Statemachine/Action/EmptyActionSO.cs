@@ -3,17 +3,17 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 using Yuki.Learning.StateMachine;
 
 [CreateAssetMenu(
-    fileName = "IdleAction", 
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/IdleActionSO")]
-public class IdleActionSO : StateActionSO
+    fileName = "EmptyAction", 
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Empty Action")]
+public class EmptyActionSO : StateActionSO
 {
     public override StateAction CreateAction(StateMachine stateMachine)
     {
-        return new IdleAction();
+        return new EmptyAction();
     }
 }
 
-public class IdleAction : StateAction
+public class EmptyAction : StateAction
 {
     public override void OnStateEnter()
     {

@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "SetLocomotionMultiplierAction",
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/PlayerLocomotion/Set Locomotion Multiplier")]
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Set Locomotion Multiplier")]
 public class SetLocomotionMultiplierActionSO : StateActionSO
 {
     [SerializeField] private float _multiplier = 1f;
@@ -18,7 +18,7 @@ public class SetLocomotionMultiplierActionSO : StateActionSO
 public class SetLocomotionMultiplierAction : StateAction
 {
     private readonly float _multiplier;
-    private PlayerLocomotion _playerLocomotion;
+    private BaseLocomotion _locomotion;
 
     public SetLocomotionMultiplierAction(float multiplier)
     {
@@ -27,14 +27,17 @@ public class SetLocomotionMultiplierAction : StateAction
 
     public override void Awake(StateMachine stateMachine)
     {
-        _playerLocomotion = stateMachine.GetComponent<PlayerLocomotion>();
+        _locomotion = stateMachine.GetComponent<BaseLocomotion>();
+
+        if (_locomotion == null)
+            Debug.LogError("SetLocomotionMultiplierAction cannot find BaseLocomotion.");
     }
 
     public override void OnStateEnter()
     {
-        if (_playerLocomotion == null) return;
+        if (_locomotion == null) return;
 
-        _playerLocomotion.SetMuitply(_multiplier);
+        _locomotion.SetMoveMultiply(_multiplier);
     }
 
     public override void OnUpdate() { }

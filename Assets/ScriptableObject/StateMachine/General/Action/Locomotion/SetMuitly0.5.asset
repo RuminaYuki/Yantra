@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7887c4fc7c20b454e86240139f8c35c7, type: 3}
-  m_Name: SetTurnSmoothSpeed5
-  m_EditorClassIdentifier: Assembly-CSharp::SetTurnSmoothSpeedActionSO
-  _turnSmoothSpeed: 5
+  m_Script: {fileID: 11500000, guid: 2d221c4a6e2501249ad5833608e7494c, type: 3}
+  m_Name: SetMuitly0.5
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotionAnimationActionSO
+  _multiplier: 0.5

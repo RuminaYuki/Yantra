@@ -1,5 +1,5 @@
 using UnityEngine;
-public class LocomotionAnim
+public class MoveAnimator
 {
     private Animator _animator;
 
@@ -9,7 +9,7 @@ public class LocomotionAnim
     private int _moveZ; //Set parameter
     private int _moveX; //Set parameter
 
-    public LocomotionAnim(Animator animator, float dampTime = 0.25f, float multiply = 1)
+    public MoveAnimator(Animator animator, float dampTime = 0.25f, float multiply = 1)
     {
         _animator = animator;
         _dampTime = dampTime;

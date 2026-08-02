@@ -40,7 +40,7 @@ public class PlayerLocomotion : BaseLocomotion
         base.Awake();
 
         //Set LocomotionAnim
-        LocomotionAnim.SetParameter(_nameParameterMoveX,_nameParameterMoveZ);
+        MoveAnimator.SetParameter(_nameParameterMoveX,_nameParameterMoveZ);
 
         _startTurnAngle = UnityEngine.Animator.StringToHash(_nameTurnAngle);
         _startTurnTrigger = UnityEngine.Animator.StringToHash(_nameStartTurn);
@@ -61,7 +61,7 @@ public class PlayerLocomotion : BaseLocomotion
     {
         if (IsMovementLocked)
         {
-            LocomotionAnim.SetMove(0f, 0f);
+            MoveAnimator.SetMove(0f, 0f);
             return;
         }
 
@@ -97,7 +97,7 @@ public class PlayerLocomotion : BaseLocomotion
         float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
         float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
 
-        LocomotionAnim.SetMove(velocityX,velocityZ);
+        MoveAnimator.SetMove(velocityX,velocityZ);
     }
     private void TurnAnimation(Vector3 direction)
     {
@@ -182,16 +182,9 @@ public class PlayerLocomotion : BaseLocomotion
     public Vector3 GetDirection() => _directionMove;
     public Vector3 GetDirectionWithReferencePoint() => GetWorldDirectionRelativeTo(_directionMove,_referencePoint);
 
-    //Animaiton
-    // Get,Set Mutiply
-    public float GetMutiply() => LocomotionAnim.Multiply;
-    public void SetMuitply(float multiply) => LocomotionAnim.Multiply = multiply;
     // Get,Set TurnbyCamera
     public bool GetTurnByCamera() => _turnbyCamera;
     public void SetTurnByCamera(bool value) => _turnbyCamera = value;
-    // Get,Set TurnSmoothSpeed
-    public float GetTurnSmoothSpeed() => Rotation.Speed;
-    public void SetTurnSmoothSpeed(float value) => Rotation.Speed = value;
 
     #endregion
 }

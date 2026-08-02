@@ -11,16 +11,16 @@ public class EnemyLocomotion : BaseLocomotion
     protected override void Awake()
     {
         base.Awake();
-        LocomotionAnim.SetParameter(_nameParameterMoveZ);
+        MoveAnimator.SetParameter(_nameParameterMoveZ);
     }
     private void Update()
     {
         if (IsMovementLocked)
         {
-            LocomotionAnim.SetMove(0f);
+            MoveAnimator.SetMove(0f);
             return;
         }
-        LocomotionAnim.SetMove(1f);
+        MoveAnimator.SetMove(1f);
     }
     private void FixedUpdate()
     {

@@ -1639,6 +1639,7 @@ GameObject:
   - component: {fileID: 733027345}
   - component: {fileID: 733027344}
   - component: {fileID: 733027347}
+  - component: {fileID: 733027350}
   - component: {fileID: 733027346}
   - component: {fileID: 733027349}
   - component: {fileID: 733027348}
@@ -1763,6 +1764,20 @@ MonoBehaviour:
   _animations:
   - id: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
     stateName: P_ka_Attack
+--- !u!114 &733027350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733027343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd64ae5dcdd4a5542a58e4e5b15ca526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateMachineController
+  _transitionTables:
+  - {fileID: 11400000, guid: de948cb50bdad5344a7838108f6701c9, type: 2}
 --- !u!1 &791131676
 GameObject:
   m_ObjectHideFlags: 0
