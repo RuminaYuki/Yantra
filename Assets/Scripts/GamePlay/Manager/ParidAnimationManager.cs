@@ -11,11 +11,23 @@ public class PairedAnimationManager : MonoBehaviour
         IPairedAnimationActor victim,
         Transform attackerSnapPoint,
         Transform victimSnapPoint,
-        string attackerAnimation,
-        string victimAnimation)
+        PairedAnimationId animationId)
     {
         if (_isPlaying || attacker == null || victim == null)
             return false;
+
+        if (animationId == null)
+        {
+            Debug.LogWarning("Paired Animation: Animation type is missing.");
+            return false;
+        }
+
+        if (!attacker.CanPlay(animationId) ||
+            !victim.CanPlay(animationId))
+        {
+            Debug.LogWarning("Paired Animation: Actor does not support this animation.");
+            return false;
+        }
 
         if (attackerSnapPoint == null || victimSnapPoint == null)
         {
@@ -24,9 +36,12 @@ public class PairedAnimationManager : MonoBehaviour
         }
 
         StartCoroutine(PlayRoutine(
-            attacker, victim,
-            attackerSnapPoint, victimSnapPoint,
-            attackerAnimation, victimAnimation));
+            attacker,
+            victim,
+            attackerSnapPoint,
+            victimSnapPoint,
+            animationId));
+
         return true;
     }
 
@@ -35,30 +50,33 @@ public class PairedAnimationManager : MonoBehaviour
         IPairedAnimationActor victim,
         Transform attackerSnapPoint,
         Transform victimSnapPoint,
-        string attackerAnimation,
-        string victimAnimation)
+        PairedAnimationId animationId)
     {
         _isPlaying = true;
+
         attacker.LockMovement();
         victim.LockMovement();
 
-        yield return WarpActors(attacker, victim, attackerSnapPoint, victimSnapPoint);
+        yield return WarpActors(
+            attacker,
+            victim,
+            attackerSnapPoint,
+            victimSnapPoint);
 
-        attacker.PlayAnimation(attackerAnimation);
-        victim.PlayAnimation(victimAnimation);
-        
-        // ยืนยันว่าเข้า state แล้วก่อน
-        yield return new WaitUntil(() =>
-            attacker.IsInAnimation(attackerAnimation) &&
-            victim.IsInAnimation(victimAnimation));
+        attacker.PlayAnimation(animationId);
+        victim.PlayAnimation(animationId);
 
-        // หลังจากเข้าแล้ว การออกจาก state จึงหมายถึงจบ
         yield return new WaitUntil(() =>
-            attacker.IsAnimationFinished(attackerAnimation) &&
-            victim.IsAnimationFinished(victimAnimation));
+            attacker.IsInAnimation(animationId) &&
+            victim.IsInAnimation(animationId));
+
+        yield return new WaitUntil(() =>
+            attacker.IsAnimationFinished(animationId) &&
+            victim.IsAnimationFinished(animationId));
 
         attacker.UnlockMovement();
         victim.UnlockMovement();
+
         _isPlaying = false;
     }
 
@@ -70,12 +88,16 @@ public class PairedAnimationManager : MonoBehaviour
     {
         Transform attackerTransform = attacker.GetTransform();
         Transform victimTransform = victim.GetTransform();
+
         Vector3 attackerStartPosition = attackerTransform.position;
         Vector3 victimStartPosition = victimTransform.position;
+
         Quaternion attackerStartRotation = attackerTransform.rotation;
         Quaternion victimStartRotation = victimTransform.rotation;
+
         Vector3 attackerTargetPosition = attackerSnapPoint.position;
         Vector3 victimTargetPosition = victimSnapPoint.position;
+
         Quaternion attackerTargetRotation = attackerSnapPoint.rotation;
         Quaternion victimTargetRotation = victimSnapPoint.rotation;
 
@@ -83,21 +105,45 @@ public class PairedAnimationManager : MonoBehaviour
         victimTargetPosition.y = victimStartPosition.y;
 
         float elapsedTime = 0f;
+
         while (elapsedTime < _warpDuration)
         {
             elapsedTime += Time.deltaTime;
-            float t = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsedTime / _warpDuration));
+
+            float t = Mathf.SmoothStep(
+                0f,
+                1f,
+                Mathf.Clamp01(elapsedTime / _warpDuration));
 
             attackerTransform.SetPositionAndRotation(
-                Vector3.Lerp(attackerStartPosition, attackerTargetPosition, t),
-                Quaternion.Slerp(attackerStartRotation, attackerTargetRotation, t));
+                Vector3.Lerp(
+                    attackerStartPosition,
+                    attackerTargetPosition,
+                    t),
+                Quaternion.Slerp(
+                    attackerStartRotation,
+                    attackerTargetRotation,
+                    t));
+
             victimTransform.SetPositionAndRotation(
-                Vector3.Lerp(victimStartPosition, victimTargetPosition, t),
-                Quaternion.Slerp(victimStartRotation, victimTargetRotation, t));
+                Vector3.Lerp(
+                    victimStartPosition,
+                    victimTargetPosition,
+                    t),
+                Quaternion.Slerp(
+                    victimStartRotation,
+                    victimTargetRotation,
+                    t));
+
             yield return null;
         }
 
-        attackerTransform.SetPositionAndRotation(attackerTargetPosition, attackerTargetRotation);
-        victimTransform.SetPositionAndRotation(victimTargetPosition, victimTargetRotation);
+        attackerTransform.SetPositionAndRotation(
+            attackerTargetPosition,
+            attackerTargetRotation);
+
+        victimTransform.SetPositionAndRotation(
+            victimTargetPosition,
+            victimTargetRotation);
     }
 }

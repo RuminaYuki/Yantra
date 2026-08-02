@@ -1746,8 +1746,7 @@ MonoBehaviour:
   _victim: {fileID: 1062817038}
   _attackerSnapPoint: {fileID: 1314175999}
   _victimSnapPoint: {fileID: 1062817027}
-  _attackerAnimation: P_ka_Attack
-  _victimAnimation: GotSlap
+  _animationId: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
   _activationDistance: 2
 --- !u!114 &733027349
 MonoBehaviour:
@@ -1761,6 +1760,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38420767fc21b8f4e9ea5bf2a7a03eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PairedAnimationActor
+  _animations:
+  - id: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
+    stateName: P_ka_Attack
 --- !u!1 &791131676
 GameObject:
   m_ObjectHideFlags: 0
@@ -2425,6 +2427,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38420767fc21b8f4e9ea5bf2a7a03eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+  _animations:
+  - id: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
+    stateName: GotSlap
 --- !u!114 &1062817039
 MonoBehaviour:
   m_ObjectHideFlags: 0

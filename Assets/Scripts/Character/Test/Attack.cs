@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Attack : MonoBehaviour
 {
@@ -20,11 +21,8 @@ public class Attack : MonoBehaviour
     private Transform _victimSnapPoint;
 
     [Header("Animations")]
-    [SerializeField]
-    private string _attackerAnimation = "PairedAttack";
-
-    [SerializeField]
-    private string _victimAnimation = "PairedHurt";
+    [FormerlySerializedAs("_animationType")]
+    [SerializeField] private PairedAnimationId _animationId;
 
     [Header("Condition")]
     [SerializeField]
@@ -41,18 +39,22 @@ public class Attack : MonoBehaviour
             return;
 
         TryAttack();
-        _isPlayed = true;
     }
 
     private void TryAttack()
     {
-        _pairedManager.TryStart(
+        if (_pairedManager == null)
+        {
+            Debug.LogWarning("PairedAnimationManager is missing.", this);
+            return;
+        }
+
+        _isPlayed = _pairedManager.TryStart(
             attacker: _attacker,
             victim: _victim,
             attackerSnapPoint: _attackerSnapPoint,
             victimSnapPoint: _victimSnapPoint,
-            attackerAnimation: _attackerAnimation,
-            victimAnimation: _victimAnimation
+            animationId: _animationId
         );
     }
 
