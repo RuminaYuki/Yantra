@@ -17,7 +17,9 @@ public class EnemyLocomotion : BaseLocomotion
     {
         if (IsMovementLocked)
         {
-            MoveAnimator.SetMove(0f);
+            if (ShouldResetMoveAnimation)
+                MoveAnimator.SetMove(0f);
+
             return;
         }
         MoveAnimator.SetMove(1f);

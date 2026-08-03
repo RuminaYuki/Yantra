@@ -41,14 +41,22 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
     }
 
     private readonly HashSet<object> _movementLockOwners = new();
-    public bool IsMovementLocked =>_movementLockOwners.Count > 0;
+    private readonly HashSet<object> _moveAnimationResetOwners = new();
 
-    public void LockMovement(object owner)
+    public bool IsMovementLocked => _movementLockOwners.Count > 0;
+    public bool ShouldResetMoveAnimation => _moveAnimationResetOwners.Count > 0;
+
+    public void LockMovement(
+        object owner,
+        bool resetMoveAnimation = true)
     {
         if (owner == null)
             return;
 
         _movementLockOwners.Add(owner);
+
+        if (resetMoveAnimation)
+            _moveAnimationResetOwners.Add(owner);
     }
 
     public void UnlockMovement(object owner)
@@ -57,6 +65,7 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
             return;
 
         _movementLockOwners.Remove(owner);
+        _moveAnimationResetOwners.Remove(owner);
     }
 
     public float GetMoveMultiply() => MoveAnimator.Multiply;

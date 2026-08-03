@@ -61,7 +61,9 @@ public class PlayerLocomotion : BaseLocomotion
     {
         if (IsMovementLocked)
         {
-            MoveAnimator.SetMove(0f, 0f);
+            if (ShouldResetMoveAnimation)
+                MoveAnimator.SetMove(0f, 0f);
+
             return;
         }
 

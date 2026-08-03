@@ -30,7 +30,9 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
 
     public void LockMovement()
     {
-        _movementLock?.LockMovement(this);
+        _movementLock?.LockMovement(
+            this,
+            resetMoveAnimation: false);
     }
 
     public void UnlockMovement()
@@ -53,7 +55,7 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
             return;
         }
 
-        _animator.CrossFadeInFixedTime(stateName, 0.1f);
+        _animator.CrossFadeInFixedTime(stateName, 0.25f);
     }
 
     public bool IsInAnimation(PairedAnimationId animationId)
