@@ -102,11 +102,11 @@ public class YantEffectController : MonoBehaviour
                 }
             }        
 
-            setting._yantEffect.Initialize(
-                _playerRoot,
-                _stats);
+            bool initialized = setting._yantEffect.Initialize(
+                                    _playerRoot,
+                                    _stats);
 
-            if (setting._effectType.HasFlag(YantEffectType.OneShot))
+            if (setting._effectType.HasFlag(YantEffectType.OneShot) && initialized)
             {
                 if (_effectSettings.Count == 1)
                 {
