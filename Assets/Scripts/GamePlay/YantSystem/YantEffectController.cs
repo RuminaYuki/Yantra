@@ -50,7 +50,7 @@ public class YantEffectController : MonoBehaviour
             var setting = _effectSettings[i];
             setting._yantEffect = setting._yantReferences as IYantEffect;
 
-            if (setting._yantEffect == null || setting._effectType == YantEffectType.None)
+            if (setting._yantEffect == null)
             {
                 _effectSettings.RemoveAt(i);
                 continue;
@@ -72,8 +72,7 @@ public class YantEffectController : MonoBehaviour
 
             setting._yantEffect.Initialize(
                 _playerRoot,
-                _stats,
-                _aimDirection);
+                _stats);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
@@ -95,20 +94,17 @@ public class YantEffectController : MonoBehaviour
         for (int i = _effectSettings.Count - 1; i >= 0; i--)
         {
             var setting = _effectSettings[i];
-            if (!setting._effectType.HasFlag(YantEffectType.Hold))
+            if (setting._effectType.HasFlag(YantEffectType.Hold))
             {
-                continue;
-            }
-
-            if (holdTime < setting._holdDuration)
-            {
-                continue;
-            }
+                if (holdTime < setting._holdDuration)
+                {
+                    continue;
+                }
+            }        
 
             setting._yantEffect.Initialize(
                 _playerRoot,
-                _stats,
-                _aimDirection);
+                _stats);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
@@ -125,11 +121,10 @@ public class YantEffectController : MonoBehaviour
         }
     }
 
-    public void SetDefaultValue(GameObject playerRoot, YantraStatsController start, Vector3 AimDirection)
+    public void SetDefaultValue(GameObject playerRoot, YantraStatsController start)
     {
         _playerRoot = playerRoot;
         _stats = start;
-        _aimDirection = AimDirection;
     }
 
     private void DestroyGameObject(float delay)

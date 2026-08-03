@@ -18,17 +18,15 @@ public class YantCaster : MonoBehaviour
     [Header("References")]
     [SerializeField] private YantraShapeMatcher _matcher;
     [SerializeField] private YantraStatsController _stats;
-    [SerializeField] private Transform _aimCamera;
     [SerializeField] private GameObject _playerRoot;
+    [SerializeField] private Transform _yantSpawnPoint;
     [SerializeField] private GameObject _yantPaper;
 
     [Header("Matching")]
     [SerializeField, Range(0f, 100f)] private float _minSimilarityPercent = 50f;
     [SerializeField] private List<YantPrefabBinding> _bindings = new List<YantPrefabBinding>();
 
-    [Header("Aim")]
-    [SerializeField] private float _maxAimDistance = 100f;
-    [SerializeField] private LayerMask _aimMask = ~0;
+    
 
     public GameObject _lastSpawnedYant;
 
@@ -43,7 +41,7 @@ public class YantCaster : MonoBehaviour
     #region Analyze Input
     public void Analyze()
     {
-        Debug.Log("Analyze : " + TryAnalyze());
+        TryAnalyze();
         
     }
 
@@ -96,21 +94,21 @@ public class YantCaster : MonoBehaviour
         }
 
         GameObject paper = _yantPaper != null ? _yantPaper : (_matcher != null ? _matcher.gameObject : gameObject);
-        Vector3 spawnPos = paper.transform.position;
-        Quaternion spawnRot = paper.transform.rotation;
+        Vector3 spawnPos = _yantSpawnPoint.transform.position;
+        Quaternion spawnRot = _yantSpawnPoint.transform.rotation;
         GameObject yantObj = null;
 
+        yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot, _yantSpawnPoint);
 
-        if (binding.YantPrefab.TryGetComponent<YantEffectController>(out YantEffectController yantEffectController))
+        if (yantObj.TryGetComponent<YantEffectController>(out YantEffectController yantEffectController))
         {
-            yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot);
             yantEffectController.SetDefaultValue(
                 _playerRoot != null ? _playerRoot : gameObject,
-                _stats,
-                GetAimDirection(yantObj.transform.position));
+                _stats);
         }
         else
         {
+            Destroy(yantObj);
             Debug.LogWarning("ไม่เจอ YantEffectController ใน yant ที่ Instantiate");
             return false;
         }
@@ -134,7 +132,6 @@ public class YantCaster : MonoBehaviour
     //เปลี่ยนไปสั่งใน YantEffectController
     public void tryCastYant(float holdTime)
     {
-        Debug.Log("try Cast");
         CastYant(holdTime);
     }
 
@@ -159,21 +156,5 @@ public class YantCaster : MonoBehaviour
     }
     #endregion
 
-    private Vector3 GetAimDirection(Vector3 fromPosition)
-    {
-        if (_aimCamera == null) return transform.forward;
-
-        Vector3 targetPoint = Physics.Raycast(
-            _aimCamera.position,
-            _aimCamera.forward,
-            out RaycastHit hit,
-            _maxAimDistance,
-            _aimMask,
-            QueryTriggerInteraction.Ignore)
-            ? hit.point
-            : _aimCamera.position + _aimCamera.forward * _maxAimDistance;
-
-        Vector3 dir = (targetPoint - fromPosition).normalized;
-        return dir.sqrMagnitude > 1e-4f ? dir : _aimCamera.forward;
-    }
+    
 }
