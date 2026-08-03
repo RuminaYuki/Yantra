@@ -28,13 +28,13 @@ public class BlastYant : MonoBehaviour, IYantEffect
         if (_aimCamera == null) _aimCamera = Camera.main?.transform;
     }
 
-    public void Initialize(GameObject playerRoot, YantraStatsController stats)
+    public bool Initialize(GameObject playerRoot, YantraStatsController stats)
     {
         if (_projectilePrefab == null)
         {
             Debug.LogWarning("<color=#FFAA00>[BlastYant]</color> ยังไม่ได้ใส่ Projectile Prefab");
             Destroy(gameObject);
-            return;
+            return false;
         }
 
         // เงยทิศขึ้นตามมุมที่ตั้ง
@@ -57,6 +57,7 @@ public class BlastYant : MonoBehaviour, IYantEffect
             playerRoot);
 
         Debug.Log($"<color=#FFAA00>[PushYant]</color> ปา projectile ไปทาง {launchDir:F2}");
+        return true;
     }
 
     private Vector3 GetAimDirection()

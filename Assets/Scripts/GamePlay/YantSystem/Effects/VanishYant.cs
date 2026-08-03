@@ -12,13 +12,13 @@ public class VanishYant : MonoBehaviour, IYantEffect
     [SerializeField] private bool _cancelOnMove = true;
     [SerializeField] private YantraInputObserverSO _inputObserver;
 
-    public void Initialize(GameObject playerRoot, YantraStatsController stats)
+    public bool Initialize(GameObject playerRoot, YantraStatsController stats)
     {
         if (playerRoot == null)
         {
             Debug.LogWarning("<color=#AA88FF>[VanishYant]</color> ไม่พบ playerRoot — หายตัวไม่ได้");
             Destroy(gameObject);
-            return;
+            return false;
         }
 
         if (!playerRoot.TryGetComponent(out YantVanish vanish))
@@ -29,6 +29,6 @@ public class VanishYant : MonoBehaviour, IYantEffect
 
         Debug.Log($"<color=#AA88FF>[VanishYant]</color> ผู้เล่นหายตัว (tag={_vanishTag}, {_duration}s)");
 
-        Destroy(gameObject, 0.1f);
+        return true;
     }
 }
