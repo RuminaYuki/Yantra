@@ -102,19 +102,19 @@ Material:
     - _AlphaDstBlend: 10
     - _AlphaSrcBlend: 1
     - _BACK_LAYER_FLOW_MODE: 0
-    - _Back_Layer_Distortion_Direction: 0.769
+    - _Back_Layer_Distortion_Direction: 0
     - _BlendMode: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 0
     - _CullModeForward: 0
     - _DIstortionSpeed: 0.315
     - _DIstortionStrength: 0.604
-    - _DIstortion_Strength: 0.477
+    - _DIstortion_Strength: 0.71
     - _DepthOffsetEnable: 0
     - _DistortionSpeed: 0.2
     - _Distortion_Back_Layer_Distance: 0
     - _Distortion_Font_Layer_Distance: 0
-    - _Distortion_Speed: 0.056
+    - _Distortion_Speed: 0.154
     - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 2
@@ -126,12 +126,12 @@ Material:
     - _FLOWMODE: 0
     - _FONT_LAYER_FLOW_MODE: 1
     - _FlowSpeed: 0.088
-    - _Font_Layer_Distortion_Direction: 0.123
+    - _Font_Layer_Distortion_Direction: 0
     - _HitEffectFrequency: 25
     - _HitEffectSpeed: 1
     - _NoiseScale: 10
     - _Noise_Scale: 5
-    - _Opacity: 0.092
+    - _Opacity: 1
     - _OpaqueCullMode: 2
     - _PerPixelSorting: 0
     - _RenderQueueType: 4
@@ -164,7 +164,7 @@ Material:
     - _Base_Color_1: {r: 1, g: 1, b: 1, a: 1}
     - _DistortionDirection: {r: 0, g: 0, b: 0, a: 0}
     - _DistortionScale: {r: 0, g: 1, b: 0, a: 0}
-    - _Distortion_Color: {r: 43.85662, g: 17.685995, b: 2.2755797, a: 1}
+    - _Distortion_Color: {r: 34.296757, g: 15.215919, b: 5.985754, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EffectColor: {r: 1, g: 0.357633, b: 0, a: 1}
     - _Emision: {r: 1, g: 0, b: 0, a: 1}
@@ -175,6 +175,6 @@ Material:
     - _TextSpeed: {r: 0.2, g: 0, b: 0, a: 0}
     - _Text_Color: {r: 917.73584, g: 404.29718, b: 90.90779, a: 1}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _WaveColor: {r: 179.36931, g: 89.20408, b: 32.99719, a: 1}
+    - _WaveColor: {r: 23.96863, g: 14.19143, b: 8.239217, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
