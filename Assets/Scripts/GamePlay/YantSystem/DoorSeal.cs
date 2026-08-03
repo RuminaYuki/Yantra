@@ -15,7 +15,7 @@ public class DoorSeal : MonoBehaviour
         {
             StopCoroutine(coroutine);
         }
-        coroutine = StartCoroutine(SealEffectDuration());
+        coroutine = StartCoroutine(SealEffectDuration());     
     }
 
     IEnumerator SealEffectDuration()
