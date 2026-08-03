@@ -10257,7 +10257,7 @@ MonoBehaviour:
   _drawableLayer:
     serializedVersion: 2
     m_Bits: 128
-  _minPointDistance: 0.002
+  _minPointDistance: 0.18
   _paperParent: {fileID: 791131681}
   _surfaceOffset: 0.01
   _allStrokes: []
@@ -10371,7 +10371,7 @@ MonoBehaviour:
   _shapeCategories:
   - CategoryName: Heal Yant
     Templates:
-    - {fileID: 11400000, guid: 26f22d6bc0f36304a96e30822b4804f3, type: 2}
+    - {fileID: 0}
     - {fileID: 11400000, guid: b7445af4623dc6147b5cdf5dde0fb602, type: 2}
     - {fileID: 11400000, guid: fd05e570ada0f1e44bd2135525f175a2, type: 2}
     - {fileID: 11400000, guid: cd6d1b36d1581aa43a6b5896755d1112, type: 2}
@@ -10393,9 +10393,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 960d15ab477f19e4a96e7674bbf7021c, type: 2}
     - {fileID: 11400000, guid: 5b9ba7430ec93ef45a2c399ca25c47f6, type: 2}
     - {fileID: 11400000, guid: d40627c795da1c94ba845d64dc839c92, type: 2}
-  - CategoryName: Push Yant
+  - CategoryName: Blast Yant
     Templates:
-    - {fileID: 11400000, guid: 8ed3cae9e6283404ca9b53fe31dbc99c, type: 2}
+    - {fileID: 11400000, guid: 26f22d6bc0f36304a96e30822b4804f3, type: 2}
     - {fileID: 11400000, guid: 3e43967a73971064ebf6fd8851de5b96, type: 2}
     - {fileID: 11400000, guid: 118250faef5632346ad8e9d26610c9b6, type: 2}
     - {fileID: 11400000, guid: 2dec409e4dbed2d40b6a3898f65e7456, type: 2}
@@ -10405,9 +10405,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: cef5ac7bbdfceb647b1cd0f46f6df390, type: 2}
     - {fileID: 11400000, guid: 0fba33b773d466048850e5dd8759393a, type: 2}
     - {fileID: 11400000, guid: 60efc54be9abd434f9803416ee52e699, type: 2}
-  _globalResampleCount: 2048
+  _globalResampleCount: 512
   _scoreSharpness: 8
-  _rotationSearchRangeDeg: 45
+  _rotationSearchRangeDeg: 10
   _rotationSearchThresholdDeg: 2
   CreateTemplate: 1
 --- !u!4 &819089443 stripped
@@ -11012,10 +11012,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7955172d3062ea94e88e5c962ad6bcf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotion
-  _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
-  _referencePoint: {fileID: 320540217}
   _dampTime: 0.25
   _multiply: 0
+  _rotateSpeed: 1
+  _gravityMultiplier: 3
+  _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
+  _referencePoint: {fileID: 320540217}
   _nameParameterMoveZ: VelocityZ
   _nameParameterMoveX: VelocityX
   _nameTurnAngle: StartTurnAngle
@@ -11023,7 +11025,6 @@ MonoBehaviour:
   _angleTurn: 45
   _angleTurnbyCamera: 60
   _turnbyCamera: 0
-  gravityMultiplier: 3
 --- !u!143 &1062817030
 CharacterController:
   m_ObjectHideFlags: 0
@@ -11476,24 +11477,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YantCaster
   _matcher: {fileID: 791131682}
   _stats: {fileID: 0}
-  _aimCamera: {fileID: 0}
-  _playerRoot: {fileID: 0}
+  _playerRoot: {fileID: 1062817018}
+  _yantSpawnPoint: {fileID: 356688298}
   _yantPaper: {fileID: 791131676}
   _minSimilarityPercent: 40
   _bindings:
   - CategoryName: Heal Yant
     YantPrefab: {fileID: 8867824720623061172, guid: df9a28f72795a534f8058f9c3d952aa9,
       type: 3}
-  - CategoryName: Push Yant
-    YantPrefab: {fileID: 9117980074068866131, guid: 62b274d37cdd5094e83398579c31526e,
-      type: 3}
   - CategoryName: Vanish Yant
     YantPrefab: {fileID: 8867824720623061172, guid: 8ef584bf25d00c74eb9d4d861d13e50b,
       type: 3}
-  _maxAimDistance: 100
-  _aimMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  - CategoryName: Blast Yant
+    YantPrefab: {fileID: 9117980074068866131, guid: 4a70989f6071a1f4fb293eb5bd6e294d,
+      type: 3}
   _lastSpawnedYant: {fileID: 0}
 --- !u!4 &1175156752
 Transform:
@@ -11871,6 +11868,81 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 141501504}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1455702408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1455702409}
+  - component: {fileID: 1455702411}
+  - component: {fileID: 1455702410}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1455702409
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455702408}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.036394, y: 0.036394, z: 0.036394}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1643713084}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1455702410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455702408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1455702411
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455702408}
+  m_CullTransparentMesh: 1
 --- !u!4 &1471388243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5006931829899664564, guid: f09e097e7032d164583e76b3e608032a,
@@ -12051,6 +12123,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1052259967}
+  - {fileID: 1455702409}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

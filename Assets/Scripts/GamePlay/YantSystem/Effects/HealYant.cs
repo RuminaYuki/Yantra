@@ -14,7 +14,7 @@ public class HealYant : MonoBehaviour, IYantEffect
         //Destroy(gameObject, _lifetime);
     }
 
-    public void Initialize(GameObject playerRoot, YantraStatsController stats, Vector3 aimDirection)
+    public void Initialize(GameObject playerRoot, YantraStatsController stats)
     {
         if (stats != null)
         {

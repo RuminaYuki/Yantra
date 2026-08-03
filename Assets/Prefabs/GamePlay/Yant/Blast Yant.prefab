@@ -194,9 +194,14 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 1835492911981352639, guid: 87aa2a20926f24b469e17a3a1a84bda1,
     type: 3}
   _throwSpeed: 18
-  _initialAngleDeg: 8
-  _useGravity: 1
+  _initialAngleDeg: 0
+  _useGravity: 0
   _projectileLifetime: 6
   _pushAcceleration: 6
   _pushLifetime: 1.5
   _pushAwayFromImpact: 1
+  _aimCamera: {fileID: 0}
+  _maxAimDistance: 100
+  _aimMask:
+    serializedVersion: 2
+    m_Bits: 4294967295

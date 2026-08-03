@@ -18,7 +18,6 @@ public class YantCaster : MonoBehaviour
     [Header("References")]
     [SerializeField] private YantraShapeMatcher _matcher;
     [SerializeField] private YantraStatsController _stats;
-    [SerializeField] private Transform _aimCamera;
     [SerializeField] private GameObject _playerRoot;
     [SerializeField] private Transform _yantSpawnPoint;
     [SerializeField] private GameObject _yantPaper;
@@ -27,9 +26,7 @@ public class YantCaster : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float _minSimilarityPercent = 50f;
     [SerializeField] private List<YantPrefabBinding> _bindings = new List<YantPrefabBinding>();
 
-    [Header("Aim")]
-    [SerializeField] private float _maxAimDistance = 100f;
-    [SerializeField] private LayerMask _aimMask = ~0;
+    
 
     public GameObject _lastSpawnedYant;
 
@@ -107,8 +104,7 @@ public class YantCaster : MonoBehaviour
         {
             yantEffectController.SetDefaultValue(
                 _playerRoot != null ? _playerRoot : gameObject,
-                _stats,
-                GetAimDirection(yantObj.transform.position));
+                _stats);
         }
         else
         {
@@ -160,21 +156,5 @@ public class YantCaster : MonoBehaviour
     }
     #endregion
 
-    private Vector3 GetAimDirection(Vector3 fromPosition)
-    {
-        if (_aimCamera == null) return transform.forward;
-
-        Vector3 targetPoint = Physics.Raycast(
-            _aimCamera.position,
-            _aimCamera.forward,
-            out RaycastHit hit,
-            _maxAimDistance,
-            _aimMask,
-            QueryTriggerInteraction.Ignore)
-            ? hit.point
-            : _aimCamera.position + _aimCamera.forward * _maxAimDistance;
-
-        Vector3 dir = (targetPoint - fromPosition).normalized;
-        return dir.sqrMagnitude > 1e-4f ? dir : _aimCamera.forward;
-    }
+    
 }

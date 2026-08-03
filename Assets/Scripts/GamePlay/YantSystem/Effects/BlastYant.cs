@@ -18,7 +18,17 @@ public class BlastYant : MonoBehaviour, IYantEffect
     [SerializeField] private float _pushLifetime = 1.5f;
     [SerializeField] private bool _pushAwayFromImpact = true;
 
-    public void Initialize(GameObject playerRoot, YantraStatsController stats, Vector3 aimDirection)
+    [Header("Aim")]
+    [SerializeField] private Transform _aimCamera;
+    [SerializeField] private float _maxAimDistance = 100f;
+    [SerializeField] private LayerMask _aimMask = ~0;
+
+    private void OnValidate()
+    {
+        if (_aimCamera == null) _aimCamera = Camera.main?.transform;
+    }
+
+    public void Initialize(GameObject playerRoot, YantraStatsController stats)
     {
         if (_projectilePrefab == null)
         {
@@ -28,9 +38,9 @@ public class BlastYant : MonoBehaviour, IYantEffect
         }
 
         // เงยทิศขึ้นตามมุมที่ตั้ง
-        Vector3 right = Vector3.Cross(Vector3.up, aimDirection);
+        Vector3 right = Vector3.Cross(Vector3.up, GetAimDirection());
         if (right.sqrMagnitude < 1e-4f) right = Vector3.right;
-        Vector3 launchDir = Quaternion.AngleAxis(-_initialAngleDeg, right.normalized) * aimDirection;
+        Vector3 launchDir = Quaternion.AngleAxis(-_initialAngleDeg, right.normalized) * GetAimDirection();
 
         YantProjectile proj = Instantiate(
             _projectilePrefab,
@@ -47,5 +57,23 @@ public class BlastYant : MonoBehaviour, IYantEffect
             playerRoot);
 
         Debug.Log($"<color=#FFAA00>[PushYant]</color> ปา projectile ไปทาง {launchDir:F2}");
+    }
+
+    private Vector3 GetAimDirection()
+    {
+        if (_aimCamera == null) return transform.forward;
+
+        Vector3 targetPoint = Physics.Raycast(
+            _aimCamera.position,
+            _aimCamera.forward,
+            out RaycastHit hit,
+            _maxAimDistance,
+            _aimMask,
+            QueryTriggerInteraction.Ignore)
+            ? hit.point
+            : _aimCamera.position + _aimCamera.forward * _maxAimDistance;
+
+        Vector3 dir = (targetPoint - this.transform.position).normalized;
+        return dir.sqrMagnitude > 1e-4f ? dir : _aimCamera.forward;
     }
 }

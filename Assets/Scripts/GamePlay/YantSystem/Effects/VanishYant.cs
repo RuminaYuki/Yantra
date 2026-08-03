@@ -12,7 +12,7 @@ public class VanishYant : MonoBehaviour, IYantEffect
     [SerializeField] private bool _cancelOnMove = true;
     [SerializeField] private YantraInputObserverSO _inputObserver;
 
-    public void Initialize(GameObject playerRoot, YantraStatsController stats, Vector3 aimDirection)
+    public void Initialize(GameObject playerRoot, YantraStatsController stats)
     {
         if (playerRoot == null)
         {
