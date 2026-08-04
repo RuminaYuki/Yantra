@@ -98,6 +98,9 @@ public class PairedAnimationManager : MonoBehaviour
             attacker.IsAnimationFinished(animationId) &&
             victim.IsAnimationFinished(animationId));
 
+        attacker.ExitAnimation(animationId);
+        victim.ExitAnimation(animationId);
+
         attacker.UnlockMovement();
         victim.UnlockMovement();
 

@@ -9,6 +9,7 @@ public class PathNavigator : MonoBehaviour
     private float _timer;
 
     public Vector3 Direction { get; private set; }
+    public Transform Target {get => _target; set => _target = value;}
 
     private void Awake()
     {
@@ -36,10 +37,5 @@ public class PathNavigator : MonoBehaviour
         }
 
         Direction = _pathfinder.GetDirection(transform.position);
-    }
-
-    public void SetTarget(Transform target)
-    {
-        _target = target;
     }
 }

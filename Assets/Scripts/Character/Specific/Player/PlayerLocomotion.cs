@@ -31,8 +31,7 @@ public class PlayerLocomotion : BaseLocomotion
 
     
 
-    private int _startTurnAngle;
-    private int _startTurnTrigger;
+    
     private bool _wasMoving;
 
     protected override void Awake()
@@ -40,10 +39,8 @@ public class PlayerLocomotion : BaseLocomotion
         base.Awake();
 
         //Set LocomotionAnim
-        MoveAnimator.SetParameter(_nameParameterMoveX,_nameParameterMoveZ);
-
-        _startTurnAngle = UnityEngine.Animator.StringToHash(_nameTurnAngle);
-        _startTurnTrigger = UnityEngine.Animator.StringToHash(_nameStartTurn);
+        LocomotionAnim.SetMoveParameter(_nameParameterMoveX,_nameParameterMoveZ);
+        LocomotionAnim.SetTurnParameter(_nameTurnAngle,_nameStartTurn);
 
         _enableUseInputObserverSO = true;
     }
@@ -61,19 +58,22 @@ public class PlayerLocomotion : BaseLocomotion
     {
         if (IsMovementLocked)
         {
+            _wasMoving = false;
+
             if (ShouldResetMoveAnimation)
-                MoveAnimator.SetMove(0f, 0f);
+                LocomotionAnim.SetMove(0f, 0f);
 
             return;
         }
 
         // set Animation
         Vector3 direction = GetDirectionWithReferencePoint();
-        MoveAnimation(direction);
         if (_turnbyCamera)
             TurnByCamera(direction);
         else
             TurnAnimation(direction);
+
+        MoveAnimation(direction);
     }
 
     void FixedUpdate()
@@ -99,7 +99,7 @@ public class PlayerLocomotion : BaseLocomotion
         float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
         float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
 
-        MoveAnimator.SetMove(velocityX,velocityZ);
+        LocomotionAnim.SetMove(velocityX,velocityZ);
     }
     private void TurnAnimation(Vector3 direction)
     {
@@ -109,8 +109,7 @@ public class PlayerLocomotion : BaseLocomotion
         if (justStartedMoving && Mathf.Abs(GetSignedAngleToCamera()) >= _angleTurn)
         {
             float angle = Vector3.SignedAngle(transform.forward,direction,Vector3.up);
-            Animator.SetFloat(_startTurnAngle, angle);
-            Animator.SetTrigger(_startTurnTrigger);
+            LocomotionAnim.SetTurn(angle);
         }
 
         _wasMoving = isMoving;
@@ -121,8 +120,7 @@ public class PlayerLocomotion : BaseLocomotion
 
         if (Mathf.Abs(angle) >= _angleTurnbyCamera && !(direction.sqrMagnitude > 0.01f))
         {
-            Animator.SetFloat(_startTurnAngle, angle);
-            Animator.SetTrigger(_startTurnTrigger);
+            LocomotionAnim.SetTurn(angle);
         }
     }
 
