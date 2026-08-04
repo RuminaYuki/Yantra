@@ -343,7 +343,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 4469769256219494171, guid: 2be2b54fad03a6b47b9387f383d3d759,
+    m_Motion: {fileID: 8045623372737710287, guid: a889dac040cfba34699170d28f61375f,
       type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: -2}
@@ -352,7 +352,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 310686302476918285, guid: 2be2b54fad03a6b47b9387f383d3d759,
+    m_Motion: {fileID: -4348197303709130868, guid: a889dac040cfba34699170d28f61375f,
       type: 3}
     m_Threshold: 0.25
     m_Position: {x: 0, y: 0}
@@ -361,7 +361,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -2820853617765744360, guid: 2be2b54fad03a6b47b9387f383d3d759,
+    m_Motion: {fileID: 1155985759645826523, guid: a889dac040cfba34699170d28f61375f,
       type: 3}
     m_Threshold: 0.5
     m_Position: {x: -2, y: 0}
@@ -370,7 +370,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 9206372025747025091, guid: 2be2b54fad03a6b47b9387f383d3d759,
+    m_Motion: {fileID: -5385478198830288621, guid: a889dac040cfba34699170d28f61375f,
       type: 3}
     m_Threshold: 0.75
     m_Position: {x: 2, y: 0}
@@ -379,7 +379,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -3152880934700300153, guid: 2be2b54fad03a6b47b9387f383d3d759,
+    m_Motion: {fileID: -4763358054146561318, guid: a889dac040cfba34699170d28f61375f,
       type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: 2}
@@ -940,7 +940,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: HoldingFlashlight 0
     m_StateMachine: {fileID: -8872355684500142859}
-    m_Mask: {fileID: 31900000, guid: 6d7374a9246daee42a1836abe4b6c30e, type: 2}
+    m_Mask: {fileID: 31900000, guid: 0b89c8181913cf246a492ef277f5b3b0, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
