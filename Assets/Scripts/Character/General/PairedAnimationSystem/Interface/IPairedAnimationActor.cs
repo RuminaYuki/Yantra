@@ -6,6 +6,7 @@ public interface IPairedAnimationActor
 
     void LockMovement();
     void PlayAnimation(PairedAnimationId animationId);
+    void ExitAnimation(PairedAnimationId animationId);
     void UnlockMovement();
 
     bool IsInAnimation(PairedAnimationId animationId);

@@ -10,6 +10,7 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
         [FormerlySerializedAs("type")]
         public PairedAnimationId id;
         public string stateName;
+        public string exitStateName;
     }
 
     [SerializeField] private PairedAnimation[] _animations;
@@ -30,7 +31,9 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
 
     public void LockMovement()
     {
-        _movementLock?.LockMovement(this);
+        _movementLock?.LockMovement(
+            this,
+            resetMoveAnimation: false);
     }
 
     public void UnlockMovement()
@@ -40,12 +43,14 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
 
     public bool CanPlay(PairedAnimationId animationId)
     {
-        return TryGetStateName(animationId, out _);
+        return TryGetAnimation(animationId, out _);
     }
 
     public void PlayAnimation(PairedAnimationId animationId)
     {
-        if (!TryGetStateName(animationId, out string stateName))
+        if (!TryGetAnimation(
+            animationId,
+            out PairedAnimation animation))
         {
             Debug.LogWarning(
                 $"{name} does not support this paired animation.",
@@ -53,7 +58,29 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
             return;
         }
 
-        _animator.CrossFadeInFixedTime(stateName, 0.1f);
+        _animator.CrossFadeInFixedTime(
+            animation.stateName,
+            0.25f);
+    }
+
+    public void ExitAnimation(PairedAnimationId animationId)
+    {
+        if (!TryGetAnimation(
+            animationId,
+            out PairedAnimation animation))
+            return;
+
+        if (string.IsNullOrWhiteSpace(animation.exitStateName))
+        {
+            Debug.LogWarning(
+                $"{name} has no exit state for this paired animation.",
+                this);
+            return;
+        }
+
+        _animator.CrossFadeInFixedTime(
+            animation.exitStateName,
+            0.25f);
     }
 
     public bool IsInAnimation(PairedAnimationId animationId)
@@ -61,13 +88,15 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
         if (_animator == null || _animator.IsInTransition(0))
             return false;
 
-        if (!TryGetStateName(animationId, out string stateName))
+        if (!TryGetAnimation(
+            animationId,
+            out PairedAnimation animation))
             return false;
 
         AnimatorStateInfo stateInfo =
             _animator.GetCurrentAnimatorStateInfo(0);
 
-        return stateInfo.IsName(stateName);
+        return stateInfo.IsName(animation.stateName);
     }
 
     public bool IsAnimationFinished(PairedAnimationId animationId)
@@ -75,25 +104,27 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
         if (_animator == null)
             return false;
 
-        if (!TryGetStateName(animationId, out string stateName))
+        if (!TryGetAnimation(
+            animationId,
+            out PairedAnimation animation))
             return false;
 
         AnimatorStateInfo stateInfo =
             _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (!stateInfo.IsName(stateName))
+        if (!stateInfo.IsName(animation.stateName))
             return true;
 
         return stateInfo.normalizedTime >= 0.95f;
     }
 
-    private bool TryGetStateName(
+    private bool TryGetAnimation(
         PairedAnimationId animationId,
-        out string stateName)
+        out PairedAnimation result)
     {
         if (animationId == null || _animations == null)
         {
-            stateName = null;
+            result = null;
             return false;
         }
 
@@ -108,11 +139,11 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
             if (string.IsNullOrWhiteSpace(animation.stateName))
                 continue;
 
-            stateName = animation.stateName;
+            result = animation;
             return true;
         }
 
-        stateName = null;
+        result = null;
         return false;
     }
 }

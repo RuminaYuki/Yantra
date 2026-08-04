@@ -17,7 +17,7 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
     protected CharacterController CharacterController { get; private set; }
     protected Animator Animator { get; private set; }
 
-    protected MoveAnimator MoveAnimator { get; private set; }
+    protected LocomotionAnim LocomotionAnim { get; private set; }
     protected RotationTransform Rotation { get; private set; }
     protected GravityCharacterCon Gravity { get; private set; }
 
@@ -26,7 +26,7 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
         Animator = GetComponent<Animator>();
         CharacterController = GetComponent<CharacterController>();
 
-        MoveAnimator = new MoveAnimator(Animator,_dampTime,_multiply);
+        LocomotionAnim = new LocomotionAnim(Animator,_dampTime,_multiply);
         Rotation = new RotationTransform(transform,_rotateSpeed);
 
         Gravity = new GravityCharacterCon(CharacterController,_gravityMultiplier);
@@ -41,14 +41,22 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
     }
 
     private readonly HashSet<object> _movementLockOwners = new();
-    public bool IsMovementLocked =>_movementLockOwners.Count > 0;
+    private readonly HashSet<object> _moveAnimationResetOwners = new();
 
-    public void LockMovement(object owner)
+    public bool IsMovementLocked => _movementLockOwners.Count > 0;
+    public bool ShouldResetMoveAnimation => _moveAnimationResetOwners.Count > 0;
+
+    public void LockMovement(
+        object owner,
+        bool resetMoveAnimation = true)
     {
         if (owner == null)
             return;
 
         _movementLockOwners.Add(owner);
+
+        if (resetMoveAnimation)
+            _moveAnimationResetOwners.Add(owner);
     }
 
     public void UnlockMovement(object owner)
@@ -57,10 +65,11 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
             return;
 
         _movementLockOwners.Remove(owner);
+        _moveAnimationResetOwners.Remove(owner);
     }
 
-    public float GetMoveMultiply() => MoveAnimator.Multiply;
-    public void SetMoveMultiply(float multiply) => MoveAnimator.Multiply = multiply;
+    public float GetMoveMultiply() => LocomotionAnim.Multiply;
+    public void SetMoveMultiply(float multiply) => LocomotionAnim.Multiply = multiply;
     public float GetRotateSmoothSpeed() => Rotation.Speed;
     public void SetRotateSmoothSpeed(float value) => Rotation.Speed = value;
 }
