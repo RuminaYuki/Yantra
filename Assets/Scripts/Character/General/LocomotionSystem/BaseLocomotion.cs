@@ -15,7 +15,8 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
     [SerializeField] private float _gravityMultiplier = 1f;
 
     protected CharacterController CharacterController { get; private set; }
-    protected Animator Animator { get; private set; }
+    Animator _animator;
+    protected Animator Animator {get=>_animator; set=>_animator = value;}
 
     protected LocomotionAnim LocomotionAnim { get; private set; }
     protected RotationTransform Rotation { get; private set; }
