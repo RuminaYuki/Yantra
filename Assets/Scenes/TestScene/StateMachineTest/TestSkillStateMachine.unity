@@ -10780,6 +10780,9 @@ MonoBehaviour:
   - Flag: {fileID: 11400000, guid: cbd2ad8135331254ba2b65379fc3d549, type: 2}
     InitialValue: 0
     runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: a3cf3693d09433046a344ab222c28e42, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
 --- !u!114 &1062817034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15244,6 +15247,11 @@ PrefabInstance:
       propertyPath: _yantSpawnPoint
       value: 
       objectReference: {fileID: 356688298}
+    - target: {fileID: 6147809767875308379, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: _minSimilarityPercent
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
         type: 3}
       propertyPath: _rotationSearchRangeDeg
@@ -15254,6 +15262,12 @@ PrefabInstance:
       propertyPath: '_shapeCategories.Array.data[0].Templates.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 26f22d6bc0f36304a96e30822b4804f3,
+        type: 2}
+    - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: '_shapeCategories.Array.data[1].Templates.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: bcd3389e159a64c42a039199e9818185,
         type: 2}
     - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
         type: 3}
