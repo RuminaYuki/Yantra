@@ -1993,9 +1993,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLocomotion
   _dampTime: 0.1
   _multiply: 0.5
-  _rotateSpeed: 5
+  _rotateSpeed: 1
   _gravityMultiplier: 1
   _nameParameterMoveZ: VelocityZ
+  _nameTurnAngle: StartTurnAngle
+  _nameStartTurn: StartTurn
+  _angleTurn: 45
 --- !u!143 &733027347
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2049,6 +2052,7 @@ MonoBehaviour:
   _animations:
   - id: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
     stateName: P_ka_Attack
+    exitStateName: BaseMovement
 --- !u!114 &733027350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2712,6 +2716,7 @@ MonoBehaviour:
   _animations:
   - id: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
     stateName: GotSlap
+    exitStateName: BaseMovement
 --- !u!114 &1062817039
 MonoBehaviour:
   m_ObjectHideFlags: 0
