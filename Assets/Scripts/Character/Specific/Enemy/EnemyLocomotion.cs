@@ -3,15 +3,16 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController),typeof(Animator))]
 public class EnemyLocomotion : BaseLocomotion
 {
-    private Vector3 _directionMove;
-
     [Header("Locomotion Anim Parameter")]
     [SerializeField] private string _nameParameterMoveZ;
+
+    PathNavigator _pathNavigator;
 
     protected override void Awake()
     {
         base.Awake();
         MoveAnimator.SetParameter(_nameParameterMoveZ);
+        _pathNavigator = GetComponent<PathNavigator>();
     }
     private void Update()
     {
@@ -31,6 +32,8 @@ public class EnemyLocomotion : BaseLocomotion
             Rotation.Rotate(Vector3.zero);
             return;
         }
-        Rotation.Rotate(transform.forward);
+
+        Debug.Log($"Path direction: {_pathNavigator.Direction}");
+        Rotation.Rotate(_pathNavigator.Direction);
     }
 }
