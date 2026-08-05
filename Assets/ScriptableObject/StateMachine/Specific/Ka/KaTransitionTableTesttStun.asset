@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5492ed31ba40b643aaf3d94f1de0aa7, type: 3}
-  m_Name: KaTransitionTableTest
+  m_Name: KaTransitionTableTesttStun
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
   _initialState: {fileID: 11400000, guid: af63c62fe85e3d64290259e7241285e4, type: 2}
   _anyTransitions: []
@@ -26,10 +26,7 @@ MonoBehaviour:
     - Conditions:
       - Condition: {fileID: 11400000, guid: e995be57c7552e248a69841f5d271c51, type: 2}
         ExpectedResult: 0
-    ToState: {fileID: 11400000, guid: 9fce708e718343044bcae4f0dd9ea742, type: 2}
-  - FromState: {fileID: 11400000, guid: 9fce708e718343044bcae4f0dd9ea742, type: 2}
-    ConditionGroups:
     - Conditions:
-      - Condition: {fileID: 11400000, guid: e995be57c7552e248a69841f5d271c51, type: 2}
+      - Condition: {fileID: 11400000, guid: b54ab37f63b3d56479a98b464bcf827d, type: 2}
         ExpectedResult: 0
     ToState: {fileID: 11400000, guid: af63c62fe85e3d64290259e7241285e4, type: 2}
