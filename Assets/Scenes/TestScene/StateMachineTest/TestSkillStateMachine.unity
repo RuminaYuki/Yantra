@@ -11344,7 +11344,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -17376,15 +17376,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
         type: 3}
+      propertyPath: _globalResampleCount
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
       propertyPath: _rotationSearchRangeDeg
-      value: 45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
         type: 3}
       propertyPath: '_shapeCategories.Array.data[0].Templates.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 26f22d6bc0f36304a96e30822b4804f3,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
         type: 3}
       propertyPath: '_shapeCategories.Array.data[1].Templates.Array.data[0]'
@@ -17397,6 +17401,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 54a5b5c3320813840b299830c46d267b,
         type: 2}
+    - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: '_shapeCategories.Array.data[3].Templates.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

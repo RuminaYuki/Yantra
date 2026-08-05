@@ -8,7 +8,7 @@ public class GameObjectAnchor : RuntimeAnchorBase<GameObject>, IRuntimeAnchorBas
     public GameObject gameObject;
     public void IProvide(GameObject gameObject)
     {
-        Debug.Log("here " + gameObject.name);
+        //Debug.Log("here " + gameObject.name);
         this.gameObject = gameObject;
         base.Provide(gameObject);
     }

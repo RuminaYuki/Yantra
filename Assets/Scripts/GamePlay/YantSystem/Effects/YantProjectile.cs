@@ -23,6 +23,7 @@ public class YantProjectile : MonoBehaviour
     private FlagSO _debuff;
 
     private bool _hasHit;
+    private StateFlags _stateFlags;
 
     private void OnValidate()
     {
@@ -54,8 +55,35 @@ public class YantProjectile : MonoBehaviour
         if (lifeTime > 0f) Destroy(gameObject, lifeTime);
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log(other.gameObject.name);
+
+        if (_hasHit) return;
+
+        // ไม่ชนตัวเอง/เจ้าของ
+        if (_owner != null && other.transform.root == _owner.transform.root) return;
+
+        _hasHit = true;
+
+        if (_debuff != null
+            && other.gameObject.TryGetComponent(out StateFlags stateFlags)
+            && stateFlags.Contains(_debuff))
+        {
+            Debug.Log(other.gameObject.name + " has debuff " + _debuff.name);
+            stateFlags.Set(_debuff, true);
+        }
+
+        if (_hitVfxPrefab != null)
+            Instantiate(_hitVfxPrefab, other.ClosestPoint(transform.position), Quaternion.identity);
+
+        if (_destroyOnHit) Destroy(gameObject);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.gameObject.name);
+
         if (_hasHit) return;
 
         // ไม่ชนตัวเอง/เจ้าของ
