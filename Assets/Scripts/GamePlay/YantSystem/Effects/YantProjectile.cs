@@ -20,6 +20,8 @@ public class YantProjectile : MonoBehaviour
     private float _pushLifeTime;
     private bool _pushAwayFromImpact;
     private GameObject _owner;
+    private FlagSO _debuff;
+
     private bool _hasHit;
 
     private void OnValidate()
@@ -35,7 +37,8 @@ public class YantProjectile : MonoBehaviour
         float pushAcceleration,
         float pushLifeTime,
         bool pushAwayFromImpact,
-        GameObject owner)
+        GameObject owner,
+        FlagSO debuff = null)
     {
         if (_rb == null) TryGetComponent(out _rb);
 
@@ -46,6 +49,7 @@ public class YantProjectile : MonoBehaviour
         _pushLifeTime = pushLifeTime;
         _pushAwayFromImpact = pushAwayFromImpact;
         _owner = owner;
+        _debuff = debuff;
 
         if (lifeTime > 0f) Destroy(gameObject, lifeTime);
     }
@@ -59,7 +63,14 @@ public class YantProjectile : MonoBehaviour
 
         _hasHit = true;
 
-        Rigidbody targetRb = collision.rigidbody;
+        if (_debuff != null
+            && collision.transform.root.TryGetComponent(out StateFlags stateFlags)
+            && stateFlags.Get(_debuff))
+        {
+            stateFlags.Set(_debuff, true);
+        }
+
+        /*Rigidbody targetRb = collision.rigidbody;
         if (targetRb != null && !targetRb.isKinematic)
         {
             Vector3 pushDir = _pushAwayFromImpact
@@ -72,7 +83,7 @@ public class YantProjectile : MonoBehaviour
                 push = targetRb.gameObject.AddComponent<YantGradualPush>();
 
             push.Begin(pushDir, _pushAcceleration, _pushLifeTime);
-        }
+        }*/
 
         if (_hitVfxPrefab != null)
             Instantiate(_hitVfxPrefab, collision.GetContact(0).point, Quaternion.identity);
