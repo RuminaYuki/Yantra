@@ -21,6 +21,7 @@ public class YantProjectile : MonoBehaviour
     private bool _pushAwayFromImpact;
     private GameObject _owner;
     private FlagSO _debuff;
+    private float _debuffDuration;
 
     private bool _hasHit;
     private StateFlags _stateFlags;
@@ -39,7 +40,8 @@ public class YantProjectile : MonoBehaviour
         float pushLifeTime,
         bool pushAwayFromImpact,
         GameObject owner,
-        FlagSO debuff = null)
+        FlagSO debuff = null,
+        float duration = 0f)
     {
         if (_rb == null) TryGetComponent(out _rb);
 
@@ -51,11 +53,12 @@ public class YantProjectile : MonoBehaviour
         _pushAwayFromImpact = pushAwayFromImpact;
         _owner = owner;
         _debuff = debuff;
+        _debuffDuration = duration;
 
         if (lifeTime > 0f) Destroy(gameObject, lifeTime);
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name);
 
@@ -70,8 +73,16 @@ public class YantProjectile : MonoBehaviour
             && other.gameObject.TryGetComponent(out StateFlags stateFlags)
             && stateFlags.Contains(_debuff))
         {
-            Debug.Log(other.gameObject.name + " has debuff " + _debuff.name);
-            stateFlags.Set(_debuff, true);
+            if (other.gameObject.TryGetComponent(out FlagCountdown flagCountdown))
+            {
+                float duration = _debuffDuration > 0f ? _debuffDuration : 0f;
+                flagCountdown.setFlagCountdown(_debuff, duration);
+            }
+            else
+            {
+                stateFlags.Set(_debuff, true);
+            }
+            //Debug.Log(other.gameObject.name + " has debuff " + _debuff.name);
         }
 
         if (_hitVfxPrefab != null)

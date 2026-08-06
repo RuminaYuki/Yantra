@@ -26,6 +26,7 @@ public class BlastYant : MonoBehaviour, IYantEffect
 
     [Header("Debuff")]
     [SerializeField] private FlagSO _debuffFlag;
+    [SerializeField] private float _debuffDuration = 3f;
 
     private void OnValidate()
     {
@@ -59,7 +60,8 @@ public class BlastYant : MonoBehaviour, IYantEffect
             _pushLifetime,
             _pushAwayFromImpact,
             playerRoot,
-            _debuffFlag);
+            _debuffFlag != null ? _debuffFlag : null,
+            _debuffDuration >= 0f ? _debuffDuration : 0f);
 
         Debug.Log($"<color=#FFAA00>[PushYant]</color> ปา projectile ไปทาง {launchDir:F2}");
         return true;
