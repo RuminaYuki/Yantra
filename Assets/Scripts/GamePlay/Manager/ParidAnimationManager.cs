@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PairedAnimationManager : MonoBehaviour
 {
+    [SerializeField, Min(0.01f)] private float _warpDuration = 0.15f;
     private bool _isPlaying;
 
     public bool TryStart(
@@ -10,30 +11,60 @@ public class PairedAnimationManager : MonoBehaviour
         IPairedAnimationActor victim,
         Transform attackerSnapPoint,
         Transform victimSnapPoint,
-        string attackerAnimation,
-        string victimAnimation)
+        PairedAnimationId animationId)
     {
-        if (_isPlaying)
-            return false;
-
-        if (attacker == null || victim == null)
-            return false;
-
-        if (attackerSnapPoint == null ||
-            victimSnapPoint == null)
+        if (attackerSnapPoint == null || victimSnapPoint == null)
         {
-            Debug.LogWarning("Paired Animation: ไม่มี Snap Point");
+            Debug.LogWarning("Paired Animation: Snap Point is missing.");
+            return false;
+        }
+
+        Pose attackerPose = new Pose(
+            attackerSnapPoint.position,
+            attackerSnapPoint.rotation);
+
+        Pose victimPose = new Pose(
+            victimSnapPoint.position,
+            victimSnapPoint.rotation);
+
+        return TryStart(
+            attacker,
+            victim,
+            attackerPose,
+            victimPose,
+            animationId);
+    }
+
+    public bool TryStart(
+        IPairedAnimationActor attacker,
+        IPairedAnimationActor victim,
+        Pose attackerSnapPose,
+        Pose victimSnapPose,
+        PairedAnimationId animationId)
+    {
+        if (_isPlaying || attacker == null || victim == null)
+            return false;
+
+        if (animationId == null)
+        {
+            Debug.LogWarning("Paired Animation ID is missing.");
+            return false;
+        }
+
+        if (!attacker.CanPlay(animationId) ||
+            !victim.CanPlay(animationId))
+        {
+            Debug.LogWarning(
+                "Actor does not support this paired animation.");
             return false;
         }
 
         StartCoroutine(PlayRoutine(
             attacker,
             victim,
-            attackerSnapPoint,
-            victimSnapPoint,
-            attackerAnimation,
-            victimAnimation
-        ));
+            attackerSnapPose,
+            victimSnapPose,
+            animationId));
 
         return true;
     }
@@ -41,25 +72,34 @@ public class PairedAnimationManager : MonoBehaviour
     private IEnumerator PlayRoutine(
         IPairedAnimationActor attacker,
         IPairedAnimationActor victim,
-        Transform attackerSnapPoint,
-        Transform victimSnapPoint,
-        string attackerAnimation,
-        string victimAnimation)
+        Pose attackerSnapPose,
+        Pose victimSnapPose,
+        PairedAnimationId animationId)
     {
         _isPlaying = true;
 
         attacker.LockMovement();
         victim.LockMovement();
 
-        SnapActor(attacker, attackerSnapPoint);
-        SnapActor(victim, victimSnapPoint);
+        yield return WarpActors(
+            attacker,
+            victim,
+            attackerSnapPose,
+            victimSnapPose);
 
-        // เรียกในเฟรมเดียวกัน
-        attacker.PlayAnimation(attackerAnimation);
-        victim.PlayAnimation(victimAnimation);
+        attacker.PlayAnimation(animationId);
+        victim.PlayAnimation(animationId);
 
-        // ใช้ทดสอบไปก่อน
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitUntil(() =>
+            attacker.IsInAnimation(animationId) &&
+            victim.IsInAnimation(animationId));
+
+        yield return new WaitUntil(() =>
+            attacker.IsAnimationFinished(animationId) &&
+            victim.IsAnimationFinished(animationId));
+
+        attacker.ExitAnimation(animationId);
+        victim.ExitAnimation(animationId);
 
         attacker.UnlockMovement();
         victim.UnlockMovement();
@@ -67,26 +107,67 @@ public class PairedAnimationManager : MonoBehaviour
         _isPlaying = false;
     }
 
-    private void SnapActor(
-        IPairedAnimationActor actor,
-        Transform snapPoint)
+    private IEnumerator WarpActors(
+        IPairedAnimationActor attacker,
+        IPairedAnimationActor victim,
+        Pose attackerSnapPose,
+        Pose victimSnapPose)
     {
-        Transform actorTransform = actor.GetTransform();
+        Transform attackerTransform = attacker.GetTransform();
+        Transform victimTransform = victim.GetTransform();
 
-        Vector3 position = snapPoint.position;
+        Vector3 attackerStartPosition = attackerTransform.position;
+        Vector3 victimStartPosition = victimTransform.position;
 
-        // Snap เฉพาะพื้นราบ
-        position.y = actorTransform.position.y;
+        Quaternion attackerStartRotation = attackerTransform.rotation;
+        Quaternion victimStartRotation = victimTransform.rotation;
 
-        Quaternion rotation = Quaternion.Euler(
-            0f,
-            snapPoint.eulerAngles.y,
-            0f
-        );
+        Vector3 attackerTargetPosition = attackerSnapPose.position;
+        Vector3 victimTargetPosition = victimSnapPose.position;
 
-        actorTransform.SetPositionAndRotation(
-            position,
-            rotation
-        );
+        attackerTargetPosition.y = attackerStartPosition.y;
+        victimTargetPosition.y = victimStartPosition.y;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < _warpDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float t = Mathf.SmoothStep(
+                0f,
+                1f,
+                Mathf.Clamp01(elapsedTime / _warpDuration));
+
+            attackerTransform.SetPositionAndRotation(
+                Vector3.Lerp(
+                    attackerStartPosition,
+                    attackerTargetPosition,
+                    t),
+                Quaternion.Slerp(
+                    attackerStartRotation,
+                    attackerSnapPose.rotation,
+                    t));
+
+            victimTransform.SetPositionAndRotation(
+                Vector3.Lerp(
+                    victimStartPosition,
+                    victimTargetPosition,
+                    t),
+                Quaternion.Slerp(
+                    victimStartRotation,
+                    victimSnapPose.rotation,
+                    t));
+
+            yield return null;
+        }
+
+        attackerTransform.SetPositionAndRotation(
+            attackerTargetPosition,
+            attackerSnapPose.rotation);
+
+        victimTransform.SetPositionAndRotation(
+            victimTargetPosition,
+            victimSnapPose.rotation);
     }
 }

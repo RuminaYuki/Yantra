@@ -14,16 +14,18 @@ public class HealYant : MonoBehaviour, IYantEffect
         //Destroy(gameObject, _lifetime);
     }
 
-    public void Initialize(GameObject playerRoot, YantraStatsController stats, Vector3 aimDirection)
+    public bool Initialize(GameObject playerRoot, YantraStatsController stats)
     {
         if (stats != null)
         {
             stats.Heal(_healAmount);
             Debug.Log($"<color=#00FF88>[HealYant]</color> ฮีล +{_healAmount}");
+            return true;
         }
         else
         {
             Debug.LogWarning("<color=#00FF88>[HealYant]</color> ไม่พบ YantraStatsController — ฮีลไม่ได้");
+            return false;
         }
         //Destroy(gameObject);
     }

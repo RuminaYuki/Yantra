@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 2568030386955828209}
   - component: {fileID: -2280239117422937287}
   - component: {fileID: 2431005053422005515}
-  - component: {fileID: -4835576268701899843}
+  - component: {fileID: -1819665770508358220}
   m_Layer: 0
   m_Name: Blast Yant
   m_TagString: Untagged
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
   _yantLifeTime: 10
   _effectSettings:
-  - _yantReferences: {fileID: -4835576268701899843}
+  - _yantReferences: {fileID: -1819665770508358220}
     _effectType: 4
     _effectDuration: 2
     _holdDuration: 1
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Provider
   Anchors:
   - {fileID: 11400000, guid: 2aa02c22bc949974d8a7630d7b6d24e5, type: 2}
---- !u!114 &-4835576268701899843
+--- !u!114 &-1819665770508358220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,10 +188,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9117980074068866131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccba52ed3a3a2524eaa0e7537ea11341, type: 3}
+  m_Script: {fileID: 11500000, guid: 3043cae583940c24ab5b524c9863bc01, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PushYant
-  _projectilePrefab: {fileID: 6588264149580857337, guid: 3fe96d87f8e50c24896afa9cf11dd78e,
+  m_EditorClassIdentifier: Assembly-CSharp::BlastYant
+  _projectilePrefab: {fileID: 1835492911981352639, guid: 87aa2a20926f24b469e17a3a1a84bda1,
     type: 3}
   _throwSpeed: 18
   _initialAngleDeg: 0
@@ -200,3 +200,8 @@ MonoBehaviour:
   _pushAcceleration: 6
   _pushLifetime: 1.5
   _pushAwayFromImpact: 1
+  _aimCamera: {fileID: 0}
+  _maxAimDistance: 100
+  _aimMask:
+    serializedVersion: 2
+    m_Bits: 4294967295

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00668fd727de9bb4081a8a202ce24c3b, type: 3}
-  m_Name: Settings
+  m_Name: HierarchyDecorator-master-settings
   m_EditorClassIdentifier: Wooshii.HierarchyDecorator.Editor::HierarchyDecorator.Settings
   globalData:
     showActiveToggles: 1
@@ -19,7 +19,7 @@ MonoBehaviour:
     swipeSameState: 1
     swipeSelectionOnly: 1
     depthMode: 0
-    tagLayerLayout: 0
+    tagLayerLayout: 3
     showTags: 1
     showLayers: 1
     applyChildLayers: 1
@@ -27,12 +27,12 @@ MonoBehaviour:
     showBreadcrumbs: 1
     instanceBreadcrumbs:
       show: 1
-      color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+      color: {r: 0, g: 0.86856556, b: 1, a: 1}
       style: 0
       displayHorizontal: 1
     fullDepthBreadcrumbs:
       show: 1
-      color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+      color: {r: 0.10196066, g: 1, b: 0, a: 1}
       style: 1
       displayHorizontal: 0
   styleData:
@@ -304,8 +304,8 @@ MonoBehaviour:
     enableIcons: 1
     clickToToggleComponent: 1
     showMissingScriptWarning: 1
-    showAll: 3
-    stackDuplicateIcons: 0
+    showAll: 1
+    stackDuplicateIcons: 1
     unityGroups:
     - name: General
       components:
@@ -5554,6 +5554,104 @@ MonoBehaviour:
     customGroups: []
     allCustomComponents:
       name: All
-      components: []
+      components:
+      - displayName: CameraFollow3D
+        name: Genoverrei.Library.DesignPatternCore.CameraFollow3D, GenoverreiLibrary,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: CameraFollow3D
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000,
+            type: 0}
+          m_Tooltip: CameraFollow3D
+          m_TextWithWhitespace: "CameraFollow3D\u200B"
+        shown: 0
+        excluded: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: ce5becaa2ca8bf14db72d438be539a7e, type: 3}
+        hasToggle: 1
+      - displayName: FollowAbility
+        name: Genoverrei.Library.Core.FollowAbility, GenoverreiLibrary, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: FollowAbility
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000,
+            type: 0}
+          m_Tooltip: FollowAbility
+          m_TextWithWhitespace: "FollowAbility\u200B"
+        shown: 0
+        excluded: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: 5becf8bd68f300a408090161626656eb, type: 3}
+        hasToggle: 1
+      - displayName: StatsController
+        name: Genoverrei.Library.DesignPatternCore.StatsController, GenoverreiLibrary,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: StatsController
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000,
+            type: 0}
+          m_Tooltip: StatsController
+          m_TextWithWhitespace: "StatsController\u200B"
+        shown: 0
+        excluded: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: 3318d65e7b3ed4545a4859cc40c7c7f9, type: 3}
+        hasToggle: 1
+      - displayName: MoveController3D
+        name: Genoverrei.Library.DesignPatternCore.MoveController3D, GenoverreiLibrary,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: MoveController3D
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000,
+            type: 0}
+          m_Tooltip: MoveController3D
+          m_TextWithWhitespace: "MoveController3D\u200B"
+        shown: 0
+        excluded: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: 25224e07751a71b4c8eec425bee0e668, type: 3}
+        hasToggle: 1
+      - displayName: BasicInputManager
+        name: Genoverrei.Library.Core.BasicInputManager, GenoverreiLibrary, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: BasicInputManager
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000,
+            type: 0}
+          m_Tooltip: BasicInputManager
+          m_TextWithWhitespace: "BasicInputManager\u200B"
+        shown: 0
+        excluded: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: 76b009f9d1be08f42a278d3353443bb1, type: 3}
+        hasToggle: 1
+      - displayName: AudioManager
+        name: Genoverrei.Library.Core.AudioManager, GenoverreiLibrary, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: AudioManager
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000,
+            type: 0}
+          m_Tooltip: AudioManager
+          m_TextWithWhitespace: "AudioManager\u200B"
+        shown: 0
+        excluded: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: 91a72f5ac4a08fc479f9546e2a48e3f9, type: 3}
+        hasToggle: 1
+      - displayName: MoveController2D
+        name: Genoverrei.Library.DesignPatternCore.MoveController2D, GenoverreiLibrary,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: MoveController2D
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000,
+            type: 0}
+          m_Tooltip: MoveController2D
+          m_TextWithWhitespace: "MoveController2D\u200B"
+        shown: 0
+        excluded: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: 3174224110c82a1499b7ee37873d6a28, type: 3}
+        hasToggle: 1
     unityVersion: 6000.3.15f1
     unityCount: 402

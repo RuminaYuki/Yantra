@@ -8980,7 +8980,7 @@ GameObject:
   - component: {fileID: 92247826}
   - component: {fileID: 92247825}
   - component: {fileID: 92247824}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Stairs (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14346,6 +14346,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 62947103}
   m_LocalEulerAnglesHint: {x: 0, y: 179.822, z: 0}
+--- !u!1 &100956618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 100956619}
+  - component: {fileID: 100956621}
+  - component: {fileID: 100956620}
+  m_Layer: 0
+  m_Name: StaminaBar_Fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &100956619
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100956618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1149365457}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1900, y: 10}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &100956620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100956618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &100956621
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100956618}
+  m_CullTransparentMesh: 1
 --- !u!1001 &141501504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15616,6 +15691,108 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &303482458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 303482459}
+  - component: {fileID: 303482462}
+  - component: {fileID: 303482461}
+  - component: {fileID: 303482460}
+  m_Layer: 0
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &303482459
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303482458}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1149365457}
+  m_Father: {fileID: 582793882}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &303482460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303482458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &303482461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303482458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0.5
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &303482462
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303482458}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!4 &315516546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5746564759562468899, guid: f09e097e7032d164583e76b3e608032a,
@@ -15654,10 +15831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506d678cf37e6ce4fa7db32e98bf2b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FatalFrameCameraController
-  _inputObserverChannel: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f,
-    type: 2}
-  IsGunAiming: 0
-  IsYantraAiming: 0
   _cameraAnimationController: {fileID: 0}
   _tppPivot: {fileID: 949986706}
   _fppEyePosition: {fileID: 1972669127}
@@ -15677,7 +15850,6 @@ MonoBehaviour:
     m_Bits: 73
   _cameraRadius: 0.2
   _minDistance: 0.5
-  _isFreeLookingInBook: 1
 --- !u!4 &320540217
 Transform:
   m_ObjectHideFlags: 0
@@ -18176,7 +18348,7 @@ GameObject:
   - component: {fileID: 544643657}
   - component: {fileID: 544643656}
   - component: {fileID: 544643655}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Stairs (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30976,6 +31148,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 62947103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
+--- !u!1 &582793881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 582793882}
+  m_Layer: 0
+  m_Name: StaminaUi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &582793882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582793881}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 303482459}
+  m_Father: {fileID: 2054773878}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590170567 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f09e097e7032d164583e76b3e608032a,
@@ -34846,13 +35050,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047275205}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.5, w: 0.8660254}
-  m_LocalPosition: {x: -13.59, y: 0.43785173, z: -1.6639996}
+  m_LocalRotation: {x: 0, y: 0, z: -0.42261827, w: 0.9063079}
+  m_LocalPosition: {x: -13.244, y: 0.43785173, z: -1.6639996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 62947103}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -50}
 --- !u!1 &1062817018
 GameObject:
   m_ObjectHideFlags: 0
@@ -34873,6 +35077,8 @@ GameObject:
   - component: {fileID: 1062817035}
   - component: {fileID: 1062817036}
   - component: {fileID: 1062817037}
+  - component: {fileID: 1062817038}
+  - component: {fileID: 1062817039}
   m_Layer: 3
   m_Name: Rin StateMachine
   m_TagString: Player
@@ -35032,10 +35238,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7955172d3062ea94e88e5c962ad6bcf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotion
-  _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
-  _referencePoint: {fileID: 320540217}
   _dampTime: 0.25
   _multiply: 0
+  _rotateSpeed: 1
+  _gravityMultiplier: 3
+  _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
+  _referencePoint: {fileID: 320540217}
   _nameParameterMoveZ: VelocityZ
   _nameParameterMoveX: VelocityX
   _nameTurnAngle: StartTurnAngle
@@ -35043,7 +35251,6 @@ MonoBehaviour:
   _angleTurn: 45
   _angleTurnbyCamera: 60
   _turnbyCamera: 0
-  gravityMultiplier: 3
 --- !u!143 &1062817030
 CharacterController:
   m_ObjectHideFlags: 0
@@ -35185,6 +35392,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Provider
   Anchors:
   - {fileID: 11400000, guid: 3ebfec1f5b2213643b5f53ca5fa476f1, type: 2}
+--- !u!114 &1062817038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43bb128186e18d949b17d03f0b4cefa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraInput
+  cameraController: {fileID: 320540216}
+--- !u!114 &1062817039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306277f8f9662d0469954596bb87b235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStaminaSystem
+  _maxStamina: 100
+  _recoverThreshold: 30
+  _exhaustedDelay: 1.5
 --- !u!4 &1091021679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4713043083974578609, guid: f09e097e7032d164583e76b3e608032a,
@@ -35465,6 +35700,122 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 141501504}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1149365456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1149365457}
+  - component: {fileID: 1149365459}
+  - component: {fileID: 1149365458}
+  - component: {fileID: 1149365461}
+  - component: {fileID: 1149365460}
+  m_Layer: 0
+  m_Name: StaminaBar_BG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1149365457
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149365456}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 100956619}
+  m_Father: {fileID: 303482459}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1900, y: 10}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1149365458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149365456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1149365459
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149365456}
+  m_CullTransparentMesh: 1
+--- !u!114 &1149365460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149365456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f9b61829689cf439e7824c1291bf35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaUI
+  _staminaSystem: {fileID: 1062817039}
+  _fillBarRect: {fileID: 100956619}
+  _fillBarImage: {fileID: 100956620}
+  _fadeSpeed: 5
+  _normalColor: {r: 1, g: 1, b: 1, a: 1}
+  _warningColor: {r: 1, g: 0.5, b: 0, a: 1}
+  _exhaustedColor: {r: 1, g: 0, b: 0, a: 1}
+  _recoveredFlashColor: {r: 0, g: 1, b: 0, a: 1}
+  _warningThreshold: 0.3
+  _criticalThreshold: 0.15
+  _blinkThreshold: 0.05
+  _warningBlinkSpeed: 6
+  _exhaustedBlinkSpeed: 3
+  _recoveryBlinkSpeed: 8
+--- !u!225 &1149365461
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149365456}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1164789132
 GameObject:
   m_ObjectHideFlags: 0
@@ -35621,8 +35972,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YantCaster
   _matcher: {fileID: 791131682}
   _stats: {fileID: 4408576543807160817}
-  _aimCamera: {fileID: 6791007115416270727}
   _playerRoot: {fileID: 4749740090139331172}
+  _yantSpawnPoint: {fileID: 0}
   _yantPaper: {fileID: 791131676}
   _minSimilarityPercent: 40
   _bindings:
@@ -35635,10 +35986,6 @@ MonoBehaviour:
   - CategoryName: Vanish Yant
     YantPrefab: {fileID: 8867824720623061172, guid: 8ef584bf25d00c74eb9d4d861d13e50b,
       type: 3}
-  _maxAimDistance: 100
-  _aimMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
   _lastSpawnedYant: {fileID: 0}
 --- !u!4 &1175156752
 Transform:
@@ -49348,6 +49695,38 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 141501504}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2054773877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2054773878}
+  m_Layer: 0
+  m_Name: ==================UI==================
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2054773878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054773877}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.84754, y: 1.5217, z: -6.36313}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 582793882}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2067811729 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7349783233930824196, guid: f09e097e7032d164583e76b3e608032a,
@@ -49900,7 +50279,7 @@ Transform:
   m_GameObject: {fileID: 2120980377}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -13.16, y: 0.43785173, z: -3.5459995}
+  m_LocalPosition: {x: -12.983, y: 0.43785173, z: -3.5459995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -53448,23 +53827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2699cd087bebb4594a95024e22f1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TPPMoveController3D
-  _rb: {fileID: 5387573050278785475}
-  _inputObserverChannel: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f,
-    type: 2}
-  _statsController: {fileID: 4408576543807160817}
-  _cameraTransform: {fileID: 6791007115416270727}
-  _cameraSystem: {fileID: 2682039322338510272}
-  _turnSmoothSpeed: 10
-  _enableJump: 1
-  _groundCheck: {fileID: 864638638873972381}
-  _groundRadius: 0.15
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  _jumpCooldown: 0.5
-  _startJumpCooldownOnLanding: 1
-  _currentJumpCooldown: 0
-  _faceMoveDirection: 0
 --- !u!4 &1310525572831123977
 Transform:
   m_ObjectHideFlags: 0
@@ -53839,7 +54201,6 @@ MonoBehaviour:
   _inputObserver: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   _drawOn3DMesh: {fileID: 25797354310893604}
   _yantCaster: {fileID: 2594780680814188353}
-  _moveController: {fileID: 0}
   _cameraController: {fileID: 2682039322338510272}
   _aimRig: {fileID: 0}
   _aimTarget: {fileID: 3804197341593386549}
@@ -54140,8 +54501,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YantCaster
   _matcher: {fileID: 4752557764899617360}
   _stats: {fileID: 4408576543807160817}
-  _aimCamera: {fileID: 6791007115416270727}
   _playerRoot: {fileID: 4749740090139331172}
+  _yantSpawnPoint: {fileID: 0}
   _yantPaper: {fileID: 4057825411153063105}
   _minSimilarityPercent: 40
   _bindings:
@@ -54154,10 +54515,6 @@ MonoBehaviour:
   - CategoryName: Vanish Yant
     YantPrefab: {fileID: 8867824720623061172, guid: 8ef584bf25d00c74eb9d4d861d13e50b,
       type: 3}
-  _maxAimDistance: 100
-  _aimMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
   _lastSpawnedYant: {fileID: 0}
 --- !u!1 &2601603644650017754
 GameObject:
@@ -54227,10 +54584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506d678cf37e6ce4fa7db32e98bf2b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FatalFrameCameraController
-  _inputObserverChannel: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f,
-    type: 2}
-  IsGunAiming: 0
-  IsYantraAiming: 0
   _cameraAnimationController: {fileID: 0}
   _tppPivot: {fileID: 3838970688820272434}
   _fppEyePosition: {fileID: 2829755987348148462}
@@ -54250,7 +54603,6 @@ MonoBehaviour:
     m_Bits: 73
   _cameraRadius: 0.2
   _minDistance: 0.5
-  _isFreeLookingInBook: 1
 --- !u!4 &2732316213390276172
 Transform:
   m_ObjectHideFlags: 0
@@ -56924,23 +57276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2699cd087bebb4594a95024e22f1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TPPMoveController3D
-  _rb: {fileID: 5387573050278785475}
-  _inputObserverChannel: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f,
-    type: 2}
-  _statsController: {fileID: 4408576543807160817}
-  _cameraTransform: {fileID: 0}
-  _cameraSystem: {fileID: 0}
-  _turnSmoothSpeed: 10
-  _enableJump: 1
-  _groundCheck: {fileID: 864638638873972381}
-  _groundRadius: 0.15
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  _jumpCooldown: 0.5
-  _startJumpCooldownOnLanding: 1
-  _currentJumpCooldown: 0
-  _faceMoveDirection: 0
 --- !u!1 &7136167115871276433
 GameObject:
   m_ObjectHideFlags: 0
@@ -58045,6 +58380,7 @@ SceneRoots:
   - {fileID: 599703877}
   - {fileID: 1398533953}
   - {fileID: 62947103}
+  - {fileID: 2054773878}
   - {fileID: 1535776901}
   - {fileID: 1273965141}
   - {fileID: 1062817027}

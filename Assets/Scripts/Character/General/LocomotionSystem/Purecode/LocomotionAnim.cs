@@ -9,6 +9,9 @@ public class LocomotionAnim
     private int _moveZ; //Set parameter
     private int _moveX; //Set parameter
 
+    private int _TurnAngle;
+    private int _TurnTrigger;
+
     public LocomotionAnim(Animator animator, float dampTime = 0.25f, float multiply = 1)
     {
         _animator = animator;
@@ -16,17 +19,26 @@ public class LocomotionAnim
         _multiply = multiply;
     }
 
+    //======================SetParameter========================
     //Set Parameter Method Overload
-    public void SetParameter(string nameParameterMoveZ)
+    public void SetMoveParameter(string nameParameterMoveZ)
     {
         _moveZ = Animator.StringToHash(nameParameterMoveZ);
     }
 
-    public void SetParameter(string nameParameterMoveX, string nameParameterMoveZ)
+    public void SetMoveParameter(string nameParameterMoveX, string nameParameterMoveZ)
     {
         _moveX = Animator.StringToHash(nameParameterMoveX);
         _moveZ = Animator.StringToHash(nameParameterMoveZ);
     }
+    //Turn
+    public void SetTurnParameter(string nameTurnAngle, string nameTurnTrigger)
+    {
+        _TurnAngle = Animator.StringToHash(nameTurnAngle);
+        _TurnTrigger = Animator.StringToHash(nameTurnTrigger);
+    }
+
+    //=========================SetKey===========================
     //SetMove Method Overload
     public void SetMove(float velocityX, float velocityZ)
     {
@@ -36,6 +48,12 @@ public class LocomotionAnim
     public void SetMove(float velocityZ)
     {
         _animator.SetFloat(_moveZ, velocityZ * _multiply, _dampTime, Time.deltaTime);
+    }
+
+    public void SetTurn(float turnAngle)
+    {
+        _animator.SetFloat(_TurnAngle, turnAngle);
+        _animator.SetTrigger(_TurnTrigger);
     }
 
     #region Secondary API

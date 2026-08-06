@@ -6,5 +6,5 @@ using UnityEngine;
 /// </summary>
 public interface IYantEffect
 {
-    void Initialize(GameObject playerRoot, YantraStatsController stats, Vector3 aimDirection);
+    bool Initialize(GameObject playerRoot, YantraStatsController stats);
 }

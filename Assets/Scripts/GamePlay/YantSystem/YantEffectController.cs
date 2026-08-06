@@ -72,8 +72,7 @@ public class YantEffectController : MonoBehaviour
 
             setting._yantEffect.Initialize(
                 _playerRoot,
-                _stats,
-                _aimDirection);
+                _stats);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
@@ -103,12 +102,11 @@ public class YantEffectController : MonoBehaviour
                 }
             }        
 
-            setting._yantEffect.Initialize(
-                _playerRoot,
-                _stats,
-                _aimDirection);
+            bool initialized = setting._yantEffect.Initialize(
+                                    _playerRoot,
+                                    _stats);
 
-            if (setting._effectType.HasFlag(YantEffectType.OneShot))
+            if (setting._effectType.HasFlag(YantEffectType.OneShot) && initialized)
             {
                 if (_effectSettings.Count == 1)
                 {
@@ -123,11 +121,10 @@ public class YantEffectController : MonoBehaviour
         }
     }
 
-    public void SetDefaultValue(GameObject playerRoot, YantraStatsController start, Vector3 AimDirection)
+    public void SetDefaultValue(GameObject playerRoot, YantraStatsController start)
     {
         _playerRoot = playerRoot;
         _stats = start;
-        _aimDirection = AimDirection;
     }
 
     private void DestroyGameObject(float delay)

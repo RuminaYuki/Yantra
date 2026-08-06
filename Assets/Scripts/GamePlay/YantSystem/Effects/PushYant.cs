@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 /// <summary>
 /// ติดบน Push Yantra prefab — ปา YantProjectile ไปในทิศที่เล็ง
@@ -51,3 +51,4 @@ public class PushYant : MonoBehaviour, IYantEffect
         Destroy(gameObject, 0.1f);
     }
 }
+*/
