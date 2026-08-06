@@ -10661,6 +10661,7 @@ GameObject:
   - component: {fileID: 854611472}
   - component: {fileID: 854611471}
   - component: {fileID: 854611477}
+  - component: {fileID: 854611478}
   m_Layer: 0
   m_Name: Ka(enemy)
   m_TagString: Untagged
@@ -10795,6 +10796,20 @@ MonoBehaviour:
   - Flag: {fileID: 11400000, guid: 1646ad0beb3e119458b2d03781b20d55, type: 2}
     InitialValue: 0
     runtimeValue: 0
+--- !u!114 &854611478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854611470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e22c710ae8abd54db76a3aa4e10dd90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlagCountdown
+  flagCountdowns: []
+  stateFlags: {fileID: 854611477}
 --- !u!4 &857341097 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1168361639653474798, guid: f09e097e7032d164583e76b3e608032a,

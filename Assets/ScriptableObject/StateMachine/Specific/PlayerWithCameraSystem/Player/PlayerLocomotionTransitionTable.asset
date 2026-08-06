@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5492ed31ba40b643aaf3d94f1de0aa7, type: 3}
   m_Name: PlayerLocomotionTransitionTable
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
-  _initialState: {fileID: 11400000, guid: ff9edf3420fed03478a5b5cd64d9b6aa, type: 2}
+  _initialState: {fileID: 11400000, guid: 4767c0900aded2945af9407f1e84e17e, type: 2}
   _anyTransitions: []
   _transitions:
   - FromState: {fileID: 11400000, guid: 4767c0900aded2945af9407f1e84e17e, type: 2}
@@ -61,4 +61,4 @@ MonoBehaviour:
     - Conditions:
       - Condition: {fileID: 11400000, guid: 20e3f98a2bd07534a89c4d132c3c594c, type: 2}
         ExpectedResult: 1
-    ToState: {fileID: 11400000, guid: ff9edf3420fed03478a5b5cd64d9b6aa, type: 2}
+    ToState: {fileID: 11400000, guid: 4767c0900aded2945af9407f1e84e17e, type: 2}
