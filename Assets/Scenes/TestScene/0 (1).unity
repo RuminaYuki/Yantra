@@ -14479,21 +14479,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -7349783233930824196, guid: f09e097e7032d164583e76b3e608032a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7349783233930824196, guid: f09e097e7032d164583e76b3e608032a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.08
-      objectReference: {fileID: 0}
-    - target: {fileID: -7349783233930824196, guid: f09e097e7032d164583e76b3e608032a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.02
-      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f09e097e7032d164583e76b3e608032a,
         type: 3}
       propertyPath: m_Name
@@ -32352,39 +32337,39 @@ MonoBehaviour:
   - CategoryName: Heal Yant
     Templates:
     - {fileID: 11400000, guid: 26f22d6bc0f36304a96e30822b4804f3, type: 2}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 6f47ef112974bd44185e20dd7ed8828f, type: 2}
+    - {fileID: 11400000, guid: fd05e570ada0f1e44bd2135525f175a2, type: 2}
+    - {fileID: 11400000, guid: cd6d1b36d1581aa43a6b5896755d1112, type: 2}
+    - {fileID: 11400000, guid: c74daf01bf2aac2419e7efa68ff6e462, type: 2}
+    - {fileID: 11400000, guid: eb48b8bdac845244ab4f5eecbb8e3fd1, type: 2}
+    - {fileID: 11400000, guid: 3d29509c4ae7c8546ab53a2af3f49db0, type: 2}
+    - {fileID: 11400000, guid: 52cbe1aee7be40142a4babbaca7aff68, type: 2}
+    - {fileID: 11400000, guid: 088e36b3d1f73aa42a7154ea4e80c94d, type: 2}
+    - {fileID: 11400000, guid: c2459fd5e07808c49be1c3e146321f8e, type: 2}
   - CategoryName: Invi Yant
     Templates:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 9fa4e52c630fbf24e9a3e0108a5f388a, type: 2}
+    - {fileID: 11400000, guid: 44e00b524377663469e73f906ed88a48, type: 2}
+    - {fileID: 11400000, guid: 78f0f1437570bf94eb0bce668b641afb, type: 2}
+    - {fileID: 11400000, guid: ea576b70f5bcba9499b1acf3c99aece2, type: 2}
+    - {fileID: 11400000, guid: 648b79e38695c0540a0a6da94644edd8, type: 2}
+    - {fileID: 11400000, guid: 011133a4029f6b441a87cc7f6e95e935, type: 2}
+    - {fileID: 11400000, guid: 8569a92d9905aa04c98a00dbc7e60548, type: 2}
+    - {fileID: 11400000, guid: 960d15ab477f19e4a96e7674bbf7021c, type: 2}
+    - {fileID: 11400000, guid: 5b9ba7430ec93ef45a2c399ca25c47f6, type: 2}
+    - {fileID: 11400000, guid: d40627c795da1c94ba845d64dc839c92, type: 2}
   - CategoryName: Push Yant
     Templates:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 8ed3cae9e6283404ca9b53fe31dbc99c, type: 2}
+    - {fileID: 11400000, guid: 3e43967a73971064ebf6fd8851de5b96, type: 2}
+    - {fileID: 11400000, guid: 118250faef5632346ad8e9d26610c9b6, type: 2}
+    - {fileID: 11400000, guid: 2dec409e4dbed2d40b6a3898f65e7456, type: 2}
+    - {fileID: 11400000, guid: f8273b023fc97a0458882b983de6d625, type: 2}
+    - {fileID: 11400000, guid: ea58ebd7a667a65469495431d77ff270, type: 2}
+    - {fileID: 11400000, guid: 80787d350dc7ddc4b8ba7a2d8848d6b3, type: 2}
+    - {fileID: 11400000, guid: cef5ac7bbdfceb647b1cd0f46f6df390, type: 2}
+    - {fileID: 11400000, guid: 0fba33b773d466048850e5dd8759393a, type: 2}
+    - {fileID: 11400000, guid: 60efc54be9abd434f9803416ee52e699, type: 2}
   _globalResampleCount: 64
   _scoreSharpness: 8
   _rotationSearchRangeDeg: 45
@@ -55773,7 +55758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YantraStatsController
   _moveController: {fileID: 0}
   yantCount: 0
-  StatsData: {fileID: 0}
+  StatsData: {fileID: 11400000, guid: dfb92f83c1a01054d8b8ad55f0cf0f76, type: 2}
   CurrentMoveSpeed: 0
   CurrectJumpForce: 0
   CurrentHp: 0
@@ -56035,39 +56020,39 @@ MonoBehaviour:
   - CategoryName: Heal Yant
     Templates:
     - {fileID: 11400000, guid: 26f22d6bc0f36304a96e30822b4804f3, type: 2}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 6f47ef112974bd44185e20dd7ed8828f, type: 2}
+    - {fileID: 11400000, guid: fd05e570ada0f1e44bd2135525f175a2, type: 2}
+    - {fileID: 11400000, guid: cd6d1b36d1581aa43a6b5896755d1112, type: 2}
+    - {fileID: 11400000, guid: c74daf01bf2aac2419e7efa68ff6e462, type: 2}
+    - {fileID: 11400000, guid: eb48b8bdac845244ab4f5eecbb8e3fd1, type: 2}
+    - {fileID: 11400000, guid: 3d29509c4ae7c8546ab53a2af3f49db0, type: 2}
+    - {fileID: 11400000, guid: 52cbe1aee7be40142a4babbaca7aff68, type: 2}
+    - {fileID: 11400000, guid: 088e36b3d1f73aa42a7154ea4e80c94d, type: 2}
+    - {fileID: 11400000, guid: c2459fd5e07808c49be1c3e146321f8e, type: 2}
   - CategoryName: Invi Yant
     Templates:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 9fa4e52c630fbf24e9a3e0108a5f388a, type: 2}
+    - {fileID: 11400000, guid: 44e00b524377663469e73f906ed88a48, type: 2}
+    - {fileID: 11400000, guid: 78f0f1437570bf94eb0bce668b641afb, type: 2}
+    - {fileID: 11400000, guid: ea576b70f5bcba9499b1acf3c99aece2, type: 2}
+    - {fileID: 11400000, guid: 648b79e38695c0540a0a6da94644edd8, type: 2}
+    - {fileID: 11400000, guid: 011133a4029f6b441a87cc7f6e95e935, type: 2}
+    - {fileID: 11400000, guid: 8569a92d9905aa04c98a00dbc7e60548, type: 2}
+    - {fileID: 11400000, guid: 960d15ab477f19e4a96e7674bbf7021c, type: 2}
+    - {fileID: 11400000, guid: 5b9ba7430ec93ef45a2c399ca25c47f6, type: 2}
+    - {fileID: 11400000, guid: d40627c795da1c94ba845d64dc839c92, type: 2}
   - CategoryName: Push Yant
     Templates:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 8ed3cae9e6283404ca9b53fe31dbc99c, type: 2}
+    - {fileID: 11400000, guid: 3e43967a73971064ebf6fd8851de5b96, type: 2}
+    - {fileID: 11400000, guid: 118250faef5632346ad8e9d26610c9b6, type: 2}
+    - {fileID: 11400000, guid: 2dec409e4dbed2d40b6a3898f65e7456, type: 2}
+    - {fileID: 11400000, guid: f8273b023fc97a0458882b983de6d625, type: 2}
+    - {fileID: 11400000, guid: ea58ebd7a667a65469495431d77ff270, type: 2}
+    - {fileID: 11400000, guid: 80787d350dc7ddc4b8ba7a2d8848d6b3, type: 2}
+    - {fileID: 11400000, guid: cef5ac7bbdfceb647b1cd0f46f6df390, type: 2}
+    - {fileID: 11400000, guid: 0fba33b773d466048850e5dd8759393a, type: 2}
+    - {fileID: 11400000, guid: 60efc54be9abd434f9803416ee52e699, type: 2}
   _globalResampleCount: 64
   _scoreSharpness: 8
   _rotationSearchRangeDeg: 45
