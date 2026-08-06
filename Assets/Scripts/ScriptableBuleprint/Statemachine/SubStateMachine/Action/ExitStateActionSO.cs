@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "NewExitStateAction",
-    menuName = "YUKI Learning State Machine/SubStateMachine/Actions/ExitStateAction")]
+    menuName = "YUKI Learning State Machine/StateMachine/SubStateMachine/Actions/ExitStateAction")]
 public class ExitStateActionSO : StateActionSO
 {
     [SerializeField] private string _exitId = "Default";

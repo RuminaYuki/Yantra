@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "NewSubStateMachineAction",
-    menuName = "YUKI Learning State Machine/SubStateMachine/Actions/SubStateMachineAction")]
+    menuName = "YUKI Learning State Machine/StateMachine/SubStateMachine/Actions/SubStateMachineAction")]
 public class SubStateMachineActionSO : StateActionSO
 {
     [SerializeField] private TransitionTableSO _transitionTable;

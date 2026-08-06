@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "NewSubStateMachineExitedCondition",
-    menuName = "YUKI Learning State Machine/SubStateMachine/Conditions/Sub State Machine Exited")]
+    menuName = "YUKI Learning State Machine/StateMachine/SubStateMachine/Conditions/Sub State Machine Exited")]
 public class SubStateMachineExitedConditionSO : StateConditionSO
 {
     [SerializeField] private string _exitId = "Default";
