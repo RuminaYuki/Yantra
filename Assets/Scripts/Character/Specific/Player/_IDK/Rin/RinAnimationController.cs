@@ -11,7 +11,7 @@ public class RinAnimationController : MonoBehaviour
     [SerializeField] private YantraInputObserverSO _inputObserver;
     [SerializeField] private DrawOn3DMesh _drawOn3DMesh;
     [SerializeField] private YantCaster _yantCaster;
-    [SerializeField] private TPPMoveController3D _moveController;
+
 
     // ==========================================
     // ระบบเล็งปืน และ กล้อง
@@ -191,7 +191,7 @@ public class RinAnimationController : MonoBehaviour
     }
 
     private void HandleJumpInput() { _animator.SetTrigger(_jumpHash); }
-    private void UpdateJumpAnimation() { if (_moveController) _animator.SetBool(_groundedHash, _moveController.IsGrounded); }
+    private void UpdateJumpAnimation() { }
 
     public void HandlePressQInput()
     {
@@ -204,21 +204,21 @@ public class RinAnimationController : MonoBehaviour
         _animator.SetBool(_drawHash, _isDrawing);
         _animator.SetBool(_lampHash, _isLampOn);
 
-        if (_cameraController != null) _cameraController.IsYantraAiming = _isDrawing;
+        // ✨ แก้ไข: เรียกใช้ API เพื่อส่งคำสั่งเปิด/ปิดโหมดกางยันต์
+        if (_cameraController != null) _cameraController.SetYantraAimState(_isDrawing);
+
         if (!wasDrawing) return;
 
         // ถ้ากำลังวาดอยู่แล้วกด Q อีกครั้งเพื่อหยุดวาด เราจะเคลียร์การวาดบน Mesh
         if (_drawOn3DMesh != null) _drawOn3DMesh.ClearDrawing();
-
-        //ถ้ากำลังวาดอยู่แล้วกด Q อีกครั้งเพื่อหยุดวาด เราจะเคลียร์การวิเคราะห์ของ YantCaster ด้วย
-        //bool castSucceeded = _yantCaster != null && _yantCaster.TryAnalyze();
-        //if (!castSucceeded && _drawOn3DMesh) _drawOn3DMesh.ClearDrawing();
     }
 
     private void HandlePressFInput()
     {
         _isDrawing = false;
-        if (_cameraController != null) _cameraController.IsYantraAiming = false;
+
+        // ✨ แก้ไข: เรียกใช้ API เพื่อส่งคำสั่งบังคับปิดโหมดยันต์
+        if (_cameraController != null) _cameraController.SetYantraAimState(false);
 
         _isLampOn = !_isLampOn;
         _animator.SetBool(_lampHash, _isLampOn);
