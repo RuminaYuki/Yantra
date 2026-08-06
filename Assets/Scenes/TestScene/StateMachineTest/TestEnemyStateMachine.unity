@@ -514,10 +514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506d678cf37e6ce4fa7db32e98bf2b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FatalFrameCameraController
-  _inputObserverChannel: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f,
-    type: 2}
-  IsGunAiming: 0
-  IsYantraAiming: 0
   _cameraAnimationController: {fileID: 0}
   _tppPivot: {fileID: 949986706}
   _fppEyePosition: {fileID: 1972669127}
@@ -537,7 +533,6 @@ MonoBehaviour:
     m_Bits: 73
   _cameraRadius: 0.2
   _minDistance: 0.5
-  _isFreeLookingInBook: 1
 --- !u!4 &320540217
 Transform:
   m_ObjectHideFlags: 0
@@ -2141,7 +2136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68d3392a0a90dc45897eddd2bb4b74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNavigator
-  _target: {fileID: 1694532894}
+  _target: {fileID: 733027345}
   _repathInterval: 0.25
 --- !u!1 &791131676
 GameObject:
@@ -2482,11 +2477,13 @@ GameObject:
   - component: {fileID: 1062817029}
   - component: {fileID: 1062817038}
   - component: {fileID: 1062817031}
+  - component: {fileID: 1062817041}
   - component: {fileID: 1062817034}
   - component: {fileID: 1062817035}
   - component: {fileID: 1062817039}
+  - component: {fileID: 1062817040}
   m_Layer: 3
-  m_Name: Mawin(player)
+  m_Name: Nawin(player)
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2630,7 +2627,7 @@ MonoBehaviour:
   _transitionTables:
   - {fileID: 11400000, guid: aabbe1a9ca9926346aeb75a676f6139f, type: 2}
   - {fileID: 11400000, guid: e935fce6c7d8b584582c951a55f80415, type: 2}
-  - {fileID: 11400000, guid: 0034a1ad5b8d68c4ea9ca5b9510fb3cd, type: 2}
+  - {fileID: 11400000, guid: 86647de0fa8e7604cad3390d271d7ee0, type: 2}
 --- !u!114 &1062817029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2813,6 +2810,34 @@ MonoBehaviour:
   AdjustPelvis: 1
   PelvisOffsetSpeed: 10
   MaxPelvisOffset: 0.6
+--- !u!114 &1062817040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306277f8f9662d0469954596bb87b235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaSystem
+  _maxStamina: 100
+  _recoverThreshold: 30
+  _exhaustedDelay: 1.5
+--- !u!114 &1062817041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062817018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43bb128186e18d949b17d03f0b4cefa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraInput
+  cameraController: {fileID: 320540216}
 --- !u!1 &1063706181
 GameObject:
   m_ObjectHideFlags: 0
