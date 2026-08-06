@@ -455,14 +455,35 @@ namespace TreeTool.EditorTools
             AssetDatabase.SaveAssets();
             return new ExportResult { treeFolder = treeFolder, prefabFolder = prefabFolder, backedUp = backedUp };
         }
+        static void EnsureFolderPath(string fullPath)
+        {
+            if (AssetDatabase.IsValidFolder(fullPath))
+                return;
 
-        /// <summary>Resolves Assets/GeneratedTrees/&lt;tree.name&gt;/, renaming the previous export
+            string[] parts = fullPath.Split('/');
+            string current = parts[0]; // "Assets"
+            for (int i = 1; i < parts.Length; i++)
+            {
+                string next = $"{current}/{parts[i]}";
+                if (!AssetDatabase.IsValidFolder(next))
+                {
+                    string guid = AssetDatabase.CreateFolder(current, parts[i]);
+                    if (string.IsNullOrEmpty(guid))
+                    {
+                        Debug.LogError($"[Procedural Tree] Failed to create folder '{next}'. " +
+                                        "Check for an invalid character in the name, or a read-only/locked path.");
+                        return;
+                    }
+                }
+                current = next;
+            }
+        }
+        /// <summary>Resolves Assets/ToolGenerated/Tree/&lt;tree.name&gt;/, renaming the previous export
         /// folder to match if the tree's GameObject was renamed since the last export.</summary>
         static string ResolveTreeFolder(ProceduralTree tree)
         {
-            const string root = "Assets/GeneratedTrees";
-            if (!AssetDatabase.IsValidFolder(root))
-                AssetDatabase.CreateFolder("Assets", "GeneratedTrees");
+            const string root = "Assets/ToolGenerated/Tree";
+            EnsureFolderPath(root);
 
             string desired = $"{root}/{tree.name}";
             if (!string.IsNullOrEmpty(tree.exportedFolderName) && tree.exportedFolderName != tree.name)
@@ -478,9 +499,8 @@ namespace TreeTool.EditorTools
                     }
                 }
             }
-            if (!AssetDatabase.IsValidFolder(desired))
-                AssetDatabase.CreateFolder(root, System.IO.Path.GetFileName(desired));
 
+            EnsureFolderPath(desired);
             tree.exportedFolderName = System.IO.Path.GetFileName(desired);
             return desired;
         }
@@ -519,8 +539,7 @@ namespace TreeTool.EditorTools
 
         static void EnsureFolder(string parent, string name)
         {
-            if (!AssetDatabase.IsValidFolder($"{parent}/{name}"))
-                AssetDatabase.CreateFolder(parent, name);
+            EnsureFolderPath($"{parent}/{name}");
         }
 
         /// <summary>Clones a material asset (so editing this tree's copy never affects the shared
@@ -594,26 +613,58 @@ namespace TreeTool.EditorTools
         }
 
         /// <summary>
-        /// One-click path to "paint this on Terrain": runs the shared export (folder, material/texture
-        /// duplication, editable Source prefab), then additionally saves a SEPARATE script-free static
-        /// prefab and registers it as a new tree prototype on a Terrain in the scene so it immediately
-        /// shows up in the Terrain's Paint Trees brush list.
+        /// One-click path to "paint this on Terrain": resolves which Terrain to target (asks the
+        /// user to disambiguate if multiple exist and none is selected), warns before overwriting
+        /// an already-painted prototype for this same tree, then runs the shared export (folder,
+        /// material/texture duplication, editable Source prefab), additionally saves a SEPARATE
+        /// script-free static prefab, and registers/updates it as a tree prototype on the Terrain
+        /// so it shows up in the Terrain's Paint Trees brush list.
         /// </summary>
         static void ExportAndAddToTerrain(ProceduralTree tree)
         {
-            var terrain = Terrain.activeTerrain != null ? Terrain.activeTerrain : Object.FindAnyObjectByType<Terrain>();
+            Terrain terrain = ResolveTargetTerrain();
             if (terrain == null)
             {
                 EditorUtility.DisplayDialog("Procedural Tree",
-                    "No Terrain found in the scene. Add a Terrain first (GameObject > 3D Object > Terrain), " +
-                    "then try again.", "OK");
+                    "No Terrain found in the scene, or multiple Terrains exist and none is selected.\n\n" +
+                    "Select the Terrain GameObject you want to paint on in the Hierarchy, then try again.",
+                    "OK");
+                return;
+            }
+            if (terrain.terrainData == null)
+            {
+                EditorUtility.DisplayDialog("Procedural Tree",
+                    $"'{terrain.name}' has a Terrain component but no Terrain Data asset assigned.\n\n" +
+                    "Select it in the Hierarchy and assign or create a Terrain Data asset in the " +
+                    "'Terrain Data' field at the top of the Terrain component, then try again.",
+                    "OK");
                 return;
             }
 
-            // must run BEFORE the export's AssetDatabase.SaveAssets, which makes Terrain re-probe
-            // every registered prototype - any stale broken one (from an old script-carrying export)
-            // logs "bounds could not be determined" on each refresh until it's removed
-            PruneBrokenPrototypes(terrain.terrainData);
+            TerrainData data = terrain.terrainData;
+
+            // must run BEFORE any AssetDatabase.SaveAssets below, which makes Terrain re-probe
+            // every registered prototype - any stale broken one (from an old script-carrying export,
+            // or a deleted/moved prefab) logs "bounds could not be determined" on each refresh
+            // until it's removed
+            PruneBrokenPrototypes(data);
+
+            // Predict the path the static prefab will be saved to BEFORE doing any destructive
+            // work, so we can warn about overwriting an existing prototype up front instead of
+            // burning a backup/export cycle first.
+            string predictedStaticPath = PredictStaticPrefabPath(tree);
+            int existingPrototypeIndex = FindPrototypeIndexByPath(data, predictedStaticPath);
+            if (existingPrototypeIndex >= 0)
+            {
+                bool replace = EditorUtility.DisplayDialog("Procedural Tree",
+                    $"'{tree.name}' is already registered as tree prototype #{existingPrototypeIndex} " +
+                    $"on '{terrain.name}'.\n\n" +
+                    "Replace it with the current settings? Every already-painted instance of this " +
+                    "prototype on the terrain will update to match - nothing gets re-painted or removed.",
+                    "Replace Existing", "Cancel Export");
+                if (!replace)
+                    return;
+            }
 
             var result = DoCoreExport(tree);
 
@@ -635,22 +686,29 @@ namespace TreeTool.EditorTools
             Object.DestroyImmediate(clone);
             AssetDatabase.SaveAssets();
 
-            TerrainData data = terrain.terrainData;
+            // Match by path, not Object reference: the export above just deleted+recreated the
+            // prefab asset at this exact path, so any old TreePrototype pointing at the previous
+            // instance is a broken reference now even though the path is identical - so we
+            // re-resolve the index by path instead of relying on the existingPrototypeIndex above.
             var prototypes = new System.Collections.Generic.List<TreePrototype>(data.treePrototypes);
-
-            int existingIndex = prototypes.FindIndex(p => p.prefab == prefabAsset);
-            if (existingIndex < 0)
+            int prototypeIndex = FindPrototypeIndexByPath(data, staticPath);
+            if (prototypeIndex < 0)
             {
                 prototypes.Add(new TreePrototype { prefab = prefabAsset });
                 data.treePrototypes = prototypes.ToArray();
-                existingIndex = prototypes.Count - 1;
+                prototypeIndex = prototypes.Count - 1;
+            }
+            else
+            {
+                prototypes[prototypeIndex] = new TreePrototype { prefab = prefabAsset };
+                data.treePrototypes = prototypes.ToArray();
             }
 
             EditorUtility.SetDirty(terrain);
             terrain.Flush();
 
             EditorUtility.DisplayDialog("Procedural Tree",
-                $"Added as tree prototype #{existingIndex} on '{terrain.name}'.\n\n" +
+                $"{(existingPrototypeIndex >= 0 ? "Updated" : "Added as")} tree prototype #{prototypeIndex} on '{terrain.name}'.\n\n" +
                 $"Editable original: this scene object (already connected to {tree.name}_Source.prefab " +
                 $"in {result.prefabFolder}). Edit it and click this button again to update the painted trees.\n\n" +
                 "Open the Terrain component - Paint Trees brush - Edit Trees to start painting it " +
@@ -659,6 +717,61 @@ namespace TreeTool.EditorTools
                 "into the prefab). For natural variety, export a few different Seeds from this tool " +
                 "as separate prefabs/prototypes and let Terrain's brush pick between them at random.",
                 "OK");
+        }
+
+        /// <summary>
+        /// Picks which Terrain to target when the scene may contain more than one: prefers
+        /// whatever Terrain the user currently has selected (or is a child of the selection) in
+        /// the Hierarchy, falls back to the single Terrain in the scene if there's only one, and
+        /// otherwise refuses to guess.
+        /// </summary>
+        static Terrain ResolveTargetTerrain()
+        {
+            if (Selection.activeGameObject != null)
+            {
+                var selected = Selection.activeGameObject.GetComponentInParent<Terrain>();
+                if (selected != null)
+                    return selected;
+            }
+
+            var all = Object.FindObjectsByType<Terrain>(FindObjectsSortMode.None);
+            if (all.Length == 1)
+                return all[0];
+
+            if (all.Length > 1)
+            {
+                Debug.LogWarning("[Procedural Tree] Multiple Terrains found in the scene and none is " +
+                                  "selected in the Hierarchy - refusing to guess which one to export to. " +
+                                  "Select the target Terrain first.");
+                return null;
+            }
+
+            return Terrain.activeTerrain;
+        }
+
+        /// <summary>Path the script-free static prefab for this tree will be saved to, computed
+        /// without touching the AssetDatabase - used to check for an existing prototype before
+        /// running the (destructive) export.</summary>
+        static string PredictStaticPrefabPath(ProceduralTree tree)
+        {
+            string folderName = string.IsNullOrEmpty(tree.exportedFolderName) ? tree.name : tree.exportedFolderName;
+            return $"Assets/GeneratedTrees/{folderName}/TreePrefab/{tree.name}.prefab";
+        }
+
+        /// <summary>Finds a tree prototype on this TerrainData whose prefab asset lives at the given
+        /// path. Comparing by path (not by Object reference) matters because Export always deletes
+        /// and recreates the prefab asset at the same path, which changes its identity.</summary>
+        static int FindPrototypeIndexByPath(TerrainData data, string path)
+        {
+            TreePrototype[] prototypes = data.treePrototypes;
+            for (int i = 0; i < prototypes.Length; i++)
+            {
+                if (prototypes[i].prefab == null)
+                    continue;
+                if (AssetDatabase.GetAssetPath(prototypes[i].prefab) == path)
+                    return i;
+            }
+            return -1;
         }
 
         /// <summary>
