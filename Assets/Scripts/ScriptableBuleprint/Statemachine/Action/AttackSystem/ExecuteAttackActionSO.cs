@@ -18,7 +18,7 @@ public class ExecuteAttackActionSO : StateActionSO
 public class ExecuteAttackAction : StateAction
 {
     private readonly GameObject _attackPrefab;
-    private AttackSystem _attackSystem;
+    private PairedAttackController _attackSystem;
 
     public ExecuteAttackAction(GameObject attackPrefab)
     {
@@ -27,7 +27,7 @@ public class ExecuteAttackAction : StateAction
 
     public override void Awake(StateMachine stateMachine)
     {
-        _attackSystem = stateMachine.GetComponent<AttackSystem>();
+        _attackSystem = stateMachine.GetComponent<PairedAttackController>();
 
         if (_attackSystem == null)
             Debug.LogError("ExecuteAttackAction cannot find AttackSystem.");

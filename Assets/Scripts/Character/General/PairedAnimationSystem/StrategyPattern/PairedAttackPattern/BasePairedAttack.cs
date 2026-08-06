@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class BasePairedAttack : MonoBehaviour, IAttackStrategy
+public abstract class BasePairedAttack : MonoBehaviour, IPairedAttackStrategy
 {
     public bool TryAttack(
         PairedAnimationManager manager,

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SingleAttack : BasePairedAttack
+public class SinglePairedAttack : BasePairedAttack
 {
     [SerializeField] private PairedSnapData _snapData;
 

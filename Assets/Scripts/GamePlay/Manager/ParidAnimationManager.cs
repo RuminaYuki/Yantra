@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class PairedAnimationManager : MonoBehaviour
 {
     [SerializeField, Min(0.01f)] private float _warpDuration = 0.15f;
+    public event Action<IPairedAnimationActor,IPairedAnimationActor,PairedAnimationId> PairedAnimationFinished;
     private bool _isPlaying;
 
     public bool TryStart(
@@ -97,6 +99,11 @@ public class PairedAnimationManager : MonoBehaviour
         yield return new WaitUntil(() =>
             attacker.IsAnimationFinished(animationId) &&
             victim.IsAnimationFinished(animationId));
+        
+        PairedAnimationFinished?.Invoke(
+        attacker,
+        victim,
+        animationId);
 
         attacker.ExitAnimation(animationId);
         victim.ExitAnimation(animationId);

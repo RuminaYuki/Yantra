@@ -1,4 +1,4 @@
-public interface IAttackStrategy
+public interface IPairedAttackStrategy
 {
     bool TryAttack(
         PairedAnimationManager manager,

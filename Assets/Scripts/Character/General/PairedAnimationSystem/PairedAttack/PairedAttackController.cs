@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PairedAnimationActor))]
-public class AttackSystem : MonoBehaviour
+public class PairedAttackController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PairedAnimationActor _victim;
@@ -40,7 +40,7 @@ public class AttackSystem : MonoBehaviour
             return false;
         }
 
-        IAttackStrategy strategy =
+        IPairedAttackStrategy strategy =
             FindStrategy(attackPrefab);
 
         if (strategy == null)
@@ -72,7 +72,7 @@ public class AttackSystem : MonoBehaviour
         _victim = victim;
     }
 
-    private IAttackStrategy FindStrategy(
+    private IPairedAttackStrategy FindStrategy(
         GameObject attackPrefab)
     {
         MonoBehaviour[] components =
@@ -80,7 +80,7 @@ public class AttackSystem : MonoBehaviour
 
         foreach (MonoBehaviour component in components)
         {
-            if (component is IAttackStrategy strategy)
+            if (component is IPairedAttackStrategy strategy)
                 return strategy;
         }
 

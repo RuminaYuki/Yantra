@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FourDirectionAttack : BasePairedAttack
+public class FourDirectionPairedAttack : BasePairedAttack
 {
     [SerializeField] private PairedSnapData[] _snapData;
 
