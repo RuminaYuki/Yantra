@@ -9,6 +9,10 @@ public class PairedAttackController : MonoBehaviour
     private PairedAnimationManager _manager;
     private PairedAnimationActor _attacker;
 
+    private float _currentDamage;
+    private bool _hasDealtDamage;
+
+
     private void Awake()
     {
         _attacker = GetComponent<PairedAnimationActor>();
@@ -30,7 +34,7 @@ public class PairedAttackController : MonoBehaviour
         }
     }
 
-    public bool TryAttack(GameObject attackPrefab)
+    public bool TryAttack(GameObject attackPrefab, float damage)
     {
         if (attackPrefab == null)
         {
@@ -61,6 +65,9 @@ public class PairedAttackController : MonoBehaviour
             return false;
         }
 
+        _currentDamage = damage;
+        _hasDealtDamage = false;
+
         return strategy.TryAttack(
             _manager,
             _attacker,
@@ -86,4 +93,18 @@ public class PairedAttackController : MonoBehaviour
 
         return null;
     }
+
+    public void ApplyPairedDamage()
+{
+    if (_victim == null || _hasDealtDamage)
+        return;
+
+    IDamageable damageable = _victim.GetComponentInParent<IDamageable>();
+
+    if (damageable == null)
+        return;
+
+    damageable.TakeDamage(_currentDamage);
+    _hasDealtDamage = true;
+}
 }

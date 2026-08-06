@@ -8,40 +8,44 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 public class ExecuteAttackActionSO : StateActionSO
 {
     [SerializeField] private GameObject _attackPrefab;
+    [SerializeField, Min(0f)]
+    private float _damage = 10f;
 
     public override StateAction CreateAction(StateMachine stateMachine)
     {
-        return new ExecuteAttackAction(_attackPrefab);
+        return new ExecuteAttackAction(_attackPrefab, _damage);
     }
 }
 
 public class ExecuteAttackAction : StateAction
 {
     private readonly GameObject _attackPrefab;
-    private PairedAttackController _attackSystem;
+    private readonly float _damage;
+    private PairedAttackController _pairedAttackController;
 
-    public ExecuteAttackAction(GameObject attackPrefab)
+
+    public ExecuteAttackAction(GameObject attackPrefab,float damage)
     {
         _attackPrefab = attackPrefab;
+        _damage = damage;
     }
 
     public override void Awake(StateMachine stateMachine)
     {
-        _attackSystem = stateMachine.GetComponent<PairedAttackController>();
+        _pairedAttackController = stateMachine.GetComponent<PairedAttackController>();
 
-        if (_attackSystem == null)
+        if (_pairedAttackController == null)
             Debug.LogError("ExecuteAttackAction cannot find AttackSystem.");
     }
 
     public override void OnStateEnter()
     {
-        if (_attackSystem == null ||
-            _attackPrefab == null)
+        if (_pairedAttackController == null || _attackPrefab == null)
         {
             return;
         }
 
-        _attackSystem.TryAttack(_attackPrefab);
+        _pairedAttackController.TryAttack(_attackPrefab, _damage);
     }
 
     public override void OnUpdate() { }
