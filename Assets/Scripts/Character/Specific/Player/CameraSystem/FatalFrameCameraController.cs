@@ -45,6 +45,8 @@ public class FatalFrameCameraController : MonoBehaviour
     private bool _isYantraAiming = false;
     private bool _isFreeLookingInBook = false;
 
+    private bool _isCutsceneMode = false;
+
     private void Start()
     {
         _mainCamera = GetComponent<Camera>();
@@ -68,6 +70,9 @@ public class FatalFrameCameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        // ถ้าอยู่ในโหมดคัทซีน ให้หยุดทำงานทันที ปล่อยให้ Timeline/Animator คุมกล้อง
+        if (_isCutsceneMode) return;
+
         // เช็คแค่ Transform พื้นฐาน ไม่ต้องเช็ค Mouse.current แล้ว
         if (_tppPivot == null || _fppEyePosition == null) return;
 
@@ -128,6 +133,22 @@ public class FatalFrameCameraController : MonoBehaviour
     }
 
     #region Public API (Interface สำหรับให้ State Machine/Player Controller เรียกใช้)
+
+    /// <summary>
+    /// เปิด/ปิด โหมดคัทซีน (ถ้าเปิด กล้องจะหยุดตามผู้เล่น ปล่อยให้ Timeline/Animator ทำงาน)
+    /// </summary>
+    public void SetCutsceneMode(bool isCutscene)
+    {
+        _isCutsceneMode = isCutscene;
+
+        if (isCutscene)
+        {
+            // ปิดโหมดเล็งต่างๆ เผื่อผู้เล่นเผลอกดค้างไว้ตอนคัทซีนตัดมาพอดี
+            _isGunAiming = false;
+            _isYantraAiming = false;
+            _isFreeLookingInBook = false;
+        }
+    }
 
     /// <summary>
     /// ส่งค่า Mouse Delta เข้ามาหมุนกล้อง
