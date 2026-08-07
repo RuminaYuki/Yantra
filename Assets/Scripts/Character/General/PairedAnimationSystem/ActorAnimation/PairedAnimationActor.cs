@@ -17,11 +17,17 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
 
     private Animator _animator;
     private IMovementLock _movementLock;
+    private IRootMotionControl _rootMotionControl;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _movementLock = GetComponent<IMovementLock>();
+        _rootMotionControl = GetComponent<IRootMotionControl>();
+    }
+    public void SetRootMotionEnabled(bool enabled)
+    {
+        _rootMotionControl?.SetRootMotionEnabled(enabled);
     }
 
     public Transform GetTransform()

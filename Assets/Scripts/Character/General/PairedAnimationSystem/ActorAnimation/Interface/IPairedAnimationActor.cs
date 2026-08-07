@@ -9,6 +9,8 @@ public interface IPairedAnimationActor
     void ExitAnimation(PairedAnimationId animationId);
     void UnlockMovement();
 
+    void SetRootMotionEnabled(bool enabled);
+
     bool IsInAnimation(PairedAnimationId animationId);
     bool IsAnimationFinished(PairedAnimationId animationId);
 

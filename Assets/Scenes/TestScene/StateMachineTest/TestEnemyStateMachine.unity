@@ -1709,7 +1709,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.9
-  m_Radius: 0.5
+  m_Radius: 0.15
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1742,7 +1742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PairedAnimationActor
   _animations:
   - id: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
-    stateName: P_KaCatchFromLeft_remap
+    stateName: P_KaCatchFromFront_remap
     exitStateName: BaseMovement
 --- !u!114 &733027350
 MonoBehaviour:
@@ -1757,7 +1757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StateMachineController
   _transitionTables:
-  - {fileID: 11400000, guid: 834f541da460eb346ac2abe7235161f2, type: 2}
+  - {fileID: 11400000, guid: fabe8bec754051a40ada84dfde1eb623, type: 2}
 --- !u!114 &733027351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1770,7 +1770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68d3392a0a90dc45897eddd2bb4b74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNavigator
-  _target: {fileID: 733027345}
+  _target: {fileID: 6724330315167347876}
   _repathInterval: 0.25
 --- !u!114 &733027352
 MonoBehaviour:
@@ -5048,11 +5048,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
+        type: 3}
+      propertyPath: _animations.Array.data[0].stateName
+      value: CatchedFromFrontFinal
+      objectReference: {fileID: 0}
     - target: {fileID: 3661598174317763743, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: targetToLookAt
       value: 
       objectReference: {fileID: 894412940}
+    - target: {fileID: 3953758522149643572, guid: 0ec2cd0195e5f64458b2f828930c2023,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 8005721335771320004, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: m_LocalPosition.x
