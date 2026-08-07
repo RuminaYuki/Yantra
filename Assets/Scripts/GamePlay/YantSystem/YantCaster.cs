@@ -16,7 +16,7 @@ public class YantPrefabBinding
 public class YantCaster : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private YantraShapeMatcher _matcher;
+    [SerializeField] private YantraGridShapeMatcher _matcher;
     [SerializeField] private YantraStatsController _stats;
     [SerializeField] private GameObject _playerRoot;
     [SerializeField] private Transform _yantSpawnPoint;
@@ -33,7 +33,7 @@ public class YantCaster : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_matcher == null) _matcher = GetComponentInChildren<YantraShapeMatcher>();
+        if (_matcher == null) _matcher = GetComponentInChildren<YantraGridShapeMatcher>();
         if (_stats == null) _stats = GetComponentInParent<YantraStatsController>();
         if (_playerRoot == null && _stats != null) _playerRoot = _stats.gameObject;
     }

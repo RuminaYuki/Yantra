@@ -161,4 +161,7 @@ public class DrawOn3DMesh : MonoBehaviour
         _allStrokes.Clear();
         _currentLine = null;
     }
+
+    //API
+    public Transform PaperParent => _paperParent;
 }
