@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class StaminaUI : MonoBehaviour
+// เพิ่ม , ICutsceneListener ต่อท้าย
+public class StaminaUI : MonoBehaviour, ICutsceneListener
 {
     [Header("References")]
     [SerializeField] private StaminaSystem _staminaSystem;
@@ -44,6 +45,8 @@ public class StaminaUI : MonoBehaviour
     private bool _isRecoveryBlinking = false;
     private float _recoveryBlinkTimer = 0f;
 
+    private bool _isCutsceneActive = false;
+
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
@@ -82,11 +85,25 @@ public class StaminaUI : MonoBehaviour
         _recoveryBlinkTimer = 0.8f;
     }
 
+    // 🌟 เปลี่ยนชื่อฟังก์ชันตรงนี้เพื่อรับคำสั่งจาก Cutscene
+    public void OnCutsceneStateChanged(bool isPlaying)
+    {
+        _isCutsceneActive = isPlaying;
+
+        // ถ้าเป็นคัทซีน บังคับเฟดหาย (_targetAlpha = 0)
+        // ถ้าออกคัทซีน ให้เช็คว่าพลังเต็มไหม ถ้าไม่เต็มก็โชว์กลับมา (_targetAlpha = 1)
+        _targetAlpha = isPlaying ? 0f : (_currentRatio >= 0.99f ? 0f : 1f);
+    }
+
     private void UpdateStaminaUI(float ratio)
     {
         _currentRatio = ratio;
         _fillBarRect.localScale = new Vector3(ratio, 1f, 1f);
-        _targetAlpha = (ratio >= 0.99f) ? 0f : 1f;
+
+        if (!_isCutsceneActive)
+        {
+            _targetAlpha = (ratio >= 0.99f) ? 0f : 1f;
+        }
 
         if (!_isExhaustedState && !_isRecoveryBlinking && _fillBarImage != null)
         {
@@ -106,7 +123,8 @@ public class StaminaUI : MonoBehaviour
     {
         if (!Mathf.Approximately(_canvasGroup.alpha, _targetAlpha))
         {
-            _canvasGroup.alpha = Mathf.Lerp(_canvasGroup.alpha, _targetAlpha, Time.deltaTime * _fadeSpeed);
+            float speed = _fadeSpeed * 0.4f;
+            _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, _targetAlpha, Time.deltaTime * speed);
         }
 
         if (_fillBarImage != null)
@@ -132,7 +150,7 @@ public class StaminaUI : MonoBehaviour
                     UpdateStaminaUI(_currentRatio);
                 }
             }
-            // 🌟 3. กระพริบเตือนตอน 15% สุดท้าย (แฟลช แดง-ขาว รัวๆ เหมือนไซเรน!)
+            // 3. กระพริบเตือนตอน 15% สุดท้าย (แฟลช แดง-ขาว รัวๆ เหมือนไซเรน!)
             else if (_currentRatio <= _blinkThreshold && _currentRatio > 0f)
             {
                 // ใช้ Color.Lerp เพื่อสลับสีระหว่าง แดง กับ ขาว จะทำให้มองเห็นชัดเจนมากในฉากที่มืด

@@ -7,19 +7,16 @@ namespace Yuki.Learning.StateMachine
     public class StateMachine
     {
         private readonly GameObject _owner;
-        private readonly HashSet<Condition> _conditions = new HashSet<Condition>();
+
+        private readonly HashSet<Condition> _conditions =
+            new HashSet<Condition>();
 
         private State _currentState;
-        private StateTransition[] _anyTransitions = Array.Empty<StateTransition>();
-        private string _pendingExitId;
-        private bool _hasPendingExit;
+
+        private StateTransition[] _anyTransitions =
+            Array.Empty<StateTransition>();
+
         private bool _isDisposed;
-
-        public GameObject Owner => _owner;
-        public bool IsDisposed => _isDisposed;
-
-        public event Action<string> Exited;
-        public event Action<string> ChildStateMachineExited;
 
         public StateMachine(GameObject owner)
         {
@@ -66,8 +63,7 @@ namespace Yuki.Learning.StateMachine
                 ChangeState(nextState);
             }
 
-            _currentState?.OnUpdate();
-            ProcessExitRequest();
+            _currentState.OnUpdate();
         }
 
         public void OnFixedUpdate()
@@ -112,39 +108,21 @@ namespace Yuki.Learning.StateMachine
             }
 
             _currentState?.OnStateExit();
+
             _currentState = nextState;
             _currentState.OnStateEnter();
         }
 
-        public void SetAnyTransitions(StateTransition[] transitions)
+        public void SetAnyTransitions(
+            StateTransition[] transitions)
         {
             if (_isDisposed)
             {
                 return;
             }
 
-            _anyTransitions = transitions ?? Array.Empty<StateTransition>();
-        }
-
-        public void RequestExit(string exitId)
-        {
-            if (_isDisposed || _hasPendingExit)
-            {
-                return;
-            }
-
-            _pendingExitId = exitId;
-            _hasPendingExit = true;
-        }
-
-        public void NotifyChildStateMachineExited(string exitId)
-        {
-            if (_isDisposed)
-            {
-                return;
-            }
-
-            ChildStateMachineExited?.Invoke(exitId);
+            _anyTransitions =
+                transitions ?? Array.Empty<StateTransition>();
         }
 
         public void Dispose()
@@ -155,6 +133,7 @@ namespace Yuki.Learning.StateMachine
             }
 
             _isDisposed = true;
+
             _currentState?.OnStateExit();
 
             foreach (Condition condition in _conditions)
@@ -163,53 +142,45 @@ namespace Yuki.Learning.StateMachine
             }
 
             _conditions.Clear();
+
             _currentState = null;
-            _anyTransitions = Array.Empty<StateTransition>();
-            _pendingExitId = null;
-            _hasPendingExit = false;
-            Exited = null;
-            ChildStateMachineExited = null;
+            _anyTransitions =
+                Array.Empty<StateTransition>();
         }
 
-        private void ProcessExitRequest()
-        {
-            if (!_hasPendingExit)
-            {
-                return;
-            }
-
-            string exitId = _pendingExitId;
-            _pendingExitId = null;
-            _hasPendingExit = false;
-
-            _currentState?.OnStateExit();
-            _currentState = null;
-            Exited?.Invoke(exitId);
-        }
-
-        private bool TryGetNextState(out State nextState)
+        private bool TryGetNextState(
+            out State nextState)
         {
             if (TryGetAnyTransition(out nextState))
             {
                 return true;
             }
 
-            return _currentState.TryGetTransition(out nextState);
+            return _currentState.TryGetTransition(
+                out nextState);
         }
 
-        private bool TryGetAnyTransition(out State nextState)
+        private bool TryGetAnyTransition(
+            out State nextState)
         {
             nextState = null;
 
-            foreach (StateTransition transition in _anyTransitions)
+            foreach (
+                StateTransition transition
+                in _anyTransitions)
             {
                 if (transition == null ||
-                    !transition.TryGetNextState(out State candidate))
+                    !transition.TryGetNextState(
+                        out State candidate))
                 {
                     continue;
                 }
 
-                if (ReferenceEquals(candidate, _currentState))
+                // Prevent re-entering the active state
+                // while its condition remains true.
+                if (ReferenceEquals(
+                    candidate,
+                    _currentState))
                 {
                     continue;
                 }
@@ -218,7 +189,9 @@ namespace Yuki.Learning.StateMachine
                 break;
             }
 
-            foreach (StateTransition transition in _anyTransitions)
+            foreach (
+                StateTransition transition
+                in _anyTransitions)
             {
                 transition?.ClearConditionsCache();
             }
