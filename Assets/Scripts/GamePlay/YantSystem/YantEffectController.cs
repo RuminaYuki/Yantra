@@ -70,9 +70,7 @@ public class YantEffectController : MonoBehaviour
                 continue;
             }
 
-            setting._yantEffect.Initialize(
-                _playerRoot,
-                _stats);
+            setting._yantEffect.Initialize(_playerRoot);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
@@ -102,9 +100,7 @@ public class YantEffectController : MonoBehaviour
                 }
             }        
 
-            bool initialized = setting._yantEffect.Initialize(
-                                    _playerRoot,
-                                    _stats);
+            bool initialized = setting._yantEffect.Initialize(_playerRoot);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot) && initialized)
             {

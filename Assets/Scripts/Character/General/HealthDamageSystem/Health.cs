@@ -22,6 +22,38 @@ public class Health : MonoBehaviour, IDamageable
         CurrentHP = maxHealth;
     }
 
+    private void Update()
+    {
+        // Debugging purpose only, remove this in production
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            TakeDamage(1f);
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Kill();
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (IsDead)
+            {
+                CurrentHP = maxHealth; // Revive with full health
+            }
+            Heal(1f); // Heal by 1
+        }
+    }
+
+    public virtual void Heal(float amount)
+    {
+        if (IsDead || IgnoreDamage) return;
+
+        CurrentHP += amount;
+        if (CurrentHP > maxHealth)
+            CurrentHP = maxHealth;
+        HealthChangedEvent();
+        Debug.Log($"{gameObject.name} <color=#32CD32> healed {amount}.</color> Current HP: {CurrentHP}/{maxHealth}");
+    }
+
     public virtual void TakeDamage(float damage)
     {
         if (IsDead || IgnoreDamage) return;

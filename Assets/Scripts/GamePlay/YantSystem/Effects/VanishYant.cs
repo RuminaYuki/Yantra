@@ -15,7 +15,7 @@ public class VanishYant : MonoBehaviour, IYantEffect
     [Header("Flag")]
     [SerializeField] private FlagSO _vanishFlag;
 
-    public bool Initialize(GameObject playerRoot, YantraStatsController stats)
+    public bool Initialize(GameObject playerRoot)
     {
         if (playerRoot == null)
         {

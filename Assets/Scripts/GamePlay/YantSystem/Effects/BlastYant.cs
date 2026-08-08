@@ -33,7 +33,7 @@ public class BlastYant : MonoBehaviour, IYantEffect
         if (_aimCamera == null) _aimCamera = Camera.main?.transform;
     }
 
-    public bool Initialize(GameObject playerRoot, YantraStatsController stats)
+    public bool Initialize(GameObject playerRoot)
     {
         if (_projectilePrefab == null)
         {
