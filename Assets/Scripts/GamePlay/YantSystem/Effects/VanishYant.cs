@@ -12,9 +12,6 @@ public class VanishYant : MonoBehaviour, IYantEffect
     [SerializeField] private bool _cancelOnMove = true;
     [SerializeField] private YantraInputObserverSO _inputObserver;
 
-    [Header("Flag")]
-    [SerializeField] private FlagSO _vanishFlag;
-
     public bool Initialize(GameObject playerRoot, YantraStatsController stats)
     {
         if (playerRoot == null)
@@ -28,12 +25,7 @@ public class VanishYant : MonoBehaviour, IYantEffect
             vanish = playerRoot.AddComponent<YantVanish>();
 
         YantraInputObserverSO observer = _cancelOnMove ? _inputObserver : null;
-        vanish.Apply(_vanishTag, _temporary, _duration, observer, _vanishFlag);
-
-        if (playerRoot.TryGetComponent(out StateFlags stateFlags) && _vanishFlag != null)
-        {
-            stateFlags.Set(_vanishFlag, true);
-        }
+        vanish.Apply(_vanishTag, _temporary, _duration, observer);
 
         Debug.Log($"<color=#AA88FF>[VanishYant]</color> ผู้เล่นหายตัว (tag={_vanishTag}, {_duration}s)");
 

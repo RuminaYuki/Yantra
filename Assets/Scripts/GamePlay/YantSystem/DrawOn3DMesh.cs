@@ -148,7 +148,6 @@ public class DrawOn3DMesh : MonoBehaviour
                 allPoints.Add(worldPoint);
             }
         }
-        Debug.Log(allPoints.Count);
         return allPoints;
     }
 

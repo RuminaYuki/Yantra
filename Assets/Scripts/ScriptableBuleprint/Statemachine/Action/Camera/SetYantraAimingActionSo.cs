@@ -42,13 +42,13 @@ public class SetYantraAimingAction : StateAction
     public override void OnStateEnter()
     {
         if (cameraController == null) return;
-        cameraController.SetYantraAimState(isAiming); // ใช้ API รับคำสั่ง
+        cameraController.IsYantraAiming = isAiming; // เรียกผ่าน Property
     }
 
     public override void OnStateExit()
     {
         if (cameraController == null) return;
-        cameraController.SetYantraAimState(false); // ใช้ API รับคำสั่ง
+        cameraController.IsYantraAiming = false; // เรียกผ่าน Property
     }
 
     public override void OnUpdate(){}

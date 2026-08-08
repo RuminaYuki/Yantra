@@ -42,13 +42,13 @@ public class SetGunAimingAction : StateAction
     public override void OnStateEnter()
     {
         if (cameraController == null) return;
-        cameraController.SetGunAimState(isAiming); // ใช้ API รับคำสั่ง
+        cameraController.IsGunAiming = isAiming; // เรียกผ่าน Property
     }
 
     public override void OnStateExit()
     {
         if (cameraController == null) return;
-        cameraController.SetGunAimState(false); // ใช้ API รับคำสั่ง
+        cameraController.IsGunAiming = false; // เรียกผ่าน Property
     }
 
     public override void OnUpdate(){}

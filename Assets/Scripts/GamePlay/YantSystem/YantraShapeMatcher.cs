@@ -384,17 +384,12 @@ namespace UIEditor
             float width = maxX - minX;
             float height = maxY - minY;
 
-            float scale = Mathf.Max(width, height);
-
-            if (scale < 1e-6f)
-                scale = 1e-6f;
+            if (width < 1e-6f) width = 1e-6f;
+            if (height < 1e-6f) height = 1e-6f;
 
             var result = new List<Vector2>(points.Count);
-
             foreach (var p in points)
-                result.Add(new Vector2(
-                    p.x / scale,
-                    p.y / scale));
+                result.Add(new Vector2(p.x * (1f / width), p.y * (1f / height)));
 
             return result;
         }
