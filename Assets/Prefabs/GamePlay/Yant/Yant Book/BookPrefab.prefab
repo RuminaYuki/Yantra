@@ -119,8 +119,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1477183803868551095}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.03165584, y: 0.8766269, z: -0.4595884, w: -0.13893056}
-  m_LocalPosition: {x: -0.52262646, y: -1.195693, z: -0.4885884}
+  m_LocalRotation: {x: 0.12977932, y: 0.5388228, z: 0.7580282, w: 0.34383228}
+  m_LocalPosition: {x: -0.1517335, y: 0.1456507, z: 0.2648734}
   m_LocalScale: {x: 1.4568754, y: 1.4568771, z: 1.4568766}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -139,12 +139,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17400aa46501ad541b6af8d62674fdd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YantCaster
-  _matcher: {fileID: 7559334317224316131}
-  _stats: {fileID: 0}
+  _matcher: {fileID: 2989483812625227861}
   _playerRoot: {fileID: 0}
   _yantSpawnPoint: {fileID: 0}
   _yantPaper: {fileID: 1559902585104980198}
-  _minSimilarityPercent: 40
+  _minSimilarityPercent: 70
   _bindings:
   - CategoryName: Heal Yant
     YantPrefab: {fileID: 8867824720623061172, guid: df9a28f72795a534f8058f9c3d952aa9,
@@ -170,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58dcccbf60c8aa49bd00bd8f43218c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaycastCheckBookTab
-  inputObserver: {fileID: 0}
+  inputObserver: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   mainCamera: {fileID: 0}
 --- !u!1 &1559902585104980198
 GameObject:
@@ -185,6 +184,7 @@ GameObject:
   - component: {fileID: 1328986008459176565}
   - component: {fileID: 1944471569773610429}
   - component: {fileID: 3950190518940257844}
+  - component: {fileID: 2989483812625227861}
   - component: {fileID: 7559334317224316131}
   - component: {fileID: 8052324723781514443}
   m_Layer: 7
@@ -310,6 +310,34 @@ MonoBehaviour:
   _paperParent: {fileID: 4700203200567172967}
   _surfaceOffset: 0.01
   _allStrokes: []
+--- !u!114 &2989483812625227861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559902585104980198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c0e1532017820489abfcf1964f5408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantraGridShapeMatcher
+  drawOn3DMesh: {fileID: 3950190518940257844}
+  fixedTemplateName: Blast Yant
+  shapeCategories:
+  - CategoryName: Heal Yant
+    Templates:
+    - {fileID: 11400000, guid: 9f975f8f049641c4ebdc859178bbe8b5, type: 2}
+    - {fileID: 11400000, guid: fa5d3de6729fe6e4183ce5c5d01bad8b, type: 2}
+    - {fileID: 11400000, guid: 243c70e41dc666549a7094660f58f32a, type: 2}
+  - CategoryName: Vanish Yant
+    Templates:
+    - {fileID: 11400000, guid: 59afb96412ef61e499d797e3368ac667, type: 2}
+  - CategoryName: Blast Yant
+    Templates:
+    - {fileID: 11400000, guid: 54a5b5c3320813840b299830c46d267b, type: 2}
+  minimumSimilarity: 75
+  DebugMode: 0
 --- !u!114 &7559334317224316131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,7 +847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TapFixedTemplate
   fixedTemplateName: Heal Yant
   bookTab: {fileID: 7781878233265510119}
-  yantraGridShapeMatcher: {fileID: 0}
+  yantraGridShapeMatcher: {fileID: 2989483812625227861}
 --- !u!1 &4712648914627274174
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TapFixedTemplate
   fixedTemplateName: Blast Yant
   bookTab: {fileID: 6644355024459248090}
-  yantraGridShapeMatcher: {fileID: 0}
+  yantraGridShapeMatcher: {fileID: 2989483812625227861}
 --- !u!1 &5423947386916550522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,7 +1141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TapFixedTemplate
   fixedTemplateName: Vanish Yant
   bookTab: {fileID: 3915406423327738929}
-  yantraGridShapeMatcher: {fileID: 0}
+  yantraGridShapeMatcher: {fileID: 2989483812625227861}
 --- !u!1 &5780167295019359981
 GameObject:
   m_ObjectHideFlags: 0

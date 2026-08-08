@@ -9127,6 +9127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506d678cf37e6ce4fa7db32e98bf2b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FatalFrameCameraController
+  vcamGameplay: {fileID: 0}
   _cameraAnimationController: {fileID: 0}
   _tppPivot: {fileID: 949986706}
   _fppEyePosition: {fileID: 1972669127}
@@ -9694,33 +9695,13 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2865104911859505335, guid: fbf30b39d10d65246a69184a98f34614, type: 3}
---- !u!1 &443398985 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3388754409268780033, guid: 0ec2cd0195e5f64458b2f828930c2023,
-    type: 3}
-  m_PrefabInstance: {fileID: 2103808901}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &443398986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 443398985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37724f921a0bd8842bc9734fd3920468, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 10
-  <CurrentHP>k__BackingField: 0
 --- !u!114 &443398988 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1831581376528694040, guid: 0ec2cd0195e5f64458b2f828930c2023,
     type: 3}
   m_PrefabInstance: {fileID: 2103808901}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 443398985}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 306277f8f9662d0469954596bb87b235, type: 3}
@@ -12397,52 +12378,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -939061152623264921, guid: fbf30b39d10d65246a69184a98f34614, type: 3}
---- !u!1 &1361586606 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6969546159014517579, guid: 0ec2cd0195e5f64458b2f828930c2023,
-    type: 3}
-  m_PrefabInstance: {fileID: 2103808901}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1361586609 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4885503127846260121, guid: 0ec2cd0195e5f64458b2f828930c2023,
-    type: 3}
-  m_PrefabInstance: {fileID: 2103808901}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1361586606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b95f09dbc687e0f468f6de29d9902f4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DrawOn3DMesh
---- !u!114 &1361586613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1361586606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c0e1532017820489abfcf1964f5408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YantraGridShapeMatcher
-  drawOn3DMesh: {fileID: 1361586609}
-  fixedTemplateName: Blast Yant
-  shapeCategories:
-  - CategoryName: Heal Yant
-    Templates:
-    - {fileID: 11400000, guid: 9f975f8f049641c4ebdc859178bbe8b5, type: 2}
-    - {fileID: 11400000, guid: fa5d3de6729fe6e4183ce5c5d01bad8b, type: 2}
-    - {fileID: 11400000, guid: 243c70e41dc666549a7094660f58f32a, type: 2}
-  - CategoryName: Vanish Yant
-    Templates:
-    - {fileID: 11400000, guid: 59afb96412ef61e499d797e3368ac667, type: 2}
-  - CategoryName: Blast Yant
-    Templates:
-    - {fileID: 11400000, guid: 54a5b5c3320813840b299830c46d267b, type: 2}
-  minimumSimilarity: 75
-  DebugMode: 0
 --- !u!1 &1387595831 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6248574976466802116, guid: fbf30b39d10d65246a69184a98f34614,
@@ -13603,18 +13538,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 141501504}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1702240138 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1261581932288049500, guid: 0ec2cd0195e5f64458b2f828930c2023,
-    type: 3}
-  m_PrefabInstance: {fileID: 2103808901}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &1707338171 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 7539197244567591875, guid: 0ec2cd0195e5f64458b2f828930c2023,
-    type: 3}
-  m_PrefabInstance: {fileID: 2103808901}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1709395299
 GameObject:
   m_ObjectHideFlags: 0
@@ -14722,74 +14645,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1207949363675953208, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: yantraGridShapeMatcher
-      value: 
-      objectReference: {fileID: 1361586613}
-    - target: {fileID: 1919295130520352614, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: _shapeCategories.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919295130520352614, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: '_shapeCategories.Array.data[0].Templates.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 9f975f8f049641c4ebdc859178bbe8b5,
-        type: 2}
-    - target: {fileID: 2241959853200122436, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: '_transitionTables.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c017d2454b7d5ae4ea1d4ca027ca8435,
-        type: 2}
-    - target: {fileID: 2327312097152116982, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: _matcher
-      value: 
-      objectReference: {fileID: 1361586613}
-    - target: {fileID: 2327312097152116982, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: _playerRoot
-      value: 
-      objectReference: {fileID: 443398985}
-    - target: {fileID: 2327312097152116982, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: _yantSpawnPoint
-      value: 
-      objectReference: {fileID: 1702240138}
-    - target: {fileID: 2327312097152116982, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: _minSimilarityPercent
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695744263005940901, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: yantraGridShapeMatcher
-      value: 
-      objectReference: {fileID: 1361586613}
-    - target: {fileID: 4885503127846260121, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: _mainCamera
-      value: 
-      objectReference: {fileID: 1707338171}
-    - target: {fileID: 5310135330415372491, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: yantraGridShapeMatcher
-      value: 
-      objectReference: {fileID: 1361586613}
-    - target: {fileID: 6667521891213465939, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 1707338171}
-    - target: {fileID: 6667521891213465939, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: inputObserver
-      value: 
-      objectReference: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f,
-        type: 2}
     - target: {fileID: 8005721335771320004, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14848,15 +14703,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3388754409268780033, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 443398986}
-    - targetCorrespondingSourceObject: {fileID: 6969546159014517579, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 1361586613}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ec2cd0195e5f64458b2f828930c2023, type: 3}
 --- !u!43 &2104492418
 Mesh:
