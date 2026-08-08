@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class StaminaSystem : MonoBehaviour
@@ -11,7 +12,7 @@ public class StaminaSystem : MonoBehaviour
     [SerializeField] private float _exhaustedDelay = 1.5f;
 
     private bool _isExhausted = false;
-    private float _currentStamina;
+    [ReadOnly][SerializeField]private float _currentStamina;
     private float _exhaustedUnlockTime; // เก็บเวลาในอนาคตที่อนุญาตให้เริ่มรีเจน
 
     public event Action<float> OnStaminaRatioChanged;
