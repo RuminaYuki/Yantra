@@ -9,6 +9,7 @@ public class YantraGridShapeMatcher : MonoBehaviour
     [SerializeField] private DrawOn3DMesh drawOn3DMesh;
 
     [Header("Templates")]
+    //อันนี้จะบังคับให้ใช้ Template ที่กำหนดไว้เท่านั้น ถ้าเป็นค่าว่างจะใช้ทุก Template ใน shapeCategories
     [SerializeField] private string fixedTemplateName;
     [SerializeField] private List<ShapeCategory> shapeCategories = new();
 

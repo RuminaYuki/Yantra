@@ -27,6 +27,7 @@ namespace YantraRecognition
                 if (category == null)
                     continue;
 
+                //บังคับให้ใช้ Template ที่กำหนดไว้
                 if (!string.IsNullOrEmpty(fixedTemplateName) && category.CategoryName != fixedTemplateName)
                     continue;
 

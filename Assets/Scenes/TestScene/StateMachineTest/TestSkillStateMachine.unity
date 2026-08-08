@@ -12576,7 +12576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YantraGridShapeMatcher
   drawOn3DMesh: {fileID: 1361586609}
-  fixedTemplateName: 
+  fixedTemplateName: Blast Yant
   shapeCategories:
   - CategoryName: Vanish Yant
     Templates:
@@ -14888,7 +14888,7 @@ PrefabInstance:
     - target: {fileID: 2327312097152116982, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: _minSimilarityPercent
-      value: 60
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 4885503127846260121, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
