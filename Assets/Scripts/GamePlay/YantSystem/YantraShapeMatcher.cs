@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using UIEditor;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 namespace UIEditor
@@ -22,21 +24,22 @@ namespace UIEditor
         [Tooltip("จำนวนจุดที่จะใช้คำนวณ")]
         [SerializeField] private int _globalResampleCount = 1000;
 
-        [Tooltip("Phase 2 scoring: ยิ่งมาก = เข้มงวดขึ้น\n" +
+        public int _intdexToSaveTemplate = 0;
+        /*[Tooltip("Phase 2 scoring: ยิ่งมาก = เข้มงวดขึ้น\n" +
                  "ค่าต่ำ (5-10) = ให้คะแนนง่าย / ค่าสูง (50+) = เข้มงวด")]
-        [SerializeField] private float _scoreSharpness = 8f;
+        [SerializeField] private float _scoreSharpness = 8f;*/
 
-        [Tooltip("Phase 1 search range (องศา) — ใช้ค้นหา template ที่ใกล้เคียงที่สุด")]
+        /*[Tooltip("Phase 1 search range (องศา) — ใช้ค้นหา template ที่ใกล้เคียงที่สุด")]
         [SerializeField] private float _rotationSearchRangeDeg = 45f;
-        [SerializeField] private float _rotationSearchThresholdDeg = 2f;
+        [SerializeField] private float _rotationSearchThresholdDeg = 2f;*/
 
-        public bool CreateTemplate;
-        public ShapeMatchResult LastResult { get; private set; }
+        //public bool CreateTemplate;
+        //public ShapeMatchResult LastResult { get; private set; }
 
         private NativeArray<float2> _nativeAllTemplates;
         private int _totalTemplateCount;
 
-        private void Start()
+        /*private void Start()
         {
             InitializeNativeData();
         }
@@ -47,7 +50,7 @@ namespace UIEditor
             {
                 _nativeAllTemplates.Dispose();
             }
-        }
+        }*/
 
         private void InitializeNativeData()
         {
@@ -75,7 +78,7 @@ namespace UIEditor
             }
         }
 
-        public void AnalyzeDrawing()
+        /*public void AnalyzeDrawing()
         {
             if (_drawOn3DMesh == null || !_drawOn3DMesh.gameObject.activeInHierarchy || !_drawOn3DMesh.enabled) return;
 
@@ -177,7 +180,7 @@ namespace UIEditor
                 }
             }
         }
-
+*/
         public void SaveToNextAvailableSlot(int categoryIndex)
         {
             if (_shapeCategories == null || categoryIndex < 0 || categoryIndex >= _shapeCategories.Count)
@@ -231,7 +234,7 @@ namespace UIEditor
             List<Vector2> points2D = ProjectToLocalPlane(worldPoints, _paperTransform);
             return ToCanonicalForm(points2D, _globalResampleCount);
         }
-
+/*
         /// <summary>
         /// Phase 2: Grid search 360° เพื่อหา minimum distance กับ template เดียว
         /// แม่นกว่า GSS เพราะค้นหาครบทุกมุม ไม่ติด local minimum
@@ -271,7 +274,7 @@ namespace UIEditor
             }
 
             return sum / _globalResampleCount;
-        }
+        }*/
 
         private List<Vector2> ToCanonicalForm(List<Vector2> rawPoints, int n)
         {
@@ -410,9 +413,23 @@ namespace UIEditor
             return new Vector2(sx / points.Count, sy / points.Count);
         }
 
-        public void ClearLastResult()
+        /*public void ClearLastResult()
         {
             LastResult = null;
+        }*/
+    }
+}
+
+[CustomEditor(typeof(YantraShapeMatcher))]
+public class YantraShapeMatcherEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        YantraShapeMatcher matcher = (YantraShapeMatcher)target;
+        if (GUILayout.Button("Save To Next AvailableSlot"))
+        {
+            matcher.SaveToNextAvailableSlot(matcher._intdexToSaveTemplate);
         }
     }
 }

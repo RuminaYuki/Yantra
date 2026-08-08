@@ -24,12 +24,12 @@ namespace UIEditor
                 return;
             }
 
-            bool shouldShow = _shapeMatcher.CreateTemplate;
+            /*bool shouldShow = _shapeMatcher.CreateTemplate;
 
             if (_panelRoot.activeSelf != shouldShow)
             {
                 _panelRoot.SetActive(shouldShow);
-            }
+            }*/
         }
     }
 }

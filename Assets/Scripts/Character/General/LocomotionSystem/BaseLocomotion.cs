@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Serialization;
-public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
+public abstract class BaseLocomotion : MonoBehaviour,IMovementLock,IRootMotionControl
 {
     [Header("Locomotion")]
     [SerializeField] private float _dampTime = 0.1f;
@@ -15,7 +15,7 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
     [SerializeField] private float _gravityMultiplier = 1f;
 
     protected CharacterController CharacterController { get; private set; }
-    protected Animator Animator { get; private set; }
+    protected Animator Animator {get; private set;}
 
     protected LocomotionAnim LocomotionAnim { get; private set; }
     protected RotationTransform Rotation { get; private set; }
@@ -33,13 +33,20 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
     }
     protected virtual void OnAnimatorMove()
     {
-        CharacterController.Move(Animator.deltaPosition + Gravity.Gravity());
-        if (IsMovementLocked)
+        Vector3 rootMotionPosition = _rootMotionEnabled
+            ? Animator.deltaPosition
+            : Vector3.zero;
+
+        CharacterController.Move(
+            rootMotionPosition + Gravity.Gravity());
+
+        if (_rootMotionEnabled && IsMovementLocked)
         {
             transform.rotation *= Animator.deltaRotation;
-        }   
+        }  
     }
 
+    // IMovementLock implementation
     private readonly HashSet<object> _movementLockOwners = new();
     private readonly HashSet<object> _moveAnimationResetOwners = new();
 
@@ -66,6 +73,13 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
 
         _movementLockOwners.Remove(owner);
         _moveAnimationResetOwners.Remove(owner);
+    }
+    
+    // IRootMotionControl implementation
+    private bool _rootMotionEnabled = true;
+    public void SetRootMotionEnabled(bool enabled)
+    {
+        _rootMotionEnabled = enabled;
     }
 
     public float GetMoveMultiply() => LocomotionAnim.Multiply;

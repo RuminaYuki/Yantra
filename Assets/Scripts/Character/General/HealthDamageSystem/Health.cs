@@ -1,0 +1,62 @@
+using System;
+using UnityEngine;
+
+public class Health : MonoBehaviour, IDamageable
+{
+    [SerializeField] protected float maxHealth = 10f;
+    public float MaxHealth => maxHealth;
+    
+    [field: SerializeField]
+    public float CurrentHP { get; protected set; }
+    public bool IsDead => CurrentHP <= 0;
+
+    public event Action OnDead;
+    public event Action<float> OnHealthChanged;
+    public event Action Onhit;
+
+    protected void DeadEvent() => OnDead?.Invoke();
+    protected void HealthChangedEvent() => OnHealthChanged?.Invoke(CurrentHP);
+
+    protected virtual void Awake()
+    {
+        CurrentHP = maxHealth;
+    }
+
+    public virtual void TakeDamage(float damage)
+    {
+        if (IsDead || IgnoreDamage) return;
+
+        CurrentHP -= damage;
+        HealthChangedEvent();
+        Onhit?.Invoke();
+
+        Debug.Log($"{gameObject.name} took {damage} damage. Current HP: {CurrentHP}/{maxHealth}");
+        if (CurrentHP <= 0)
+        {
+            Debug.Log($"{gameObject.name} is dead.");
+            CurrentHP = 0;
+            DeadEvent();
+        }
+    }
+
+    public void Kill()
+    {
+        if (IsDead) return;
+
+        CurrentHP = 0;
+        HealthChangedEvent();
+        DeadEvent();
+    }
+
+    public bool IgnoreDamage { get; private set; } = false;
+    public void EnableIgnoreDamage(bool enable)
+    {
+        IgnoreDamage = enable;
+    }
+    
+    public void SetCurrentHealth(float amount)
+    {
+        if(amount <= 0) return;
+        CurrentHP = amount;
+    }
+}
