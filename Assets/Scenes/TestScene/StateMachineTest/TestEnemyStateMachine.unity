@@ -1418,12 +1418,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &618584891 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3388754409268780033, guid: 0ec2cd0195e5f64458b2f828930c2023,
-    type: 3}
-  m_PrefabInstance: {fileID: 3605079294924578884}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &650700033 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a8231f06415f05c48b7538df79ca5739,
@@ -1620,14 +1614,15 @@ GameObject:
   - component: {fileID: 733027344}
   - component: {fileID: 733027347}
   - component: {fileID: 733027350}
+  - component: {fileID: 733027357}
   - component: {fileID: 733027346}
   - component: {fileID: 733027349}
   - component: {fileID: 733027348}
   - component: {fileID: 733027352}
   - component: {fileID: 733027351}
   - component: {fileID: 733027353}
-  - component: {fileID: 733027354}
   - component: {fileID: 733027355}
+  - component: {fileID: 733027356}
   m_Layer: 0
   m_Name: Ka(enemy)
   m_TagString: Untagged
@@ -1760,7 +1755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StateMachineController
   _transitionTables:
-  - {fileID: 11400000, guid: fabe8bec754051a40ada84dfde1eb623, type: 2}
+  - {fileID: 11400000, guid: de948cb50bdad5344a7838108f6701c9, type: 2}
 --- !u!114 &733027351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1773,7 +1768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68d3392a0a90dc45897eddd2bb4b74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNavigator
-  _target: {fileID: 6724330315167347876}
+  _target: {fileID: 0}
   _repathInterval: 0.25
 --- !u!114 &733027352
 MonoBehaviour:
@@ -1802,20 +1797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaypointPath
   _pathRoot: {fileID: 1417619150}
---- !u!114 &733027354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733027343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b36271b81515b44a54f495eb743668, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WaypointPatrolController
-  _waypointPath: {fileID: 733027353}
-  _arrivalDistance: 0.5
+  IsEnablePathGizmos: 1
 --- !u!114 &733027355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1838,6 +1820,42 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enableRayCast: 1
+--- !u!114 &733027356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733027343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef641b642823764f9f37fcc173ac61b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostTrackerIK
+  targetToLookAt: {fileID: 0}
+  maxLookDistance: 10
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  eyeOffset: {x: 0, y: 1.5, z: 0}
+  maxLookWeight: 1
+  smoothSpeed: 5
+--- !u!114 &733027357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733027343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f24cbbf5a9d30cf478e51c6e1abd23e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateFlags
+  flags:
+  - Flag: {fileID: 11400000, guid: e3700e6fb14a9174a97b1fcf52b048cc, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
 --- !u!4 &894412940 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4758797354340404493, guid: a8231f06415f05c48b7538df79ca5739,
@@ -2865,6 +2883,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1417619150}
+  - component: {fileID: 1417619151}
   m_Layer: 0
   m_Name: KaPath
   m_TagString: Untagged
@@ -2890,6 +2909,21 @@ Transform:
   - {fileID: 1572866867}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1417619151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417619149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1f871c0f9daa7142b058079e45b1035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathGizmos
+  pathColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pointRadius: 0.15
+  arrowSize: 0.4
 --- !u!1 &1535776900
 GameObject:
   m_ObjectHideFlags: 0
@@ -5112,21 +5146,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: _animations.Array.data[0].stateName
-      value: CatchedFromFrontFinal
-      objectReference: {fileID: 0}
     - target: {fileID: 3661598174317763743, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: targetToLookAt
       value: 
       objectReference: {fileID: 894412940}
-    - target: {fileID: 3953758522149643572, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.15
-      objectReference: {fileID: 0}
     - target: {fileID: 8005721335771320004, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5185,11 +5209,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3388754409268780033, guid: 0ec2cd0195e5f64458b2f828930c2023,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6724330315167347890}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ec2cd0195e5f64458b2f828930c2023, type: 3}
 --- !u!114 &4251660433144678517 stripped
 MonoBehaviour:
@@ -5197,7 +5217,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3605079294924578884}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618584891}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38420767fc21b8f4e9ea5bf2a7a03eb8, type: 3}
@@ -5209,20 +5229,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3605079294924578884}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6724330315167347890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618584891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37724f921a0bd8842bc9734fd3920468, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 10
-  <CurrentHP>k__BackingField: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
