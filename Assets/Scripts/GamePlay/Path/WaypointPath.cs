@@ -6,6 +6,7 @@ public class WaypointPath : MonoBehaviour
 
     private int _currentIndex;
     private int _direction = 1;
+    public bool IsEnablePathGizmos = true;
 
     public int Count =>
         _pathRoot != null
@@ -42,7 +43,7 @@ public class WaypointPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (_pathRoot == null)
+        if (_pathRoot == null || !IsEnablePathGizmos)
             return;
 
         Gizmos.color = Color.yellow;

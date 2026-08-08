@@ -16,7 +16,7 @@ public class HealYant : MonoBehaviour, IYantEffect
         health = playerRoot.GetComponentInParent<IDamageable>();
         if (health != null)
         {
-            health.Heal(_healAmount);
+            //health.Heal(_healAmount);
             //Debug.Log($"<color=#00FF88>[HealYant]</color> ฮีล +{_healAmount}");
             return true;
         }
