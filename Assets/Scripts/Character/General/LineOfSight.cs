@@ -3,6 +3,7 @@ using UnityEngine;
 public class LineOfSight : MonoBehaviour
 {
     [SerializeField] Transform target;
+    [SerializeField] Transform viewpoint;
     [SerializeField] bool showGizmos = true;
 
     [Header("DetectRange")]
@@ -17,6 +18,8 @@ public class LineOfSight : MonoBehaviour
     [SerializeField] bool enableRayCast = true;
 
     public Transform Target => target;
+
+    private Transform Viewpoint => viewpoint != null ? viewpoint : transform;
 
     void Start()
     {
@@ -36,22 +39,23 @@ public class LineOfSight : MonoBehaviour
 
     public bool DetectRange()
     {
-        float distance = (target.position - transform.position).sqrMagnitude;
+        float distance = (target.position - Viewpoint.position).sqrMagnitude;
         return distance <= detectRange * detectRange;
     }
     public bool FOVAngle()
     {
-        Vector3 dirToTarget = (target.position - transform.position).normalized;
-        float angle = Vector3.Angle(transform.forward, dirToTarget);
+        Vector3 dirToTarget = (target.position - Viewpoint.position).normalized;
+        float angle = Vector3.Angle(Viewpoint.forward, dirToTarget);
 
         return angle <= viewAngle * 0.5f;
     }
     public bool Raycast()
     {
-        Vector3 dirToTarget = (target.position - transform.position).normalized;
-        float distance = Vector3.Distance(transform.position, target.position);
+        Vector3 origin = Viewpoint.position;
+        Vector3 dirToTarget = (target.position - origin).normalized;
+        float distance = Vector3.Distance(origin, target.position);
 
-        if (Physics.Raycast(transform.position, dirToTarget, distance, obstacleLayer))
+        if (Physics.Raycast(origin, dirToTarget, distance, obstacleLayer))
         {
             return false;
         }
@@ -70,20 +74,22 @@ public class LineOfSight : MonoBehaviour
         if(!showGizmos) return;
         if (target == null) return;
 
+        Transform viewOrigin = Viewpoint;
+
         //DetectRange
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectRange);
+        Gizmos.DrawWireSphere(viewOrigin.position, detectRange);
 
         //FOV
-        Vector3 left = Quaternion.Euler(0, -viewAngle / 2, 0) * transform.forward;
-        Vector3 right = Quaternion.Euler(0, viewAngle / 2, 0) * transform.forward;
+        Vector3 left = Quaternion.Euler(0, -viewAngle / 2, 0) * viewOrigin.forward;
+        Vector3 right = Quaternion.Euler(0, viewAngle / 2, 0) * viewOrigin.forward;
 
         Gizmos.color = Color.cyan;
-        Gizmos.DrawRay(transform.position, left * detectRange);
-        Gizmos.DrawRay(transform.position, right * detectRange);
+        Gizmos.DrawRay(viewOrigin.position, left * detectRange);
+        Gizmos.DrawRay(viewOrigin.position, right * detectRange);
 
         //Raycast
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, target.position);
+        Gizmos.DrawLine(viewOrigin.position, target.position);
     }
 }

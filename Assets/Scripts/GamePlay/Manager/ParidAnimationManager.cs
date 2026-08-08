@@ -72,16 +72,20 @@ public class PairedAnimationManager : MonoBehaviour
     }
 
     private IEnumerator PlayRoutine(
-        IPairedAnimationActor attacker,
-        IPairedAnimationActor victim,
-        Pose attackerSnapPose,
-        Pose victimSnapPose,
-        PairedAnimationId animationId)
+    IPairedAnimationActor attacker,
+    IPairedAnimationActor victim,
+    Pose attackerSnapPose,
+    Pose victimSnapPose,
+    PairedAnimationId animationId)
     {
         _isPlaying = true;
 
         attacker.LockMovement();
         victim.LockMovement();
+
+        // ปิด Root Motion ก่อนเริ่ม Warp
+        attacker.SetRootMotionEnabled(false);
+        victim.SetRootMotionEnabled(false);
 
         yield return WarpActors(
             attacker,
@@ -89,21 +93,27 @@ public class PairedAnimationManager : MonoBehaviour
             attackerSnapPose,
             victimSnapPose);
 
+        // เริ่ม CrossFade โดยยังไม่เปิด Root Motion
         attacker.PlayAnimation(animationId);
         victim.PlayAnimation(animationId);
 
+        // รอจนทั้งคู่เข้า Attack State จริง
         yield return new WaitUntil(() =>
             attacker.IsInAnimation(animationId) &&
             victim.IsInAnimation(animationId));
 
+        // เปิด Root Motion ของ Attack เมื่อพร้อมกันแล้ว
+        attacker.SetRootMotionEnabled(true);
+        victim.SetRootMotionEnabled(true);
+
         yield return new WaitUntil(() =>
             attacker.IsAnimationFinished(animationId) &&
             victim.IsAnimationFinished(animationId));
-        
+
         PairedAnimationFinished?.Invoke(
-        attacker,
-        victim,
-        animationId);
+            attacker,
+            victim,
+            animationId);
 
         attacker.ExitAnimation(animationId);
         victim.ExitAnimation(animationId);
