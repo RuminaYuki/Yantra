@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506d678cf37e6ce4fa7db32e98bf2b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FatalFrameCameraController
+  vcamGameplay: {fileID: 0}
   _cameraAnimationController: {fileID: 0}
   _tppPivot: {fileID: 2331765517946729004}
   _fppEyePosition: {fileID: 4998768242501833454}
@@ -1645,6 +1646,7 @@ GameObject:
   - component: {fileID: 3661598174317763743}
   - component: {fileID: 1670577747332474308}
   - component: {fileID: 1831581376528694040}
+  - component: {fileID: 7564764884602532370}
   m_Layer: 3
   m_Name: PlayerController
   m_TagString: Player
@@ -1794,7 +1796,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.9
-  m_Radius: 0.5
+  m_Radius: 0.15
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1888,7 +1890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   _animations:
   - id: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
-    stateName: GotSlap
+    stateName: CatchedFromFrontFinal
     exitStateName: BaseMovement
 --- !u!114 &7103691933969499626
 MonoBehaviour:
@@ -2001,6 +2003,21 @@ MonoBehaviour:
   _maxStamina: 100
   _recoverThreshold: 30
   _exhaustedDelay: 1.5
+  _currentStamina: 0
+--- !u!114 &7564764884602532370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37724f921a0bd8842bc9734fd3920468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 10
+  <CurrentHP>k__BackingField: 0
 --- !u!1 &3701737388500474450
 GameObject:
   m_ObjectHideFlags: 0
@@ -3807,11 +3824,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4371954679780879206, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: yantraGridShapeMatcher
+      value: 
+      objectReference: {fileID: 2158641416506019662}
+    - target: {fileID: 5067892906068733704, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: yantraGridShapeMatcher
+      value: 
+      objectReference: {fileID: 2158641416506019662}
+    - target: {fileID: 7340394495647333269, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: yantraGridShapeMatcher
+      value: 
+      objectReference: {fileID: 2158641416506019662}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6f2c258a18b0514f8959d610175256e, type: 3}
+--- !u!114 &2158641416506019662 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7559334317224316131, guid: d6f2c258a18b0514f8959d610175256e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8438952321389085613}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c0e1532017820489abfcf1964f5408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantraGridShapeMatcher
 --- !u!114 &2327312097152116982 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6147809767875308379, guid: d6f2c258a18b0514f8959d610175256e,
