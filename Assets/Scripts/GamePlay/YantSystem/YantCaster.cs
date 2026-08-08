@@ -17,7 +17,6 @@ public class YantCaster : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private YantraGridShapeMatcher _matcher;
-    [SerializeField] private YantraStatsController _stats;
     [SerializeField] private GameObject _playerRoot;
     [SerializeField] private Transform _yantSpawnPoint;
     [SerializeField] private GameObject _yantPaper;
@@ -34,8 +33,6 @@ public class YantCaster : MonoBehaviour
     private void OnValidate()
     {
         if (_matcher == null) _matcher = GetComponentInChildren<YantraGridShapeMatcher>();
-        if (_stats == null) _stats = GetComponentInParent<YantraStatsController>();
-        if (_playerRoot == null && _stats != null) _playerRoot = _stats.gameObject;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     #region Analyze Input
@@ -102,9 +99,7 @@ public class YantCaster : MonoBehaviour
 
         if (yantObj.TryGetComponent<YantEffectController>(out YantEffectController yantEffectController))
         {
-            yantEffectController.SetDefaultValue(
-                _playerRoot != null ? _playerRoot : gameObject,
-                _stats);
+            yantEffectController.SetDefaultValue(_playerRoot != null ? _playerRoot : gameObject);
         }
         else
         {
