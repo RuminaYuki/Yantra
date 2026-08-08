@@ -1,7 +1,9 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
-public class StaminaSystem : MonoBehaviour
+// เพิ่ม , ICutsceneListener ต่อท้าย
+public class StaminaSystem : MonoBehaviour, ICutsceneListener
 {
     [Header("Stamina Settings")]
     [SerializeField] private float _maxStamina = 100f;
@@ -10,8 +12,10 @@ public class StaminaSystem : MonoBehaviour
     [Tooltip("เวลาดีเลย์ (วินาที) ที่หลอดจะแดงค้างและไม่ยอมรีเจนตอนพลังหมด")]
     [SerializeField] private float _exhaustedDelay = 1.5f;
 
+    public bool IsPaused { get; set; } = false;
+
     private bool _isExhausted = false;
-    private float _currentStamina;
+    [ReadOnly][SerializeField]private float _currentStamina;
     private float _exhaustedUnlockTime; // เก็บเวลาในอนาคตที่อนุญาตให้เริ่มรีเจน
 
     public event Action<float> OnStaminaRatioChanged;
@@ -33,6 +37,8 @@ public class StaminaSystem : MonoBehaviour
 
     public bool TryConsumeStamina(float amount)
     {
+        if (IsPaused || _isExhausted) return false;
+
         if (_isExhausted) return false;
 
         _currentStamina -= amount;
@@ -54,6 +60,8 @@ public class StaminaSystem : MonoBehaviour
 
     public void RegenerateStamina(float amount)
     {
+        if (IsPaused) return;
+
         // ถ้าติดหอบ และเวลายังไม่ถึงกำหนด ให้เด้งออกทันที (ไม่ยอมเพิ่มพลัง)
         if (_isExhausted && Time.time < _exhaustedUnlockTime) return;
 
@@ -79,6 +87,12 @@ public class StaminaSystem : MonoBehaviour
         }
 
         OnStaminaRatioChanged?.Invoke(_currentStamina / _maxStamina);
+    }
+
+    // 🌟 ส่วนที่เพิ่มเข้ามาใหม่ เพื่อรับคำสั่งจาก Cutscene
+    public void OnCutsceneStateChanged(bool isPlaying)
+    {
+        IsPaused = isPlaying;
     }
 
     #endregion

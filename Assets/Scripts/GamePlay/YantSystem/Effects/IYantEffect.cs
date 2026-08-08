@@ -6,5 +6,5 @@ using UnityEngine;
 /// </summary>
 public interface IYantEffect
 {
-    bool Initialize(GameObject playerRoot, YantraStatsController stats);
+    bool Initialize(GameObject playerRoot);
 }

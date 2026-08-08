@@ -204,8 +204,8 @@ public class RinAnimationController : MonoBehaviour
         _animator.SetBool(_drawHash, _isDrawing);
         _animator.SetBool(_lampHash, _isLampOn);
 
-        // ✨ แก้ไข: เรียกใช้ API เพื่อส่งคำสั่งเปิด/ปิดโหมดกางยันต์
-        if (_cameraController != null) _cameraController.SetYantraAimState(_isDrawing);
+        // แก้ไข: เรียกใช้ API เพื่อส่งคำสั่งเปิด/ปิดโหมดกางยันต์
+        if (_cameraController != null) _cameraController.IsYantraAiming = _isDrawing;
 
         if (!wasDrawing) return;
 
@@ -217,8 +217,8 @@ public class RinAnimationController : MonoBehaviour
     {
         _isDrawing = false;
 
-        // ✨ แก้ไข: เรียกใช้ API เพื่อส่งคำสั่งบังคับปิดโหมดยันต์
-        if (_cameraController != null) _cameraController.SetYantraAimState(false);
+        // แก้ไข: เรียกใช้ API เพื่อส่งคำสั่งบังคับปิดโหมดยันต์
+        if (_cameraController != null) _cameraController.IsYantraAiming = false;
 
         _isLampOn = !_isLampOn;
         _animator.SetBool(_lampHash, _isLampOn);
