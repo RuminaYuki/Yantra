@@ -246,6 +246,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "6303996e84684db1a9f59ff0bcdd8191"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "6bc90ec236a54fc3a98978097a6e1709"
+                },
+                "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "69cc15f01c994513a723a6538713aed4"
                 },
                 "m_SlotId": 2
@@ -1447,15 +1461,18 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 51.00001525878906,
-            "y": 0.000011444091796875,
-            "width": 117.99998474121094,
-            "height": 77.00001525878906
+            "x": 79.99995422363281,
+            "y": 43.00001525878906,
+            "width": 85.99998474121094,
+            "height": 101.00004577636719
         }
     },
     "m_Slots": [
         {
             "m_Id": "fe764f88342b440590feeb5651ef0e68"
+        },
+        {
+            "m_Id": "b7c1d4e889ef4e60b5743a9f26a4d34e"
         }
     ],
     "synonyms": [],
@@ -2084,6 +2101,27 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
+    "m_ObjectId": "b7c1d4e889ef4e60b5743a9f26a4d34e",
+    "m_Id": 2,
+    "m_DisplayName": "UV",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "UV",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_Labels": []
 }
 
 {
