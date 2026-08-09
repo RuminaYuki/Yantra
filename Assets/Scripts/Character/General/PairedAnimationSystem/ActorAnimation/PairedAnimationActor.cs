@@ -16,13 +16,13 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
     [SerializeField] private PairedAnimation[] _animations;
 
     private Animator _animator;
-    private IMovementLock _movementLock;
+    private ILocomotionLock _movementLock;
     private IRootMotionControl _rootMotionControl;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _movementLock = GetComponent<IMovementLock>();
+        _movementLock = GetComponent<ILocomotionLock>();
         _rootMotionControl = GetComponent<IRootMotionControl>();
     }
     public void SetRootMotionEnabled(bool enabled)
@@ -37,14 +37,14 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
 
     public void LockMovement()
     {
-        _movementLock?.LockMovement(
+        _movementLock?.LockLocomotion(
             this,
             resetMoveAnimation: false);
     }
 
     public void UnlockMovement()
     {
-        _movementLock?.UnlockMovement(this);
+        _movementLock?.UnlockLocomotion(this);
     }
 
     public bool CanPlay(PairedAnimationId animationId)

@@ -1622,7 +1622,6 @@ GameObject:
   - component: {fileID: 733027351}
   - component: {fileID: 733027353}
   - component: {fileID: 733027355}
-  - component: {fileID: 733027356}
   m_Layer: 0
   m_Name: Ka(enemy)
   m_TagString: Untagged
@@ -1820,26 +1819,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enableRayCast: 1
---- !u!114 &733027356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733027343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ef641b642823764f9f37fcc173ac61b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostTrackerIK
-  targetToLookAt: {fileID: 0}
-  maxLookDistance: 10
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 256
-  eyeOffset: {x: 0, y: 1.5, z: 0}
-  maxLookWeight: 1
-  smoothSpeed: 5
 --- !u!114 &733027357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5209,7 +5188,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nawin(Player)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3661598174317763743, guid: 0ec2cd0195e5f64458b2f828930c2023, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

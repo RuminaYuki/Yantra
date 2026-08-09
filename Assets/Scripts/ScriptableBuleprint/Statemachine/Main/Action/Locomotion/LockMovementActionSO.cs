@@ -35,14 +35,14 @@ public class LockMovementAction : StateAction
 
     public override void OnStateEnter()
     {
-        _locomotion?.LockMovement(
+        _locomotion?.LockLocomotion(
             this,
             _resetMoveAnimation);
     }
 
     public override void OnStateExit()
     {
-        _locomotion?.UnlockMovement(this);
+        _locomotion?.UnlockLocomotion(this);
     }
 
     public override void OnUpdate() { }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Serialization;
-public abstract class BaseLocomotion : MonoBehaviour,IMovementLock,IRootMotionControl
+public abstract class BaseLocomotion : MonoBehaviour,ILocomotionLock,IRootMotionControl
 {
     [Header("Locomotion")]
     [SerializeField] private float _dampTime = 0.1f;
@@ -53,9 +53,7 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock,IRootMotionCo
     public bool IsMovementLocked => _movementLockOwners.Count > 0;
     public bool ShouldResetMoveAnimation => _moveAnimationResetOwners.Count > 0;
 
-    public void LockMovement(
-        object owner,
-        bool resetMoveAnimation = true)
+    public void LockLocomotion(object owner,bool resetMoveAnimation = true)
     {
         if (owner == null)
             return;
@@ -66,7 +64,7 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock,IRootMotionCo
             _moveAnimationResetOwners.Add(owner);
     }
 
-    public void UnlockMovement(object owner)
+    public void UnlockLocomotion(object owner)
     {
         if (owner == null)
             return;
@@ -86,4 +84,5 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock,IRootMotionCo
     public void SetMoveMultiply(float multiply) => LocomotionAnim.Multiply = multiply;
     public float GetRotateSmoothSpeed() => Rotation.Speed;
     public void SetRotateSmoothSpeed(float value) => Rotation.Speed = value;
+    public void StopMovement(bool enableMove = true) => LocomotionAnim.SetMovementEnabled(!enableMove);
 }

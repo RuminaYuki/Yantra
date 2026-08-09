@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-[RequireComponent(typeof(CharacterController),typeof(Animator))]
+[RequireComponent(typeof(CharacterController),typeof(Animator),typeof(PathNavigator))]
 public class EnemyLocomotion : BaseLocomotion
 {
     [Header("Locomotion Anim Parameter")]

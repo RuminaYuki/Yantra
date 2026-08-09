@@ -26,7 +26,7 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] private bool _useGlobalEvent = true;
 
     private PlayableDirector _director;
-    private IMovementLock _playerMoveLock; // Interface สำหรับล็อกขาผู้เล่น
+    private ILocomotionLock _playerMoveLock; // Interface สำหรับล็อกขาผู้เล่น
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class CutsceneController : MonoBehaviour
         // ค้นหา Interface IMovementLock จากตัวละครผู้เล่น
         if (_playerObject != null)
         {
-            _playerMoveLock = _playerObject.GetComponent<IMovementLock>();
+            _playerMoveLock = _playerObject.GetComponent<ILocomotionLock>();
 
             if (_playerMoveLock == null)
             {
@@ -73,7 +73,7 @@ public class CutsceneController : MonoBehaviour
         if (_cameraController != null) _cameraController.IsCutsceneMode = true;
 
         // 2. สั่งล็อกขาผู้เล่นผ่าน Interface
-        if (_playerMoveLock != null) _playerMoveLock.LockMovement(this);
+        if (_playerMoveLock != null) _playerMoveLock.LockLocomotion(this);
 
         // 3. ตะโกนบอกทุกคนใน Array ว่าคัทซีนเริ่มแล้ว (ซ่อน UI, หยุดระบบ)
         NotifyListeners(true);
@@ -94,7 +94,7 @@ public class CutsceneController : MonoBehaviour
         if (_cameraController != null) _cameraController.IsCutsceneMode = false;
 
         // 2. ปลดล็อกขาผู้เล่นให้เดินต่อได้
-        if (_playerMoveLock != null) _playerMoveLock.UnlockMovement(this);
+        if (_playerMoveLock != null) _playerMoveLock.UnlockLocomotion(this);
 
         // 3. ตะโกนบอกทุกคนใน Array ว่าคัทซีนจบแล้ว (โชว์ UI, ระบบเดินหน้าต่อ)
         NotifyListeners(false);
