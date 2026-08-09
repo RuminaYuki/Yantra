@@ -2,8 +2,19 @@ using UnityEngine;
 
 public abstract class InteractableBase : MonoBehaviour, Iinteractable
 {
+    [Header("Highlight and Focus Objects")]
     [SerializeField] private GameObject highlightObject;
     [SerializeField] private GameObject focusObject;
+
+    [Header("Interaction Settings")]
+    [Tooltip("If true, the player can interact with this object.")]
+    [SerializeField]private bool canInteract = true;
+    [Tooltip("If true, the highlight will be hidden when canInteract is false.")]
+    [SerializeField] private bool hideInteract = false;
+
+    //if hideInteract is true, CanInteract will always return the value of canInteract, otherwise it will return the value of false
+    public bool CanInteract => hideInteract ? canInteract : true;
+
 
     private void Awake()
     {
@@ -19,6 +30,7 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
 
     public virtual void Interact()
     {
+        if (!canInteract) return;
     }
 
     public virtual void OnFocus()
@@ -43,5 +55,10 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
     {
         highlightObject.SetActive(false);
         focusObject.SetActive(false);
+    }
+
+    public void SetCanInteract(bool value)
+    {
+        canInteract = value;
     }
 }

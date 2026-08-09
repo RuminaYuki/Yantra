@@ -27,7 +27,7 @@ public class TapFixedTemplate : MonoBehaviour
     private void OnTabClicked(bool value)
     {
         if (!value) return;
-        Debug.Log($"TapFixedTemplate: OnTabClicked - {value} {gameObject.name}");
+        //Debug.Log($"TapFixedTemplate: OnTabClicked - {value} {gameObject.name}");
         yantraGridShapeMatcher.SetFixedTemplate(fixedTemplateName);
     }
 }
