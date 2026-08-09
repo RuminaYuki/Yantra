@@ -1836,7 +1836,7 @@ MonoBehaviour:
   maxLookDistance: 10
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   eyeOffset: {x: 0, y: 1.5, z: 0}
   maxLookWeight: 1
   smoothSpeed: 5
@@ -1854,6 +1854,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateFlags
   flags:
   - Flag: {fileID: 11400000, guid: e3700e6fb14a9174a97b1fcf52b048cc, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: 515a896fab11e4a4c8d28a3f4fe5ac80, type: 2}
     InitialValue: 0
     runtimeValue: 0
 --- !u!4 &894412940 stripped

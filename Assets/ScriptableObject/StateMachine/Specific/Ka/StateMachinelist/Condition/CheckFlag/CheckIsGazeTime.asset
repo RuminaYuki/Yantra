@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9582d3c29dc19da4eab615a6b9d02fb9, type: 3}
-  m_Name: DebugAction
-  m_EditorClassIdentifier: Assembly-CSharp::DebugActionSO
-  DebugSetting:
-    StateName: Idle
-    EnableCheckUpdate: 0
+  m_Script: {fileID: 11500000, guid: 828323aa1aace154891a3661130da74b, type: 3}
+  m_Name: CheckIsGazeTime
+  m_EditorClassIdentifier: Assembly-CSharp::FlagConditionSO
+  flag: {fileID: 11400000, guid: 515a896fab11e4a4c8d28a3f4fe5ac80, type: 2}

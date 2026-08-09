@@ -7,12 +7,39 @@ BlendTree:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
-  m_Childs: []
-  m_BlendParameter: VelocityZ
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: 6085290032775426223, guid: c5dbbda177999f94e8bef4898bd5b705,
+      type: 3}
+    m_Threshold: -180
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: VelocityZ
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 9005656135333695213, guid: 2c062cebb548f9c45be40110d8801041,
+      type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: VelocityZ
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 6085290032775426223, guid: c5dbbda177999f94e8bef4898bd5b705,
+      type: 3}
+    m_Threshold: 180
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0.5
+    m_DirectBlendParameter: VelocityZ
+    m_Mirror: 1
+  m_BlendParameter: StartTurnAngle
   m_BlendParameterY: VelocityZ
-  m_MinThreshold: 0
-  m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
+  m_MinThreshold: -180
+  m_MaxThreshold: 180
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!1102 &-7114651582556183411
@@ -204,7 +231,7 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: StartTurnAngle
     m_Type: 1
-    m_DefaultFloat: 0
+    m_DefaultFloat: 135
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
@@ -313,7 +340,7 @@ AnimatorStateMachine:
     m_Position: {x: 620, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8889466741962020604}
-    m_Position: {x: 620, y: 20, z: 0}
+    m_Position: {x: 20, y: 240, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
