@@ -29,19 +29,22 @@ public class FlagCountdown : MonoBehaviour
             stateFlags = GetComponent<StateFlags>();
     }
 
-    public void setFlagCountdown(FlagSO flag, float countdownTime, bool flageValue = true)
+    public void SetFlagCountdown(FlagSO flag, float countdownTime, bool flagValue = true)
     {
         foreach (var flagData in flagCountdowns)
         {
-            if (flagData.flag == flag && flagData.countdownTime < countdownTime)
-                SetStartCountdown(flagData, countdownTime);
-            return;
+            if (flagData.flag == flag)
+            {
+                if (flagData.countdownTime < countdownTime)
+                    SetStartCountdown(flagData, countdownTime, flagValue);
+                return;
+            }
         }
         
         FlagCDData newFlagData = new FlagCDData(flag, countdownTime);
         flagCountdowns.Add(newFlagData);
 
-        SetStartCountdown(newFlagData, countdownTime, flageValue);
+        SetStartCountdown(newFlagData, countdownTime, flagValue);
     }
     
     public float GetRemainingTime(FlagSO flag)
@@ -64,26 +67,38 @@ public class FlagCountdown : MonoBehaviour
         return false;
     }
 
-    private void SetStartCountdown(FlagCDData flagData, float countdownTime, bool flageValue = false)
+    private void SetStartCountdown(FlagCDData flagData, float countdownTime, bool flagValue = false)
     {
-        stateFlags.Set(flagData.flag, flageValue);
+        stateFlags.Set(flagData.flag, flagValue);
         if (flagData.countdownCoroutine != null)
         {
             StopCoroutine(flagData.countdownCoroutine);
         }
         flagData.countdownTime = countdownTime;
         flagData.remainingTime = countdownTime;
-        flagData.countdownCoroutine = StartCoroutine(CountdownCoroutine(flagData, !flageValue));
+        flagData.countdownCoroutine = StartCoroutine(CountdownCoroutine(flagData, !flagValue));
     }
 
-    private IEnumerator CountdownCoroutine(FlagCDData flagData, bool flageValue = false)
+    private IEnumerator CountdownCoroutine(FlagCDData flagData, bool flagValue = false)
     {
         while (flagData.remainingTime > 0)
         {
             flagData.remainingTime -= Time.deltaTime;
             yield return null;
         }
-        stateFlags.Set(flagData.flag, flageValue);
+        stateFlags.Set(flagData.flag, flagValue);
         flagCountdowns.Remove(flagData);
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var flagData in flagCountdowns)
+        {
+            if (flagData.countdownCoroutine != null)
+            {
+                StopCoroutine(flagData.countdownCoroutine);
+            }
+        }
+        flagCountdowns.Clear();
     }
 }

@@ -23,6 +23,11 @@ public class BlastYant : MonoBehaviour, IYantEffect
     [SerializeField] private float _maxAimDistance = 100f;
     [SerializeField] private LayerMask _aimMask = ~0;
 
+    //ถ้ามีหลาย debuff จะใช้ List<FlagSO> แทน
+    [Header("Debuff")]
+    [SerializeField] private FlagSO debuff;
+    [SerializeField] private float debuffDuration = 3f;
+
     private void OnValidate()
     {
         if (_aimCamera == null) _aimCamera = Camera.main?.transform;

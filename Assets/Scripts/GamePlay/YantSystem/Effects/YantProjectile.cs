@@ -20,6 +20,8 @@ public class YantProjectile : MonoBehaviour
     private float _pushLifeTime;
     private bool _pushAwayFromImpact;
     private GameObject _owner;
+    private FlagSO _debuff;
+    private float _debuffDuration;
     private bool _hasHit;
 
     private void OnValidate()
@@ -35,7 +37,9 @@ public class YantProjectile : MonoBehaviour
         float pushAcceleration,
         float pushLifeTime,
         bool pushAwayFromImpact,
-        GameObject owner)
+        GameObject owner,
+        FlagSO debuff = null,
+        float debuffDuration = 0)
     {
         if (_rb == null) TryGetComponent(out _rb);
 
@@ -46,8 +50,54 @@ public class YantProjectile : MonoBehaviour
         _pushLifeTime = pushLifeTime;
         _pushAwayFromImpact = pushAwayFromImpact;
         _owner = owner;
+        _debuff = debuff;
+        _debuffDuration = debuffDuration;
 
         if (lifeTime > 0f) Destroy(gameObject, lifeTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_hasHit) return;
+
+        // ไม่ชนตัวเอง/เจ้าของ
+        if (_owner != null && other.transform.root == _owner.transform.root) return;
+
+        _hasHit = true;
+
+        Rigidbody targetRb = other.GetComponent<Rigidbody>();
+        if (targetRb != null && !targetRb.isKinematic)
+        {
+            Vector3 pushDir = _pushAwayFromImpact
+                ? (targetRb.worldCenterOfMass - transform.position)
+                : _rb.linearVelocity;
+
+            pushDir.Normalize();
+
+            if (!targetRb.TryGetComponent(out YantGradualPush push))
+                push = targetRb.gameObject.AddComponent<YantGradualPush>();
+
+            push.Begin(pushDir, _pushAcceleration, _pushLifeTime);
+        }
+
+        if (_hitVfxPrefab != null)
+            Instantiate(_hitVfxPrefab, transform.position, Quaternion.identity);
+
+        if (_debuff != null && _debuffDuration > 0f)
+        {
+            if (other.TryGetComponent(out FlagCountdown flagCountdown))
+            {
+                flagCountdown.SetFlagCountdown(_debuff, _debuffDuration, true);
+            }
+            else if (other.TryGetComponent(out StateFlags stateFlags))
+            {
+                // ถ้าไม่มี FlagCountdown ให้สร้างขึ้นมาใหม่
+                FlagCountdown newFlagCountdown = other.gameObject.AddComponent<FlagCountdown>();
+                newFlagCountdown.SetFlagCountdown(_debuff, _debuffDuration, true);
+            }
+        }
+
+        if (_destroyOnHit) Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
