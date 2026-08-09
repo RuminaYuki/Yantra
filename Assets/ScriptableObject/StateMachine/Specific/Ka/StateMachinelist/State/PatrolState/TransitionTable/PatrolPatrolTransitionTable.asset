@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
   _initialState: {fileID: 11400000, guid: 13e1a1eedd1fe554e8747cde2afb2794, type: 2}
   _anyTransitions:
-  - ToState: {fileID: 11400000, guid: a148eaef6cabde241a866ada6e642ad8, type: 2}
+  - ToState: {fileID: 11400000, guid: f738d1e087440914292ddb96ff8978d9, type: 2}
     ConditionGroups:
     - Conditions:
       - Condition: {fileID: 11400000, guid: e49c1adb276d5614ea7919c7c7dd91c9, type: 2}
@@ -32,9 +32,3 @@ MonoBehaviour:
       - Condition: {fileID: 11400000, guid: 67b6c7a5f869883439c29a6fd04c604d, type: 2}
         ExpectedResult: 0
     ToState: {fileID: 11400000, guid: 13e1a1eedd1fe554e8747cde2afb2794, type: 2}
-  - FromState: {fileID: 11400000, guid: a148eaef6cabde241a866ada6e642ad8, type: 2}
-    ConditionGroups:
-    - Conditions:
-      - Condition: {fileID: 11400000, guid: fea2a60e897d67541b3e9746785c49a3, type: 2}
-        ExpectedResult: 0
-    ToState: {fileID: 11400000, guid: f738d1e087440914292ddb96ff8978d9, type: 2}

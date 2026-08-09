@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 064477ec6286dbb46971440740c727ae, type: 3}
-  m_Name: SetPathNavigatorPlayerTargetAction
-  m_EditorClassIdentifier: Assembly-CSharp::SetPathNavigatorTargetActionSO
-  _targetAnchor: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: ddfd2aead628d7446a6524853d335674, type: 3}
+  m_Name: StartLookIKAction
+  m_EditorClassIdentifier: Assembly-CSharp::StartLookIKActionSO
+  _targetAnchor: {fileID: 11400000, guid: 177281d4fd647324a8f2e7516b0dac15, type: 2}

@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7da57aa186da8c4a92fe7e1a7ef5add, type: 3}
   m_Name: KaGaze
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.StateSO
-  _actions: []
+  _actions:
+  - {fileID: 11400000, guid: 3109f69d7fb37784bac2bfee920d0eb1, type: 2}
+  - {fileID: 11400000, guid: 664963cf5359ee24680fb6f52bcd3085, type: 2}
+  - {fileID: 11400000, guid: c35e69f21e5d07c4eb798c0530b103d3, type: 2}
