@@ -277,7 +277,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  - {fileID: 2100000, guid: b25052f1d21c71e44af7da2f6bbc5446, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -372,6 +372,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PaperInteractable
   highlightObject: {fileID: 2826308972162881349}
   focusObject: {fileID: 1428110219638800620}
+  canInteract: 1
+  hideInteract: 0
 --- !u!65 &6620450940398190693
 BoxCollider:
   m_ObjectHideFlags: 0

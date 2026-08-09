@@ -62,7 +62,7 @@ public class CenterRayInteract : MonoBehaviour
 
             detectedThisFrame.Add(interactable);
 
-            if (!highlightedInteractables.Contains(interactable))
+            if (!highlightedInteractables.Contains(interactable) && interactable.CanInteract)
             {
                 interactable.ShowHighlight();
                 highlightedInteractables.Add(interactable);
@@ -202,9 +202,16 @@ public class CenterRayInteract : MonoBehaviour
 
 public interface Iinteractable
 {
+    bool CanInteract { get; }
+
+    //Command the object to perform its interaction logic
     void Interact();
+
+    //Command the object to show Focus when in Camera forward
     void OnFocus();
     void OnLoseFocus();
+
+    //Command the object to show Highlight when in Highlight range
     void ShowHighlight();
     void HideHighlight();
 }

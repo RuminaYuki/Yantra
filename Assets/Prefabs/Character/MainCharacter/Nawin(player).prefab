@@ -985,6 +985,52 @@ Transform:
   - {fileID: 4856735613077498282}
   m_Father: {fileID: 6310663611873514362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2255064624685850864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6168041680654951111}
+  - component: {fileID: 6124693514981279362}
+  m_Layer: 3
+  m_Name: HeadIKTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6168041680654951111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255064624685850864}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 652001588548712837}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6124693514981279362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255064624685850864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Provider
+  Anchors:
+  - {fileID: 11400000, guid: 177281d4fd647324a8f2e7516b0dac15, type: 2}
 --- !u!1 &2263355751463690735
 GameObject:
   m_ObjectHideFlags: 0
@@ -1669,6 +1715,7 @@ Transform:
   m_Children:
   - {fileID: 3014236619818543205}
   - {fileID: 5974443361452607067}
+  - {fileID: 6168041680654951111}
   m_Father: {fileID: 8005721335771320004}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1390672549510041132
@@ -1851,6 +1898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Provider
   Anchors:
   - {fileID: 11400000, guid: 3ebfec1f5b2213643b5f53ca5fa476f1, type: 2}
+  - {fileID: 11400000, guid: efc6619fc08490145ad46bcfc092734a, type: 2}
 --- !u!114 &675246780280655256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1952,7 +2000,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef641b642823764f9f37fcc173ac61b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostTrackerIK
-  targetToLookAt: {fileID: 0}
   maxLookDistance: 10
   obstacleMask:
     serializedVersion: 2
@@ -1960,6 +2007,7 @@ MonoBehaviour:
   eyeOffset: {x: 0, y: 1.5, z: 0}
   maxLookWeight: 1
   smoothSpeed: 5
+  showGizmos: 1
 --- !u!114 &1670577747332474308
 MonoBehaviour:
   m_ObjectHideFlags: 0

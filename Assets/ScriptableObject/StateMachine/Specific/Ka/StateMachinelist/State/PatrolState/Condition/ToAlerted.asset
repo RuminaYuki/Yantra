@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2ef262a749aaf741855b6e4bddb2add, type: 3}
-  m_Name: ExitStateAction
-  m_EditorClassIdentifier: Assembly-CSharp::ExitStateActionSO
+  m_Script: {fileID: 11500000, guid: ae75f5365ad06ad4ebb6bb2bce623372, type: 3}
+  m_Name: ToAlerted
+  m_EditorClassIdentifier: Assembly-CSharp::SubStateMachineExitedConditionSO
   _exitId: ToAlerted

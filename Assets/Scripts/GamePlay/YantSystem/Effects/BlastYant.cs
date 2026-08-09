@@ -59,7 +59,9 @@ public class BlastYant : MonoBehaviour, IYantEffect
             _pushAcceleration,
             _pushLifetime,
             _pushAwayFromImpact,
-            playerRoot);
+            playerRoot,
+            debuff,
+            debuffDuration);
 
         Debug.Log($"<color=#FFAA00>[PushYant]</color> ปา projectile ไปทาง {launchDir:F2}");
         return true;
