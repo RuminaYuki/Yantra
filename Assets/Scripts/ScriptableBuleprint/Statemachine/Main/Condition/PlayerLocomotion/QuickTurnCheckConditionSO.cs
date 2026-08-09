@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "QuickTurnCheckCondition",
-    menuName = "YUKI Learning State Machine/StateMachine/Conditions/QuickTurnCheck")]
+    menuName = "YUKI Learning State Machine/StateMachine/Conditions/Locomotion/PlayerLocomotion/QuickTurnCheck")]
 public class QuickTurnCheckConditionSO : StateConditionSO
 {
     [SerializeField, Range(0.1f, 1f)] private float _inputThreshold = 0.5f;
