@@ -26,6 +26,9 @@ MonoBehaviour:
     - Conditions:
       - Condition: {fileID: 11400000, guid: e49c1adb276d5614ea7919c7c7dd91c9, type: 2}
         ExpectedResult: 0
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 1a108de283518e14c9d4e113c129bfe6, type: 2}
+        ExpectedResult: 0
     ToState: {fileID: 11400000, guid: 3fc52d28db1c9cb4cb34c4af9032e069, type: 2}
   - FromState: {fileID: 11400000, guid: acf6d1b53d1fc1b4e82acfed7b7b7ae3, type: 2}
     ConditionGroups:
@@ -37,5 +40,31 @@ MonoBehaviour:
     ConditionGroups:
     - Conditions:
       - Condition: {fileID: 11400000, guid: fea2a60e897d67541b3e9746785c49a3, type: 2}
+        ExpectedResult: 0
+    ToState: {fileID: 11400000, guid: 0e5ee70c0a1532144a82e1fe4649e0ea, type: 2}
+  - FromState: {fileID: 11400000, guid: 3fc52d28db1c9cb4cb34c4af9032e069, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: fc5aed25d26a6954ebe8454e63ec4597, type: 2}
+        ExpectedResult: 1
+    ToState: {fileID: 11400000, guid: 71fd5985d9b8e4449bbc95b78540a833, type: 2}
+  - FromState: {fileID: 11400000, guid: 0e5ee70c0a1532144a82e1fe4649e0ea, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 9e63444d40e8dff42ab178748278d96e, type: 2}
+        ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: 5ad913214d03a804983f28745f956c31, type: 2}
+        ExpectedResult: 0
+    ToState: {fileID: 11400000, guid: 380efa19c75765546883ee652e3362bf, type: 2}
+  - FromState: {fileID: 11400000, guid: 0e5ee70c0a1532144a82e1fe4649e0ea, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 04ce788a2fd64c34b811496de2c16e26, type: 2}
+        ExpectedResult: 1
+    ToState: {fileID: 11400000, guid: 71fd5985d9b8e4449bbc95b78540a833, type: 2}
+  - FromState: {fileID: 11400000, guid: 380efa19c75765546883ee652e3362bf, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 9519c0ab7208a6c40a1a7d5dddca75d7, type: 2}
         ExpectedResult: 0
     ToState: {fileID: 11400000, guid: 0e5ee70c0a1532144a82e1fe4649e0ea, type: 2}
