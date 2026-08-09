@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2ef262a749aaf741855b6e4bddb2add, type: 3}
-  m_Name: ExitStateAction
-  m_EditorClassIdentifier: Assembly-CSharp::ExitStateActionSO
-  _exitId: ToAlerted
+  m_Script: {fileID: 11500000, guid: e735da92d11765a4c84d56b861424d90, type: 3}
+  m_Name: LoseChaseRange
+  m_EditorClassIdentifier: Assembly-CSharp::DistanceConditionSO
+  _targetAnchor: {fileID: 11400000, guid: efc6619fc08490145ad46bcfc092734a, type: 2}
+  _distance: 12
