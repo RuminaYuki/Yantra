@@ -14,6 +14,12 @@ public abstract class BaseLocomotion : MonoBehaviour,ILocomotionLock,IRootMotion
     [FormerlySerializedAs("gravityMultiplier")]
     [SerializeField] private float _gravityMultiplier = 1f;
 
+    #if UNITY_EDITOR
+    [Header("Runtime Debug")]
+    [SerializeField] private float _debugMoveMultiply;
+    [SerializeField] private float _debugRotateSpeed;
+    #endif
+
     protected CharacterController CharacterController { get; private set; }
     protected Animator Animator {get; private set;}
 
@@ -31,6 +37,16 @@ public abstract class BaseLocomotion : MonoBehaviour,ILocomotionLock,IRootMotion
 
         Gravity = new GravityCharacterCon(CharacterController,_gravityMultiplier);
     }
+    #if UNITY_EDITOR
+    protected virtual void Update()
+    {
+        if (LocomotionAnim == null || Rotation == null)
+            return;
+
+        _debugMoveMultiply = LocomotionAnim.Multiply;
+        _debugRotateSpeed = Rotation.Speed;
+    }
+    #endif
     protected virtual void OnAnimatorMove()
     {
         Vector3 rootMotionPosition = _rootMotionEnabled
