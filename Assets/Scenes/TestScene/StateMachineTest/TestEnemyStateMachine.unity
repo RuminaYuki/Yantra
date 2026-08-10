@@ -1663,7 +1663,7 @@ Transform:
   m_GameObject: {fileID: 733027343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.1, y: 0, z: 0}
+  m_LocalPosition: {x: 7.85, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1886,7 +1886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DistanceDebug
   _conditions:
-  - {fileID: 11400000, guid: 04ce788a2fd64c34b811496de2c16e26, type: 2}
+  - {fileID: 11400000, guid: 9e63444d40e8dff42ab178748278d96e, type: 2}
   IsShowGizmos: 1
 --- !u!114 &733027360
 MonoBehaviour:
