@@ -1615,6 +1615,7 @@ GameObject:
   - component: {fileID: 733027347}
   - component: {fileID: 733027350}
   - component: {fileID: 733027357}
+  - component: {fileID: 733027360}
   - component: {fileID: 733027346}
   - component: {fileID: 733027349}
   - component: {fileID: 733027348}
@@ -1661,14 +1662,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733027343}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.61, y: 0, z: 13.03}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 1.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 650700033}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &733027346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1849,6 +1850,9 @@ MonoBehaviour:
   - Flag: {fileID: 11400000, guid: 2deb76109dce51f4a92d250d91b6216e, type: 2}
     InitialValue: 0
     runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: 1646ad0beb3e119458b2d03781b20d55, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
 --- !u!114 &733027358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1884,6 +1888,20 @@ MonoBehaviour:
   _conditions:
   - {fileID: 11400000, guid: 04ce788a2fd64c34b811496de2c16e26, type: 2}
   IsShowGizmos: 1
+--- !u!114 &733027360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733027343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e22c710ae8abd54db76a3aa4e10dd90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlagCountdown
+  flagCountdowns: []
+  stateFlags: {fileID: 733027357}
 --- !u!4 &894412940 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4758797354340404493, guid: a8231f06415f05c48b7538df79ca5739,
@@ -5283,7 +5301,7 @@ PrefabInstance:
     - target: {fileID: 8005721335771320004, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8005721335771320004, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
@@ -5293,7 +5311,7 @@ PrefabInstance:
     - target: {fileID: 8005721335771320004, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.74
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8005721335771320004, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
