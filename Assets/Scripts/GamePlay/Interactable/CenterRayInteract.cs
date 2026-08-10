@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class CenterRayInteract : MonoBehaviour
     [Header("Line Of Sight")]
     [SerializeField] private LayerMask obstacleLayer;
 
+    public GameObject currentInteractableDebug;
     private Iinteractable currentInteractable;
 
     public Iinteractable CurrentInteractable => currentInteractable;
@@ -31,6 +33,8 @@ public class CenterRayInteract : MonoBehaviour
     {
         DetectNearbyInteractables();
         DetectInteractable();
+
+        currentInteractableDebug = (currentInteractable as MonoBehaviour)?.gameObject;
     }
 
     /// <summary>
@@ -69,6 +73,7 @@ public class CenterRayInteract : MonoBehaviour
             }
         }
 
+        // Remove highlights from interactables that are no longer detected
         foreach (Iinteractable interactable in highlightedInteractables)
         {
             if (!detectedThisFrame.Contains(interactable))
@@ -157,24 +162,33 @@ public class CenterRayInteract : MonoBehaviour
             }
         }
 
+        if (bestInteractable == null)
+        {
+            ClearCurrentInteractable();
+            return;
+        }
+
         SetFocus(bestInteractable);
     }
 
     private void SetFocus(Iinteractable interactable)
     {
-        if (currentInteractable == interactable)
+        if (interactable == null || interactable == currentInteractable)
             return;
 
-        currentInteractable?.OnLoseFocus();
+        ClearCurrentInteractable();
 
         currentInteractable = interactable;
-
-        currentInteractable?.OnFocus();
+        currentInteractable.OnFocus();
     }
 
-    public void Interact()
+    private void ClearCurrentInteractable()
     {
-        currentInteractable?.Interact();
+        if (currentInteractable == null)
+            return;
+
+        currentInteractable.OnLoseFocus();
+        currentInteractable = null;
     }
 
     private void OnDrawGizmosSelected()
@@ -205,7 +219,7 @@ public interface Iinteractable
     bool CanInteract { get; }
 
     //Command the object to perform its interaction logic
-    void Interact();
+    void Interact(GameObject rootplayer);
 
     //Command the object to show Focus when in Camera forward
     void OnFocus();
