@@ -66,7 +66,7 @@ public class PairedAnimationActor : MonoBehaviour, IPairedAnimationActor
 
         _animator.CrossFadeInFixedTime(
             animation.stateName,
-            0.25f);
+            0.075f);
     }
 
     public void ExitAnimation(PairedAnimationId animationId)
