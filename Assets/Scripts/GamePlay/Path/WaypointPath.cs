@@ -7,7 +7,14 @@ public class WaypointPath : MonoBehaviour
     private int _currentIndex;
     private int _direction = 1;
     public bool IsEnablePathGizmos = true;
-
+    private void Awake()
+    {
+        if (_pathRoot == null)
+        {
+            Debug.LogWarning("WaypointPath: Path Root is not assigned.");
+            _pathRoot = transform;
+        }
+    }
     public int Count =>
         _pathRoot != null
             ? _pathRoot.childCount
