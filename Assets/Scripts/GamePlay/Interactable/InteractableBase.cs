@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class InteractableBase : MonoBehaviour, Iinteractable
 {
@@ -26,11 +27,18 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
         }
         highlightObject.SetActive(false);
         focusObject.SetActive(false);
+
+        
     }
 
-    public virtual void Interact()
+    public virtual void Interact(GameObject rootplayer)
     {
-        if (!canInteract) return;
+        if (!canInteract)
+        {
+            Debug.LogWarning($"Interactable {this.gameObject.name} is not interactable.");
+            return;
+        }
+        //Debug.Log($"Interact input detected{this.gameObject.name}");
     }
 
     public virtual void OnFocus()
