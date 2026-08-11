@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "ExecuteAttackAction",
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/Attack System/Execute Attack")]
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Attack System/Paired Attack/Execute Attack")]
 public class ExecuteAttackActionSO : StateActionSO
 {
     [SerializeField] private GameObject _attackPrefab;

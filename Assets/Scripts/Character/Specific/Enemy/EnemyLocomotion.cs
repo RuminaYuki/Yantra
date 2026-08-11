@@ -19,8 +19,9 @@ public class EnemyLocomotion : BaseLocomotion
         LocomotionAnim.SetTurnParameter(_nameTurnAngle,_nameStartTurn);
         _pathNavigator = GetComponent<PathNavigator>();
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (IsMovementLocked)
         {
             _wasMoving = false;

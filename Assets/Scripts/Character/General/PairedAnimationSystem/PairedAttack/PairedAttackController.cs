@@ -12,6 +12,27 @@ public class PairedAttackController : MonoBehaviour
     private float _currentDamage;
     private bool _hasDealtDamage;
 
+    public bool IsAttackRunning { get; private set; }
+    public bool HasCompletedAttack { get; private set; }
+
+    private void OnEnable()
+    {
+        if (_manager != null)
+        {
+            _manager.PairedAnimationFinished += OnPairedAnimationFinished;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_manager != null)
+        {
+            _manager.PairedAnimationFinished -= OnPairedAnimationFinished;
+        }
+
+        IsAttackRunning = false;
+        HasCompletedAttack = false;
+    }
 
     private void Awake()
     {
@@ -31,12 +52,9 @@ public class PairedAttackController : MonoBehaviour
             Debug.LogError(
                 "AttackSystem cannot find PairedAnimationManager.",
                 this);
+            return;
         }
-        if(_victim == null)
-        {
-            Debug.LogWarning("Victim not assign");
-            _victim = GameObject.FindGameObjectWithTag("Player").GetComponent<PairedAnimationActor>();
-        }
+
     }
 
     public bool TryAttack(GameObject attackPrefab, float damage)
@@ -73,10 +91,15 @@ public class PairedAttackController : MonoBehaviour
         _currentDamage = damage;
         _hasDealtDamage = false;
 
-        return strategy.TryAttack(
+        HasCompletedAttack = false;
+
+        bool started = strategy.TryAttack(
             _manager,
             _attacker,
             _victim);
+
+        IsAttackRunning = started;
+        return started;
     }
 
     public void SetVictim(PairedAnimationActor victim)
@@ -100,16 +123,28 @@ public class PairedAttackController : MonoBehaviour
     }
 
     public void ApplyPairedDamage()
-{
-    if (_victim == null || _hasDealtDamage)
-        return;
+    {
+        if (_victim == null || _hasDealtDamage)
+            return;
 
-    IDamageable damageable = _victim.GetComponentInParent<IDamageable>();
+        IDamageable damageable = _victim.GetComponentInParent<IDamageable>();
 
-    if (damageable == null)
-        return;
+        if (damageable == null)
+            return;
 
-    damageable.TakeDamage(_currentDamage);
-    _hasDealtDamage = true;
-}
+        damageable.TakeDamage(_currentDamage);
+        _hasDealtDamage = true;
+    }
+
+    private void OnPairedAnimationFinished(
+        IPairedAnimationActor attacker,
+        IPairedAnimationActor victim,
+        PairedAnimationId animationId)
+    {
+        if (!ReferenceEquals(attacker, _attacker))
+            return;
+
+        IsAttackRunning = false;
+        HasCompletedAttack = true;
+    }
 }
