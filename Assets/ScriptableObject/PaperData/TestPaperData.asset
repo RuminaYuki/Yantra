@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11b0b63987efc14c89d0bd946cae953, type: 3}
   m_Name: TestPaperData
   m_EditorClassIdentifier: Assembly-CSharp::PaperDataSO
-  Lines: []
+  Line:
+    icon: {fileID: 0}
+    title: Test
+    content: "\tI wonder how I wonder\nWhy yesterday you told me\nAbout the blue
+      blue sky\nAnd all that I can see is just\nA yellow Lemon Tree\nI'm turning
+      my head up and down\nI'm turning turning turning turning\nTurning around\nAnd
+      all that I can see is just\nAnother lemon tree"

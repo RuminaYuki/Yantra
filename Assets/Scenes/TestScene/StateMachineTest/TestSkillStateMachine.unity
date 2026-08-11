@@ -8304,7 +8304,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2905323091003622660, guid: 89840fb2447613c41a4e9d3ac785980a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 655978880}
   m_SourcePrefab: {fileID: 100100000, guid: 89840fb2447613c41a4e9d3ac785980a, type: 3}
 --- !u!1 &161499970
 GameObject:
@@ -8336,6 +8340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExamineUI
   examineCanvas: {fileID: 423451811}
+  titleText: {fileID: 872917585}
+  contentText: {fileID: 987801236}
 --- !u!4 &161499972
 Transform:
   m_ObjectHideFlags: 0
@@ -9995,6 +10001,38 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4583407886439279732, guid: fbf30b39d10d65246a69184a98f34614, type: 3}
+--- !u!1 &655978879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2905323091003622660, guid: 89840fb2447613c41a4e9d3ac785980a,
+    type: 3}
+  m_PrefabInstance: {fileID: 141691737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &655978880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655978879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1147f5e18f7034fa3bd7987e3a992f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PaperDataInteractable
+  interactable: {fileID: 655978882}
+  dataSO: {fileID: 11400000, guid: 407f0ec4807caae4fabca6aa1501f096, type: 2}
+--- !u!114 &655978882 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3919198148196084313, guid: 89840fb2447613c41a4e9d3ac785980a,
+    type: 3}
+  m_PrefabInstance: {fileID: 141691737}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655978879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa6b138fdf63b247a5edb0ff042a58c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PaperInteractable
 --- !u!1 &707393554 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2519092360280523269, guid: fbf30b39d10d65246a69184a98f34614,
@@ -11097,8 +11135,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
