@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ReadInteractable : InteractableBase
+public class ExamineInteractable : InteractableBase
 {
     [Header("Read Interactable")]
     [SerializeField] private Transform cameraPoint;
 
     [Header("Transition Settings")]
     [SerializeField] private bool transitoinSmooth = true;
-    [SerializeField] private float transitionSpeed = 5f;
-    [SerializeField] private float arrivalThreshold = 0.05f;
+    [Tooltip("How long the camera takes to reach the target pose (seconds).")]
+    [SerializeField] private float transitionDuration = 0.6f;
 
     private FatalFrameCameraController _cameraController;
     private Transform _cameraTransform;
@@ -27,7 +27,7 @@ public class ReadInteractable : InteractableBase
 
         if (cameraPoint == null)
         {
-            Debug.LogWarning($"{nameof(ReadInteractable)}: cameraPoint is not assigned on {gameObject.name}.");
+            Debug.LogWarning($"{nameof(ExamineInteractable)}: cameraPoint is not assigned on {gameObject.name}.");
             return false;
         }
 
@@ -36,7 +36,7 @@ public class ReadInteractable : InteractableBase
 
         if (cameraPoint == null)
         {
-            Debug.LogWarning($"{nameof(ReadInteractable)}: cameraPoint is not assigned on {gameObject.name}.");
+            Debug.LogWarning($"{nameof(ExamineInteractable)}: cameraPoint is not assigned on {gameObject.name}.");
             return false;
         }
 
@@ -90,7 +90,7 @@ public class ReadInteractable : InteractableBase
 
         if (_cameraController == null)
         {
-            Debug.LogWarning($"{nameof(ReadInteractable)}: FatalFrameCameraController not found on player.");
+            Debug.LogWarning($"{nameof(ExamineInteractable)}: FatalFrameCameraController not found on player.");
             return false;
         }
 
@@ -105,13 +105,11 @@ public class ReadInteractable : InteractableBase
 
     private IEnumerator TransitionToReadPose()
     {
-        while (!HasReached(cameraPoint.position, cameraPoint.rotation))
-        {
-            float step = Time.deltaTime * transitionSpeed;
-            _cameraTransform.position = Vector3.Lerp(_cameraTransform.position, cameraPoint.position, step);
-            _cameraTransform.rotation = Quaternion.Slerp(_cameraTransform.rotation, cameraPoint.rotation, step);
-            yield return null;
-        }
+        yield return TransitionPose(
+            _cameraTransform.position,
+            _cameraTransform.rotation,
+            cameraPoint.position,
+            cameraPoint.rotation);
 
         SnapToCameraPoint();
         _transitionRoutine = null;
@@ -119,15 +117,34 @@ public class ReadInteractable : InteractableBase
 
     private IEnumerator TransitionFromReadPose()
     {
-        while (!HasReached(_savedPosition, _savedRotation))
+        yield return TransitionPose(
+            _cameraTransform.position,
+            _cameraTransform.rotation,
+            _savedPosition,
+            _savedRotation);
+
+        FinishReading();
+    }
+
+    private IEnumerator TransitionPose(
+        Vector3 startPosition,
+        Quaternion startRotation,
+        Vector3 endPosition,
+        Quaternion endRotation)
+    {
+        float duration = Mathf.Max(0.01f, transitionDuration);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            float step = Time.deltaTime * transitionSpeed;
-            _cameraTransform.position = Vector3.Lerp(_cameraTransform.position, _savedPosition, step);
-            _cameraTransform.rotation = Quaternion.Slerp(_cameraTransform.rotation, _savedRotation, step);
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / duration));
+            _cameraTransform.position = Vector3.Lerp(startPosition, endPosition, t);
+            _cameraTransform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
             yield return null;
         }
 
-        FinishReading();
+        _cameraTransform.SetPositionAndRotation(endPosition, endRotation);
     }
 
     private void FinishReading()
@@ -143,12 +160,6 @@ public class ReadInteractable : InteractableBase
 
         _isReading = false;
         _transitionRoutine = null;
-    }
-
-    private bool HasReached(Vector3 targetPosition, Quaternion targetRotation)
-    {
-        return Vector3.Distance(_cameraTransform.position, targetPosition) < arrivalThreshold
-            && Quaternion.Angle(_cameraTransform.rotation, targetRotation) < 1f;
     }
 
     private void StopTransitionRoutine()
@@ -182,6 +193,6 @@ public class ReadInteractable : InteractableBase
     public override bool CancelInteraction(GameObject rootplayer)
     {
         EndReading();
-        return true;
+        return base.CancelInteraction(rootplayer);
     }
 }
