@@ -8,6 +8,9 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private CenterRayInteract rayInteract;
     [SerializeField] private GameObject rootPlayer;
 
+    [SerializeField] private bool onInteractable = false;
+    private Iinteractable activeInteractable;
+
     private void Awake()
     {
         rayInteract = GetComponent<CenterRayInteract>();
@@ -18,14 +21,35 @@ public class PlayerInteract : MonoBehaviour
             rayInteract.enabled = false;
             return;
         }
+
         inputAction.action.started += HandleMoveInput;
     }
 
     private void HandleMoveInput(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!context.started)
+            return;
+
+        if (!onInteractable)
         {
-            rayInteract.CurrentInteractable?.Interact(rootPlayer);
+            activeInteractable = rayInteract.CurrentInteractable;
+            if (activeInteractable != null && activeInteractable.Interact(rootPlayer))
+            {
+                onInteractable = true;
+                rayInteract.SetInteractEnabled(false);
+                rayInteract.StopHighlightingAll();
+            }
+        }
+        else
+        {
+            onInteractable = false;
+            rayInteract.SetInteractEnabled(true);
+
+            if (activeInteractable != null)
+            {
+                activeInteractable.CancelInteraction(rootPlayer);
+                activeInteractable = null;
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,7 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
     //if hideInteract is true, CanInteract will always return the value of canInteract, otherwise it will return the value of false
     public bool CanInteract => hideInteract ? canInteract : true;
 
+    public Action OnInteract;
 
     private void Awake()
     {
@@ -25,24 +27,26 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
             this.enabled = false;
             return;
         }
+
         highlightObject.SetActive(false);
         focusObject.SetActive(false);
-
-        
     }
 
-    public virtual void Interact(GameObject rootplayer)
+    public virtual bool Interact(GameObject rootplayer)
     {
         if (!canInteract)
         {
             Debug.LogWarning($"Interactable {this.gameObject.name} is not interactable.");
-            return;
+            return false;
         }
+        OnInteract?.Invoke();
+        return true;
         //Debug.Log($"Interact input detected{this.gameObject.name}");
     }
 
     public virtual void OnFocus()
     {
+        if (!canInteract) return;
         focusObject.SetActive(true);
         highlightObject.SetActive(false);
     }
@@ -65,6 +69,12 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
         focusObject.SetActive(false);
     }
 
+    public virtual bool CancelInteraction(GameObject rootplayer)
+    {
+        return false;
+    }
+
+    //API set CanInteract
     public void SetCanInteract(bool value)
     {
         canInteract = value;

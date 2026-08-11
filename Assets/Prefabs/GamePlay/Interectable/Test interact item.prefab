@@ -356,6 +356,7 @@ Transform:
   - {fileID: 1152340736040106981}
   - {fileID: 7581090655913002818}
   - {fileID: 8798491801965638755}
+  - {fileID: 3029508116043846523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &3919198148196084313
@@ -374,6 +375,10 @@ MonoBehaviour:
   focusObject: {fileID: 1428110219638800620}
   canInteract: 1
   hideInteract: 0
+  cameraPoint: {fileID: 3029508116043846523}
+  transitoinSmooth: 1
+  transitionSpeed: 5
+  arrivalThreshold: 0.05
 --- !u!65 &6620450940398190693
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -395,3 +400,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.21, y: 0.0005, z: 0.297}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &3312044615290667008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3029508116043846523}
+  m_Layer: 9
+  m_Name: CameraPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3029508116043846523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3312044615290667008}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9182947527880130960}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}

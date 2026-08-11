@@ -21,27 +21,27 @@ public class ReadInteractable : InteractableBase
 
     public bool IsReading => _isReading;
 
-    public override void Interact(GameObject rootplayer)
+    public override bool Interact(GameObject rootplayer)
     {
-        base.Interact(rootplayer);
+        if(!base.Interact(rootplayer)) return false;
 
         if (cameraPoint == null)
         {
             Debug.LogWarning($"{nameof(ReadInteractable)}: cameraPoint is not assigned on {gameObject.name}.");
-            return;
+            return false;
         }
 
         if (_isReading)
-            return;
+            return false;
 
         if (cameraPoint == null)
         {
             Debug.LogWarning($"{nameof(ReadInteractable)}: cameraPoint is not assigned on {gameObject.name}.");
-            return;
+            return false;
         }
 
         if (!ResolveCameraController(rootplayer))
-            return;
+            return false;
 
         _savedPosition = _cameraTransform.position;
         _savedRotation = _cameraTransform.rotation;
@@ -57,6 +57,7 @@ public class ReadInteractable : InteractableBase
             _transitionRoutine = StartCoroutine(TransitionToReadPose());
         else
             SnapToCameraPoint();
+        return true;
     }
 
     /// เรียกเมื่อออกจากโหมดอ่าน (จาก UI หรือ input อื่น)
@@ -176,5 +177,11 @@ public class ReadInteractable : InteractableBase
         }
 
         _isReading = false;
+    }
+
+    public override bool CancelInteraction(GameObject rootplayer)
+    {
+        EndReading();
+        return true;
     }
 }

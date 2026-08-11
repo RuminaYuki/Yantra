@@ -8251,12 +8251,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test interact item (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 3919198148196084313, guid: 89840fb2447613c41a4e9d3ac785980a,
-        type: 3}
-      propertyPath: action
-      value: 
-      objectReference: {fileID: 4332528383966633596, guid: db0e9067649de694aba4b3fc8b88612f,
-        type: 3}
     - target: {fileID: 9182947527880130960, guid: 89840fb2447613c41a4e9d3ac785980a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9367,6 +9361,8 @@ MonoBehaviour:
   inputAction: {fileID: 4332528383966633596, guid: db0e9067649de694aba4b3fc8b88612f,
     type: 3}
   rayInteract: {fileID: 443398989}
+  rootPlayer: {fileID: 1118969013}
+  onInteractable: 0
 --- !u!4 &443399020 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 652001588548712837, guid: 0ec2cd0195e5f64458b2f828930c2023,
@@ -9928,7 +9924,7 @@ MonoBehaviour:
   _otsPivot: {fileID: 0}
   _yantraPivot: {fileID: 762333552}
   _yantraOffsetRotationY: 0
-  _tppOffset: {x: 0.7, y: 0.2, z: -1.65}
+  _tppOffset: {x: 0.35, y: 0.2, z: -0.9}
   _tppFOV: 60
   _fppFOV: 40
   _otsFOV: 50
@@ -10360,6 +10356,8 @@ MonoBehaviour:
   _multiply: 0.5
   _rotateSpeed: 1
   _gravityMultiplier: 1
+  _debugMoveMultiply: 0
+  _debugRotateSpeed: 0
   _nameParameterMoveZ: VelocityZ
   _nameTurnAngle: StartTurnAngle
   _nameStartTurn: StartTurn
@@ -10943,6 +10941,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enableRayCast: 1
+--- !u!1 &1118969013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9103408916130526773, guid: 0ec2cd0195e5f64458b2f828930c2023,
+    type: 3}
+  m_PrefabInstance: {fileID: 2103808901}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1132388819 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 26844662620191305, guid: fbf30b39d10d65246a69184a98f34614,

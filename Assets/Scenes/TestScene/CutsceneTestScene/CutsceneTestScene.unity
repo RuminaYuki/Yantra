@@ -28416,10 +28416,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
   _globalResampleCount: 64
-  _scoreSharpness: 8
-  _rotationSearchRangeDeg: 45
-  _rotationSearchThresholdDeg: 2
-  CreateTemplate: 1
+  _intdexToSaveTemplate: 0
 --- !u!4 &995969570
 Transform:
   m_ObjectHideFlags: 0
@@ -54035,6 +54032,7 @@ MonoBehaviour:
   _maxStamina: 100
   _recoverThreshold: 30
   _exhaustedDelay: 1.5
+  _currentStamina: 0
 --- !u!114 &1936406782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54102,7 +54100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef641b642823764f9f37fcc173ac61b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostTrackerIK
-  targetToLookAt: {fileID: 1853613251}
   maxLookDistance: 10
   obstacleMask:
     serializedVersion: 2
@@ -54110,6 +54107,7 @@ MonoBehaviour:
   eyeOffset: {x: 0, y: 1.5, z: 0}
   maxLookWeight: 1
   smoothSpeed: 5
+  showGizmos: 1
 --- !u!114 &1936406786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54161,6 +54159,8 @@ MonoBehaviour:
   _multiply: 0
   _rotateSpeed: 1
   _gravityMultiplier: 3
+  _debugMoveMultiply: 0
+  _debugRotateSpeed: 0
   _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   _referencePoint: {fileID: 2076092243}
   _nameParameterMoveZ: VelocityZ
@@ -54885,8 +54885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17400aa46501ad541b6af8d62674fdd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YantCaster
-  _matcher: {fileID: 995969569}
-  _stats: {fileID: 0}
+  _matcher: {fileID: 0}
   _playerRoot: {fileID: 0}
   _yantSpawnPoint: {fileID: 0}
   _yantPaper: {fileID: 995969564}

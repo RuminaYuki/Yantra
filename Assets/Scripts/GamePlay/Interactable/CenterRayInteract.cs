@@ -29,8 +29,16 @@ public class CenterRayInteract : MonoBehaviour
 
     private readonly HashSet<Iinteractable> highlightedInteractables = new();
 
+    private bool isInteractableInSight = false;
+
     private void Update()
     {
+        if(isInteractableInSight)
+        {
+            StopHighlightingAll();
+            return;
+        }
+
         DetectNearbyInteractables();
         DetectInteractable();
 
@@ -38,7 +46,7 @@ public class CenterRayInteract : MonoBehaviour
     }
 
     /// <summary>
-    /// หา Interactable รอบตัวเพื่อเปิด Highlight
+    /// ๏ฟฝ๏ฟฝ Interactable ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด Highlight
     /// </summary>
     private void DetectNearbyInteractables()
     {
@@ -88,10 +96,11 @@ public class CenterRayInteract : MonoBehaviour
     }
 
     /// <summary>
-    /// หา Interactable ที่อยู่ในหน้าจอและใกล้ Center
+    /// ๏ฟฝ๏ฟฝ Interactable ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝหน๏ฟฝาจ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ Center
     /// </summary>
     private void DetectInteractable()
     {
+        
         Iinteractable bestInteractable = null;
 
         float bestScore = float.MaxValue;
@@ -108,7 +117,6 @@ public class CenterRayInteract : MonoBehaviour
 
             Vector3 targetPosition = target.transform.position;
 
-            // ระยะจากกล้อง
             float distance =
                 Vector3.Distance(
                     playerCamera.transform.position,
@@ -118,15 +126,12 @@ public class CenterRayInteract : MonoBehaviour
             if (distance > focusDistance)
                 continue;
 
-            // แปลงตำแหน่งเป็น Viewport
             Vector3 viewportPosition =
                 playerCamera.WorldToViewportPoint(targetPosition);
 
-            // อยู่หลังกล้อง
             if (viewportPosition.z <= 0f)
                 continue;
 
-            // ระยะจาก Center Screen
             Vector2 screenCenter = new Vector2(0.5f, 0.5f);
 
             Vector2 targetScreenPosition =
@@ -141,11 +146,9 @@ public class CenterRayInteract : MonoBehaviour
                     targetScreenPosition
                 );
 
-            // ไม่อยู่ใกล้ Center พอ
             if (screenDistance > focusScreenRadius)
                 continue;
 
-            // เช็คว่ามีสิ่งกีดขวางหรือไม่
             if (Physics.Linecast(
                 playerCamera.transform.position,
                 targetPosition,
@@ -154,7 +157,6 @@ public class CenterRayInteract : MonoBehaviour
                 continue;
             }
 
-            // ยิ่งใกล้ Center ยิ่งได้คะแนนดี
             if (screenDistance < bestScore)
             {
                 bestScore = screenDistance;
@@ -187,8 +189,21 @@ public class CenterRayInteract : MonoBehaviour
         if (currentInteractable == null)
             return;
 
+        Debug.Log($"Lost focus on {currentInteractable as MonoBehaviour}");
         currentInteractable.OnLoseFocus();
         currentInteractable = null;
+    }
+
+    public void SetInteractEnabled(bool enabled) => isInteractableInSight = !enabled;
+
+    public void StopHighlightingAll()
+    {
+        foreach (Iinteractable interactable in highlightedInteractables)
+        {
+            interactable.HideHighlight();
+        }
+
+        highlightedInteractables.Clear();
     }
 
     private void OnDrawGizmosSelected()
@@ -219,7 +234,7 @@ public interface Iinteractable
     bool CanInteract { get; }
 
     //Command the object to perform its interaction logic
-    void Interact(GameObject rootplayer);
+    bool Interact(GameObject rootplayer);
 
     //Command the object to show Focus when in Camera forward
     void OnFocus();
@@ -228,4 +243,6 @@ public interface Iinteractable
     //Command the object to show Highlight when in Highlight range
     void ShowHighlight();
     void HideHighlight();
+
+    bool CancelInteraction(GameObject rootplayer);
 }
