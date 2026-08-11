@@ -148,6 +148,7 @@ public class DrawOn3DMesh : MonoBehaviour
                 allPoints.Add(worldPoint);
             }
         }
+        //Debug.Log(allPoints.Count);
         return allPoints;
     }
 
@@ -160,4 +161,7 @@ public class DrawOn3DMesh : MonoBehaviour
         _allStrokes.Clear();
         _currentLine = null;
     }
+
+    //API
+    public Transform PaperParent => _paperParent;
 }

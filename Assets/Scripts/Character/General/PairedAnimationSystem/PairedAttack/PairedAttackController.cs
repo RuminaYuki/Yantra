@@ -1,0 +1,150 @@
+using UnityEngine;
+
+[RequireComponent(typeof(PairedAnimationActor))]
+public class PairedAttackController : MonoBehaviour
+{
+    [Header("References")]
+    [SerializeField] private PairedAnimationActor _victim;
+
+    private PairedAnimationManager _manager;
+    private PairedAnimationActor _attacker;
+
+    private float _currentDamage;
+    private bool _hasDealtDamage;
+
+    public bool IsAttackRunning { get; private set; }
+    public bool HasCompletedAttack { get; private set; }
+
+    private void OnEnable()
+    {
+        if (_manager != null)
+        {
+            _manager.PairedAnimationFinished += OnPairedAnimationFinished;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_manager != null)
+        {
+            _manager.PairedAnimationFinished -= OnPairedAnimationFinished;
+        }
+
+        IsAttackRunning = false;
+        HasCompletedAttack = false;
+    }
+
+    private void Awake()
+    {
+        _attacker = GetComponent<PairedAnimationActor>();
+
+        GameObject gameManager =
+            GameObject.FindGameObjectWithTag("GameManager");
+
+        if (gameManager != null)
+        {
+            _manager =
+                gameManager.GetComponent<PairedAnimationManager>();
+        }
+
+        if (_manager == null)
+        {
+            Debug.LogError(
+                "AttackSystem cannot find PairedAnimationManager.",
+                this);
+            return;
+        }
+
+    }
+
+    public bool TryAttack(GameObject attackPrefab, float damage)
+    {
+        if (attackPrefab == null)
+        {
+            Debug.LogWarning(
+                "Attack Prefab is missing.",
+                this);
+            return false;
+        }
+
+        IPairedAttackStrategy strategy =
+            FindStrategy(attackPrefab);
+
+        if (strategy == null)
+        {
+            Debug.LogError(
+                $"{attackPrefab.name} does not contain IAttackStrategy.",
+                this);
+            return false;
+        }
+
+        if (_manager == null ||
+            _attacker == null ||
+            _victim == null)
+        {
+            Debug.LogWarning(
+                "AttackSystem references are missing.",
+                this);
+            return false;
+        }
+
+        _currentDamage = damage;
+        _hasDealtDamage = false;
+
+        HasCompletedAttack = false;
+
+        bool started = strategy.TryAttack(
+            _manager,
+            _attacker,
+            _victim);
+
+        IsAttackRunning = started;
+        return started;
+    }
+
+    public void SetVictim(PairedAnimationActor victim)
+    {
+        _victim = victim;
+    }
+
+    private IPairedAttackStrategy FindStrategy(
+        GameObject attackPrefab)
+    {
+        MonoBehaviour[] components =
+            attackPrefab.GetComponentsInChildren<MonoBehaviour>(true);
+
+        foreach (MonoBehaviour component in components)
+        {
+            if (component is IPairedAttackStrategy strategy)
+                return strategy;
+        }
+
+        return null;
+    }
+
+    public void ApplyPairedDamage()
+    {
+        if (_victim == null || _hasDealtDamage)
+            return;
+
+        IDamageable damageable = _victim.GetComponentInParent<IDamageable>();
+
+        if (damageable == null)
+            return;
+
+        damageable.TakeDamage(_currentDamage);
+        _hasDealtDamage = true;
+    }
+
+    private void OnPairedAnimationFinished(
+        IPairedAnimationActor attacker,
+        IPairedAnimationActor victim,
+        PairedAnimationId animationId)
+    {
+        if (!ReferenceEquals(attacker, _attacker))
+            return;
+
+        IsAttackRunning = false;
+        HasCompletedAttack = true;
+    }
+}

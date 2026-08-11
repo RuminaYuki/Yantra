@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-[RequireComponent(typeof(CharacterController),typeof(Animator))]
+[RequireComponent(typeof(CharacterController),typeof(Animator),typeof(PathNavigator))]
 public class EnemyLocomotion : BaseLocomotion
 {
     [Header("Locomotion Anim Parameter")]
@@ -19,8 +19,9 @@ public class EnemyLocomotion : BaseLocomotion
         LocomotionAnim.SetTurnParameter(_nameTurnAngle,_nameStartTurn);
         _pathNavigator = GetComponent<PathNavigator>();
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (IsMovementLocked)
         {
             _wasMoving = false;

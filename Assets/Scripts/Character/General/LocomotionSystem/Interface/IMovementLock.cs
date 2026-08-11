@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public interface IMovementLock
+public interface ILocomotionLock
 {
     bool IsMovementLocked { get; }
     bool ShouldResetMoveAnimation { get; }
 
-    void LockMovement(object owner, bool resetMoveAnimation = true);
-    void UnlockMovement(object owner);
+    void LockLocomotion(object owner, bool resetMoveAnimation = true);
+    void UnlockLocomotion(object owner);
 }

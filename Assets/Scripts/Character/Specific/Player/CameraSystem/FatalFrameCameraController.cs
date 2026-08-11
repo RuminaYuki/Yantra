@@ -1,23 +1,22 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Unity.Cinemachine; // เพิ่มบรรทัดนี้
 
-[RequireComponent(typeof(Camera))]
+// ลบ [RequireComponent(typeof(Camera))] ออกไปแล้ว เพราะเราจะไม่ใช้กล้องจริงที่นี่
 public class FatalFrameCameraController : MonoBehaviour
 {
-    [Header("Input Observer")]
-    [SerializeField] private YantraInputObserverSO _inputObserverChannel;
+    [Header("Cinemachine")]
+    [Tooltip("ลาก VCam มาใส่เพื่อคุมการซูม (FOV)")]
+    public CinemachineCamera vcamGameplay; // เพิ่มตัวแปรนี้
 
-    [Header("Camera States")]
-    public bool IsGunAiming = false;    // คลิกขวา (ปืน)
-    public bool IsYantraAiming = false; // กด Q (ยันต์)
+    [Header("Dependencies")]
     [SerializeField] private CameraAnimationController _cameraAnimationController;
 
     [Header("Targets")]
     [SerializeField] private Transform _tppPivot;
     [SerializeField] private Transform _fppEyePosition;
-    [SerializeField] private Transform _otsPivot; // ✨ เพิ่มช่องสำหรับใส่จุดเล็งข้ามไหล่
-    [SerializeField] private Transform _yantraPivot; // เพิ่มช่องสำหรับใส่จุดเล็งยันต์
+    [SerializeField] private Transform _otsPivot;
+    [SerializeField] private Transform _yantraPivot;
+
     [Tooltip("เพิ่มการก้มหน้า +ก้มลง -ก้มขึ้น")]
     [SerializeField] private int _yantraOffsetRotationY;
 
@@ -27,7 +26,7 @@ public class FatalFrameCameraController : MonoBehaviour
 
     [Header("FPP / OTS Settings")]
     [SerializeField] private float _fppFOV = 40f;
-    [SerializeField] private float _otsFOV = 50f; // มุมกล้องตอนเล็งปืน
+    [SerializeField] private float _otsFOV = 50f;
 
     [Header("Controls")]
     [SerializeField] private float _mouseSensitivity = 0.15f;
@@ -40,18 +39,45 @@ public class FatalFrameCameraController : MonoBehaviour
     [SerializeField] private float _cameraRadius = 0.2f;
     [SerializeField] private float _minDistance = 0.5f;
 
-    private bool _ChangeCameraFinish = false;
-
-    private Camera _mainCamera;
+    // --- State Variables ---
     private float _pitch = 0f;
     private float _yaw = 0f;
+    private Vector2 _currentLookDelta;
 
-    public bool _isFreeLookingInBook = false;
+    private bool _isGunAiming = false;
+    private bool _isYantraAiming = false;
+    private bool _isFreeLookingInBook = false;
+    private bool _isCutsceneMode = false;
+
+    #region Public Properties API
+    public bool IsCutsceneMode
+    {
+        get => _isCutsceneMode;
+        set { _isCutsceneMode = value; if (_isCutsceneMode) { IsGunAiming = false; IsYantraAiming = false; IsFreeLookingInBook = false; } }
+    }
+    public bool IsGunAiming
+    {
+        get => _isGunAiming;
+        set { if (IsYantraAiming && value == true) return; _isGunAiming = value; }
+    }
+    public bool IsYantraAiming
+    {
+        get => _isYantraAiming;
+        set { _isYantraAiming = value; if (_isYantraAiming) IsGunAiming = false; }
+    }
+    public bool IsFreeLookingInBook
+    {
+        get => _isFreeLookingInBook;
+        set => _isFreeLookingInBook = value;
+    }
+    public Vector2 CameraRotation => new Vector2(_yaw, _pitch);
+    public float MinPitch => _minPitch;
+    public float MaxPitch => _maxPitch;
+    #endregion
 
     private void Start()
     {
-        _mainCamera = GetComponent<Camera>();
-
+        // ลบการ Get Component Camera ทิ้งไป
         if (Application.isPlaying)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -65,82 +91,44 @@ public class FatalFrameCameraController : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    public void FeedLookInput(Vector2 lookDelta)
     {
-        if (_inputObserverChannel != null)
-        {
-            _inputObserverChannel.OnPressCtalR_ButtonChannel += HandleLookAround;
-            _inputObserverChannel.OnPressQ_ButtonChannel += HandleQ;
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (_inputObserverChannel != null)
-        {
-            _inputObserverChannel.OnPressCtalR_ButtonChannel -= HandleLookAround;
-            _inputObserverChannel.OnPressQ_ButtonChannel -= HandleQ;
-        }
-    }
-
-    private void Update()
-    {
-        if (Mouse.current != null)
-        {
-            // บังคับว่าถ้ากางยันต์อยู่ จะห้ามเล็งปืนซ้อน
-            if (!IsYantraAiming)
-            {
-                if (Mouse.current.rightButton.wasPressedThisFrame) IsGunAiming = true;
-                if (Mouse.current.rightButton.wasReleasedThisFrame) IsGunAiming = false;
-            }
-        }
+        _currentLookDelta = lookDelta;
     }
 
     private void LateUpdate()
     {
-        if (_tppPivot == null || _fppEyePosition == null || Mouse.current == null) return;
+        if (_isCutsceneMode || _tppPivot == null || _fppEyePosition == null) return;
 
         Quaternion targetRotation;
 
         if (!IsYantraAiming)
         {
-            // ถ้าไม่ได้กางสมุด ให้ขยับกล้องด้วยเมาส์ได้ตามปกติ
-            Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-            _yaw += mouseDelta.x * _mouseSensitivity;
-            _pitch -= mouseDelta.y * _mouseSensitivity;
-            _pitch = Mathf.Clamp(_pitch, _minPitch, _maxPitch);
+            _yaw += _currentLookDelta.x * _mouseSensitivity;
+            _pitch -= _currentLookDelta.y * _mouseSensitivity;
+            _pitch = Mathf.Clamp(_pitch, MinPitch, MaxPitch);
             targetRotation = Quaternion.Euler(_pitch, _yaw, 0f);
         }
         else
         {
-            // ถ้ากางสมุดอยู่ (IsYantraAiming == true)
-            // บังคับก้มหน้าลง 45 องศา (เปลี่ยนตัวเลข 45f ได้ตามความเหมาะสม)
-            // ค่อยๆ ก้มลงอย่างสมูทด้วย Lerp
             targetRotation = Quaternion.LookRotation(_yantraPivot.position - transform.position);
-            //_pitch = Mathf.Lerp(_pitch, Rotation.y + _yantraOffsetRotationY, Time.deltaTime * 5f);
-            // หมายเหตุ: เราไม่ยุ่งกับ _yaw ผู้เล่นจะหันไปทางเดิมก่อนเปิดสมุด
         }
 
-        
         Vector3 desiredPosition;
         float targetFOV;
 
         if (IsYantraAiming)
         {
-            // โหมด FPP (กางยันต์)
             desiredPosition = _fppEyePosition.position;
             targetFOV = _fppFOV;
         }
         else if (IsGunAiming)
         {
-            // ✨ โหมด OTS (เล็งปืนข้ามไหล่)
-            // ถ้ามีพิกัด _otsPivot ให้ใช้พิกัดนั้น ถ้าไม่มีให้กะระยะเอาจากจุดหมุนตัวละคร
             desiredPosition = _otsPivot != null ? _otsPivot.position : _tppPivot.position + (targetRotation * new Vector3(0.5f, 0.1f, -1f));
             targetFOV = _otsFOV;
         }
         else
         {
-            // โหมด TPP (เดินสำรวจปกติ)
             Vector3 rotatedOffset = targetRotation * _tppOffset;
             desiredPosition = _tppPivot.position + rotatedOffset;
             targetFOV = _tppFOV;
@@ -156,27 +144,16 @@ public class FatalFrameCameraController : MonoBehaviour
             }
         }
 
+        // หมุนตัวมันเอง (ทำตัวเป็นร่างทรง)
         transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * _transitionSpeed);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _transitionSpeed);
-        _mainCamera.fieldOfView = Mathf.Lerp(_mainCamera.fieldOfView, targetFOV, Time.deltaTime * _transitionSpeed);
-        
-    }
-    
-    private void HandleLookAround()
-    {
-        bool freelook = _isFreeLookingInBook;
-        _isFreeLookingInBook = !freelook;
-        Debug.Log($"HandleLookAround called. IsYantraAiming: {IsYantraAiming}, _isFreeLookingInBook: {_isFreeLookingInBook}");
-    }
 
-    private void HandleQ()
-    {
-        _isFreeLookingInBook = IsYantraAiming ? false : true; // ถ้ากำลังกางสมุดอยู่แล้วกด Q อีกครั้ง ให้ปิดโหมด Free Look
-    }
+        // เปลี่ยนให้มันไปสั่ง FOV ของ Cinemachine แทน
+        if (vcamGameplay != null)
+        {
+            vcamGameplay.Lens.FieldOfView = Mathf.Lerp(vcamGameplay.Lens.FieldOfView, targetFOV, Time.deltaTime * _transitionSpeed);
+        }
 
-    #region API
-    public Vector2 CameraRotation => new Vector2(_yaw, _pitch);
-    public float MinPitch => _minPitch;
-    public float MaxPitch => _maxPitch;
-    #endregion
+        _currentLookDelta = Vector2.zero;
+    }
 }

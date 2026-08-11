@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Serialization;
-public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
+public abstract class BaseLocomotion : MonoBehaviour,ILocomotionLock,IRootMotionControl
 {
     [Header("Locomotion")]
     [SerializeField] private float _dampTime = 0.1f;
@@ -14,9 +14,14 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
     [FormerlySerializedAs("gravityMultiplier")]
     [SerializeField] private float _gravityMultiplier = 1f;
 
+    #if UNITY_EDITOR
+    [Header("Runtime Debug")]
+    [SerializeField] private float _debugMoveMultiply;
+    [SerializeField] private float _debugRotateSpeed;
+    #endif
+
     protected CharacterController CharacterController { get; private set; }
-    Animator _animator;
-    protected Animator Animator {get=>_animator; set=>_animator = value;}
+    protected Animator Animator {get; private set;}
 
     protected LocomotionAnim LocomotionAnim { get; private set; }
     protected RotationTransform Rotation { get; private set; }
@@ -32,24 +37,39 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
 
         Gravity = new GravityCharacterCon(CharacterController,_gravityMultiplier);
     }
+    #if UNITY_EDITOR
+    protected virtual void Update()
+    {
+        if (LocomotionAnim == null || Rotation == null)
+            return;
+
+        _debugMoveMultiply = LocomotionAnim.Multiply;
+        _debugRotateSpeed = Rotation.Speed;
+    }
+    #endif
     protected virtual void OnAnimatorMove()
     {
-        CharacterController.Move(Animator.deltaPosition + Gravity.Gravity());
-        if (IsMovementLocked)
+        Vector3 rootMotionPosition = _rootMotionEnabled
+            ? Animator.deltaPosition
+            : Vector3.zero;
+
+        CharacterController.Move(
+            rootMotionPosition + Gravity.Gravity());
+
+        if (_rootMotionEnabled && IsMovementLocked)
         {
             transform.rotation *= Animator.deltaRotation;
-        }   
+        }  
     }
 
+    // IMovementLock implementation
     private readonly HashSet<object> _movementLockOwners = new();
     private readonly HashSet<object> _moveAnimationResetOwners = new();
 
     public bool IsMovementLocked => _movementLockOwners.Count > 0;
     public bool ShouldResetMoveAnimation => _moveAnimationResetOwners.Count > 0;
 
-    public void LockMovement(
-        object owner,
-        bool resetMoveAnimation = true)
+    public void LockLocomotion(object owner,bool resetMoveAnimation = true)
     {
         if (owner == null)
             return;
@@ -60,7 +80,7 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
             _moveAnimationResetOwners.Add(owner);
     }
 
-    public void UnlockMovement(object owner)
+    public void UnlockLocomotion(object owner)
     {
         if (owner == null)
             return;
@@ -68,9 +88,17 @@ public abstract class BaseLocomotion : MonoBehaviour,IMovementLock
         _movementLockOwners.Remove(owner);
         _moveAnimationResetOwners.Remove(owner);
     }
+    
+    // IRootMotionControl implementation
+    private bool _rootMotionEnabled = true;
+    public void SetRootMotionEnabled(bool enabled)
+    {
+        _rootMotionEnabled = enabled;
+    }
 
     public float GetMoveMultiply() => LocomotionAnim.Multiply;
     public void SetMoveMultiply(float multiply) => LocomotionAnim.Multiply = multiply;
     public float GetRotateSmoothSpeed() => Rotation.Speed;
     public void SetRotateSmoothSpeed(float value) => Rotation.Speed = value;
+    public void StopMovement(bool enableMove = true) => LocomotionAnim.SetMovementEnabled(!enableMove);
 }

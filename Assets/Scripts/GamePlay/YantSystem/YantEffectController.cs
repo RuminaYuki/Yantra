@@ -24,9 +24,6 @@ public class YantEffectController : MonoBehaviour
     [SerializeField] private List<YantEffectSettings> _effectSettings = new List<YantEffectSettings>();
 
     private GameObject _playerRoot;
-    private YantraStatsController _stats;
-    private Vector3 _aimDirection;
-
     private Coroutine _destroyCoroutine;
 
     private void Awake()
@@ -70,9 +67,7 @@ public class YantEffectController : MonoBehaviour
                 continue;
             }
 
-            setting._yantEffect.Initialize(
-                _playerRoot,
-                _stats);
+            setting._yantEffect.Initialize(_playerRoot);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
@@ -102,9 +97,7 @@ public class YantEffectController : MonoBehaviour
                 }
             }        
 
-            bool initialized = setting._yantEffect.Initialize(
-                                    _playerRoot,
-                                    _stats);
+            bool initialized = setting._yantEffect.Initialize(_playerRoot);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot) && initialized)
             {
@@ -121,10 +114,9 @@ public class YantEffectController : MonoBehaviour
         }
     }
 
-    public void SetDefaultValue(GameObject playerRoot, YantraStatsController start)
+    public void SetDefaultValue(GameObject playerRoot)
     {
         _playerRoot = playerRoot;
-        _stats = start;
     }
 
     private void DestroyGameObject(float delay)

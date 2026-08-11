@@ -8,7 +8,6 @@ public class BlastYant : MonoBehaviour, IYantEffect
     [Header("Projectile")]
     [SerializeField] private YantProjectile _projectilePrefab;
     [SerializeField] private float _throwSpeed = 18f;
-
     [Tooltip("เงยปาขึ้นเล็กน้อย (องศา)")]
     [SerializeField] private float _initialAngleDeg = 8f;
     [SerializeField] private bool _useGravity = true;
@@ -24,15 +23,17 @@ public class BlastYant : MonoBehaviour, IYantEffect
     [SerializeField] private float _maxAimDistance = 100f;
     [SerializeField] private LayerMask _aimMask = ~0;
 
+    //ถ้ามีหลาย debuff จะใช้ List<FlagSO> แทน
     [Header("Debuff")]
-    [SerializeField] private FlagSO _debuffFlag;
+    [SerializeField] private FlagSO debuff;
+    [SerializeField] private float debuffDuration = 3f;
 
     private void OnValidate()
     {
         if (_aimCamera == null) _aimCamera = Camera.main?.transform;
     }
 
-    public bool Initialize(GameObject playerRoot, YantraStatsController stats)
+    public bool Initialize(GameObject playerRoot)
     {
         if (_projectilePrefab == null)
         {
@@ -59,7 +60,8 @@ public class BlastYant : MonoBehaviour, IYantEffect
             _pushLifetime,
             _pushAwayFromImpact,
             playerRoot,
-            _debuffFlag);
+            debuff,
+            debuffDuration);
 
         Debug.Log($"<color=#FFAA00>[PushYant]</color> ปา projectile ไปทาง {launchDir:F2}");
         return true;

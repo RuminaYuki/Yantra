@@ -8,7 +8,7 @@ public class YantVanish : MonoBehaviour
     private bool _isVanished;
     private YantraInputObserverSO _inputObserver;
 
-    public void Apply(string vanishTag, bool temporary, float duration, YantraInputObserverSO inputObserver, FlagSO Flag = null)
+    public void Apply(string vanishTag, bool temporary, float duration, YantraInputObserverSO inputObserver)
     {
         if (_revertRoutine != null)
         {
@@ -30,7 +30,7 @@ public class YantVanish : MonoBehaviour
             _inputObserver.OnMoveChannel += OnMoveInput;
 
         if (temporary)
-            _revertRoutine = StartCoroutine(RevertAfter(duration, Flag));
+            _revertRoutine = StartCoroutine(RevertAfter(duration));
     }
 
     public void Revert()
@@ -72,15 +72,12 @@ public class YantVanish : MonoBehaviour
         }
     }
 
-    private IEnumerator RevertAfter(float duration, FlagSO flag = null)
+    private IEnumerator RevertAfter(float duration)
     {
         yield return new WaitForSeconds(duration);
         gameObject.tag = _originalTag;
         _isVanished = false;
         _revertRoutine = null;
-        if (flag != null)
-            if (TryGetComponent(out StateFlags stateFlags))
-                stateFlags.Set(flag, false);
         UnsubscribeObserver();
     }
 }

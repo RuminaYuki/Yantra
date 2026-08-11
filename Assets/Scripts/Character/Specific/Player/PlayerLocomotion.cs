@@ -54,8 +54,10 @@ public class PlayerLocomotion : BaseLocomotion
     {
         _playerInput.OnMoveChannel -= HandleMoveInput;
     }
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (IsMovementLocked)
         {
             _wasMoving = false;
