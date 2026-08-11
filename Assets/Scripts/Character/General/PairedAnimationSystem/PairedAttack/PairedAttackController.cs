@@ -32,6 +32,11 @@ public class PairedAttackController : MonoBehaviour
                 "AttackSystem cannot find PairedAnimationManager.",
                 this);
         }
+        if(_victim == null)
+        {
+            Debug.LogWarning("Victim not assign");
+            _victim = GameObject.FindGameObjectWithTag("Player").GetComponent<PairedAnimationActor>();
+        }
     }
 
     public bool TryAttack(GameObject attackPrefab, float damage)
