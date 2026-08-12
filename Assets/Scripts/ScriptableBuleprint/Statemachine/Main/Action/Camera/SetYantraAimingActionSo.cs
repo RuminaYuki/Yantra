@@ -18,7 +18,7 @@ public class SetYantraAimingActionSO : StateActionSO
 public class SetYantraAimingAction : StateAction
 {
     private readonly bool isAiming;
-    private FatalFrameCameraController cameraController;
+    private PlayerCameraController cameraController;
 
     public SetYantraAimingAction(bool isAiming)
     {
@@ -30,13 +30,13 @@ public class SetYantraAimingAction : StateAction
         Camera mainCamera = Camera.main;
 
         if (mainCamera != null)
-            cameraController = mainCamera.GetComponent<FatalFrameCameraController>();
+            cameraController = mainCamera.GetComponent<PlayerCameraController>();
 
         if (cameraController == null)
-            cameraController = Object.FindFirstObjectByType<FatalFrameCameraController>();
+            cameraController = Object.FindFirstObjectByType<PlayerCameraController>();
 
         if (cameraController == null)
-            Debug.LogError("SetYantraAimingAction cannot find FatalFrameCameraController.");
+            Debug.LogError("SetYantraAimingAction cannot find PlayerCameraController.");
     }
 
     public override void OnStateEnter()

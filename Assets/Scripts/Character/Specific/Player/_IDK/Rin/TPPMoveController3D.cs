@@ -16,8 +16,8 @@ public class TPPMoveController3D : MonoBehaviour
     [SerializeField] private Transform _cameraTransform;
 
     [Header("Camera & Rotation System")]
-    [Tooltip("ใส่ Main Camera ที่มีสคริปต์ FatalFrameCameraController")]
-    [SerializeField] private FatalFrameCameraController _cameraSystem;
+    [Tooltip("ใส่ Main Camera ที่มีสคริปต์ PlayerCameraController")]
+    [SerializeField] private PlayerCameraController _cameraSystem;
     [Tooltip("ความเร็วในการหันหน้าของตัวละครในโหมด TPP")]
     [SerializeField] private float _turnSmoothSpeed = 10f;
 

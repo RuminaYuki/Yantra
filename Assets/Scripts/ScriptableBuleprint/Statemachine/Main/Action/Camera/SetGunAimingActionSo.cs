@@ -18,7 +18,7 @@ public class SetGunAimingActionSO : StateActionSO
 public class SetGunAimingAction : StateAction
 {
     private readonly bool isAiming;
-    private FatalFrameCameraController cameraController;
+    private PlayerCameraController cameraController;
 
     public SetGunAimingAction(bool isAiming)
     {
@@ -30,13 +30,13 @@ public class SetGunAimingAction : StateAction
         Camera mainCamera = Camera.main;
 
         if (mainCamera != null)
-            cameraController = mainCamera.GetComponent<FatalFrameCameraController>();
+            cameraController = mainCamera.GetComponent<PlayerCameraController>();
 
         if (cameraController == null)
-            cameraController = Object.FindFirstObjectByType<FatalFrameCameraController>();
+            cameraController = Object.FindFirstObjectByType<PlayerCameraController>();
 
         if (cameraController == null)
-            Debug.LogError("SetGunAimingAction cannot find FatalFrameCameraController.");
+            Debug.LogError("SetGunAimingAction cannot find PlayerCameraController.");
     }
 
     public override void OnStateEnter()

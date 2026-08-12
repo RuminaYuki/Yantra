@@ -2,7 +2,7 @@ using UnityEngine;
 using Unity.Cinemachine; // เพิ่มบรรทัดนี้
 
 // ลบ [RequireComponent(typeof(Camera))] ออกไปแล้ว เพราะเราจะไม่ใช้กล้องจริงที่นี่
-public class FatalFrameCameraController : MonoBehaviour
+public class PlayerCameraController : MonoBehaviour
 {
     [Header("Cinemachine")]
     [Tooltip("ลาก VCam มาใส่เพื่อคุมการซูม (FOV)")]

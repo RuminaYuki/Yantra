@@ -10,7 +10,7 @@ public class EmergencyAimFix : MonoBehaviour
     public Transform aimTarget;
 
     [Header("ลากสคริปต์กล้องมาใส่ เพื่อเช็คการเล็ง")]
-    public FatalFrameCameraController cameraController;
+    public PlayerCameraController cameraController;
 
     [Header("ปรับแกนถ้ามันหันผิดทิศ (หมุนจนกว่าจะตรงเป้า)")]
     public Vector3 chestOffset = new Vector3(0, -90, -90);
