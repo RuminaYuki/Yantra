@@ -23,7 +23,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: YantInvisible
+  m_Name: YantInvisible Outline Layer
   m_Shader: {fileID: -6465566751694194690, guid: 34a78f6de31ba58478824326f2b6dfbc,
     type: 3}
   m_Parent: {fileID: 0}
@@ -107,6 +107,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RadialDistortionFlow_0a641ca496934bca8cfcaa3edb38aaf7_NoiseMap_1541703021_Texture2D:
+        m_Texture: {fileID: 2800000, guid: c499ae7ea10e6f94b87fb2756cd4eda0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RadialDistortionFlow_31fd8b7d9a4342ffaf861ffa13e16883_NoiseMap_1541703021_Texture2D:
+        m_Texture: {fileID: 2800000, guid: c499ae7ea10e6f94b87fb2756cd4eda0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RadialDistortionFlow_fb4c19e83d0c41edb978651d6572d74e_NoiseMap_1541703021_Texture2D:
         m_Texture: {fileID: 2800000, guid: c499ae7ea10e6f94b87fb2756cd4eda0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -245,7 +253,7 @@ Material:
     - _MetallicRemapMin: 0
     - _Noise_Contrast: 3
     - _Noise_Scale: 314
-    - _Noise_Speed: 0.061
+    - _Noise_Speed: 0.024
     - _Noise_Threshold: 0.379
     - _NormalMapSpace: 0
     - _NormalScale: 1
@@ -315,6 +323,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
@@ -325,8 +334,9 @@ Material:
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _Noise_Color: {r: 0.41007897, g: 1, b: 0, a: 1}
     - _Offset: {r: 1, g: 0, b: 0, a: 0}
-    - _Outline_Color: {r: 0.16470575, g: 1, b: 0, a: 1}
+    - _Outline_Color: {r: 2.7339506, g: 2.6136608, b: 3.4415908, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
@@ -334,5 +344,6 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
+    - _Wave_Color: {r: 0.36405498, g: 0.06550373, b: 0.6037736, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
