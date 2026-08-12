@@ -18,6 +18,15 @@ BlendTree:
     m_DirectBlendParameter: VelocityZ
     m_Mirror: 0
   - serializedVersion: 2
+    m_Motion: {fileID: -7022077602271802407, guid: e4b15ec0918b7b74e997648874b0fe41,
+      type: 3}
+    m_Threshold: -90
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0.5
+    m_DirectBlendParameter: VelocityX
+    m_Mirror: 1
+  - serializedVersion: 2
     m_Motion: {fileID: 9005656135333695213, guid: 2c062cebb548f9c45be40110d8801041,
       type: 3}
     m_Threshold: 0
@@ -25,6 +34,15 @@ BlendTree:
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityZ
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -7022077602271802407, guid: e4b15ec0918b7b74e997648874b0fe41,
+      type: 3}
+    m_Threshold: 90
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 6085290032775426223, guid: c5dbbda177999f94e8bef4898bd5b705,
@@ -105,7 +123,7 @@ BlendTree:
     m_DirectBlendParameter: VelocityZ
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 8554811497408002527, guid: dc4b7820495e22f45ad22ea87842cac1,
+    m_Motion: {fileID: -2991454979020708719, guid: 33f35ae13770d23419d3a0930edf34c2,
       type: 3}
     m_Threshold: 1.5
     m_Position: {x: -1, y: 0}
@@ -114,7 +132,7 @@ BlendTree:
     m_DirectBlendParameter: VelocityZ
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 8554811497408002527, guid: dc4b7820495e22f45ad22ea87842cac1,
+    m_Motion: {fileID: -2991454979020708719, guid: 33f35ae13770d23419d3a0930edf34c2,
       type: 3}
     m_Threshold: 2
     m_Position: {x: 1, y: 0}
@@ -122,10 +140,19 @@ BlendTree:
     m_CycleOffset: 0.5
     m_DirectBlendParameter: VelocityZ
     m_Mirror: 1
+  - serializedVersion: 2
+    m_Motion: {fileID: 2110406200423545789, guid: 711714f26800c04469fd411115722355,
+      type: 3}
+    m_Threshold: 2.5
+    m_Position: {x: 0, y: -1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: VelocityX
+    m_Mirror: 0
   m_BlendParameter: VelocityX
   m_BlendParameterY: VelocityZ
   m_MinThreshold: 0
-  m_MaxThreshold: 2
+  m_MaxThreshold: 2.5
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 2
