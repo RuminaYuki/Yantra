@@ -55,6 +55,14 @@ public class PairedAttackController : MonoBehaviour
             return;
         }
 
+        if(_victim == null)
+        {
+            _victim = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PairedAnimationActor>();
+            if(_victim == null)
+                Debug.LogWarning(
+                    "Victim reference is not set.",
+                    this);
+        }
     }
 
     public bool TryAttack(GameObject attackPrefab, float damage)
