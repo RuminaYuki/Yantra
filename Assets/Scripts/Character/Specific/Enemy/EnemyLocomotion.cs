@@ -5,6 +5,7 @@ public class EnemyLocomotion : BaseLocomotion
 {
     [Header("Locomotion Anim Parameter")]
     [SerializeField] private string _nameParameterMoveZ;
+    [SerializeField] private string _nameParameterMoveX;
     [SerializeField] private string _nameTurnAngle;
     [SerializeField] private string _nameStartTurn;
     [SerializeField] private float _angleTurn = 45;
@@ -15,7 +16,7 @@ public class EnemyLocomotion : BaseLocomotion
     protected override void Awake()
     {
         base.Awake();
-        LocomotionAnim.SetMoveParameter(_nameParameterMoveZ);
+        LocomotionAnim.SetMoveParameter(_nameParameterMoveZ,_nameParameterMoveX);
         LocomotionAnim.SetTurnParameter(_nameTurnAngle,_nameStartTurn);
         _pathNavigator = GetComponent<PathNavigator>();
     }
@@ -27,14 +28,14 @@ public class EnemyLocomotion : BaseLocomotion
             _wasMoving = false;
 
             if (ShouldResetMoveAnimation)
-                LocomotionAnim.SetMove(0f);
+                LocomotionAnim.SetMove(0f, 0f);
 
             return;
         }
 
         bool isMoving = _pathNavigator.Direction.sqrMagnitude > 0.01f;
         TurnToTarget(_pathNavigator.Target);
-        LocomotionAnim.SetMove(isMoving ? 1f : 0f);
+        LocomotionAnim.SetMove(isMoving ? 1f : 0f, 0f);
     }
     private void FixedUpdate()
     {
