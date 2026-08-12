@@ -14,16 +14,8 @@ public class PlayerLocomotion : BaseLocomotion
     [Header("ReferencePoint")]
     [SerializeField] private Transform _referencePoint;
 
-    //Walk Run and Turn Setting
-    [Header("Walk and Run Setting")]
-    [SerializeField] private string _nameParameterMoveZ;
-    [SerializeField] private string _nameParameterMoveX;
-    
     //Turn
     [Header("Turn Animation Setting")]
-    [SerializeField] private string _nameTurnAngle;
-    [SerializeField] private string _nameStartTurn;
-    [SerializeField] private float _angleTurn = 45;
     [SerializeField] private float _angleTurnbyCamera = 60;
 
     [Header("Turn Logic Setting")]
@@ -32,16 +24,9 @@ public class PlayerLocomotion : BaseLocomotion
     
 
     
-    private bool _wasMoving;
-
     protected override void Awake()
     {
         base.Awake();
-
-        //Set LocomotionAnim
-        LocomotionAnim.SetMoveParameter(_nameParameterMoveX,_nameParameterMoveZ);
-        LocomotionAnim.SetTurnParameter(_nameTurnAngle,_nameStartTurn);
-
         _enableUseInputObserverSO = true;
     }
 
@@ -56,36 +41,18 @@ public class PlayerLocomotion : BaseLocomotion
     }
     protected override void Update()
     {
+        Vector3 direction = GetDirectionWithReferencePoint();
+        SetMovementDirection(direction);
+        SetFacingDirection(direction.sqrMagnitude > 0.01f || _turnbyCamera
+            ? GetCameraForwardFlat()
+            : Vector3.zero);
         base.Update();
 
         if (IsMovementLocked)
-        {
-            _wasMoving = false;
-
-            if (ShouldResetMoveAnimation)
-                LocomotionAnim.SetMove(0f, 0f);
-
             return;
-        }
 
-        // set Animation
-        Vector3 direction = GetDirectionWithReferencePoint();
         if (_turnbyCamera)
             TurnByCamera(direction);
-        else
-            TurnAnimation(direction);
-
-        MoveAnimation(direction);
-    }
-
-    void FixedUpdate()
-    {
-        if (IsMovementLocked)
-            return;
-
-        bool hasMoveInput = _directionMove.sqrMagnitude > 0.01f;
-        if (!hasMoveInput && !_turnbyCamera) return;
-        Rotation.Rotate(GetCameraForwardFlat());
     }
 
     private void HandleMoveInput(Vector3 moveInput)
@@ -95,27 +62,6 @@ public class PlayerLocomotion : BaseLocomotion
     }
 
     #region SetAnimation
-    private void MoveAnimation(Vector3 direction)
-    {
-        Vector3 localVelocity = transform.InverseTransformDirection(direction);
-        float velocityX = Mathf.Clamp(localVelocity.x, -1, 1);
-        float velocityZ = Mathf.Clamp(localVelocity.z, -1, 1);
-
-        LocomotionAnim.SetMove(velocityX,velocityZ);
-    }
-    private void TurnAnimation(Vector3 direction)
-    {
-        bool isMoving = direction.sqrMagnitude > 0.01f;
-        bool justStartedMoving = isMoving && !_wasMoving;
-
-        if (justStartedMoving && Mathf.Abs(GetSignedAngleToCamera()) >= _angleTurn)
-        {
-            float angle = Vector3.SignedAngle(transform.forward,direction,Vector3.up);
-            LocomotionAnim.SetTurn(angle);
-        }
-
-        _wasMoving = isMoving;
-    }
     private void TurnByCamera(Vector3 direction)
     {
         float angle = GetSignedAngleToCamera();

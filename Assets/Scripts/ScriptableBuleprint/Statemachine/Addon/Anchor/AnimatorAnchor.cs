@@ -19,8 +19,4 @@ public class AnimatorAnchor : RuntimeAnchorBase<Animator> , IRuntimeAnchorBase
     }
 }
 
-public interface IRuntimeAnchorBase
-{
-    void IProvide(GameObject player);
-    void IUnset();
-}
+

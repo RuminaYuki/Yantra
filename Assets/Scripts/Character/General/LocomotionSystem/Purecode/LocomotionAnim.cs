@@ -8,7 +8,6 @@ public class LocomotionAnim
 
     private int _moveZ; //Set parameter
     private int _moveX; //Set parameter
-    private bool _canMove = true;
 
     private int _TurnAngle;
     private int _TurnTrigger;
@@ -43,14 +42,14 @@ public class LocomotionAnim
     //SetMove Method Overload
     public void SetMove(float velocityX, float velocityZ)
     {
-        float finalVelocityX = _canMove ? velocityX * _multiply : 0f;
-        float finalVelocityZ = _canMove ? velocityZ * _multiply : 0f;
+        float finalVelocityX = velocityX * _multiply;
+        float finalVelocityZ = velocityZ * _multiply;
         _animator.SetFloat(_moveX, finalVelocityX, _dampTime, Time.deltaTime);
         _animator.SetFloat(_moveZ, finalVelocityZ, _dampTime, Time.deltaTime);
     }
     public void SetMove(float velocityZ)
     {
-        float finalVelocity = _canMove ? velocityZ * _multiply : 0f;
+        float finalVelocity = velocityZ * _multiply;
         _animator.SetFloat(_moveZ, finalVelocity, _dampTime, Time.deltaTime);
     }
 
@@ -63,7 +62,6 @@ public class LocomotionAnim
     #region Secondary API
     public float DampTime{get => _dampTime; set => _dampTime = value;}
     public float Multiply { get => _multiply; set => _multiply = value; }
-    public void SetMovementEnabled(bool enabled) =>_canMove = enabled;
     #endregion
     
 }

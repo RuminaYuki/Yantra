@@ -8,12 +8,15 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 public class DistanceConditionSO : StateConditionSO
 {
     [SerializeField] private TransformAnchor _targetAnchor;
+    [Header("if have FloatDataSO, it will override the value")]
+    [SerializeField, Min(0f)] private FloatDataSO _distanceData;
     [SerializeField, Min(0f)] private float _distance = 1f;
     public float Distance => _distance;
 
     public override Condition CreateCondition()
     {
-        return new DistanceCondition(_targetAnchor, _distance);
+        float distance = _distanceData != null ? _distanceData.Value : _distance;
+        return new DistanceCondition(_targetAnchor, distance);
     }
 }
 
