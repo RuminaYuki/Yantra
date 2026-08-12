@@ -189,7 +189,7 @@ public class CenterRayInteract : MonoBehaviour
         if (currentInteractable == null)
             return;
 
-        Debug.Log($"Lost focus on {currentInteractable as MonoBehaviour}");
+        //Debug.Log($"Lost focus on {currentInteractable as MonoBehaviour}");
         currentInteractable.OnLoseFocus();
         currentInteractable = null;
     }

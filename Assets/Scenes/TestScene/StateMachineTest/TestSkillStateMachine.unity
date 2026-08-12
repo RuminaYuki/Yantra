@@ -8251,6 +8251,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test interact item (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3919198148196084313, guid: 89840fb2447613c41a4e9d3ac785980a,
+        type: 3}
+      propertyPath: transitoinSmooth
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9182947527880130960, guid: 89840fb2447613c41a4e9d3ac785980a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9367,7 +9372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &423451812
 RectTransform:
   m_ObjectHideFlags: 0

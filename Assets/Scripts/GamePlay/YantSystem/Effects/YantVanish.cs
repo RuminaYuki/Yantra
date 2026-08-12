@@ -8,6 +8,8 @@ public class YantVanish : MonoBehaviour
     private bool _isVanished;
     private YantraInputObserverSO _inputObserver;
 
+    [SerializeField] private StatSO _statSO;
+
     public void Apply(string vanishTag, bool temporary, float duration, YantraInputObserverSO inputObserver)
     {
         if (_revertRoutine != null)
@@ -31,6 +33,9 @@ public class YantVanish : MonoBehaviour
 
         if (temporary)
             _revertRoutine = StartCoroutine(RevertAfter(duration));
+
+        if(_statSO != null)
+            SetStatToPlayer(true, duration);
     }
 
     public void Revert()
@@ -69,6 +74,16 @@ public class YantVanish : MonoBehaviour
         {
             _inputObserver.OnMoveChannel -= OnMoveInput;
             _inputObserver = null;
+        }
+    }
+
+    private void SetStatToPlayer(bool value, float duration = 0f)
+    {
+        StatCountdown countdown = GetComponent<StatCountdown>();
+
+        if (countdown != null)
+        {
+            countdown.SetStatCountdown(_statSO, duration, value);
         }
     }
 

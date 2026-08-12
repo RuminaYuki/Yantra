@@ -13,6 +13,8 @@ public class MaterialManager : MonoBehaviour
         public Material[] Materials;
     }
 
+    [SerializeField] private StatObserver _statObserver;
+
     [Header("Material Settings")]
     [ReadOnly, SerializeField] private Transform _parrentTransform;
     [SerializeField] private List<Material> _characterMaterial;
@@ -20,6 +22,7 @@ public class MaterialManager : MonoBehaviour
 
 
     [Header("Yant Invisible Settings")]
+    [SerializeField] private StatSO _invisibleStatSO;
     [SerializeField] private Material _yantInvisbleMaterial;
     [SerializeField] private Color _yantInvisbleColor = new(0.37f, 0.16f, 0.49f, 1f);
     [SerializeField] private VisualEffect _yantInvisbleSmoke;
@@ -37,6 +40,7 @@ public class MaterialManager : MonoBehaviour
     {
         CacheMaterials();
         SetDefault();
+        _statObserver.OnStatChanged += OnStatChanged;
     }
 
     private void OnDisable()
@@ -54,6 +58,13 @@ public class MaterialManager : MonoBehaviour
 
     }
 
+    private void OnStatChanged(StatSO statSO, bool value)
+    {
+        if (statSO == null) return;
+
+        if (statSO ==  _invisibleStatSO) OnInvisible(value);
+    }
+
     private void OnInvisible(bool isInvisible)
     {
         _yantInvisible = isInvisible;
@@ -66,10 +77,10 @@ public class MaterialManager : MonoBehaviour
                 if (!material) continue;
 
                 material.SetColor("_BaseColor", _yantInvisbleColor);
-                Debug.Log($"Set BaseColor to {_yantInvisbleColor.GetHashCode()}");
+                //Debug.Log($"Set BaseColor to {_yantInvisbleColor.GetHashCode()}");
                 
                 material.SetFloat("_Opacity", 90f);
-                Debug.Log($"Set _Opacity to 90%");
+                //Debug.Log($"Set _Opacity to 90%");
             }
 
             foreach (SkinMaterialData skinMaterialData in _additionalMaterials)
@@ -92,7 +103,7 @@ public class MaterialManager : MonoBehaviour
 
                 skinMaterialData.Renderer.sharedMaterials = newMaterials;
 
-                Debug.Log($"Add {_yantInvisbleMaterial.name} to {skinMaterialData.Renderer.name}");
+                //Debug.Log($"Add {_yantInvisbleMaterial.name} to {skinMaterialData.Renderer.name}");
             }
 
             if (_yantInvisbleSmoke)
@@ -112,10 +123,10 @@ public class MaterialManager : MonoBehaviour
 
 
                 material.SetColor("_BaseColor", Color.white);
-                Debug.Log($"Set BaseColor to white");
+                //Debug.Log($"Set BaseColor to white");
 
                 material.SetFloat("_Opacity", 100f);
-                Debug.Log($"Set _Opacity to 100%");
+                //Debug.Log($"Set _Opacity to 100%");
             }
 
             foreach (SkinMaterialData skinMaterialData in _additionalMaterials)
@@ -138,7 +149,7 @@ public class MaterialManager : MonoBehaviour
                 skinMaterialData.Renderer.sharedMaterials =
                     restoredMaterials.ToArray();
 
-                Debug.Log($"Restore Materials to {skinMaterialData.Renderer.name}");
+                //Debug.Log($"Restore Materials to {skinMaterialData.Renderer.name}");
             }
 
             if (_yantInvisbleSmoke)
@@ -160,10 +171,10 @@ public class MaterialManager : MonoBehaviour
             if (!material) continue;
 
             material.SetColor("_BaseColor", Color.white);
-            Debug.Log($"Set BaseColor to white");
+            //Debug.Log($"Set BaseColor to white");
 
             material.SetFloat("_Opacity", 100f);
-            Debug.Log($"Set _Opacity to 100%");
+            //Debug.Log($"Set _Opacity to 100%");
         }
     }
 
