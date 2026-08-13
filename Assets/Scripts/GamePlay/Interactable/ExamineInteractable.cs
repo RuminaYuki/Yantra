@@ -11,7 +11,7 @@ public class ExamineInteractable : InteractableBase
     [Tooltip("How long the camera takes to reach the target pose (seconds).")]
     [SerializeField] private float transitionDuration = 0.6f;
 
-    private FatalFrameCameraController _cameraController;
+    private PlayerCameraController _cameraController;
     private Transform _cameraTransform;
     private ILocomotionLock _locomotionLock;
     private Vector3 _savedPosition;
@@ -76,17 +76,17 @@ public class ExamineInteractable : InteractableBase
 
     private bool ResolveCameraController(GameObject rootplayer)
     {
-        _cameraController = rootplayer.GetComponentInChildren<FatalFrameCameraController>();
+        _cameraController = rootplayer.GetComponentInChildren<PlayerCameraController>();
 
         if (_cameraController == null)
         {
             Camera camera = rootplayer.GetComponentInChildren<Camera>();
             if (camera != null)
-                _cameraController = camera.GetComponent<FatalFrameCameraController>();
+                _cameraController = camera.GetComponent<PlayerCameraController>();
         }
 
         if (_cameraController == null && Camera.main != null)
-            _cameraController = Camera.main.GetComponent<FatalFrameCameraController>();
+            _cameraController = Camera.main.GetComponent<PlayerCameraController>();
 
         if (_cameraController == null)
         {
