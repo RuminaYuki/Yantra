@@ -1,8 +1,8 @@
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class MaterialManager : MonoBehaviour
 {
@@ -21,11 +21,29 @@ public class MaterialManager : MonoBehaviour
     [Header("Yant Invisible Settings")]
     [SerializeField] private List<Material> _yantInvisbleMaterial;
     [SerializeField] private Color _yantInvisbleColor = new(0.37f, 0.16f, 0.49f, 1f);
-    [SerializeField] private VisualEffect _yantInvisbleSmoke;
-
+    [SerializeField] private ParticleSystem _yantInvisbleSmoke;
     [SerializeField] private bool _yantInvisible;
 
-    private bool _isInvisible = false;
+    [Header("Heal Settings")]
+    [SerializeField] private List<Material> _healMaterial;
+    [SerializeField] private float _maxHealRadius = 2.5f;
+    [SerializeField] private float _healDuration = 1.5f;
+
+    [SerializeField]
+    private AnimationCurve _healEaseCurve =
+        AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+    private static readonly int HealRadiusID =
+        Shader.PropertyToID("_HealRadius");
+
+    private static readonly int HealOpacityID =
+        Shader.PropertyToID("_HealOpacity");
+
+    private readonly List<MaterialPropertyBlock> _healPropertyBlockPool = new();
+
+    private Coroutine _healCoroutine;
+
+    #region Unity Lifecycle
 
     private void OnValidate()
     {
@@ -35,11 +53,21 @@ public class MaterialManager : MonoBehaviour
     private void Awake()
     {
         CacheMaterials();
+        EnsureHealPropertyBlockPool();
+
         SetDefault();
     }
 
     private void OnDisable()
     {
+        if (_healCoroutine != null)
+        {
+            StopCoroutine(_healCoroutine);
+            _healCoroutine = null;
+        }
+
+        RemoveHealMaterials();
+
         SetDefault();
     }
 
@@ -50,7 +78,16 @@ public class MaterialManager : MonoBehaviour
             _yantInvisible = !_yantInvisible;
             OnInvisible(_yantInvisible);
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            PlayHeal();
+        }
     }
+
+    #endregion
+
+    #region Yant Invisible
 
     private void OnInvisible(bool isInvisible)
     {
@@ -65,8 +102,13 @@ public class MaterialManager : MonoBehaviour
                     continue;
                 }
 
-                material.SetColor("_BaseColor", _yantInvisbleColor);
-                material.SetFloat("_Opacity", 90f);
+                material.SetColor(
+                    "_BaseColor",
+                    _yantInvisbleColor);
+
+                material.SetFloat(
+                    "_Opacity",
+                    90f);
             }
 
             foreach (SkinMaterialData skinMaterialData in _additionalMaterials)
@@ -76,17 +118,15 @@ public class MaterialManager : MonoBehaviour
                     continue;
                 }
 
-                AddInvisibleMaterials(skinMaterialData.Renderer);
+                AddMaterials(
+                    skinMaterialData.Renderer,
+                    _yantInvisbleMaterial);
             }
 
             if (_yantInvisbleSmoke)
             {
                 _yantInvisbleSmoke.Play();
             }
-
-#if UNITY_EDITOR
-            CacheMaterials();
-#endif
         }
         else
         {
@@ -97,8 +137,13 @@ public class MaterialManager : MonoBehaviour
                     continue;
                 }
 
-                material.SetColor("_BaseColor", Color.white);
-                material.SetFloat("_Opacity", 100f);
+                material.SetColor(
+                    "_BaseColor",
+                    Color.white);
+
+                material.SetFloat(
+                    "_Opacity",
+                    100f);
             }
 
             foreach (SkinMaterialData skinMaterialData in _additionalMaterials)
@@ -108,7 +153,9 @@ public class MaterialManager : MonoBehaviour
                     continue;
                 }
 
-                RemoveInvisibleMaterials(skinMaterialData.Renderer);
+                RemoveMaterials(
+                    skinMaterialData.Renderer,
+                    _yantInvisbleMaterial);
             }
 
             if (_yantInvisbleSmoke)
@@ -118,84 +165,137 @@ public class MaterialManager : MonoBehaviour
         }
     }
 
-    private void AddInvisibleMaterials(SkinnedMeshRenderer renderer)
+    #endregion
+
+    #region Heal
+
+    public void PlayHeal()
     {
-        if (_yantInvisbleMaterial == null ||
-            _yantInvisbleMaterial.Count == 0)
+        if (_healCoroutine != null)
         {
-            return;
+            StopCoroutine(_healCoroutine);
         }
 
-        Material[] currentMaterials = renderer.sharedMaterials;
+        AddHealMaterials();
 
-        List<Material> newMaterials = new(currentMaterials);
+        ApplyHealOpacity(1f);
+        ApplyHealRadius(0f);
 
-        foreach (Material invisibleMaterial in _yantInvisbleMaterial)
-        {
-            if (!invisibleMaterial)
-            {
-                continue;
-            }
-
-            if (newMaterials.Contains(invisibleMaterial))
-            {
-                continue;
-            }
-
-            newMaterials.Add(invisibleMaterial);
-        }
-
-        renderer.sharedMaterials = newMaterials.ToArray();
+        _healCoroutine = StartCoroutine(HealRoutine());
     }
 
-    private void RemoveInvisibleMaterials(SkinnedMeshRenderer renderer)
+    private IEnumerator HealRoutine()
     {
-        if (_yantInvisbleMaterial == null ||
-            _yantInvisbleMaterial.Count == 0)
+        float time = 0f;
+
+        while (time < _healDuration)
         {
-            return;
+            time += Time.deltaTime;
+
+            float normalized =
+                Mathf.Clamp01(time / _healDuration);
+
+            float eased =
+                _healEaseCurve.Evaluate(normalized);
+
+            float currentRadius =
+                eased * _maxHealRadius;
+
+            ApplyHealRadius(currentRadius);
+
+            yield return null;
         }
 
-        Material[] currentMaterials = renderer.sharedMaterials;
+        ApplyHealRadius(_maxHealRadius);
 
-        List<Material> restoredMaterials = new();
-
-        foreach (Material material in currentMaterials)
-        {
-            if (!material)
-            {
-                continue;
-            }
-
-            if (_yantInvisbleMaterial.Contains(material))
-            {
-                continue;
-            }
-
-            restoredMaterials.Add(material);
-        }
-
-        renderer.sharedMaterials = restoredMaterials.ToArray();
+        _healCoroutine = null;
     }
 
-    private void SetDefault()
+    private void AddHealMaterials()
     {
-        if (_yantInvisbleSmoke)
+        foreach (SkinMaterialData skinMaterialData in _additionalMaterials)
         {
-            _yantInvisbleSmoke.Stop();
-        }
-
-        foreach (Material material in _characterMaterial)
-        {
-            if (!material)
+            if (!skinMaterialData.Renderer)
             {
                 continue;
             }
 
-            material.SetColor("_BaseColor", Color.white);
-            material.SetFloat("_Opacity", 100f);
+            AddMaterials(
+                skinMaterialData.Renderer,
+                _healMaterial);
         }
     }
+
+    private void RemoveHealMaterials()
+    {
+        foreach (SkinMaterialData skinMaterialData in _additionalMaterials)
+        {
+            if (!skinMaterialData.Renderer)
+            {
+                continue;
+            }
+
+            RemoveMaterials(
+                skinMaterialData.Renderer,
+                _healMaterial);
+        }
+    }
+
+    private void ApplyHealRadius(float radius)
+    {
+        for (int i = 0; i < _additionalMaterials.Count; i++)
+        {
+            SkinMaterialData skinMaterialData =
+                _additionalMaterials[i];
+
+            if (!skinMaterialData.Renderer)
+            {
+                continue;
+            }
+
+            MaterialPropertyBlock propertyBlock =
+                _healPropertyBlockPool[i];
+
+            skinMaterialData.Renderer.GetPropertyBlock(
+                propertyBlock);
+
+            propertyBlock.SetFloat(
+                HealRadiusID,
+                radius);
+
+            skinMaterialData.Renderer.SetPropertyBlock(
+                propertyBlock);
+        }
+    }
+
+    private void ApplyHealOpacity(float opacity)
+    {
+        for (int i = 0; i < _additionalMaterials.Count; i++)
+        {
+            SkinMaterialData skinMaterialData =
+                _additionalMaterials[i];
+
+            if (!skinMaterialData.Renderer)
+            {
+                continue;
+            }
+
+            MaterialPropertyBlock propertyBlock =
+                _healPropertyBlockPool[i];
+
+            skinMaterialData.Renderer.GetPropertyBlock(
+                propertyBlock);
+
+            propertyBlock.SetFloat(
+                HealOpacityID,
+                opacity);
+
+            skinMaterialData.Renderer.SetPropertyBlock(
+                propertyBlock);
+        }
+    }
+
+    #endregion
 
     private void CacheMaterials()
     {
@@ -221,15 +321,29 @@ public class MaterialManager : MonoBehaviour
                 continue;
             }
 
-            Material[] materials = skinnedMeshRenderer.sharedMaterials;
+            Material[] materials =
+                skinnedMeshRenderer.sharedMaterials;
+
             List<Material> additionalMaterials = new();
 
             foreach (Material material in materials)
             {
-                if (material && !_characterMaterial.Contains(material))
+                if (!material)
                 {
-                    additionalMaterials.Add(material);
+                    continue;
                 }
+
+                if (_characterMaterial.Contains(material))
+                {
+                    continue;
+                }
+
+                if (_healMaterial.Contains(material))
+                {
+                    continue;
+                }
+
+                additionalMaterials.Add(material);
             }
 
             _additionalMaterials.Add(new SkinMaterialData
@@ -238,5 +352,133 @@ public class MaterialManager : MonoBehaviour
                 Materials = additionalMaterials.ToArray()
             });
         }
+
+        EnsureHealPropertyBlockPool();
+    }
+
+    private void EnsureHealPropertyBlockPool()
+    {
+        _healPropertyBlockPool.Clear();
+
+        for (int i = 0; i < _additionalMaterials.Count; i++)
+        {
+            _healPropertyBlockPool.Add(
+                new MaterialPropertyBlock());
+        }
+    }
+
+    private void SetDefault()
+    {
+        // Character Default
+        foreach (Material material in _characterMaterial)
+        {
+            if (!material)
+            {
+                continue;
+            }
+
+            material.SetColor(
+                "_BaseColor",
+                Color.white);
+
+            material.SetFloat(
+                "_Opacity",
+                100f);
+        }
+
+        // Invisible Default
+        if (_yantInvisbleSmoke)
+        {
+            _yantInvisbleSmoke.Stop();
+        }
+
+        foreach (SkinMaterialData skinMaterialData in _additionalMaterials)
+        {
+            if (!skinMaterialData.Renderer)
+            {
+                continue;
+            }
+
+            RemoveMaterials(
+                skinMaterialData.Renderer,
+                _yantInvisbleMaterial);
+        }
+
+        // Heal Default
+        RemoveHealMaterials();
+
+        ApplyHealOpacity(0f);
+        ApplyHealRadius(0f);
+    }
+
+    private void AddMaterials(
+        SkinnedMeshRenderer renderer,
+        List<Material> materialsToAdd)
+    {
+        if (!renderer ||
+            materialsToAdd == null ||
+            materialsToAdd.Count == 0)
+        {
+            return;
+        }
+
+        Material[] currentMaterials =
+            renderer.sharedMaterials;
+
+        List<Material> newMaterials =
+            new(currentMaterials);
+
+        foreach (Material material in materialsToAdd)
+        {
+            if (!material)
+            {
+                continue;
+            }
+
+            if (newMaterials.Contains(material))
+            {
+                continue;
+            }
+
+            newMaterials.Add(material);
+        }
+
+        renderer.sharedMaterials =
+            newMaterials.ToArray();
+    }
+
+    private void RemoveMaterials(
+        SkinnedMeshRenderer renderer,
+        List<Material> materialsToRemove)
+    {
+        if (!renderer ||
+            materialsToRemove == null ||
+            materialsToRemove.Count == 0)
+        {
+            return;
+        }
+
+        Material[] currentMaterials =
+            renderer.sharedMaterials;
+
+        List<Material> restoredMaterials = new();
+
+        foreach (Material material in currentMaterials)
+        {
+            if (!material)
+            {
+                continue;
+            }
+
+            if (materialsToRemove.Contains(material))
+            {
+                continue;
+            }
+
+            restoredMaterials.Add(material);
+        }
+
+        renderer.sharedMaterials =
+            restoredMaterials.ToArray();
     }
 }

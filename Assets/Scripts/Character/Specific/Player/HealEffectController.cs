@@ -10,24 +10,35 @@ public class HealEffectController : MonoBehaviour
     [ReadOnly, SerializeField] private List<SkinnedMeshRenderer> _targetRenderers = new();
 
     [Header("Heal Settings")]
-    [SerializeField] private float maxRadius = 2.5f;
-    [SerializeField] private float duration = 1.5f;
+    [SerializeField] private float _maxRadius = 2.5f;
+    [SerializeField] private float _duration = 1.5f;
+
     [SerializeField]
-    private AnimationCurve easeCurve =
+    private AnimationCurve _easeCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    private static readonly int HealRadiusID = Shader.PropertyToID("_HealRadius");
+    private static readonly int HealRadiusID =
+        Shader.PropertyToID("_HealRadius");
+
+    private static readonly int HealOpacityID =
+        Shader.PropertyToID("_HealOpacity");
+
     private readonly List<MaterialPropertyBlock> _mpbPool = new();
 
     private void OnValidate()
     {
         CacheRenderers();
+        EnsurePropertyBlockPool();
     }
 
     private void Awake()
     {
         CacheRenderers();
         EnsurePropertyBlockPool();
+
+        // เริ่มเกมมา Effect มองไม่เห็น
+        ApplyOpacityToAll(0f);
+        ApplyRadiusToAll(0f);
     }
 
     private void CacheRenderers()
@@ -54,11 +65,11 @@ public class HealEffectController : MonoBehaviour
                 continue;
             }
 
-            // เอาเฉพาะตัวที่มี material ที่ใช้ _HealRadius จริงๆ (กันไปเซ็ตค่าใส่ renderer ที่ไม่เกี่ยว)
             bool hasHealMaterial = false;
-            foreach (Material mat in renderer.sharedMaterials)
+
+            foreach (Material material in renderer.sharedMaterials)
             {
-                if (mat && mat.HasProperty(HealRadiusID))
+                if (material && material.HasProperty(HealRadiusID))
                 {
                     hasHealMaterial = true;
                     break;
@@ -75,6 +86,7 @@ public class HealEffectController : MonoBehaviour
     private void EnsurePropertyBlockPool()
     {
         _mpbPool.Clear();
+
         for (int i = 0; i < _targetRenderers.Count; i++)
         {
             _mpbPool.Add(new MaterialPropertyBlock());
@@ -92,26 +104,37 @@ public class HealEffectController : MonoBehaviour
     public void PlayHeal()
     {
         StopAllCoroutines();
+
+        // กด H ปุ๊บ Effect กลับมาเห็นทันที
+        ApplyOpacityToAll(1f);
+
         StartCoroutine(HealRoutine());
     }
 
     private IEnumerator HealRoutine()
     {
-        float t = 0f;
-        while (t < duration)
+        float time = 0f;
+
+        while (time < _duration)
         {
-            t += Time.deltaTime;
-            float normalized = Mathf.Clamp01(t / duration);
-            float eased = easeCurve.Evaluate(normalized);
-                float currentRadius = eased * maxRadius;
+            time += Time.deltaTime;
+
+            float normalized =
+                Mathf.Clamp01(time / _duration);
+
+            float eased =
+                _easeCurve.Evaluate(normalized);
+
+            float currentRadius =
+                eased * _maxRadius;
 
             ApplyRadiusToAll(currentRadius);
 
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.3f);
-        ApplyRadiusToAll(0f);
+        // ให้ Effect ค้างหลังเล่นจบ
+        ApplyRadiusToAll(_maxRadius);
     }
 
     private void ApplyRadiusToAll(float radius)
@@ -119,14 +142,39 @@ public class HealEffectController : MonoBehaviour
         for (int i = 0; i < _targetRenderers.Count; i++)
         {
             SkinnedMeshRenderer renderer = _targetRenderers[i];
+
             if (!renderer)
             {
                 continue;
             }
 
             MaterialPropertyBlock mpb = _mpbPool[i];
+
             renderer.GetPropertyBlock(mpb);
+
             mpb.SetFloat(HealRadiusID, radius);
+
+            renderer.SetPropertyBlock(mpb);
+        }
+    }
+
+    private void ApplyOpacityToAll(float opacity)
+    {
+        for (int i = 0; i < _targetRenderers.Count; i++)
+        {
+            SkinnedMeshRenderer renderer = _targetRenderers[i];
+
+            if (!renderer)
+            {
+                continue;
+            }
+
+            MaterialPropertyBlock mpb = _mpbPool[i];
+
+            renderer.GetPropertyBlock(mpb);
+
+            mpb.SetFloat(HealOpacityID, opacity);
+
             renderer.SetPropertyBlock(mpb);
         }
     }
