@@ -1831,6 +1831,11 @@ GameObject:
   - component: {fileID: 7564764884602532370}
   - component: {fileID: 5829247252735835381}
   - component: {fileID: 649150574759504625}
+  - component: {fileID: 3311584235873488721}
+  - component: {fileID: 4156717407434846555}
+  - component: {fileID: 8089797697649941050}
+  - component: {fileID: 3538070472994239782}
+  - component: {fileID: 4420882688903385976}
   m_Layer: 3
   m_Name: PlayerController
   m_TagString: Player
@@ -2051,17 +2056,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotion
   _dampTime: 0.25
   _multiply: 0
+  _nameParameterMoveZ: VelocityZ
+  _nameParameterMoveX: VelocityX
+  _nameTurnAngle: StartTurnAngle
+  _nameStartTurn: StartTurn
+  _angleTurn: 45
   _rotateSpeed: 1
   _gravityMultiplier: 3
   _debugMoveMultiply: 0
   _debugRotateSpeed: 0
   _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   _referencePoint: {fileID: 2591412271110741091}
-  _nameParameterMoveZ: VelocityZ
-  _nameParameterMoveX: VelocityX
-  _nameTurnAngle: StartTurnAngle
-  _nameStartTurn: StartTurn
-  _angleTurn: 45
   _angleTurnbyCamera: 60
   _turnbyCamera: 0
 --- !u!114 &790457895582925045
@@ -2247,6 +2252,99 @@ MonoBehaviour:
   rayInteract: {fileID: 5829247252735835381}
   rootPlayer: {fileID: 9103408916130526773}
   onInteractable: 0
+--- !u!114 &3311584235873488721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fb5d8169b205b4e992fbfe1f80933b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialManager
+  _statObserver: {fileID: 4156717407434846555}
+  _parrentTransform: {fileID: 652001588548712837}
+  _characterMaterial:
+  - {fileID: 2100000, guid: 1d48ff315e77a764083c5fa36e53cfde, type: 2}
+  _additionalMaterials:
+  - Renderer: {fileID: 7295473345760909959}
+    Materials:
+    - {fileID: 2100000, guid: c8eeed5732183fb4489cea8168dad951, type: 2}
+  - Renderer: {fileID: 5817839969162351413}
+    Materials:
+    - {fileID: 2100000, guid: 2603ec9ab8cba1143b41809547ffea7d, type: 2}
+  - Renderer: {fileID: 5833838899298505638}
+    Materials:
+    - {fileID: 2100000, guid: fcfb6f229124a7d4da1ce3840ebb602f, type: 2}
+  - Renderer: {fileID: 6946628259325072957}
+    Materials:
+    - {fileID: 2100000, guid: 030e4073c38fdb44dbb9a8dbfbe3a3ed, type: 2}
+  - Renderer: {fileID: 6028099147497517372}
+    Materials:
+    - {fileID: 2100000, guid: d06029d41f9fe19498b67e2706fcbd12, type: 2}
+  - Renderer: {fileID: 1442535775804951512}
+    Materials:
+    - {fileID: 2100000, guid: c7126378596d5e446980c62dab498fcc, type: 2}
+  _invisibleStatSO: {fileID: 11400000, guid: e8f9d967926733d4d90cf3f410734c41, type: 2}
+  _yantInvisbleMaterial: {fileID: 2100000, guid: d2697dddd1c43d042819bb86e927a9c0,
+    type: 2}
+  _yantInvisbleColor: {r: 0.37, g: 0.16, b: 0.49, a: 1}
+  _yantInvisbleSmoke: {fileID: 0}
+  _yantInvisible: 0
+--- !u!114 &4156717407434846555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a7c5e89dc6c5f4a96da247aeb60e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatObserver
+  stats: []
+--- !u!114 &8089797697649941050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b1a8b7b81fba74e82d5609135e7f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatCountdown
+  countdowns: []
+  statObserver: {fileID: 4156717407434846555}
+--- !u!114 &3538070472994239782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa7bc0b1a5e7d84fa24459b249a9c0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackCoordinator
+--- !u!114 &4420882688903385976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70feb6d3d91b2e045bfc71b593f32a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantVanish
+  _statSO: {fileID: 11400000, guid: e8f9d967926733d4d90cf3f410734c41, type: 2}
 --- !u!1 &3701737388500474450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2807,7 +2905,7 @@ MonoBehaviour:
   _otsPivot: {fileID: 0}
   _yantraPivot: {fileID: 6992557839641635557}
   _yantraOffsetRotationY: 0
-  _tppOffset: {x: 0.35, y: 0.2, z: -0.9}
+  _tppOffset: {x: 0.35, y: 0.2, z: -1}
   _tppFOV: 60
   _fppFOV: 40
   _otsFOV: 50
@@ -4236,6 +4334,31 @@ PrefabInstance:
       propertyPath: _yantSpawnPoint
       value: 
       objectReference: {fileID: 1261581932288049500}
+    - target: {fileID: 6147809767875308379, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: _minSimilarityPercent
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247634366131956425, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247634366131956425, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: da7e4af0bf84fbe42b19c9e0bc9c19c3, type: 2}
+    - target: {fileID: 7472325208072672957, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7472325208072672957, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 27a191956e2d4b44d8e6731354acb1df, type: 2}
     - target: {fileID: 8052324723781514443, guid: d6f2c258a18b0514f8959d610175256e,
         type: 3}
       propertyPath: _shapeCategories.Array.size

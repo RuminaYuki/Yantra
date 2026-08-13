@@ -37,7 +37,7 @@ public class FlagCountdown : MonoBehaviour
         {
             if (flagData.flag == flag)
             {
-                if (flagData.countdownTime < countdownTime)
+                if (flagData.remainingTime < countdownTime)
                 SetStartCountdown(flagData, countdownTime, flagValue);
                 return;
             }
@@ -86,7 +86,7 @@ public class FlagCountdown : MonoBehaviour
         while (flagData.remainingTime > 0)
         {
             flagData.remainingTime -= Time.deltaTime;
-            Debug.Log($"CountdownCoroutine: {flagData.flag.name}, remainingTime: {flagData.remainingTime}");
+            //Debug.Log($"CountdownCoroutine: {flagData.flag.name}, remainingTime: {flagData.remainingTime}");
             yield return null;
         }
         stateFlags.Set(flagData.flag, flagValue);

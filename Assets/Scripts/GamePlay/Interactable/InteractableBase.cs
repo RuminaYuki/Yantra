@@ -18,6 +18,7 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
     public bool CanInteract => hideInteract ? canInteract : true;
 
     public Action OnInteract;
+    public Action OnEndInteract;
 
     private void Awake()
     {
@@ -71,6 +72,7 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
 
     public virtual bool CancelInteraction(GameObject rootplayer)
     {
+        OnEndInteract?.Invoke();
         return false;
     }
 
@@ -79,4 +81,22 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
     {
         canInteract = value;
     }
+}
+
+public interface Iinteractable
+{
+    bool CanInteract { get; }
+
+    //Command the object to perform its interaction logic
+    bool Interact(GameObject rootplayer);
+
+    //Command the object to show Focus when in Camera forward
+    void OnFocus();
+    void OnLoseFocus();
+
+    //Command the object to show Highlight when in Highlight range
+    void ShowHighlight();
+    void HideHighlight();
+
+    bool CancelInteraction(GameObject rootplayer);
 }

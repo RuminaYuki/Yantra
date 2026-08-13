@@ -189,7 +189,7 @@ public class CenterRayInteract : MonoBehaviour
         if (currentInteractable == null)
             return;
 
-        Debug.Log($"Lost focus on {currentInteractable as MonoBehaviour}");
+        //Debug.Log($"Lost focus on {currentInteractable as MonoBehaviour}");
         currentInteractable.OnLoseFocus();
         currentInteractable = null;
     }
@@ -229,20 +229,3 @@ public class CenterRayInteract : MonoBehaviour
     }
 }
 
-public interface Iinteractable
-{
-    bool CanInteract { get; }
-
-    //Command the object to perform its interaction logic
-    bool Interact(GameObject rootplayer);
-
-    //Command the object to show Focus when in Camera forward
-    void OnFocus();
-    void OnLoseFocus();
-
-    //Command the object to show Highlight when in Highlight range
-    void ShowHighlight();
-    void HideHighlight();
-
-    bool CancelInteraction(GameObject rootplayer);
-}

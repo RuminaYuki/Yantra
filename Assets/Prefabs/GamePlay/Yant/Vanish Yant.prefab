@@ -13,13 +13,15 @@ GameObject:
   - component: {fileID: 1625883414680777010}
   - component: {fileID: 5018629197499477566}
   - component: {fileID: -9137451391539441850}
+  - component: {fileID: 3781564938757227648}
+  - component: {fileID: -8642917754202229033}
   m_Layer: 7
   m_Name: Vanish Yant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7780515593612909709
 Transform:
   m_ObjectHideFlags: 0
@@ -130,3 +132,35 @@ MonoBehaviour:
   _duration: 5
   _cancelOnMove: 1
   _inputObserver: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
+--- !u!114 &3781564938757227648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867824720623061172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02643e0e27c3c5b46a059694c4dceeef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
+  _yantLifeTime: 10
+  _effectSettings:
+  - _yantReferences: {fileID: -9137451391539441850}
+    _effectType: 2
+    _effectDuration: 0.5
+    _holdDuration: 0
+--- !u!114 &-8642917754202229033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867824720623061172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Provider
+  Anchors:
+  - {fileID: 11400000, guid: 2aa02c22bc949974d8a7630d7b6d24e5, type: 2}

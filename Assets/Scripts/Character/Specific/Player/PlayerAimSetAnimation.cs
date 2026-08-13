@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAimSetAnimation : MonoBehaviour
 {
-    [SerializeField] private FatalFrameCameraController cameraController;
+    [SerializeField] private PlayerCameraController cameraController;
     [SerializeField] private Transform playerRoot;
     [SerializeField] private float maxYawAngle = 60f;
     [SerializeField] private float smoothSpeed = 10f;

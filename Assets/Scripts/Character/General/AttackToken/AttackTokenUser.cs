@@ -4,9 +4,21 @@ public class AttackTokenUser : MonoBehaviour
 {
     [SerializeField] private AttackCoordinator _coordinator;
 
+#if UNITY_EDITOR
+    [Header("Runtime Debug")]
+    [SerializeField] private bool _debugHasToken;
+#endif
+
     public bool HasToken =>
         _coordinator != null &&
         _coordinator.IsOwner(gameObject);
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        _debugHasToken = HasToken;
+    }
+#endif
 
     private void Awake()
     {

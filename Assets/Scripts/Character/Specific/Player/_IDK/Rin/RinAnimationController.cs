@@ -18,7 +18,7 @@ public class RinAnimationController : MonoBehaviour
     // ==========================================
     [Header("Aiming & Camera System")]
     [Tooltip("ลาก Main Camera (ที่มีสคริปต์กล้อง) มาใส่ช่องนี้")]
-    [SerializeField] private FatalFrameCameraController _cameraController;
+    [SerializeField] private PlayerCameraController _cameraController;
     
     [Tooltip("ลากโฟลเดอร์ TargetTracking (Rig) มาใส่ช่องนี้")]
     [SerializeField] private UnityEngine.Animations.Rigging.Rig _aimRig; 

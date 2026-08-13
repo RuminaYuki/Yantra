@@ -9,8 +9,8 @@ public class CutsceneController : MonoBehaviour
     public static event Action<bool> OnGlobalCutsceneStateChanged;
 
     [Header("Dependencies")]
-    [Tooltip("ลากกล้องตัวแม่ที่มีสคริปต์ FatalFrameCameraController มาใส่")]
-    [SerializeField] private FatalFrameCameraController _cameraController;
+    [Tooltip("ลากกล้องตัวแม่ที่มีสคริปต์ PlayerCameraController มาใส่")]
+    [SerializeField] private PlayerCameraController _cameraController;
 
     [Tooltip("ลาก GameObject ของผู้เล่นที่มีสคริปต์ Locomotion (และ IMoveLock) มาใส่")]
     [SerializeField] private GameObject _playerObject;

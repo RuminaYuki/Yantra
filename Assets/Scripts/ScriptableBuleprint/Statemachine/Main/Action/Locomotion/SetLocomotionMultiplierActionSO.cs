@@ -41,4 +41,9 @@ public class SetLocomotionMultiplierAction : StateAction
     }
 
     public override void OnUpdate() { }
+
+    public override void OnStateExit()
+    {
+        _locomotion?.SetMoveMultiply(1f);
+    }
 }
