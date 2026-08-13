@@ -28,14 +28,20 @@ public class PathGizmos : MonoBehaviour
 
     private void DrawArrow(Vector3 start, Vector3 end)
     {
-        Vector3 direction = (end - start).normalized;
-        Vector3 arrowPosition = Vector3.Lerp(start, end, 0.6f);
+        Vector3 direction = end - start;
 
-        Vector3 right = Quaternion.LookRotation(direction) *
+        if (direction.sqrMagnitude <= Mathf.Epsilon)
+            return;
+
+        direction.Normalize();
+        Vector3 arrowPosition = Vector3.Lerp(start, end, 0.6f);
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+        Vector3 right = lookRotation *
                         Quaternion.Euler(0f, 160f, 0f) *
                         Vector3.forward;
 
-        Vector3 left = Quaternion.LookRotation(direction) *
+        Vector3 left = lookRotation *
                        Quaternion.Euler(0f, 200f, 0f) *
                        Vector3.forward;
 

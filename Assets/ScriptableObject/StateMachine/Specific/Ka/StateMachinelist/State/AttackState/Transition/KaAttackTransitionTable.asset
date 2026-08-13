@@ -18,7 +18,7 @@ MonoBehaviour:
     ConditionGroups:
     - Conditions:
       - Condition: {fileID: 11400000, guid: 0a9c2c2c950f810429ebde9b5f517c46, type: 2}
-        ExpectedResult: 0
+        ExpectedResult: 1
   _transitions:
   - FromState: {fileID: 11400000, guid: 34bfb9b0f3b789349ac42d848e27dc8f, type: 2}
     ConditionGroups:

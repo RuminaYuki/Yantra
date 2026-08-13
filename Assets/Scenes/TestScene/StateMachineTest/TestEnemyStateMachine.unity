@@ -5046,7 +5046,7 @@ PrefabInstance:
     - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: _animations.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
@@ -5062,6 +5062,12 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
+      propertyPath: _animations.Array.data[3].id
+      value: 
+      objectReference: {fileID: 11400000, guid: 9396bdf7a033f8f4a9adc1a18c75248f,
+        type: 2}
+    - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
+        type: 3}
       propertyPath: _animations.Array.data[1].stateName
       value: CatchFromRightFinal
       objectReference: {fileID: 0}
@@ -5072,12 +5078,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
+      propertyPath: _animations.Array.data[3].stateName
+      value: CatchedFromBehideFinal
+      objectReference: {fileID: 0}
+    - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
+        type: 3}
       propertyPath: _animations.Array.data[1].exitStateName
       value: BaseMovement
       objectReference: {fileID: 0}
     - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
         type: 3}
       propertyPath: _animations.Array.data[2].exitStateName
+      value: BaseMovement
+      objectReference: {fileID: 0}
+    - target: {fileID: 790457895582925045, guid: 0ec2cd0195e5f64458b2f828930c2023,
+        type: 3}
+      propertyPath: _animations.Array.data[3].exitStateName
       value: BaseMovement
       objectReference: {fileID: 0}
     - target: {fileID: 3661598174317763743, guid: 0ec2cd0195e5f64458b2f828930c2023,

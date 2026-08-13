@@ -1363,6 +1363,9 @@ MonoBehaviour:
   - id: {fileID: 11400000, guid: 76d3cdfbd4cdc494fa124c7dcb75b0be, type: 2}
     stateName: P_KaCatchFromLeft_remap
     exitStateName: BaseMovement
+  - id: {fileID: 11400000, guid: 9396bdf7a033f8f4a9adc1a18c75248f, type: 2}
+    stateName: P_ka_CatchFromBehidet_remap
+    exitStateName: BaseMovement
 --- !u!114 &349472562318097818
 MonoBehaviour:
   m_ObjectHideFlags: 0
