@@ -333,34 +333,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "837608a0562c4682a61fe93643c88258"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "5c1f644446c34b09a80ae34324744606"
-                },
-                "m_SlotId": 2
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "9bf603d7949045ca8698b4efe9dfd223"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "5c1f644446c34b09a80ae34324744606"
-                },
-                "m_SlotId": 1
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "9bf603d7949045ca8698b4efe9dfd223"
                 },
                 "m_SlotId": 2
@@ -518,6 +490,31 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "04400aabec44408ca082f370b27304a1",
+    "m_Id": 1,
+    "m_DisplayName": "Out_Vector4",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "OutVector4",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "06858f52009c4d3799b125b12a1063ae",
     "m_Id": 0,
@@ -586,7 +583,7 @@
     "m_ObjectId": "08c218e8fd0149ab803d54fc0083602c",
     "m_Title": "FadeOut",
     "m_Position": {
-        "x": -475.0,
+        "x": -474.99993896484377,
         "y": 750.0
     }
 }
@@ -649,22 +646,6 @@
         "z": 0.0,
         "w": 0.0
     },
-    "m_LiteralMode": false
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "18f87ca794334bc78f3253c0f778bf0d",
-    "m_Id": 1,
-    "m_DisplayName": "Mask",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Mask",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": [],
     "m_LiteralMode": false
 }
 
@@ -1067,8 +1048,8 @@
     "m_ObjectId": "385b1f55635d4900b4571fbf138c205d",
     "m_Title": "FadeIn",
     "m_Position": {
-        "x": -246.9998779296875,
-        "y": 308.0
+        "x": -246.99989318847657,
+        "y": 308.0000305175781
     }
 }
 
@@ -1200,29 +1181,6 @@
     "m_EnumValues": [
         0
     ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
-    "m_ObjectId": "3e2649ec4aa647ff84ac9dc1b538f45c",
-    "m_Id": 2,
-    "m_DisplayName": "Color",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Color",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-    },
-    "m_Labels": []
 }
 
 {
@@ -1603,8 +1561,8 @@
     "m_ObjectId": "56e25d61273644c0a88aab2c950e900e",
     "m_Title": "Mask",
     "m_Position": {
-        "x": 597.0,
-        "y": 164.00006103515626
+        "x": 597.0000610351563,
+        "y": 163.99998474121095
     }
 }
 
@@ -1620,18 +1578,15 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1407.9998779296875,
-            "y": 199.9999542236328,
-            "width": 86.0001220703125,
-            "height": 100.99995422363281
+            "x": -180.99998474121095,
+            "y": -559.0000610351563,
+            "width": 119.00004577636719,
+            "height": 77.00003051757813
         }
     },
     "m_Slots": [
         {
-            "m_Id": "3e2649ec4aa647ff84ac9dc1b538f45c"
-        },
-        {
-            "m_Id": "18f87ca794334bc78f3253c0f778bf0d"
+            "m_Id": "04400aabec44408ca082f370b27304a1"
         }
     ],
     "synonyms": [],
@@ -1890,8 +1845,8 @@
     "m_ObjectId": "816ab56bfe95400fb24dca85ff68a203",
     "m_Title": "GradColor",
     "m_Position": {
-        "x": 162.0,
-        "y": -373.0
+        "x": 162.00006103515626,
+        "y": -372.9999694824219
     }
 }
 
@@ -2020,8 +1975,8 @@
     "m_ObjectId": "892c5a6a8002449e859dcf12c3c58693",
     "m_Title": "Envelope",
     "m_Position": {
-        "x": 64.99998474121094,
-        "y": 509.9999694824219
+        "x": 65.00003814697266,
+        "y": 510.0000305175781
     }
 }
 
@@ -2392,7 +2347,7 @@
     "m_Title": "Ring",
     "m_Position": {
         "x": -279.0,
-        "y": -165.99993896484376
+        "y": -165.99998474121095
     }
 }
 
@@ -3422,8 +3377,8 @@
     "m_ObjectId": "f7007af9e52545fc95c6851ed2a944bd",
     "m_Title": "Color",
     "m_Position": {
-        "x": 912.000244140625,
-        "y": -110.99993896484375
+        "x": 912.0,
+        "y": -111.00003051757813
     }
 }
 

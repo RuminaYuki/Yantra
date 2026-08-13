@@ -100,11 +100,7 @@
             "m_Id": "811d4ca96a444e5ab18f49fd6370b953"
         }
     ],
-    "m_GroupDatas": [
-        {
-            "m_Id": "2d83461d573d452382785ca330e859ed"
-        }
-    ],
+    "m_GroupDatas": [],
     "m_StickyNoteDatas": [],
     "m_Edges": [
         {
@@ -758,17 +754,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.GroupData",
-    "m_ObjectId": "2d83461d573d452382785ca330e859ed",
-    "m_Title": "Heal Mask",
-    "m_Position": {
-        "x": -3292.000244140625,
-        "y": 218.0
-    }
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "301d0b37756e4e8eb87605fd6d9d7b9d",
     "m_Id": 0,
@@ -1035,7 +1020,7 @@
     "m_Type": "UnityEditor.ShaderGraph.PositionNode",
     "m_ObjectId": "6137302cc9d74cbfb055c698e1c3e9c3",
     "m_Group": {
-        "m_Id": "2d83461d573d452382785ca330e859ed"
+        "m_Id": ""
     },
     "m_Name": "Position",
     "m_DrawState": {
