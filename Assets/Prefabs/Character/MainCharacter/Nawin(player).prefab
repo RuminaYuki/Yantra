@@ -1132,7 +1132,7 @@ GameObject:
   - component: {fileID: 6168041680654951111}
   - component: {fileID: 6124693514981279362}
   m_Layer: 3
-  m_Name: HeadIKTarget
+  m_Name: HeadTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2030,6 +2030,12 @@ MonoBehaviour:
   - Flag: {fileID: 11400000, guid: e6c4709f4f37fe94e983f55676fcc7be, type: 2}
     InitialValue: 0
     runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: 46e0baaa43de6c642b2241e0654ad3e2, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: a3cf3693d09433046a344ab222c28e42, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
 --- !u!114 &3925103966490164683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2045,6 +2051,7 @@ MonoBehaviour:
   Anchors:
   - {fileID: 11400000, guid: 3ebfec1f5b2213643b5f53ca5fa476f1, type: 2}
   - {fileID: 11400000, guid: efc6619fc08490145ad46bcfc092734a, type: 2}
+  - {fileID: 11400000, guid: 492affa3078d1bf4c9e3282d31a1a3ce, type: 2}
 --- !u!114 &675246780280655256
 MonoBehaviour:
   m_ObjectHideFlags: 0
