@@ -43,6 +43,11 @@ namespace Yuki.Learning.StateMachine
 
         public void OnStateEnter()
         {
+            foreach (StateTransition transition in _transitions)
+            {
+                transition.OnStateEnter();
+            }
+            
             foreach (StateAction action in _actions)
             {
                 action.OnStateEnter();

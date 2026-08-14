@@ -19,8 +19,20 @@ MonoBehaviour:
     - Conditions:
       - Condition: {fileID: 11400000, guid: e49c1adb276d5614ea7919c7c7dd91c9, type: 2}
         ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: 2f78b923c476a5a4eb690f445d92a636, type: 2}
+        ExpectedResult: 1
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: e49c1adb276d5614ea7919c7c7dd91c9, type: 2}
+        ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: d91ec0b9f2ba7794d855beeb994adc44, type: 2}
+        ExpectedResult: 1
     - Conditions:
       - Condition: {fileID: 11400000, guid: 1a108de283518e14c9d4e113c129bfe6, type: 2}
+        ExpectedResult: 0
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: e49c1adb276d5614ea7919c7c7dd91c9, type: 2}
+        ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: 89b94d8ae7b074e438a0fe823b9d7098, type: 2}
         ExpectedResult: 0
   _transitions:
   - FromState: {fileID: 11400000, guid: 13e1a1eedd1fe554e8747cde2afb2794, type: 2}

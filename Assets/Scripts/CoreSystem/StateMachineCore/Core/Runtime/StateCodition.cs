@@ -6,6 +6,7 @@ namespace Yuki.Learning.StateMachine
         private bool _cachedStatement;
 
         public virtual void Awake(StateMachine stateMachine){}
+        public virtual void OnStateEnter(){}
         protected abstract bool Statement();
         public virtual void Dispose(){}
 
@@ -45,6 +46,10 @@ namespace Yuki.Learning.StateMachine
                 _condition.GetStatement();
 
             return actualResult == _expectedResult;
+        }
+        public void OnStateEnter()
+        {
+            _condition.OnStateEnter();
         }
 
         public void ClearCache()

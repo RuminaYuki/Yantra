@@ -1433,10 +1433,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe60a42dfbdd134aa4ea8177d07828d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LineOfSight
+  targetAnchor: {fileID: 11400000, guid: 177281d4fd647324a8f2e7516b0dac15, type: 2}
   target: {fileID: 0}
   viewpoint: {fileID: 1214753033062989671}
-  showGizmos: 0
-  detectRange: 7.94
+  showGizmos: 1
+  detectRange: 10.28
   viewAngle: 45
   enableFOV: 1
   obstacleLayer:
