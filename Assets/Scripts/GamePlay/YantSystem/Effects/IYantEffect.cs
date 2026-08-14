@@ -6,5 +6,5 @@ using UnityEngine;
 /// </summary>
 public interface IYantEffect
 {
-    bool Initialize(GameObject playerRoot);
+    bool Initialize(GameObject playerRoot ,bool holdLMB = false);
 }

@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: -2280239117422937287}
   - component: {fileID: 2431005053422005515}
   - component: {fileID: -1819665770508358220}
+  - component: {fileID: -4517172090575426864}
   m_Layer: 0
   m_Name: Blast Yant
   m_TagString: Untagged
@@ -139,14 +140,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9117980074068866131}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.056443956, z: -0, w: 0.99840575}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -63.446648, y: 0.18744993, z: 91.703064}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2348961796562133278}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &-2280239117422937287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,12 +160,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02643e0e27c3c5b46a059694c4dceeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
-  _yantLifeTime: 10
+  _yantLifeTime: 20
   _effectSettings:
-  - _yantReferences: {fileID: -1819665770508358220}
+  - _yantReferences: {fileID: -4517172090575426864}
     _effectType: 0
     _effectDuration: 2
     _holdDuration: 0
+  _playerRoot: {fileID: 0}
 --- !u!114 &2431005053422005515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +188,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9117980074068866131}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3043cae583940c24ab5b524c9863bc01, type: 3}
   m_Name: 
@@ -207,3 +209,33 @@ MonoBehaviour:
     m_Bits: 4294967295
   debuff: {fileID: 11400000, guid: 1646ad0beb3e119458b2d03781b20d55, type: 2}
   debuffDuration: 3
+--- !u!114 &-4517172090575426864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117980074068866131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d5db550f5e7d148a3914a53f21412c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConeLightYant
+  _coneAngle: 14.99
+  _range: 8
+  _beamDuration: 2.5
+  _tickInterval: 1
+  _damagePerTick: 1
+  _requiredTargetCount: 1
+  _damageBoostPerExtraTarget: 0
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _frontAxisIsY: 0
+  _originOffset: {x: 0, y: 0, z: 0}
+  _rotationOffset: {x: 0, y: 0, z: 0}
+  _rotateWithBeam: 0
+  _spinSpeed: 90
+  _spinAxis: {x: 0, y: 1, z: 0}
+  _drawDebugCone: 1
+  _owner: {fileID: 0}

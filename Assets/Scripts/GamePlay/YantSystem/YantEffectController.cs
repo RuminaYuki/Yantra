@@ -23,7 +23,7 @@ public class YantEffectController : MonoBehaviour
 
     [SerializeField] private List<YantEffectSettings> _effectSettings = new List<YantEffectSettings>();
 
-    private GameObject _playerRoot;
+    [SerializeField] private GameObject _playerRoot;
     private Coroutine _destroyCoroutine;
 
     private void Awake()
@@ -67,7 +67,7 @@ public class YantEffectController : MonoBehaviour
                 continue;
             }
 
-            setting._yantEffect.Initialize(_playerRoot);
+            setting._yantEffect.Initialize(_playerRoot, false);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
@@ -84,20 +84,20 @@ public class YantEffectController : MonoBehaviour
         }
     }
 
-    public void TryInitialize(float holdTime)
+    public void TryInitialize(float holdTime, bool holdLMB = false)
     {
         for (int i = _effectSettings.Count - 1; i >= 0; i--)
         {
             var setting = _effectSettings[i];
             if (setting._effectType.HasFlag(YantEffectType.Hold))
             {
-                if (holdTime < setting._holdDuration)
+                if (setting._holdDuration > 0f && holdTime < setting._holdDuration)
                 {
                     continue;
                 }
-            }        
+            }
 
-            bool initialized = setting._yantEffect.Initialize(_playerRoot);
+            bool initialized = setting._yantEffect.Initialize(_playerRoot, holdLMB);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot) && initialized)
             {

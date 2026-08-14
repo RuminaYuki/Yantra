@@ -11,7 +11,7 @@ public class HealYant : MonoBehaviour, IYantEffect
     [Tooltip("หน่วงเวลาก่อนลบ prefab (ให้เวลา VFX เล่น)")]
     //[SerializeField] private float _lifetime = 2f;
 
-    public bool Initialize(GameObject playerRoot)
+    public bool Initialize(GameObject playerRoot, bool holdLMB)
     {
         health = playerRoot.GetComponentInParent<IHeal>();
         if (health != null)

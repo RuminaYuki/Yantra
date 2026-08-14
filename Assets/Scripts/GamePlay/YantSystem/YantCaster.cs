@@ -104,7 +104,7 @@ public class YantCaster : MonoBehaviour
         else
         {
             Destroy(yantObj);
-            Debug.LogWarning("äÁèà¨Í YantEffectController ã¹ yant ·Õè Instantiate");
+            Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½ï¿½ YantEffectController ï¿½ yant ï¿½ï¿½ï¿½ Instantiate");
             return false;
         }
 
@@ -124,13 +124,13 @@ public class YantCaster : MonoBehaviour
     #endregion
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     #region Cast Yant on Input
-    //à»ÅÕèÂ¹ä»ÊÑè§ã¹ YantEffectController
-    public void tryCastYant(float holdTime)
+    //ï¿½ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½ï¿½ï¿½ YantEffectController
+    public void tryCastYant(float holdTime, bool holdLMB = false)
     {
-        CastYant(holdTime);
+        CastYant(holdTime, holdLMB);
     }
 
-    private bool CastYant(float holdTime)
+    private bool CastYant(float holdTime, bool holdLMB = false)
     {
         GameObject yant = _lastSpawnedYant;
         if (yant == null)
@@ -140,7 +140,7 @@ public class YantCaster : MonoBehaviour
         }
         if (yant.TryGetComponent(out YantEffectController effect))
         {
-            effect.TryInitialize(holdTime);
+            effect.TryInitialize(holdTime, holdLMB);
             return true;
         }
         else
