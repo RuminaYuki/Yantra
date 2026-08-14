@@ -91,4 +91,10 @@ public class Health : MonoBehaviour, IDamageable,IHeal
         if(amount <= 0) return;
         CurrentHP = amount;
     }
+
+    public void RestoreFullHealth()
+    {
+        CurrentHP = maxHealth;
+        HealthChangedEvent();
+    }
 }

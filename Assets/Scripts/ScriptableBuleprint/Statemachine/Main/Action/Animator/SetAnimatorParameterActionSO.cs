@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine;
 
 [CreateAssetMenu(
     fileName = "SetParametersAnimatorActionSO", 
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/SetParametersAnimatorAction")]
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Animator/SetParametersAnimatorAction")]
 public class SetAnimatorParameterActionSO : StateActionSO  
 {
     public ParameterSetting ParameterSetting;
