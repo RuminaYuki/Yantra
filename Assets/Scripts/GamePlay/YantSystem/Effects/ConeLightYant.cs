@@ -25,8 +25,11 @@ public class ConeLightYant : MonoBehaviour, IYantEffect
     [Tooltip("ถ้าเปิด จะใช้แกน Y ของ Obj เป็นทิศด้านหน้า")]
     [SerializeField] private bool _frontAxisIsY = false;
 
-    [Tooltip("เลื่อนจุดเริ่มต้นแสงออกจาก source ไปด้านหน้า")]
+    [Tooltip("เลื่อนจุดเริ่มต้นแสงออกจาก source")]
     [SerializeField] private Vector3 _originOffset = Vector3.zero;
+
+    [Tooltip("Transform ที่ใช้เป็นจุดเริ่มและทิศทางของ Cone")]
+    [SerializeField] private Transform _originTransform;
 
     [Header("Transform Settings")]
     [Tooltip("Rotation เพิ่มเติมของ Cone Object")]
@@ -46,14 +49,25 @@ public class ConeLightYant : MonoBehaviour, IYantEffect
     [SerializeField] private bool _drawDebugCone = true;
 
     [SerializeField] private GameObject _owner;
+
     private Coroutine _beamRoutine;
     private bool _isBeamActive;
+
+    private void Awake()
+    {
+        _originTransform = Camera.main != null
+            ? Camera.main.transform
+            : null;
+    }
 
     public bool Initialize(GameObject playerRoot, bool holdLMB = false)
     {
         if (playerRoot == null)
         {
-            Debug.LogWarning("<color=#66CCFF>[ConeLightYant]</color> playerRoot ว่าง");
+            Debug.LogWarning(
+                "<color=#66CCFF>[ConeLightYant]</color> playerRoot ว่าง"
+            );
+
             return false;
         }
 
@@ -108,7 +122,8 @@ public class ConeLightYant : MonoBehaviour, IYantEffect
             elapsedTime += _tickInterval;
 
             // หมดเวลาการยิง
-            if (_beamDuration > 0f && elapsedTime >= _beamDuration)
+            if (_beamDuration > 0f &&
+                elapsedTime >= _beamDuration)
             {
                 StopBeam();
                 yield break;
@@ -129,12 +144,51 @@ public class ConeLightYant : MonoBehaviour, IYantEffect
         }
     }
 
+    /// <summary>
+    /// หาจุดเริ่มต้นของ Cone
+    /// ถ้ามี Origin Transform จะใช้ตำแหน่งของมัน
+    /// ถ้าไม่มีจะใช้ตำแหน่งของ Effect ตัวเอง
+    /// </summary>
+    private Vector3 GetOrigin()
+    {
+        if (_originTransform != null)
+        {
+            return _originTransform.position +
+                   _originTransform.TransformDirection(_originOffset);
+        }
+
+        return transform.position +
+               transform.TransformDirection(_originOffset);
+    }
+
+    /// <summary>
+    /// หาทิศทางการยิงของ Cone
+    /// ถ้ามี Origin Transform จะใช้ Rotation ของมัน
+    /// ถ้าไม่มีจะใช้ Rotation ของ Effect ตัวเอง
+    /// </summary>
+    private Vector3 GetForwardDirection()
+    {
+        if (_originTransform != null)
+        {
+            if (_frontAxisIsY)
+            {
+                return _originTransform.up.normalized;
+            }
+
+            return _originTransform.forward.normalized;
+        }
+
+        if (_frontAxisIsY)
+        {
+            return transform.up.normalized;
+        }
+
+        return transform.forward.normalized;
+    }
+
     private void ApplyDamage()
     {
-        Vector3 origin =
-            transform.position +
-            transform.TransformDirection(_originOffset);
-
+        Vector3 origin = GetOrigin();
         Vector3 forward = GetForwardDirection();
 
         Collider[] hits = Physics.OverlapSphere(
@@ -149,7 +203,8 @@ public class ConeLightYant : MonoBehaviour, IYantEffect
             return;
         }
 
-        List<IDamageable> validTargets = new List<IDamageable>();
+        List<IDamageable> validTargets =
+            new List<IDamageable>();
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -217,18 +272,6 @@ public class ConeLightYant : MonoBehaviour, IYantEffect
         }
     }
 
-    private Vector3 GetForwardDirection()
-    {
-        // ใช้แกน Y ของ Obj เป็นด้านหน้า
-        if (_frontAxisIsY)
-        {
-            return transform.up.normalized;
-        }
-
-        // ใช้แกน Z ของ Obj เป็นด้านหน้า
-        return transform.forward.normalized;
-    }
-
     private void OnDrawGizmosSelected()
     {
         if (!_drawDebugCone)
@@ -245,13 +288,16 @@ public class ConeLightYant : MonoBehaviour, IYantEffect
 
         Matrix4x4 originalMatrix = Gizmos.matrix;
 
-        Vector3 debugOrigin =
-            transform.position +
-            transform.TransformDirection(_originOffset);
+        Vector3 debugOrigin = GetOrigin();
+
+        // ใช้ Rotation ของ Origin Transform
+        Quaternion debugRotation = _originTransform != null
+            ? _originTransform.rotation
+            : transform.rotation;
 
         Gizmos.matrix = Matrix4x4.TRS(
             debugOrigin,
-            transform.rotation,
+            debugRotation,
             Vector3.one
         );
 

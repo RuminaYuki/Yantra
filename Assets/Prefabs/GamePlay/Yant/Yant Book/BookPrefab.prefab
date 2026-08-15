@@ -143,6 +143,8 @@ MonoBehaviour:
   _playerRoot: {fileID: 0}
   _yantSpawnPoint: {fileID: 0}
   _yantPaper: {fileID: 1559902585104980198}
+  _drawOn3DMesh: {fileID: 3950190518940257844}
+  _yantAmount: 0
   _minSimilarityPercent: 70
   _bindings:
   - CategoryName: Heal Yant
@@ -185,7 +187,6 @@ GameObject:
   - component: {fileID: 1944471569773610429}
   - component: {fileID: 3950190518940257844}
   - component: {fileID: 2989483812625227861}
-  - component: {fileID: 7559334317224316131}
   - component: {fileID: 8052324723781514443}
   m_Layer: 7
   m_Name: Yant Paper
@@ -309,36 +310,9 @@ MonoBehaviour:
   _minPointDistance: 0.18
   _paperParent: {fileID: 4700203200567172967}
   _surfaceOffset: 0.01
+  _canDraw: 0
   _allStrokes: []
 --- !u!114 &2989483812625227861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1559902585104980198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c0e1532017820489abfcf1964f5408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YantraGridShapeMatcher
-  drawOn3DMesh: {fileID: 3950190518940257844}
-  fixedTemplateName: Blast Yant
-  shapeCategories:
-  - CategoryName: Heal Yant
-    Templates:
-    - {fileID: 11400000, guid: 9f975f8f049641c4ebdc859178bbe8b5, type: 2}
-    - {fileID: 11400000, guid: fa5d3de6729fe6e4183ce5c5d01bad8b, type: 2}
-    - {fileID: 11400000, guid: 243c70e41dc666549a7094660f58f32a, type: 2}
-  - CategoryName: Vanish Yant
-    Templates:
-    - {fileID: 11400000, guid: 59afb96412ef61e499d797e3368ac667, type: 2}
-  - CategoryName: Blast Yant
-    Templates:
-    - {fileID: 11400000, guid: 54a5b5c3320813840b299830c46d267b, type: 2}
-  minimumSimilarity: 75
-  DebugMode: 0
---- !u!114 &7559334317224316131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

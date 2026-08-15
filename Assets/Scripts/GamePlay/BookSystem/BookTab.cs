@@ -19,7 +19,6 @@ public class BookTab : MonoBehaviour
         {
             bookGroup.ToggleEnable(this);
         }
-
     }
 
     public void SetActiveGameObjects(bool isActive)

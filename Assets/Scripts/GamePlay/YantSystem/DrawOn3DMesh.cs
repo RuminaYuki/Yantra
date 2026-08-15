@@ -30,6 +30,8 @@ public class DrawOn3DMesh : MonoBehaviour
     private bool _isDrawing = false;
     private Vector2 _lastMousePos;  
 
+    private bool _canDraw = false;
+
     // เก็บรายการเส้นทั้งหมดที่วาดใน Session นี้
     [SerializeField]private List<LineRenderer> _allStrokes = new List<LineRenderer>();
 
@@ -62,6 +64,8 @@ public class DrawOn3DMesh : MonoBehaviour
 
     private void OnLeftClickInput(Vector2 clickPos, InputAction.CallbackContext context)
     {
+        if (!_canDraw) return;
+
         _isDrawing = context.ReadValueAsButton();
 
         if (_isDrawing)
@@ -164,4 +168,5 @@ public class DrawOn3DMesh : MonoBehaviour
 
     //API
     public Transform PaperParent => _paperParent;
+    public void SetCanDraw(bool value) => _canDraw = value;
 }

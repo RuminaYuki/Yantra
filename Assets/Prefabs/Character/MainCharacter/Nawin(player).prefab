@@ -2378,8 +2378,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70feb6d3d91b2e045bfc71b593f32a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YantVanish
+  _stateFlags: {fileID: 7503419770440926771}
   _statSO: {fileID: 11400000, guid: e8f9d967926733d4d90cf3f410734c41, type: 2}
-  _flagSO: {fileID: 0}
+  _flagSO: {fileID: 11400000, guid: a3cf3693d09433046a344ab222c28e42, type: 2}
+  _isCrouchFlag: {fileID: 11400000, guid: 46e0baaa43de6c642b2241e0654ad3e2, type: 2}
 --- !u!1 &3701737388500474450
 GameObject:
   m_ObjectHideFlags: 0

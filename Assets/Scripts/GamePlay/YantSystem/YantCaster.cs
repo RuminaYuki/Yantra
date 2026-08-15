@@ -20,15 +20,21 @@ public class YantCaster : MonoBehaviour
     [SerializeField] private GameObject _playerRoot;
     [SerializeField] private Transform _yantSpawnPoint;
     [SerializeField] private GameObject _yantPaper;
+    [SerializeField] private DrawOn3DMesh _drawOn3DMesh;
+
+    [Header("Stat")]
+    [SerializeField] private int _yantAmount;
 
     [Header("Matching")]
     [SerializeField, Range(0f, 100f)] private float _minSimilarityPercent = 50f;
     [SerializeField] private List<YantPrefabBinding> _bindings = new List<YantPrefabBinding>();
 
-    
-
     public GameObject _lastSpawnedYant;
 
+    private void OnEnable()
+    {
+        _drawOn3DMesh.SetCanDraw(_yantAmount > 0);
+    }
 
     private void OnValidate()
     {
@@ -39,7 +45,6 @@ public class YantCaster : MonoBehaviour
     public void Analyze()
     {
         TryAnalyze();
-        
     }
 
     private bool TryAnalyze()
@@ -111,10 +116,9 @@ public class YantCaster : MonoBehaviour
         _lastSpawnedYant = yantObj;
 
         // Clear the drawing on the paper after casting
-        DrawOn3DMesh drawOn3DMesh = paper.GetComponent<DrawOn3DMesh>();
-        if (drawOn3DMesh != null)
+        if (_drawOn3DMesh != null)
         {
-            drawOn3DMesh.ClearDrawing();
+            _drawOn3DMesh.ClearDrawing();
         }
 
         Debug.Log($"<color=#00FFFF>[YantCaster]</color> Cast '{category}' successfully.");
@@ -151,5 +155,5 @@ public class YantCaster : MonoBehaviour
     }
     #endregion
 
-    
+    public int GetYantAmount => _yantAmount;
 }

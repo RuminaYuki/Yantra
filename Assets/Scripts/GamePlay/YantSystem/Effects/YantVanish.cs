@@ -7,7 +7,7 @@ public class YantVanish : MonoBehaviour
     private string _originalTag;
     private Coroutine _revertRoutine;
     private bool _isVanished;
-    [SerializeField] private YantraInputObserverSO _inputObserver;
+    private YantraInputObserverSO _inputObserver;
     [SerializeField] private StateFlagsAccess _stateFlags;
 
     [SerializeField] private StatSO _statSO;
