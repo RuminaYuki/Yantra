@@ -1819,6 +1819,7 @@ GameObject:
   - component: {fileID: 3953758522149643572}
   - component: {fileID: 2241959853200122436}
   - component: {fileID: 7503419770440926771}
+  - component: {fileID: 73343289006256190}
   - component: {fileID: 3925103966490164683}
   - component: {fileID: 675246780280655256}
   - component: {fileID: 790457895582925045}
@@ -2036,6 +2037,20 @@ MonoBehaviour:
   - Flag: {fileID: 11400000, guid: a3cf3693d09433046a344ab222c28e42, type: 2}
     InitialValue: 0
     runtimeValue: 0
+--- !u!114 &73343289006256190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e22c710ae8abd54db76a3aa4e10dd90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlagCountdown
+  flagCountdowns: []
+  stateFlags: {fileID: 0}
 --- !u!114 &3925103966490164683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2364,6 +2379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YantVanish
   _statSO: {fileID: 11400000, guid: e8f9d967926733d4d90cf3f410734c41, type: 2}
+  _flagSO: {fileID: 0}
 --- !u!1 &3701737388500474450
 GameObject:
   m_ObjectHideFlags: 0

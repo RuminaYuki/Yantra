@@ -113,9 +113,10 @@ public class FlagCountdown : MonoBehaviour
             {
                 if (flagCountdowns[i].countdownCoroutine != null)
                 {
-                    StopCoroutine(flagCountdowns[i].countdownCoroutine);
+                    flagCountdowns[i].remainingTime = 0;
+                    //StopCoroutine(flagCountdowns[i].countdownCoroutine);
                 }
-                flagCountdowns.RemoveAt(i);
+                //flagCountdowns.RemoveAt(i);
                 return;
             }
         }

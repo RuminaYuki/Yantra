@@ -83,8 +83,8 @@ public class StatCountdown : MonoBehaviour
 
         if (existingData != null)
         {
-            // ถ้าเวลาที่ขอมาไม่มากกว่าเวลาที่เหลือ
-            // ไม่ต้อง reset countdown
+            // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+            // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง reset countdown
             if (countdownTime <= existingData.remainingTime)
                 return;
 
@@ -180,11 +180,12 @@ public class StatCountdown : MonoBehaviour
 
         if (data.countdownCoroutine != null)
         {
-            StopCoroutine(data.countdownCoroutine);
-            data.countdownCoroutine = null;
+            data.remainingTime = 0;
+            //StopCoroutine(data.countdownCoroutine);
+            //data.countdownCoroutine = null;
         }
 
-        countdowns.Remove(data);
+        //countdowns.Remove(data);
     }
 
     private StatCountdownData FindCountdown(StatSO stat)

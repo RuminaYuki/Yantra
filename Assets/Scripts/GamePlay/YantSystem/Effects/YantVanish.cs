@@ -1,14 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class YantVanish : MonoBehaviour
 {
     private string _originalTag;
     private Coroutine _revertRoutine;
     private bool _isVanished;
-    private YantraInputObserverSO _inputObserver;
+    [SerializeField] private YantraInputObserverSO _inputObserver;
+    [SerializeField] private StateFlagsAccess _stateFlags;
 
     [SerializeField] private StatSO _statSO;
+    [SerializeField] private FlagSO _flagSO;
+    [SerializeField] private FlagSO _isCrouchFlag;
 
     public void Apply(string vanishTag, bool temporary, float duration, YantraInputObserverSO inputObserver)
     {
@@ -24,6 +28,10 @@ public class YantVanish : MonoBehaviour
         if (!_isVanished)
             _originalTag = gameObject.tag;
 
+        // ค้นหา StateFlags หากยังไม่ได้เก็บไว้
+        if (_stateFlags == null)
+            _stateFlags = GetComponent<StateFlagsAccess>();
+
         gameObject.tag = vanishTag;
         _isVanished = true;
 
@@ -34,8 +42,23 @@ public class YantVanish : MonoBehaviour
         if (temporary)
             _revertRoutine = StartCoroutine(RevertAfter(duration));
 
-        if(_statSO != null)
-            SetStatToPlayer(true, duration);
+        if (_statSO != null)
+        {
+            StatCountdown countdown = GetComponent<StatCountdown>();
+
+            if (countdown != null)
+            {
+                countdown.SetStatCountdown(_statSO, duration, true);
+            }
+        }
+
+        if (_flagSO != null)
+        {
+            FlagCountdown flagdown = GetComponent<FlagCountdown>();
+
+            if (flagdown != null)
+                flagdown.SetFlagCountdown(_flagSO, duration, true);
+        }
     }
 
     public void Revert()
@@ -50,6 +73,24 @@ public class YantVanish : MonoBehaviour
         {
             gameObject.tag = _originalTag;
             _isVanished = false;
+
+            if (_statSO != null)
+            {
+                StatCountdown countdown = GetComponent<StatCountdown>();
+
+                if (countdown != null)
+                {
+                    countdown.StopCountdown(_statSO);
+                }
+            }
+
+            if (_flagSO != null)
+            {
+                FlagCountdown flagdown = GetComponent<FlagCountdown>();
+
+                if (flagdown != null)
+                    flagdown.StopCountdown(_flagSO);
+            }
         }
 
         UnsubscribeObserver();
@@ -63,7 +104,13 @@ public class YantVanish : MonoBehaviour
     private void OnMoveInput(Vector3 moveInput)
     {
         if (!_isVanished) return;
-        if (moveInput.sqrMagnitude < 1e-6f) return;
+        //if (moveInput.sqrMagnitude < 1e-6f) return;
+
+        // ยังคงย่อเดินได้ถ้ากำลัง crouch อยู่
+        if (_stateFlags != null && _isCrouchFlag != null && _stateFlags.Get(_isCrouchFlag))
+            return;
+
+        Debug.Log("here");
 
         Revert();
     }
@@ -74,16 +121,6 @@ public class YantVanish : MonoBehaviour
         {
             _inputObserver.OnMoveChannel -= OnMoveInput;
             _inputObserver = null;
-        }
-    }
-
-    private void SetStatToPlayer(bool value, float duration = 0f)
-    {
-        StatCountdown countdown = GetComponent<StatCountdown>();
-
-        if (countdown != null)
-        {
-            countdown.SetStatCountdown(_statSO, duration, value);
         }
     }
 
