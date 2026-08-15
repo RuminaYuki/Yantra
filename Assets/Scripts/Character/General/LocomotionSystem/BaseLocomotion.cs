@@ -8,14 +8,14 @@ public class BaseLocomotion : MonoBehaviour,ILocomotionLock,IRootMotionControl
     private const float MovementThreshold = 0.01f;
 
     [Header("Locomotion")]
-    [SerializeField] private float _dampTime = 0.1f;
+    [SerializeField] private float _dampTime = 0.25f;
     [SerializeField] private float _multiply = 1f;
-    [SerializeField] private string _nameParameterMoveZ;
-    [SerializeField] private string _nameParameterMoveX;
+    [SerializeField] private string _nameParameterMoveZ = "VelocityZ";
+    [SerializeField] private string _nameParameterMoveX = "VelocityX";
 
     [Header("Turn Animation")]
-    [SerializeField] private string _nameTurnAngle;
-    [SerializeField] private string _nameStartTurn;
+    [SerializeField] private string _nameTurnAngle = "StartTurnAngle";
+    [SerializeField] private string _nameStartTurn = "StartTurn";
     [SerializeField] private float _angleTurn = 45f;
 
     [Header("Rotation")]

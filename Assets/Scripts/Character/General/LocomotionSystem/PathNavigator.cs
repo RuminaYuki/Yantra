@@ -9,11 +9,36 @@ public class PathNavigator : MonoBehaviour
     private float _timer;
 
     public Vector3 Direction { get; private set; }
-    public Transform Target {get => _target; set => _target = value;}
+
+    public Transform Target {get=> _target; set=> _target = value;}
 
     private void Awake()
     {
         _pathfinder = new UnityNavMeshPathfinder();
+    }
+
+    public bool TrySetTarget(Transform target)
+    {
+        if (target == null || _pathfinder == null)
+            return false;
+
+        if (!_pathfinder.TryCalculatePath(transform.position,
+                target.position, out Vector3 resolvedPosition))
+        {
+            return false;
+        }
+
+        target.position = resolvedPosition;
+        _target = target;
+        _timer = _repathInterval;
+
+        return true;
+    }
+
+    public void ClearTarget()
+    {
+        _target = null;
+        Direction = Vector3.zero;
     }
 
     private void Update()
@@ -30,10 +55,14 @@ public class PathNavigator : MonoBehaviour
         {
             _timer = _repathInterval;
 
-            _pathfinder.CalculatePath(
-                transform.position,
-                _target.position
-            );
+            if (!_pathfinder.TryCalculatePath(transform.position,
+                    _target.position, out Vector3 resolvedPosition))
+            {
+                Direction = Vector3.zero;
+                return;
+            }
+
+            _target.position = resolvedPosition;
         }
 
         Direction = _pathfinder.GetDirection(transform.position);

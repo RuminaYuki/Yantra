@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5492ed31ba40b643aaf3d94f1de0aa7, type: 3}
+  m_Name: TaniTransitionTableTestLocomotion
+  m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
+  _initialState: {fileID: 11400000, guid: d428f36c34ba13742be9b97d524422e2, type: 2}
+  _anyTransitions: []
+  _transitions:
+  - FromState: {fileID: 11400000, guid: d428f36c34ba13742be9b97d524422e2, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 9519c0ab7208a6c40a1a7d5dddca75d7, type: 2}
+        ExpectedResult: 0
+    ToState: {fileID: 11400000, guid: c33ff0f6d2fbdbf4d8aa67c35ffbcd5e, type: 2}
+  - FromState: {fileID: 11400000, guid: c33ff0f6d2fbdbf4d8aa67c35ffbcd5e, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 60bba476f3b1b82408aadbf3c8feb348, type: 2}
+        ExpectedResult: 0
+    ToState: {fileID: 11400000, guid: d428f36c34ba13742be9b97d524422e2, type: 2}

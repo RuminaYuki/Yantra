@@ -7,6 +7,9 @@ public class WaypointPath : MonoBehaviour
     private int _currentIndex;
     private int _direction = 1;
     public bool IsEnablePathGizmos = true;
+
+    public Transform PathRoot => _pathRoot;
+
     private void Awake()
     {
         if (_pathRoot == null)
@@ -46,6 +49,15 @@ public class WaypointPath : MonoBehaviour
         }
 
         _currentIndex += _direction;
+    }
+
+    public void SetCurrentPoint(Transform point)
+    {
+        if (point == null || _pathRoot == null)
+            return;
+
+        point.SetParent(_pathRoot);
+        _currentIndex = point.GetSiblingIndex();
     }
 
     private void OnDrawGizmosSelected()
