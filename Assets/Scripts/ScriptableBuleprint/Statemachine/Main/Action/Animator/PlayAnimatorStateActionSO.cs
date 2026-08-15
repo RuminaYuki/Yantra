@@ -1,0 +1,112 @@
+using UnityEngine;
+using Yuki.Learning.StateMachine;
+using Yuki.Learning.StateMachine.ScriptableObjects;
+
+[CreateAssetMenu(
+    fileName = "PlayAnimatorStateAction",
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Animator/Play Animator State")]
+public class PlayAnimatorStateActionSO : StateActionSO
+{
+    [Header("Enter State")]
+    [SerializeField] private string _stateName;
+    [SerializeField] private int _layerIndex;
+    [SerializeField] private float _transitionDuration = 0.25f;
+    [SerializeField, Range(0f, 1f)] private float _normalizedStartTime;
+
+    [Header("Exit State")]
+    [SerializeField] private string _exitStateName;
+    [SerializeField] private float _exitTransitionDuration = 0.25f;
+    [SerializeField, Range(0f, 1f)] private float _exitNormalizedStartTime;
+
+    public override StateAction CreateAction(StateMachine stateMachine)
+    {
+        return new PlayAnimatorStateAction(
+            _stateName,
+            _exitStateName,
+            _layerIndex,
+            _transitionDuration,
+            _normalizedStartTime,
+            _exitTransitionDuration,
+            _exitNormalizedStartTime);
+    }
+}
+
+public class PlayAnimatorStateAction : StateAction
+{
+    private readonly int _stateHash;
+    private readonly int _exitStateHash;
+    private readonly int _layerIndex;
+    private readonly float _transitionDuration;
+    private readonly float _normalizedStartTime;
+    private readonly float _exitTransitionDuration;
+    private readonly float _exitNormalizedStartTime;
+
+    private Animator _animator;
+
+    public PlayAnimatorStateAction(
+        string stateName,
+        string exitStateName,
+        int layerIndex,
+        float transitionDuration,
+        float normalizedStartTime,
+        float exitTransitionDuration,
+        float exitNormalizedStartTime)
+    {
+        _stateHash = Animator.StringToHash(stateName);
+        _exitStateHash = Animator.StringToHash(exitStateName);
+        _layerIndex = layerIndex;
+        _transitionDuration = transitionDuration;
+        _normalizedStartTime = normalizedStartTime;
+        _exitTransitionDuration = exitTransitionDuration;
+        _exitNormalizedStartTime = exitNormalizedStartTime;
+    }
+
+    public override void Awake(StateMachine stateMachine)
+    {
+        _animator = stateMachine.GetComponent<Animator>();
+
+        if (_animator == null)
+            Debug.LogError(
+                "PlayAnimatorStateAction cannot find Animator.");
+    }
+
+    public override void OnStateEnter()
+    {
+        PlayState(
+            _stateHash,
+            _transitionDuration,
+            _normalizedStartTime);
+    }
+
+    public override void OnUpdate() { }
+
+    public override void OnStateExit()
+    {
+        PlayState(
+            _exitStateHash,
+            _exitTransitionDuration,
+            _exitNormalizedStartTime);
+    }
+
+    private void PlayState(int stateHash, float transitionDuration, float normalizedStartTime)
+    {
+        if (_animator == null)
+            return;
+
+        if (!_animator.HasState(_layerIndex, stateHash))
+        {
+            Debug.LogWarning(
+                $"Animator state does not exist: hash {stateHash}, " +
+                $"layer {_layerIndex}.",
+                _animator);
+
+            return;
+        }
+
+        _animator.CrossFadeInFixedTime(
+            stateHash,
+            transitionDuration,
+            _layerIndex,
+            normalizedStartTime);
+    }
+}

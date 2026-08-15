@@ -12,7 +12,26 @@ namespace Yuki.Learning.StateMachine
             _targetState = targetState;
             _conditionGroups = conditionGroups;
         }
+        public void OnStateEnter()
+        {
+            if (_conditionGroups == null)
+            {
+                return;
+            }
 
+            foreach (StateCondition[] group in _conditionGroups)
+            {
+                if (group == null)
+                {
+                    continue;
+                }
+
+                foreach (StateCondition condition in group)
+                {
+                    condition.OnStateEnter();
+                }
+            }
+        }
         public bool TryGetNextState(out State nextState)
         {
             if (IsAnyGroupMet())

@@ -9,10 +9,12 @@ public class SetFlagOnEnterActionSO : StateActionSO
 {
     [SerializeField] private FlagSO flag;
     [SerializeField] private bool value = true;
+    [Tooltip("Change opposite Value On Exit")]
+    [SerializeField] private bool changeValueOnExit = false;
 
     public override StateAction CreateAction(StateMachine stateMachine)
     {
-        return new SetFlagOnEnterAction(flag, value);
+        return new SetFlagOnEnterAction(flag, value, changeValueOnExit);
     }
 }
 
@@ -20,12 +22,14 @@ public class SetFlagOnEnterAction : StateAction
 {
     private readonly FlagSO flag;
     private readonly bool value;
+    private readonly bool changeValueOnExit;
     private StateFlagsAccess stateFlags;
 
-    public SetFlagOnEnterAction(FlagSO flag, bool value)
+    public SetFlagOnEnterAction(FlagSO flag, bool value, bool changeValueOnExit)
     {
         this.flag = flag;
         this.value = value;
+        this.changeValueOnExit = changeValueOnExit;
     }
 
     public override void Awake(StateMachine stateMachine)
@@ -43,4 +47,12 @@ public class SetFlagOnEnterAction : StateAction
     }
 
     public override void OnUpdate(){}
+
+    public override void OnStateExit()
+    {
+        if (changeValueOnExit)
+        {
+            stateFlags.Set(flag, !value);
+        }
+    }
 }
