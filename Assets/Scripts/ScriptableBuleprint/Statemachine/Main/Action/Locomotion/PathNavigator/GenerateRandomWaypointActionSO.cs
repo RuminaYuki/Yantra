@@ -4,105 +4,117 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "GenerateRandomWaypointAction",
-    menuName =
-        "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Path Navigator/Generate Random Waypoint")]
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Path Navigator/Generate Random Waypoints")]
 public class GenerateRandomWaypointActionSO : StateActionSO
 {
-    public override StateAction CreateAction(
-        StateMachine stateMachine)
+    [SerializeField, Min(1)]
+    private int _pointCount = 3;
+
+    [SerializeField, Min(1)]
+    private int _maxAttemptsPerPoint = 10;
+
+    public override StateAction CreateAction(StateMachine stateMachine)
     {
-        return new GenerateRandomWaypointAction();
+        return new GenerateRandomWaypointAction(_pointCount,_maxAttemptsPerPoint);
     }
 }
 
 public class GenerateRandomWaypointAction : StateAction
 {
-    private const int MaxAttempts = 10;
+    private readonly int _pointCount;
+    private readonly int _maxAttemptsPerPoint;
 
     private RandomWalkPoint _randomWalkPoint;
     private WaypointPath _waypointPath;
-    private PathNavigator _pathNavigator;
-    private GameObject _owner;
+    private Transform _owner;
+
+    public GenerateRandomWaypointAction(
+        int pointCount,
+        int maxAttemptsPerPoint)
+    {
+        _pointCount = Mathf.Max(1, pointCount);
+        _maxAttemptsPerPoint =
+            Mathf.Max(1, maxAttemptsPerPoint);
+    }
 
     public override void Awake(StateMachine stateMachine)
     {
-        _owner = stateMachine.Owner;
-
-        _randomWalkPoint =
-            stateMachine.GetComponent<RandomWalkPoint>();
-
-        _waypointPath =
-            stateMachine.GetComponent<WaypointPath>();
-
-        _pathNavigator =
-            stateMachine.GetComponent<PathNavigator>();
+        _owner = stateMachine.Owner.transform;
+        _randomWalkPoint = stateMachine.GetComponent<RandomWalkPoint>();
+        _waypointPath = stateMachine.GetComponent<WaypointPath>();
 
         if (_randomWalkPoint == null)
         {
             Debug.LogError(
                 "GenerateRandomWaypointAction requires RandomWalkPoint.",
-                _owner);
+                stateMachine.Owner);
         }
 
         if (_waypointPath == null)
         {
             Debug.LogError(
                 "GenerateRandomWaypointAction requires WaypointPath.",
-                _owner);
-        }
-
-        if (_pathNavigator == null)
-        {
-            Debug.LogError(
-                "GenerateRandomWaypointAction requires PathNavigator.",
-                _owner);
+                stateMachine.Owner);
         }
     }
 
     public override void OnStateEnter()
     {
-        if (_randomWalkPoint == null ||
+        if (_owner == null ||
+            _randomWalkPoint == null ||
             _waypointPath == null ||
-            _pathNavigator == null)
+            _waypointPath.PathRoot == null)
         {
             return;
         }
 
-        Transform currentPoint =
-            _waypointPath.CurrentPoint;
+        int count = Mathf.Min(
+            _pointCount,
+            _waypointPath.Count);
 
-        if (currentPoint == null)
+        if (count < _pointCount)
         {
             Debug.LogWarning(
-                "GenerateRandomWaypointAction cannot find CurrentPoint.",
+                $"Path Root requires at least {_pointCount} waypoint children.",
                 _owner);
-
-            return;
         }
 
-        for (int i = 0; i < MaxAttempts; i++)
+        Vector3 origin = _owner.position;
+
+        for (int i = 0; i < count; i++)
         {
-            if (!_randomWalkPoint.TryGetRandomPoint(
-                    out Vector3 randomPosition))
+            if (!TryGeneratePoint(origin, out Vector3 position))
             {
-                continue;
+                Debug.LogWarning(
+                    $"Could not generate waypoint {i + 1}.",
+                    _owner);
+
+                return;
             }
 
-            currentPoint.position = randomPosition;
+            Transform waypoint =
+                _waypointPath.PathRoot.GetChild(i);
 
-            if (_pathNavigator.TrySetTarget(currentPoint))
-                return;
+            waypoint.position = position;
+            origin = position;
         }
-
-        _pathNavigator.ClearTarget();
-
-        Debug.LogWarning(
-            $"GenerateRandomWaypointAction could not find " +
-            $"a reachable point after {MaxAttempts} attempts.",
-            _owner);
     }
 
     public override void OnUpdate()
     {
+    }
+
+    private bool TryGeneratePoint(Vector3 origin, out Vector3 point)
+    {
+        for (int i = 0; i < _maxAttemptsPerPoint; i++)
+        {
+            if (_randomWalkPoint.TryGetRandomPoint(origin, out point))
+            {
+                return true;
+            }
+        }
+
+        point = default;
+        return false;
     }
 }

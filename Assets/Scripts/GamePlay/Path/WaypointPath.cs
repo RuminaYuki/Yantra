@@ -18,10 +18,11 @@ public class WaypointPath : MonoBehaviour
             _pathRoot = transform;
         }
     }
-    public int Count =>
-        _pathRoot != null
-            ? _pathRoot.childCount
-            : 0;
+    
+    public int Count => _pathRoot != null ? _pathRoot.childCount : 0;
+    public int CurrentIndex => _currentIndex;
+    public int LastIndex => Count - 1;
+    public bool IsAtLastPoint => Count > 0 && _currentIndex == LastIndex;
 
     public Transform CurrentPoint
     {
