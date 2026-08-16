@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "FollowPathLocomotionAction",
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Path Navigator/Follow Path Locomotion")]
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Navigation/Follow Path Locomotion")]
 public class FollowPathLocomotionActionSO : StateActionSO
 {
     public override StateAction CreateAction(StateMachine stateMachine)

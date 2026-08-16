@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "GenerateRandomWaypointAction",
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Path Navigator/Generate Random Waypoints")]
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Navigation/Generate Random Waypoints")]
 public class GenerateRandomWaypointActionSO : StateActionSO
 {
     [SerializeField, Min(1)]

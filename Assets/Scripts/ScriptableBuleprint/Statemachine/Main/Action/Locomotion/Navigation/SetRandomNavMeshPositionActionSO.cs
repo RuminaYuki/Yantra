@@ -5,7 +5,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "SetRandomNavMeshPositionAction",
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Path Navigator/Set Random NavMesh Position")]
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Navigation/Set Random NavMesh Position")]
 public class SetRandomNavMeshPositionActionSO : StateActionSO
 {
     [SerializeField] private TransformAnchor _targetAnchor;

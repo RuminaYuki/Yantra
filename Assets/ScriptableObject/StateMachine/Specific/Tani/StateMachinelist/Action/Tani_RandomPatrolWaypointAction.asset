@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e09f266a47961b4ea3585632557e2fe, type: 3}
-  m_Name: TaniRandomPatrolWaypointAction
+  m_Name: Tani_RandomPatrolWaypointAction
   m_EditorClassIdentifier: Assembly-CSharp::GenerateRandomWaypointActionSO
   _pointCount: 3
   _maxAttemptsPerPoint: 3
-  _radius: 100
+  _radius: 15
   _minDistance: 1.5

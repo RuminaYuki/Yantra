@@ -2,7 +2,7 @@ using UnityEngine;
 using Yuki.Learning.StateMachine;
 using Yuki.Learning.StateMachine.ScriptableObjects;
 [CreateAssetMenu(fileName = "FollowWaypointPathAction", 
-menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Path Navigator/Follow Waypoint Path")]
+menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Navigation/Follow Waypoint Path")]
 public class FollowWaypointPathActionSO : StateActionSO
 {
     public override StateAction CreateAction(StateMachine stateMachine)

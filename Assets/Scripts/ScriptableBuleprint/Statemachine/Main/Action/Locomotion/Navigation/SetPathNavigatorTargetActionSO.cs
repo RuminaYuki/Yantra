@@ -4,7 +4,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(
     fileName = "SetPathNavigatorTargetAction",
-    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Path Navigator/Set Target")]
+    menuName = "YUKI Learning State Machine/StateMachine/Actions/Locomotion/Navigation/Set Target")]
 public class SetPathNavigatorTargetActionSO : StateActionSO
 {
     [SerializeField] private TransformAnchor _targetAnchor;
