@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7da57aa186da8c4a92fe7e1a7ef5add, type: 3}
-  m_Name: KaDead
+  m_Name: AttackState
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.StateSO
   _actions:
-  - {fileID: 11400000, guid: 664963cf5359ee24680fb6f52bcd3085, type: 2}
-  - {fileID: 11400000, guid: 8bcdc118ff535dd4c83fad9f297eff95, type: 2}
-  - {fileID: 11400000, guid: fec6fe1b16ea7d842ba88f45dbbea6b2, type: 2}
+  - {fileID: 11400000, guid: a925a96c3aa767f4cb2a3e904102f469, type: 2}

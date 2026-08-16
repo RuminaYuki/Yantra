@@ -8,21 +8,30 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 public class SetLocomotionMultiplierActionSO : StateActionSO
 {
     [SerializeField] private float _multiplier = 1f;
+    [SerializeField] private bool _resetOnStateExit = true;
 
     public override StateAction CreateAction(StateMachine stateMachine)
     {
-        return new SetLocomotionMultiplierAction(_multiplier);
+        return new SetLocomotionMultiplierAction(
+            _multiplier,
+            _resetOnStateExit);
     }
 }
 
 public class SetLocomotionMultiplierAction : StateAction
 {
     private readonly float _multiplier;
+    private readonly bool _resetOnStateExit;
     private BaseLocomotion _locomotion;
+    private float _previousMultiplier;
+    private bool _isApplied;
 
-    public SetLocomotionMultiplierAction(float multiplier)
+    public SetLocomotionMultiplierAction(
+        float multiplier,
+        bool resetOnStateExit)
     {
         _multiplier = multiplier;
+        _resetOnStateExit = resetOnStateExit;
     }
 
     public override void Awake(StateMachine stateMachine)
@@ -35,15 +44,24 @@ public class SetLocomotionMultiplierAction : StateAction
 
     public override void OnStateEnter()
     {
-        if (_locomotion == null) return;
+        if (_locomotion == null)
+            return;
 
+        _previousMultiplier = _locomotion.GetMoveMultiply();
         _locomotion.SetMoveMultiply(_multiplier);
+        _isApplied = true;
     }
 
     public override void OnUpdate() { }
 
     public override void OnStateExit()
     {
-        _locomotion?.SetMoveMultiply(1f);
+        if (_locomotion == null || !_isApplied)
+            return;
+
+        if (_resetOnStateExit)
+            _locomotion.SetMoveMultiply(_previousMultiplier);
+
+        _isApplied = false;
     }
 }

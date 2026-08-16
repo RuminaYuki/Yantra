@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7da57aa186da8c4a92fe7e1a7ef5add, type: 3}
-  m_Name: KaHurt
+  m_Name: KaAttackState
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.StateSO
   _actions:
-  - {fileID: 11400000, guid: 664963cf5359ee24680fb6f52bcd3085, type: 2}
-  - {fileID: 11400000, guid: 6e4b2a926db267f4ea6bdd0b5931f0ba, type: 2}
-  - {fileID: 11400000, guid: a3ad81d32aceede47af155bdb7a35fa8, type: 2}
+  - {fileID: 11400000, guid: 108d198d89a44fd40b591c453fa09898, type: 2}
