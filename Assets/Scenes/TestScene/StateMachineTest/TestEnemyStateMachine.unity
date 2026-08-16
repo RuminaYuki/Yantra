@@ -2114,6 +2114,40 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &359185539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359185525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16eea55c01a89c74b98834b072cd1822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterTeleporter
+--- !u!114 &359185540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359185525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f24cbbf5a9d30cf478e51c6e1abd23e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateFlags
+  flags:
+  - Flag: {fileID: 11400000, guid: d01d1976ba0e15245af857cd6d0476c4, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: 5f0e67f4450cc024f9aa126150973ce9, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: 16ae3ba9c84cc534bb4535cfa99aa5dd, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
 --- !u!1001 &395186300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2954,6 +2988,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 523780135}
+  - component: {fileID: 523780136}
   m_Layer: 0
   m_Name: TaniDisappearPoint
   m_TagString: Untagged
@@ -2976,6 +3011,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1874022263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &523780136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523780134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Provider
+  Anchors:
+  - {fileID: 11400000, guid: cb8416882e58f114baa9a935f572a902, type: 2}
 --- !u!1 &529906896
 GameObject:
   m_ObjectHideFlags: 0
@@ -10938,6 +10987,7 @@ GameObject:
   - component: {fileID: 1813501388}
   - component: {fileID: 1813501389}
   - component: {fileID: 1813501387}
+  - component: {fileID: 1813501390}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -11005,6 +11055,19 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 50db9d5a389a4d441bb9da46bd948bfb, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &1813501390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813501386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b146c1f8d42441145a6def60956e75d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestEventChannelListener
+  _eventChannel: {fileID: 11400000, guid: 00258178a1b34514690060e5be2003bb, type: 2}
 --- !u!1 &1818140051
 GameObject:
   m_ObjectHideFlags: 0
@@ -14268,6 +14331,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 753491701661662287, guid: 206c783f89f5b3442acc1f6a489780d8,
         type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 359185540}
+    - targetCorrespondingSourceObject: {fileID: 753491701661662287, guid: 206c783f89f5b3442acc1f6a489780d8,
+        type: 3}
       insertIndex: -1
       addedObject: {fileID: 359185531}
     - targetCorrespondingSourceObject: {fileID: 753491701661662287, guid: 206c783f89f5b3442acc1f6a489780d8,
@@ -14278,6 +14345,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 359185532}
+    - targetCorrespondingSourceObject: {fileID: 753491701661662287, guid: 206c783f89f5b3442acc1f6a489780d8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 359185539}
   m_SourcePrefab: {fileID: 100100000, guid: 206c783f89f5b3442acc1f6a489780d8, type: 3}
 --- !u!1001 &3605079294924578884
 PrefabInstance:
