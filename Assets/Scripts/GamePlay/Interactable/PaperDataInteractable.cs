@@ -21,11 +21,11 @@ public class PaperDataInteractable : MonoBehaviour
         interactable.OnEndInteract -= HideExamineUICanvas;
     }
 
-    private void ShowExamineUICanvas()
+    private void ShowExamineUICanvas(GameObject rootplayer)
     {
         ExamineUI.Instance.Open(dataSO);
     }
-    private void HideExamineUICanvas()
+    private void HideExamineUICanvas(GameObject rootplayer)
     {
         ExamineUI.Instance.Close();
     }

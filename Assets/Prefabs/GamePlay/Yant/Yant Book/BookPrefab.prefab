@@ -144,7 +144,9 @@ MonoBehaviour:
   _yantSpawnPoint: {fileID: 0}
   _yantPaper: {fileID: 1559902585104980198}
   _drawOn3DMesh: {fileID: 3950190518940257844}
-  _yantAmount: 0
+  _inventory: {fileID: 0}
+  _useConsumableForCasting: 1
+  _itemConsumable: {fileID: 11400000, guid: 6ef828eaf8f2a7940b077e4a0dfd501e, type: 2}
   _minSimilarityPercent: 70
   _bindings:
   - CategoryName: Heal Yant
@@ -310,7 +312,6 @@ MonoBehaviour:
   _minPointDistance: 0.18
   _paperParent: {fileID: 4700203200567172967}
   _surfaceOffset: 0.01
-  _canDraw: 0
   _allStrokes: []
 --- !u!114 &2989483812625227861
 MonoBehaviour:

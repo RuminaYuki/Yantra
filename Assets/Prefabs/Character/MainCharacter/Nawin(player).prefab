@@ -1837,6 +1837,7 @@ GameObject:
   - component: {fileID: 8089797697649941050}
   - component: {fileID: 3538070472994239782}
   - component: {fileID: 4420882688903385976}
+  - component: {fileID: 7429501560264599608}
   m_Layer: 3
   m_Name: PlayerController
   m_TagString: Player
@@ -2382,6 +2383,18 @@ MonoBehaviour:
   _statSO: {fileID: 11400000, guid: e8f9d967926733d4d90cf3f410734c41, type: 2}
   _flagSO: {fileID: 11400000, guid: a3cf3693d09433046a344ab222c28e42, type: 2}
   _isCrouchFlag: {fileID: 11400000, guid: 46e0baaa43de6c642b2241e0654ad3e2, type: 2}
+--- !u!114 &7429501560264599608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57cbc586fbad41c42b41a5373c15eda9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory
 --- !u!1 &3701737388500474450
 GameObject:
   m_ObjectHideFlags: 0
@@ -4361,6 +4374,11 @@ PrefabInstance:
       propertyPath: _mainCamera
       value: 
       objectReference: {fileID: 3763982105849043526}
+    - target: {fileID: 6147809767875308379, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: _inventory
+      value: 
+      objectReference: {fileID: 7429501560264599608}
     - target: {fileID: 6147809767875308379, guid: d6f2c258a18b0514f8959d610175256e,
         type: 3}
       propertyPath: _playerRoot
