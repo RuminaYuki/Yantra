@@ -43,6 +43,8 @@ public class PlayAnimatorStateAction : StateAction
 
     private Animator _animator;
 
+    private readonly bool _hasExitState;
+
     public PlayAnimatorStateAction(
         string stateName,
         string exitStateName,
@@ -52,6 +54,9 @@ public class PlayAnimatorStateAction : StateAction
         float exitTransitionDuration,
         float exitNormalizedStartTime)
     {
+        _hasExitState = !string.IsNullOrWhiteSpace(exitStateName);
+        _exitStateHash = _hasExitState ? Animator.StringToHash(exitStateName) : 0;
+
         _stateHash = Animator.StringToHash(stateName);
         _exitStateHash = Animator.StringToHash(exitStateName);
         _layerIndex = layerIndex;
@@ -82,6 +87,14 @@ public class PlayAnimatorStateAction : StateAction
 
     public override void OnStateExit()
     {
+        if (!_hasExitState ||
+            _animator == null ||
+            !_animator.isActiveAndEnabled ||
+            _animator.runtimeAnimatorController == null)
+        {
+            return;
+        }
+
         PlayState(
             _exitStateHash,
             _exitTransitionDuration,
