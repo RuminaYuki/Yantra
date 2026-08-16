@@ -13,12 +13,15 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
     [SerializeField]private bool canInteract = true;
     [Tooltip("If true, the highlight will be hidden when canInteract is false.")]
     [SerializeField] private bool hideInteract = false;
+    [Tooltip("If true, ")]
+    [SerializeField] private bool holdInteract = false;
 
     //if hideInteract is true, CanInteract will always return the value of canInteract, otherwise it will return the value of false
     public bool CanInteract => hideInteract ? canInteract : true;
+    public bool HoldInteract => holdInteract;
 
-    public Action OnInteract;
-    public Action OnEndInteract;
+    public Action OnInteract { get; set; }
+    public Action OnEndInteract { get; set; }
 
     private void Awake()
     {
@@ -86,6 +89,10 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
 public interface Iinteractable
 {
     bool CanInteract { get; }
+    bool HoldInteract {  get; }
+
+    public Action OnInteract { get; set; }
+    public Action OnEndInteract { get; set; }
 
     //Command the object to perform its interaction logic
     bool Interact(GameObject rootplayer);

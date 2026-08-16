@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5657807920023715714}
+  - component: {fileID: 161212910449672975}
+  - component: {fileID: 2116356213205104354}
   m_Layer: 0
   m_Name: StaminaUi
   m_TagString: Untagged
@@ -25,13 +27,51 @@ Transform:
   m_GameObject: {fileID: 1113432591204883110}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -929.0103, y: -538.98425, z: -73.54673}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5231890487673968019}
-  m_Father: {fileID: 1018941977000212792}
+  - {fileID: 4997643869917442534}
+  m_Father: {fileID: 5231890487673968019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!225 &161212910449672975
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113432591204883110}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &2116356213205104354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113432591204883110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f9b61829689cf439e7824c1291bf35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaUI
+  _staminaSystem: {fileID: 0}
+  _fillBarRect: {fileID: 179604534375003205}
+  _fillBarImage: {fileID: 9001838342842920195}
+  _fadeSpeed: 5
+  _normalColor: {r: 1, g: 1, b: 1, a: 1}
+  _warningColor: {r: 1, g: 0.5, b: 0, a: 1}
+  _exhaustedColor: {r: 1, g: 0, b: 0, a: 1}
+  _recoveredFlashColor: {r: 0, g: 1, b: 0, a: 1}
+  _warningThreshold: 0.3
+  _criticalThreshold: 0.15
+  _blinkThreshold: 0.05
+  _warningBlinkSpeed: 6
+  _exhaustedBlinkSpeed: 3
+  _recoveryBlinkSpeed: 8
 --- !u!1 &1453312154233484977
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,8 +279,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4997643869917442534}
-  m_Father: {fileID: 5657807920023715714}
+  - {fileID: 5657807920023715714}
+  m_Father: {fileID: 1018941977000212792}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -322,7 +362,6 @@ GameObject:
   - component: {fileID: 1454627875808608829}
   - component: {fileID: 371296692029461596}
   - component: {fileID: 2447566152166775707}
-  - component: {fileID: 2689679380510591655}
   m_Layer: 0
   m_Name: StaminaBar_BG
   m_TagString: Untagged
@@ -337,17 +376,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3073784998598542934}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 73.54673}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 179604534375003205}
-  m_Father: {fileID: 5231890487673968019}
+  m_Father: {fileID: 5657807920023715714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 929.0103, y: 48.984253}
   m_SizeDelta: {x: 1000, y: 10}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1454627875808608829
@@ -400,32 +439,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &2689679380510591655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3073784998598542934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8f9b61829689cf439e7824c1291bf35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StaminaUI
-  _staminaSystem: {fileID: 0}
-  _fillBarRect: {fileID: 179604534375003205}
-  _fillBarImage: {fileID: 9001838342842920195}
-  _fadeSpeed: 5
-  _normalColor: {r: 1, g: 1, b: 1, a: 1}
-  _warningColor: {r: 1, g: 0.5, b: 0, a: 1}
-  _exhaustedColor: {r: 1, g: 0, b: 0, a: 1}
-  _recoveredFlashColor: {r: 0, g: 1, b: 0, a: 1}
-  _warningThreshold: 0.3
-  _criticalThreshold: 0.15
-  _blinkThreshold: 0.05
-  _warningBlinkSpeed: 6
-  _exhaustedBlinkSpeed: 3
-  _recoveryBlinkSpeed: 8
 --- !u!1 &6115922372028289088
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,7 +744,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5657807920023715714}
+  - {fileID: 5231890487673968019}
   - {fileID: 6272878357810700022}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
