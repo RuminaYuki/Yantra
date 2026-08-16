@@ -128,6 +128,8 @@ public class BaseLocomotion : MonoBehaviour,ILocomotionLock,IRootMotionControl
     public void SetMoveMultiply(float multiply) => LocomotionAnim.Multiply = multiply;
     public float GetRotateSmoothSpeed() => Rotation.Speed;
     public void SetRotateSmoothSpeed(float value) => Rotation.Speed = value;
+    public float GetGravityMultiplier() => Gravity._GravityMultiplier;
+    public void SetGravityMultiplier(float value) => Gravity._GravityMultiplier = value;
 
     private void ResetLockedMovement()
     {
