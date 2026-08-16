@@ -14,12 +14,17 @@ public class InteractionPoint : MonoBehaviour, IObjectiveTarget
     {
         interactable = GetComponent<Iinteractable>();
 
-        if (interactable != null) interactable.OnInteract += Complete;
+        if (interactable != null) interactable.OnInteract += TyInteract;
     }
 
     public void Setup(Objective obj)
     {
         objective = obj;
+    }
+
+    private void TyInteract(GameObject rootplayer)
+    {
+        Complete();
     }
 
     public void Complete()
