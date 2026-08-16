@@ -51,6 +51,12 @@ public class WaypointPath : MonoBehaviour
 
         _currentIndex += _direction;
     }
+    
+    public void ResetToFirstPoint()
+    {
+        _currentIndex = 0;
+        _direction = 1;
+    }
 
     public void SetCurrentPoint(Transform point)
     {

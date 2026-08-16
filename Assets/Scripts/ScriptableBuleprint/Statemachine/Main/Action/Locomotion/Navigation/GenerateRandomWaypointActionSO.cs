@@ -11,11 +11,21 @@ public class GenerateRandomWaypointActionSO : StateActionSO
     private int _pointCount = 3;
 
     [SerializeField, Min(1)]
-    private int _maxAttemptsPerPoint = 10;
+    private int _maxAttemptsPerPoint = 3;
+
+    [SerializeField, Min(0.01f)]
+    private float _radius = 5f;
+
+    [SerializeField, Min(0.01f)]
+    private float _minDistance = 1.5f;
 
     public override StateAction CreateAction(StateMachine stateMachine)
     {
-        return new GenerateRandomWaypointAction(_pointCount,_maxAttemptsPerPoint);
+        return new GenerateRandomWaypointAction(
+            _pointCount,
+            _maxAttemptsPerPoint,
+            _radius,
+            _minDistance);
     }
 }
 
@@ -23,6 +33,8 @@ public class GenerateRandomWaypointAction : StateAction
 {
     private readonly int _pointCount;
     private readonly int _maxAttemptsPerPoint;
+    private readonly float _radius;
+    private readonly float _minDistance;
 
     private RandomWalkPoint _randomWalkPoint;
     private WaypointPath _waypointPath;
@@ -30,11 +42,14 @@ public class GenerateRandomWaypointAction : StateAction
 
     public GenerateRandomWaypointAction(
         int pointCount,
-        int maxAttemptsPerPoint)
+        int maxAttemptsPerPoint,
+        float radius,
+        float minDistance)
     {
         _pointCount = Mathf.Max(1, pointCount);
-        _maxAttemptsPerPoint =
-            Mathf.Max(1, maxAttemptsPerPoint);
+        _maxAttemptsPerPoint = Mathf.Max(1, maxAttemptsPerPoint);
+        _radius = Mathf.Max(0.01f, radius);
+        _minDistance = Mathf.Clamp(minDistance, 0.01f, _radius);
     }
 
     public override void Awake(StateMachine stateMachine)
@@ -64,33 +79,20 @@ public class GenerateRandomWaypointAction : StateAction
             _randomWalkPoint == null ||
             _waypointPath == null ||
             _waypointPath.PathRoot == null)
-        {
             return;
-        }
 
-        int count = Mathf.Min(
-            _pointCount,
-            _waypointPath.Count);
+        _waypointPath.ResetToFirstPoint();
 
-        if (count < _pointCount)
-        {
-            Debug.LogWarning(
-                $"Path Root requires at least {_pointCount} waypoint children.",
-                _owner);
-        }
+        int count = Mathf.Min(_pointCount, _waypointPath.Count);
 
         Vector3 origin = _owner.position;
 
         for (int i = 0; i < count; i++)
         {
-            if (!TryGeneratePoint(origin, out Vector3 position))
-            {
-                Debug.LogWarning(
-                    $"Could not generate waypoint {i + 1}.",
-                    _owner);
-
+            if (!TryGeneratePoint(
+                    origin,
+                    out Vector3 position))
                 return;
-            }
 
             Transform waypoint =
                 _waypointPath.PathRoot.GetChild(i);
@@ -108,7 +110,11 @@ public class GenerateRandomWaypointAction : StateAction
     {
         for (int i = 0; i < _maxAttemptsPerPoint; i++)
         {
-            if (_randomWalkPoint.TryGetRandomPoint(origin, out point))
+            if (_randomWalkPoint.TryGetRandomPoint(
+                    origin,
+                    _radius,
+                    _minDistance,
+                    out point))
             {
                 return true;
             }
