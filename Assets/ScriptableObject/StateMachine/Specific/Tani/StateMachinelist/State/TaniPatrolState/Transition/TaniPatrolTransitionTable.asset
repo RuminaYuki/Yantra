@@ -13,12 +13,38 @@ MonoBehaviour:
   m_Name: TaniPatrolTransitionTable
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
   _initialState: {fileID: 11400000, guid: d428f36c34ba13742be9b97d524422e2, type: 2}
-  _anyTransitions: []
+  _anyTransitions:
+  - ToState: {fileID: 11400000, guid: 8fe426125a86e10458c31dc50d1c84f1, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: e49c1adb276d5614ea7919c7c7dd91c9, type: 2}
+        ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: 2f78b923c476a5a4eb690f445d92a636, type: 2}
+        ExpectedResult: 1
+      - Condition: {fileID: 11400000, guid: 6760ad400cbd4b148b77316633c5246b, type: 2}
+        ExpectedResult: 1
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: e49c1adb276d5614ea7919c7c7dd91c9, type: 2}
+        ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: 2f78b923c476a5a4eb690f445d92a636, type: 2}
+        ExpectedResult: 1
+      - Condition: {fileID: 11400000, guid: 6760ad400cbd4b148b77316633c5246b, type: 2}
+        ExpectedResult: 1
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 3d28852e78215de4fbb51ceb3677a28a, type: 2}
+        ExpectedResult: 0
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: e49c1adb276d5614ea7919c7c7dd91c9, type: 2}
+        ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: 89b94d8ae7b074e438a0fe823b9d7098, type: 2}
+        ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: 6760ad400cbd4b148b77316633c5246b, type: 2}
+        ExpectedResult: 1
   _transitions:
   - FromState: {fileID: 11400000, guid: d428f36c34ba13742be9b97d524422e2, type: 2}
     ConditionGroups:
     - Conditions:
-      - Condition: {fileID: 11400000, guid: cc349cd67c76d1441a5fadd2a3790192, type: 2}
+      - Condition: {fileID: 11400000, guid: e56e226098bf4d643ba18e50eac92a8f, type: 2}
         ExpectedResult: 0
     ToState: {fileID: 11400000, guid: c33ff0f6d2fbdbf4d8aa67c35ffbcd5e, type: 2}
   - FromState: {fileID: 11400000, guid: c33ff0f6d2fbdbf4d8aa67c35ffbcd5e, type: 2}
@@ -26,10 +52,24 @@ MonoBehaviour:
     - Conditions:
       - Condition: {fileID: 11400000, guid: 60bba476f3b1b82408aadbf3c8feb348, type: 2}
         ExpectedResult: 0
+      - Condition: {fileID: 11400000, guid: 81aac37293ecc014f891fc7103434ef1, type: 2}
+        ExpectedResult: 1
     ToState: {fileID: 11400000, guid: ce32ac446197b6e4d9dde2aaf0beedba, type: 2}
   - FromState: {fileID: 11400000, guid: ce32ac446197b6e4d9dde2aaf0beedba, type: 2}
     ConditionGroups:
     - Conditions:
-      - Condition: {fileID: 11400000, guid: cc349cd67c76d1441a5fadd2a3790192, type: 2}
+      - Condition: {fileID: 11400000, guid: e56e226098bf4d643ba18e50eac92a8f, type: 2}
         ExpectedResult: 0
     ToState: {fileID: 11400000, guid: c33ff0f6d2fbdbf4d8aa67c35ffbcd5e, type: 2}
+  - FromState: {fileID: 11400000, guid: c33ff0f6d2fbdbf4d8aa67c35ffbcd5e, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 81aac37293ecc014f891fc7103434ef1, type: 2}
+        ExpectedResult: 0
+    ToState: {fileID: 11400000, guid: f6fff378a2383f54f974ebed49b38b90, type: 2}
+  - FromState: {fileID: 11400000, guid: f6fff378a2383f54f974ebed49b38b90, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: e56e226098bf4d643ba18e50eac92a8f, type: 2}
+        ExpectedResult: 0
+    ToState: {fileID: 11400000, guid: 01ac7d4772fd8174183c4ddb6d916985, type: 2}
