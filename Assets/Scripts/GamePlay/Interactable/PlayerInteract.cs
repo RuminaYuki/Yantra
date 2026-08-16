@@ -29,10 +29,19 @@ public class PlayerInteract : MonoBehaviour
     {
         if (!context.started)
             return;
+            
+        activeInteractable = rayInteract.CurrentInteractable;
+        if (activeInteractable == null )
+            return;
+
+        if (!activeInteractable.HoldInteract)
+        {
+            activeInteractable.Interact(rootPlayer);
+            return;
+        }
 
         if (!onInteractable)
         {
-            activeInteractable = rayInteract.CurrentInteractable;
             if (activeInteractable != null && activeInteractable.Interact(rootPlayer))
             {
                 onInteractable = true;
