@@ -5,6 +5,10 @@ using UnityEngine.Events;
 
 public class Objective : MonoBehaviour
 {
+    [Header("VoidChanel")]
+    [SerializeField] private VoidEventChannelSO _eventChannel;
+    
+    [Header("objectiveData")]
     [SerializeField] private ObjectiveSO objectiveData;
     
     [Tooltip("Filter and add IObjectiveTarget from MonoBehaviour to objectiveTargets list.")]
