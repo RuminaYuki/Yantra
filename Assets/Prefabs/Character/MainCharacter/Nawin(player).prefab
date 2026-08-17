@@ -627,6 +627,7 @@ Transform:
   - {fileID: 4820505181921907331}
   - {fileID: 7302662459756772655}
   - {fileID: 8229757981739818899}
+  - {fileID: 6040007836869644660}
   m_Father: {fileID: 4880661016805986422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1126768154866385786
@@ -1524,8 +1525,7 @@ Transform:
   m_LocalPosition: {x: 0.000014438629, y: 0.027133219, z: -0.000000114440915}
   m_LocalScale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6040007836869644660}
+  m_Children: []
   m_Father: {fileID: 4856735613077498282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2778614151218511872
@@ -3270,6 +3270,7 @@ GameObject:
   - component: {fileID: 6040007836869644660}
   - component: {fileID: 4889054194721000634}
   - component: {fileID: 4877799228842819325}
+  - component: {fileID: 4477946914189967659}
   m_Layer: 0
   m_Name: Flashlight
   m_TagString: Untagged
@@ -3285,12 +3286,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293821148687431485}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9324352, y: 0.108843274, z: -0.33759284, w: -0.06891198}
-  m_LocalPosition: {x: 0.031, y: 0.0115, z: 0.0222}
+  m_LocalRotation: {x: -0.91485554, y: 0.19328494, z: -0.29074484, w: 0.20284927}
+  m_LocalPosition: {x: 0.037971713, y: 0.16686831, z: 0.044043887}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6708451330932699777}
+  m_Father: {fileID: 6310663611873514362}
   m_LocalEulerAnglesHint: {x: 168.346, y: 321.134, z: 9.192}
 --- !u!108 &4889054194721000634
 Light:
@@ -3299,7 +3300,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293821148687431485}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.9056604, g: 0.89541936, b: 0.756141, a: 1}
@@ -3499,6 +3500,20 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
+--- !u!114 &4477946914189967659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6293821148687431485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Provider
+  Anchors:
+  - {fileID: 11400000, guid: 249d105159cc9714ab3646b1274020e9, type: 2}
 --- !u!1 &6348211947695859989
 GameObject:
   m_ObjectHideFlags: 0

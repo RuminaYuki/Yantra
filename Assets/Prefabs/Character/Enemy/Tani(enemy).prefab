@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 8328599419128855153}
   - component: {fileID: 6263826553327899844}
   - component: {fileID: 9152216105090541869}
+  - component: {fileID: 2676706639175309345}
   m_Layer: 0
   m_Name: EnemyController
   m_TagString: Untagged
@@ -286,6 +287,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enableRayCast: 1
+--- !u!114 &2676706639175309345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753491701661662287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4647bbd0785bd3b4b998ca61e70cab41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaniPhaseController
+  _transitionTables:
+  - {fileID: 11400000, guid: 12a088218e2b96d4a9d0fc80c87fd1a7, type: 2}
+  - {fileID: 11400000, guid: c1f153c2a707241479bbf880c759c71c, type: 2}
+  - {fileID: 11400000, guid: 795baef2725d94f409d8f4df9f8b527b, type: 2}
+  _sealTaniEvent: {fileID: 11400000, guid: 2a69c53af48bee84db12bbfef3a7b590, type: 2}
 --- !u!1 &1322102201380666121
 GameObject:
   m_ObjectHideFlags: 0
