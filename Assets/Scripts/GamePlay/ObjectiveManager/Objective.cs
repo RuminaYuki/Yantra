@@ -13,7 +13,7 @@ public class Objective : MonoBehaviour
     [SerializeField] private List<MonoBehaviour> SetobjectiveTargetsInspecter = new();
     private List<IObjectiveTarget> objectiveTargets = new();
     
-    [Header("VoidChanel")]
+    [Header("Event Chanel")]
     [SerializeField] private StringEventChannelSO onObjectiveCompleted;
     [SerializeField] private IntEventChannelSO onObjectiveChange;
     
