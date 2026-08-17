@@ -7,6 +7,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
     menuName = "YUKI Learning State Machine/StateMachine/Conditions/Animation Finished")]
 public class AnimationFinishedConditionSO : StateConditionSO
 {
+    [Header("If AnimatorAnchor has Set It will Check Target Instead")]
     [SerializeField] private AnimatorAnchor animatorAnchor;
     [SerializeField] private string stateName;
     [SerializeField] private int layerIndex;

@@ -511,7 +511,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4813272296387939907}
-  - {fileID: 8818237486095527546}
   m_Father: {fileID: 6822742963822158080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2505384191297380910
@@ -1304,6 +1303,9 @@ MonoBehaviour:
   - Flag: {fileID: 11400000, guid: 1646ad0beb3e119458b2d03781b20d55, type: 2}
     InitialValue: 0
     runtimeValue: 0
+  - Flag: {fileID: 11400000, guid: e6c4709f4f37fe94e983f55676fcc7be, type: 2}
+    InitialValue: 0
+    runtimeValue: 0
 --- !u!114 &5747113619426650191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1362,6 +1364,9 @@ MonoBehaviour:
     exitStateName: BaseMovement
   - id: {fileID: 11400000, guid: 76d3cdfbd4cdc494fa124c7dcb75b0be, type: 2}
     stateName: P_KaCatchFromLeft_remap
+    exitStateName: BaseMovement
+  - id: {fileID: 11400000, guid: 9396bdf7a033f8f4a9adc1a18c75248f, type: 2}
+    stateName: P_ka_CatchFromBehidet_remap
     exitStateName: BaseMovement
 --- !u!114 &349472562318097818
 MonoBehaviour:
@@ -1430,10 +1435,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe60a42dfbdd134aa4ea8177d07828d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LineOfSight
+  targetAnchor: {fileID: 11400000, guid: 177281d4fd647324a8f2e7516b0dac15, type: 2}
   target: {fileID: 0}
   viewpoint: {fileID: 1214753033062989671}
-  showGizmos: 0
-  detectRange: 7.94
+  showGizmos: 1
+  detectRange: 10.28
   viewAngle: 45
   enableFOV: 1
   obstacleLayer:
@@ -2761,37 +2767,6 @@ Transform:
   - {fileID: 3332306670317789661}
   - {fileID: 9218218319023886117}
   m_Father: {fileID: 2460580477840777097}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8662077751844385879
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8818237486095527546}
-  m_Layer: 0
-  m_Name: Point (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8818237486095527546
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8662077751844385879}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.87, y: 0, z: -11.68}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1834963662155422197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8707805924160117194
 GameObject:

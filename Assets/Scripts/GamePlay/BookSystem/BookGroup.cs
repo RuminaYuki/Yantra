@@ -30,7 +30,6 @@ public class BookGroup : MonoBehaviour
                 _bookTab.bookTab.SetActiveGameObjects(_bookTab.bookTab == bookTab);
             }
         }
-
     }
 }
 

@@ -12,7 +12,7 @@ public class SealYant : MonoBehaviour, IYantEffect
         if (_aimCamera == null) _aimCamera = Camera.main?.transform;
     }
 
-    public bool Initialize(GameObject playerRoot)
+    public bool Initialize(GameObject playerRoot, bool holdLMB)
     {
         RaycastHit hit;
         GetAimDirection(out hit);

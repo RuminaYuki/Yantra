@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VanishYant
   _vanishTag: Untagged
   _temporary: 1
-  _duration: 5
+  _duration: 10
   _cancelOnMove: 1
   _inputObserver: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
 --- !u!114 &3781564938757227648
@@ -150,6 +150,7 @@ MonoBehaviour:
     _effectType: 2
     _effectDuration: 0.5
     _holdDuration: 0
+  _playerRoot: {fileID: 0}
 --- !u!114 &-8642917754202229033
 MonoBehaviour:
   m_ObjectHideFlags: 0

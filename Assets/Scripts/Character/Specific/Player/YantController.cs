@@ -12,6 +12,7 @@ public class YantController : MonoBehaviour
 
     [ReadOnly][SerializeField] private float _holdTime = 0;
     private bool _holding = false;
+    private bool _isHoldingLeftMouse = false;
 
     [ReadOnly][SerializeField]private bool _isDrawing = false;
     private bool IsDrawing
@@ -53,6 +54,11 @@ public class YantController : MonoBehaviour
         {
             _holdTime += Time.deltaTime;
         }
+
+        if (_isHoldingLeftMouse && _isCasting)
+        {
+            _yantCaster?.tryCastYant(_holdTime, true);
+        }
     }
 
     private void HandlePressEInput()
@@ -65,10 +71,20 @@ public class YantController : MonoBehaviour
 
     private void HandlePressLeftClickInput(Vector2 position, InputAction.CallbackContext context)
     {
-        if (_yantCaster != null && context.started && _isCasting)
+        if (!_isCasting) return;
+
+        if (context.started)
         {
-            _yantCaster.tryCastYant(_holdTime);
-            _holdTime = 0;
+            _isHoldingLeftMouse = true;
+            _holdTime = 0f;
+            _yantCaster?.tryCastYant(_holdTime, true);
+        }
+
+        if (context.canceled)
+        {
+            _isHoldingLeftMouse = false;
+            _holdTime = 0f;
+            _yantCaster?.tryCastYant(0f, false);
         }
     }
 

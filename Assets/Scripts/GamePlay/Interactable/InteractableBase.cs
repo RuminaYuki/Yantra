@@ -13,12 +13,15 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
     [SerializeField]private bool canInteract = true;
     [Tooltip("If true, the highlight will be hidden when canInteract is false.")]
     [SerializeField] private bool hideInteract = false;
+    [Tooltip("If true, ")]
+    [SerializeField] private bool holdInteract = false;
 
     //if hideInteract is true, CanInteract will always return the value of canInteract, otherwise it will return the value of false
     public bool CanInteract => hideInteract ? canInteract : true;
+    public bool HoldInteract => holdInteract;
 
-    public Action OnInteract;
-    public Action OnEndInteract;
+    public Action<GameObject> OnInteract { get; set; }
+    public Action<GameObject> OnEndInteract { get; set; }
 
     private void Awake()
     {
@@ -40,7 +43,7 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
             Debug.LogWarning($"Interactable {this.gameObject.name} is not interactable.");
             return false;
         }
-        OnInteract?.Invoke();
+        OnInteract?.Invoke(rootplayer);
         return true;
         //Debug.Log($"Interact input detected{this.gameObject.name}");
     }
@@ -72,7 +75,7 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
 
     public virtual bool CancelInteraction(GameObject rootplayer)
     {
-        OnEndInteract?.Invoke();
+        OnEndInteract?.Invoke(rootplayer);
         return false;
     }
 
@@ -86,6 +89,10 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
 public interface Iinteractable
 {
     bool CanInteract { get; }
+    bool HoldInteract {  get; }
+
+    public Action<GameObject> OnInteract { get; set; }
+    public Action<GameObject> OnEndInteract { get; set; }
 
     //Command the object to perform its interaction logic
     bool Interact(GameObject rootplayer);

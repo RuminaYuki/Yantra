@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class LineOfSight : MonoBehaviour
 {
+    [Header("If targetAnchor is set, It will override Target value")]
+    [SerializeField] TransformAnchor targetAnchor;
     [SerializeField] Transform target;
     [SerializeField] Transform viewpoint;
     [SerializeField] bool showGizmos = true;
@@ -23,17 +25,21 @@ public class LineOfSight : MonoBehaviour
 
     void Start()
     {
-        if (target == null)
+        if(targetAnchor != null)
         {
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
+            target = targetAnchor.Value;
+            if (target == null)
             {
-                target = player.transform;
+                GameObject player = GameObject.FindWithTag("Player");
+                if (player != null)
+                {
+                    target = player.transform;
+                }
+                else
+                {
+                    Debug.LogError("Dont have Player in Scene");
+                }   
             }
-            else
-            {
-                Debug.LogError("Dont have Player in Scene");
-            }   
         }
     }
 

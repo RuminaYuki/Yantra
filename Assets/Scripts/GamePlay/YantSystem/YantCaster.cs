@@ -20,15 +20,31 @@ public class YantCaster : MonoBehaviour
     [SerializeField] private GameObject _playerRoot;
     [SerializeField] private Transform _yantSpawnPoint;
     [SerializeField] private GameObject _yantPaper;
+    [SerializeField] private DrawOn3DMesh _drawOn3DMesh;
+    [SerializeField] private Inventory _inventory;
+
+    [Header("Yant Caster Setting")]
+    [SerializeField] private bool _useConsumableForCasting;
+    [SerializeField] private ItemData _itemConsumable;
 
     [Header("Matching")]
     [SerializeField, Range(0f, 100f)] private float _minSimilarityPercent = 50f;
     [SerializeField] private List<YantPrefabBinding> _bindings = new List<YantPrefabBinding>();
 
-    
-
     public GameObject _lastSpawnedYant;
 
+    private void OnEnable()
+    {
+        if (_inventory != null && _useConsumableForCasting)
+        {
+            int _yantAmount = _inventory.GetItemCount(_itemConsumable);
+            _drawOn3DMesh.SetCanDraw(_yantAmount > 0);
+        }
+        else if (!_useConsumableForCasting)
+        {
+            _drawOn3DMesh.SetCanDraw(true);
+        }
+    }
 
     private void OnValidate()
     {
@@ -39,7 +55,6 @@ public class YantCaster : MonoBehaviour
     public void Analyze()
     {
         TryAnalyze();
-        
     }
 
     private bool TryAnalyze()
@@ -66,6 +81,8 @@ public class YantCaster : MonoBehaviour
         {
             _matcher.ClearLastResult();
         }
+
+        _inventory.TryRemoveItem(_itemConsumable, 1);
 
         return FinalResult;
     }
@@ -104,17 +121,16 @@ public class YantCaster : MonoBehaviour
         else
         {
             Destroy(yantObj);
-            Debug.LogWarning("äÁèà¨Í YantEffectController ã¹ yant ·Õè Instantiate");
+            Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½ï¿½ YantEffectController ï¿½ yant ï¿½ï¿½ï¿½ Instantiate");
             return false;
         }
 
         _lastSpawnedYant = yantObj;
 
         // Clear the drawing on the paper after casting
-        DrawOn3DMesh drawOn3DMesh = paper.GetComponent<DrawOn3DMesh>();
-        if (drawOn3DMesh != null)
+        if (_drawOn3DMesh != null)
         {
-            drawOn3DMesh.ClearDrawing();
+            _drawOn3DMesh.ClearDrawing();
         }
 
         Debug.Log($"<color=#00FFFF>[YantCaster]</color> Cast '{category}' successfully.");
@@ -124,13 +140,13 @@ public class YantCaster : MonoBehaviour
     #endregion
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     #region Cast Yant on Input
-    //à»ÅÕèÂ¹ä»ÊÑè§ã¹ YantEffectController
-    public void tryCastYant(float holdTime)
+    //ï¿½ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½ï¿½ï¿½ YantEffectController
+    public void tryCastYant(float holdTime, bool holdLMB = false)
     {
-        CastYant(holdTime);
+        CastYant(holdTime, holdLMB);
     }
 
-    private bool CastYant(float holdTime)
+    private bool CastYant(float holdTime, bool holdLMB = false)
     {
         GameObject yant = _lastSpawnedYant;
         if (yant == null)
@@ -140,7 +156,7 @@ public class YantCaster : MonoBehaviour
         }
         if (yant.TryGetComponent(out YantEffectController effect))
         {
-            effect.TryInitialize(holdTime);
+            effect.TryInitialize(holdTime, holdLMB);
             return true;
         }
         else
@@ -150,6 +166,4 @@ public class YantCaster : MonoBehaviour
         }
     }
     #endregion
-
-    
 }
