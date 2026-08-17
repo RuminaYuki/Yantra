@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5492ed31ba40b643aaf3d94f1de0aa7, type: 3}
   m_Name: TaniPhase2TransitionTable
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
-  _initialState: {fileID: 11400000, guid: b73f99b02180a8848a24719eb8bdd0ed, type: 2}
+  _initialState: {fileID: 11400000, guid: 7a3ea678683a7854fa43cdaa8459df63, type: 2}
   _anyTransitions: []
   _transitions:
   - FromState: {fileID: 11400000, guid: 7a3ea678683a7854fa43cdaa8459df63, type: 2}

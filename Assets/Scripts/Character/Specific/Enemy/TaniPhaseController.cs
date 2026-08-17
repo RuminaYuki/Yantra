@@ -16,16 +16,33 @@ public class TaniPhaseController : MonoBehaviour
 
     void OnEnable()
     {
+        if (_sealTaniEvent == null)
+        {
+            Debug.LogError("Seal Tani event channel is not assigned.", this);
+            return;
+        }
+
         _sealTaniEvent.Raised += HandleSealTaniEvent;
     }
     void OnDisable()
     {
-        _sealTaniEvent.Raised -= HandleSealTaniEvent;
+        if (_sealTaniEvent != null)
+            _sealTaniEvent.Raised -= HandleSealTaniEvent;
     }
     private void HandleSealTaniEvent(int amount)
     {
-        if(amount == 0) return;
-        _stateMachineController.ChangeTable(0,_transitionTables[amount]);
-        Debug.Log("Trigget _sealTaniEvent amount "+ amount);
+        if (amount <= 0)
+            return;
+
+        if (_transitionTables == null || amount >= _transitionTables.Length)
+        {
+            Debug.LogWarning(
+                $"No Tani transition table is configured for objective progress {amount}.",
+                this);
+            return;
+        }
+
+        _stateMachineController.ChangeTable(0, _transitionTables[amount - 1]);
+        Debug.Log($"Triggered seal Tani event with amount {amount}.", this);
     }
 }
