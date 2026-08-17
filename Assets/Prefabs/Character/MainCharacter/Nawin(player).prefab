@@ -1840,6 +1840,7 @@ GameObject:
   - component: {fileID: 3538070472994239782}
   - component: {fileID: 4420882688903385976}
   - component: {fileID: 7429501560264599608}
+  - component: {fileID: 1651477607954239820}
   m_Layer: 3
   m_Name: PlayerController
   m_TagString: Player
@@ -2424,6 +2425,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57cbc586fbad41c42b41a5373c15eda9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
+--- !u!114 &1651477607954239820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c9c68a79594f9a4e934f08eb4802952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSoundController
+  footstepWalkID: {fileID: 11400000, guid: 18225abed158b74408acf7cee4d0610b, type: 2}
+  footstepRunID: {fileID: 0}
+  flashlightToggleID: {fileID: 0}
+  openNotebookID: {fileID: 0}
+  mode: 1
+  walkStrideLength: 1.6
+  runStrideLength: 2.4
+  runSpeedThreshold: 3.5
+  minMoveSpeed: 0.15
+  minStepInterval: 0.15
+  requireGrounded: 1
+  logFootsteps: 0
 --- !u!1 &3701737388500474450
 GameObject:
   m_ObjectHideFlags: 0
