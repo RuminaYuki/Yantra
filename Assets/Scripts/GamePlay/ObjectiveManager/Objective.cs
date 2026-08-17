@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Objective : MonoBehaviour
 {
-    [Header("VoidChanel")]
-    [SerializeField] private VoidEventChannelSO _eventChannel;
     
+
     [Header("objectiveData")]
     [SerializeField] private ObjectiveSO objectiveData;
     
@@ -15,8 +13,9 @@ public class Objective : MonoBehaviour
     [SerializeField] private List<MonoBehaviour> SetobjectiveTargetsInspecter = new();
     private List<IObjectiveTarget> objectiveTargets = new();
     
-    public Action<string> onObjectiveCompleted;
-    public Action<int> onObjectiveChange;
+    [Header("VoidChanel")]
+    [SerializeField] private StringEventChannelSO onObjectiveCompleted;
+    [SerializeField] private IntEventChannelSO onObjectiveChange;
     
     private int currentProgress = 0;
     private bool isCompleted = false;
@@ -67,7 +66,7 @@ public class Objective : MonoBehaviour
             return;
 
         currentProgress++;
-        onObjectiveChange?.Invoke(currentProgress);
+        onObjectiveChange?.Raise(currentProgress);
         Debug.Log($"Progress: {currentProgress}/{TargetCount}");
 
         if (currentProgress >= TargetCount)
@@ -82,7 +81,7 @@ public class Objective : MonoBehaviour
         Debug.Log($"🎉 Objective Completed: {objectiveData.ObjectiveName}");
         
         // Invoke UnityEvent
-        onObjectiveCompleted?.Invoke(objectiveData.ObjectiveName);
+        onObjectiveCompleted?.Raise(objectiveData.ObjectiveName);
     }
 }
 

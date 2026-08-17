@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6945405950845437562}
-  - component: {fileID: 7009812620870968826}
   - component: {fileID: 5073675983963515596}
   - component: {fileID: 8721116652922855546}
   - component: {fileID: 2510381563819976060}
+  - component: {fileID: 8515789532983796968}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -35,20 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7009812620870968826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131788519651117330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59a044c775b8e6043a58ab02ba28b2a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  UseDontDestroyOnLoad: 1
-  CurrentGameState: 0
 --- !u!114 &5073675983963515596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,3 +88,19 @@ MonoBehaviour:
   sfxParam: SFXVolume
   bgmParam: BGMVolume
   voiceParam: VoiceVolume
+--- !u!114 &8515789532983796968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131788519651117330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4b34f3a0a691e448a98183a9207547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPooler
+  poolTable: {fileID: 11400000, guid: a65befeece3589541871dae537639692, type: 2}
+  useScriptableObject: 1
+  pools: []
+  groupUnderContainer: 1
