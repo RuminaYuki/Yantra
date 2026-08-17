@@ -34,10 +34,10 @@ public class TaniPhaseController : MonoBehaviour
         if (amount <= 0)
             return;
 
-        if (_transitionTables == null || amount >= _transitionTables.Length)
+        if (_transitionTables == null || amount - 1 >= _transitionTables.Length)
         {
             Debug.LogWarning(
-                $"No Tani transition table is configured for objective progress {amount}.",
+                $"No Tani transition table is configured for objective progress {amount - 1}.",
                 this);
             return;
         }
