@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b67304e647c21ef4d92c49e76ccc86b5
+guid: 19ffe5500b0b8fa46b224251b55bd3cd
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -17,7 +17,40 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Nawin_UsedHealingYant' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'Nawin_RightArmPart1' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLegPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLegPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftUpLegPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftUpLegPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Nawin_HoldingYant' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_RightArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Nawin_HoldToAttack' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_RightArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLegPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLegPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftUpLegPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftUpLegPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Nawin_AttackToIdle' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_SpinePart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -29,7 +62,152 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Nawin_UsedHealingYant
+      takeName: Nawin_UsedHealingYant
+      internalID: -8569835700643390187
+      firstFrame: 0
+      lastFrame: 26
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_HoldingYant
+      takeName: Nawin_HoldingYant
+      internalID: -4248892460435012373
+      firstFrame: 0
+      lastFrame: 44
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_HoldToAttack
+      takeName: Nawin_HoldToAttack
+      internalID: 5664724358711832594
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_AttackToIdle
+      takeName: Nawin_AttackToIdle
+      internalID: 3522924432928481710
+      firstFrame: 0
+      lastFrame: 13
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_UsedAttackYant
+      takeName: Nawin_UsedAttackYant
+      internalID: 5901114009658559852
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -1306,11 +1484,12 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: b67304e647c21ef4d92c49e76ccc86b5,
+    type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
