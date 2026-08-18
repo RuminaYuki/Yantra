@@ -90,7 +90,7 @@ public class ExamineInteractable : InteractableBase
 
         if (_cameraController == null)
         {
-            Debug.LogWarning($"{nameof(ExamineInteractable)}: FatalFrameCameraController not found on player.");
+            Debug.LogWarning($"{nameof(ExamineInteractable)}: PlayerCameraController not found on player.");
             return false;
         }
 

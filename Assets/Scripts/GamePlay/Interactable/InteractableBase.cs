@@ -20,8 +20,8 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
     public bool CanInteract => hideInteract ? canInteract : true;
     public bool HoldInteract => holdInteract;
 
-    public Action OnInteract { get; set; }
-    public Action OnEndInteract { get; set; }
+    public Action<GameObject> OnInteract { get; set; }
+    public Action<GameObject> OnEndInteract { get; set; }
 
     private void Awake()
     {
@@ -43,7 +43,7 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
             Debug.LogWarning($"Interactable {this.gameObject.name} is not interactable.");
             return false;
         }
-        OnInteract?.Invoke();
+        OnInteract?.Invoke(rootplayer);
         return true;
         //Debug.Log($"Interact input detected{this.gameObject.name}");
     }
@@ -75,7 +75,7 @@ public abstract class InteractableBase : MonoBehaviour, Iinteractable
 
     public virtual bool CancelInteraction(GameObject rootplayer)
     {
-        OnEndInteract?.Invoke();
+        OnEndInteract?.Invoke(rootplayer);
         return false;
     }
 
@@ -91,8 +91,8 @@ public interface Iinteractable
     bool CanInteract { get; }
     bool HoldInteract {  get; }
 
-    public Action OnInteract { get; set; }
-    public Action OnEndInteract { get; set; }
+    public Action<GameObject> OnInteract { get; set; }
+    public Action<GameObject> OnEndInteract { get; set; }
 
     //Command the object to perform its interaction logic
     bool Interact(GameObject rootplayer);

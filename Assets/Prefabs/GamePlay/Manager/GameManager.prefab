@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6945405950845437562}
-  - component: {fileID: 6473139635277867778}
   - component: {fileID: 5073675983963515596}
   - component: {fileID: 8721116652922855546}
+  - component: {fileID: 2510381563819976060}
+  - component: {fileID: 8515789532983796968}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -34,38 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6473139635277867778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131788519651117330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
-  m_SerializedVersion: 0
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 50db9d5a389a4d441bb9da46bd948bfb, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!114 &5073675983963515596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f5a09bb3627b240a9becac5489b2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PairedAnimationManager
-  _warpDuration: 0.5
+  _warpDuration: 0.15
 --- !u!114 &8721116652922855546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,3 +63,44 @@ MonoBehaviour:
   examineCanvas: {fileID: 0}
   titleText: {fileID: 0}
   contentText: {fileID: 0}
+--- !u!114 &2510381563819976060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131788519651117330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f647a7dcb2dae1f42a6f93ac48ab9a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  soundTable: {fileID: 11400000, guid: 1131b1be245de6f42817490cf2385117, type: 2}
+  audioPoolTag: SFXsource
+  bgmSource: {fileID: 0}
+  voiceSource: {fileID: 0}
+  voiceMixerGroup: {fileID: 0}
+  duckBgmDuringVoice: 1
+  duckedBgmMultiplier: 0.35
+  duckFadeTime: 0.25
+  audioMixer: {fileID: 24100000, guid: e316f4b716e6408419b3f5b43b0e4078, type: 2}
+  masterParam: MasterVolume
+  sfxParam: SFXVolume
+  bgmParam: BGMVolume
+  voiceParam: VoiceVolume
+--- !u!114 &8515789532983796968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131788519651117330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4b34f3a0a691e448a98183a9207547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPooler
+  poolTable: {fileID: 11400000, guid: a65befeece3589541871dae537639692, type: 2}
+  useScriptableObject: 1
+  pools: []
+  groupUnderContainer: 1

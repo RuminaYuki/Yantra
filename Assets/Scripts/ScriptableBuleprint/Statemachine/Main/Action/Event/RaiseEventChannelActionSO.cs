@@ -7,8 +7,7 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
     menuName = "YUKI Learning State Machine/StateMachine/Actions/Event/Raise Event Channel")]
 public class RaiseEventChannelActionSO : StateActionSO
 {
-    [SerializeField]
-    private VoidEventChannelSO _eventChannel;
+    [SerializeField] private VoidEventChannelSO _eventChannel;
 
     public override StateAction CreateAction(
         StateMachine stateMachine)
@@ -23,8 +22,7 @@ public class RaiseEventChannelAction : StateAction
     private readonly VoidEventChannelSO _eventChannel;
     private GameObject _owner;
 
-    public RaiseEventChannelAction(
-        VoidEventChannelSO eventChannel)
+    public RaiseEventChannelAction(VoidEventChannelSO eventChannel)
     {
         _eventChannel = eventChannel;
     }

@@ -21,9 +21,11 @@ public class YantCaster : MonoBehaviour
     [SerializeField] private Transform _yantSpawnPoint;
     [SerializeField] private GameObject _yantPaper;
     [SerializeField] private DrawOn3DMesh _drawOn3DMesh;
+    [SerializeField] private Inventory _inventory;
 
-    [Header("Stat")]
-    [SerializeField] private int _yantAmount;
+    [Header("Yant Caster Setting")]
+    [SerializeField] private bool _useConsumableForCasting;
+    [SerializeField] private ItemData _itemConsumable;
 
     [Header("Matching")]
     [SerializeField, Range(0f, 100f)] private float _minSimilarityPercent = 50f;
@@ -33,7 +35,15 @@ public class YantCaster : MonoBehaviour
 
     private void OnEnable()
     {
-        _drawOn3DMesh.SetCanDraw(_yantAmount > 0);
+        if (_inventory != null && _useConsumableForCasting)
+        {
+            int _yantAmount = _inventory.GetItemCount(_itemConsumable);
+            _drawOn3DMesh.SetCanDraw(_yantAmount > 0);
+        }
+        else if (!_useConsumableForCasting)
+        {
+            _drawOn3DMesh.SetCanDraw(true);
+        }
     }
 
     private void OnValidate()
@@ -71,6 +81,8 @@ public class YantCaster : MonoBehaviour
         {
             _matcher.ClearLastResult();
         }
+
+        _inventory.TryRemoveItem(_itemConsumable, 1);
 
         return FinalResult;
     }
@@ -154,6 +166,4 @@ public class YantCaster : MonoBehaviour
         }
     }
     #endregion
-
-    public int GetYantAmount => _yantAmount;
 }
