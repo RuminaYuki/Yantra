@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 14c482c213a75c743bba94e8e41ed684
+guid: 60731d8c39d4eab4fbd4ac3b533db246
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -17,16 +17,7 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Narwin_PickUpItem' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'Nawin_RightArmPart1' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
-      'Nawin_PickUpBook' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_RightForeArmPart2'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -40,21 +31,21 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Nawin_Dead
-      takeName: Nawin_Dead
-      internalID: -3337668760526346099
+      name: Nawin_HoldFlashLIghtIdle
+      takeName: Nawin_HoldFlashLIghtIdle
+      internalID: -3532042338670296127
       firstFrame: 0
-      lastFrame: 72
+      lastFrame: 46
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 0
@@ -69,21 +60,21 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Narwin_PickUpItem
-      takeName: Narwin_PickUpItem
-      internalID: 3078826731980252072
+      name: Nawin_HoldFlashLIghtLookUp
+      takeName: Nawin_HoldFlashLIghtLookUp
+      internalID: 2140874185598288904
       firstFrame: 0
-      lastFrame: 59
+      lastFrame: 49
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 0
@@ -98,27 +89,27 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Nawin_HoldingBook
-      takeName: Nawin_HoldingBook
-      internalID: 2423126091634891513
+      name: Nawin_HoldFlashLIghtLookDown
+      takeName: Nawin_HoldFlashLIghtLookDown
+      internalID: -6994797201438344681
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 46
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 0
       keepOriginalPositionXZ: 1
       heightFromFeet: 1
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -127,27 +118,56 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Nawin_PickUpBook
-      takeName: Nawin_PickUpBook
-      internalID: -4950481673248817180
+      name: Nawin_HoldFlashLIghtLookLeft
+      takeName: Nawin_HoldFlashLIghtLookLeft
+      internalID: 4565030977346300538
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 46
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 0
       keepOriginalPositionXZ: 1
       heightFromFeet: 1
-      mirror: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_HoldFlashLIghtLookRight
+      takeName: Nawin_HoldFlashLIghtLookRight
+      internalID: -1712019568344518448
+      firstFrame: 0
+      lastFrame: 46
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
