@@ -16,13 +16,17 @@ public class SoundData
     }
 #endif
 
-    [Header("🎯 Identity & Routing")]
+    [Header("Identity & Routing")]
     public SoundID id;
-    public AudioMixerGroup mixerGroup; // เผื่อไว้แยกช่องเสียง (BGM, SFX)
+    public AudioMixerGroup mixerGroup;
 
-    [Header("🎵 Audio Clip (โหมดปกติ หรือ สุ่มเสียง)")]
+    [Header("Audio Clip")]
     [Tooltip("เปิดเพื่อใช้ระบบสุ่มเสียงจากหลายๆ ไฟล์ (ถ้าปิด จะใช้แค่ช่อง Clip เดี่ยวๆ)")]
     public bool useRandomClips = false;
+
+    [Header("Random Chance")]
+    [Tooltip("โอกาสที่จะหยิบเสียงจากใน List มาเล่น (100 = สุ่มจาก List เสมอ, 20 = มีโอกาสแค่ 20%)")]
+    [Range(0f, 100f)] public float randomChance = 100f;
 
     [Tooltip("ใส่ไฟล์เสียงที่นี่ (กรณีปิดการสุ่ม)")]
     public AudioClip clip;
@@ -30,39 +34,53 @@ public class SoundData
     [Tooltip("ใส่ไฟล์เสียงหลายๆ ไฟล์ที่นี่ (กรณีเปิดการสุ่ม)")]
     public AudioClip[] clips;
 
-    [Header("🎛️ Pitch Settings")]
+    [Header("Pitch Settings")]
     [Tooltip("เปิดเพื่อสุ่มเสียงแหลม/ทุ้ม (ทำให้เสียงดูไม่ซ้ำซาก)")]
     public bool useRandomPitch = false;
     [Range(0.1f, 3f)] public float minPitch = 0.9f;
     [Range(0.1f, 3f)] public float maxPitch = 1.1f;
 
     [Header("Volume & 3D Settings")]
+    [Tooltip("เปิดเพื่อสุ่มความดังแต่ละก้าว (น้ำหนักเท้าหนัก/เบา)")]
+    public bool useRandomVolume = false;
+    [Range(0f, 1f)] public float minVolume = 0.85f;
+    [Range(0f, 1f)] public float maxVolume = 1.0f;
+
     [Range(0f, 1f)] public float volume = 1f;
     [Tooltip("0 = 2D (เสียงดังเท่ากันหมด), 1 = 3D (ดังตามระยะทาง)")]
     [Range(0f, 1f)] public float spatialBlend = 1f;
 
     // ==========================================
-    // ฟังก์ชันจัดการ Logic ที่ตัวมันเอง (ฉลาดขึ้น)
+    // Core Logic
     // ==========================================
 
     public AudioClip GetClip()
     {
-        // ถ้าไม่เปิดระบบสุ่ม หรือ เปิดไว้แต่ไม่ได้ใส่ไฟล์ใน Array เลย -> ให้ใช้ไฟล์เดี่ยวๆ (แบบเก่า)
         if (!useRandomClips || clips == null || clips.Length == 0)
             return clip;
 
-        // ถ้าเปิดระบบสุ่ม -> สุ่มหยิบมา 1 ไฟล์
-        return clips[UnityEngine.Random.Range(0, clips.Length)];
+        if (UnityEngine.Random.Range(0f, 100f) <= randomChance)
+        {
+            return clips[UnityEngine.Random.Range(0, clips.Length)];
+        }
+
+        return clip;
     }
 
     public float GetPitch()
     {
-        // ถ้าเปิดระบบสุ่ม Pitch -> สุ่มค่ามาให้
         if (useRandomPitch)
             return UnityEngine.Random.Range(minPitch, maxPitch);
 
-        // ถ้าไม่เปิด -> คืนค่า 1 (ระดับเสียงปกติเป๊ะๆ)
         return 1f;
+    }
+
+    public float GetVolume()
+    {
+        if (useRandomVolume)
+            return UnityEngine.Random.Range(minVolume, maxVolume);
+
+        return volume;
     }
 }
 

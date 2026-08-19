@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Objective : MonoBehaviour
 {
-    
-
     [Header("objectiveData")]
     [SerializeField] private ObjectiveSO objectiveData;
     
@@ -83,6 +81,8 @@ public class Objective : MonoBehaviour
         // Invoke UnityEvent
         onObjectiveCompleted?.Raise(objectiveData.ObjectiveName);
     }
+
+    public ObjectiveSO ObjectiveSO => objectiveData;
 }
 
 public interface IObjectiveTarget

@@ -6,7 +6,7 @@ public class SFXPlayer : MonoBehaviour
 {
     private AudioSource audioSource;
     private Coroutine returnRoutine;
-    [HideInInspector] public string myPoolTag; // ตัวแปรสำหรับจำว่าตัวเองมาจากแท็กไหน
+    [HideInInspector] public string myPoolTag;
 
     public bool IsPlaying => audioSource != null && audioSource.isPlaying;
 
@@ -15,14 +15,13 @@ public class SFXPlayer : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    // ตัวช่วยกลาง: เซ็ตค่าลำโพงจากคูปอง แล้วคืนความยาวเสียงจริง (คิด pitch แล้ว)
     private float Setup(SoundData data, bool loop)
     {
         AudioClip clipToPlay = data.GetClip();
 
         if (clipToPlay == null)
         {
-            Debug.LogWarning("[SFXPlayer] SoundData ไม่มี AudioClip");
+            Debug.LogWarning("[SFXPlayer] SoundData missing AudioClip");
             ReturnHome();
             return 0f;
         }
@@ -35,9 +34,11 @@ public class SFXPlayer : MonoBehaviour
 
         float pitch = data.GetPitch();
 
-        // นำค่าจากคูปอง (Inspector) มาเซ็ตใส่ลำโพง
         audioSource.clip = clipToPlay;
-        audioSource.volume = data.volume;
+
+        // ดึงค่า Volume ที่ผ่านการคำนวณน้ำหนักเท้ามาแล้ว
+        audioSource.volume = data.GetVolume();
+
         audioSource.pitch = pitch;
         audioSource.spatialBlend = data.spatialBlend;
         audioSource.loop = loop;
@@ -47,9 +48,6 @@ public class SFXPlayer : MonoBehaviour
 
         audioSource.Play();
 
-        // [FIX] ของเดิมใช้ clip.length ตรงๆ แต่ถ้าสุ่ม pitch ได้ 0.9
-        // เสียงจะยาวขึ้นเป็น length / 0.9 แล้ว coroutine ปิดลำโพงก่อนเสียงจบ → เสียงแหว่ง
-        // (เสียงฝีเท้าที่เปิด useRandomPitch จะโดนบ่อยมาก)
         return clipToPlay.length / Mathf.Max(0.01f, Mathf.Abs(pitch));
     }
 
@@ -71,14 +69,11 @@ public class SFXPlayer : MonoBehaviour
         return duration;
     }
 
-    /// <summary>[ADD] วนไม่มีกำหนด ต้องเรียก Stop() เองเท่านั้น (เช่น เสียงหายใจตอน Tani ไล่)</summary>
     public void PlayLoopForever(SoundData data)
     {
         Setup(data, true);
-        // ไม่ตั้ง coroutine — รอคำสั่ง Stop() อย่างเดียว
     }
 
-    /// <summary>[ADD] สั่งหยุดกลางคันแล้วคืนลำโพงเข้าโกดังทันที</summary>
     public void Stop()
     {
         if (returnRoutine != null)
@@ -93,7 +88,6 @@ public class SFXPlayer : MonoBehaviour
         ReturnHome();
     }
 
-    /// <summary>[ADD] ค่อยๆ หรี่เสียงลงแล้วค่อยคืนโกดัง (เหมาะกับเสียงบรรยากาศ)</summary>
     public void FadeOutAndStop(float fadeTime)
     {
         if (returnRoutine != null)
@@ -125,12 +119,11 @@ public class SFXPlayer : MonoBehaviour
 
     private IEnumerator ReturnAfterFinished(float duration)
     {
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(duration + 0.15f);
         returnRoutine = null;
         ReturnHome();
     }
 
-    // แทนที่จะปิดตัวเองดื้อๆ ให้ส่งตัวเองไปให้โกดังประเมินว่าจะ "เก็บ" หรือ "เผาทิ้ง"
     private void ReturnHome()
     {
         if (!gameObject.activeInHierarchy) return;
@@ -141,12 +134,10 @@ public class SFXPlayer : MonoBehaviour
         }
         else
         {
-            // ถ้าหาโกดังไม่เจอจริงๆ ค่อยลบทิ้ง (กรณีนี้ไม่ควรเกิดแล้วหลังแก้ SoundManager)
             Destroy(gameObject);
         }
     }
 
-    // กันเคสถูกปิดจากที่อื่น เช่น เปลี่ยนซีน หรือโดน pool สั่งปิด
     private void OnDisable()
     {
         if (returnRoutine != null)
@@ -158,7 +149,7 @@ public class SFXPlayer : MonoBehaviour
         if (audioSource != null)
         {
             audioSource.Stop();
-            audioSource.clip = null; // ปล่อย reference ไม่ให้ค้าง
+            audioSource.clip = null;
         }
     }
 }

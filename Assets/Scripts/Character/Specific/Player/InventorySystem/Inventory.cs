@@ -34,6 +34,11 @@ public class Inventory : MonoBehaviour
             _inventory.Add(item, amount);
         }
 
+        if (item.EventChannel != null)
+        {
+            item.EventChannel.Raise(_inventory[item]);
+        }
+
         Debug.Log($"Added item: {item.ItemName} | Amount: {amount} | Total: {_inventory[item]}");
         return true;
     }
@@ -65,6 +70,11 @@ public class Inventory : MonoBehaviour
         else
         {
             return false;
+        }
+
+        if (item.EventChannel != null)
+        {
+            item.EventChannel.Raise(_inventory[item]);
         }
 
         Debug.Log($"Removed item: {item.ItemName} | Amount: {amount} | Total: {_inventory[item]}");
