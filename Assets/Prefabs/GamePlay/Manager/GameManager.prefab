@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8721116652922855546}
   - component: {fileID: 2510381563819976060}
   - component: {fileID: 8515789532983796968}
+  - component: {fileID: 8724207655785170733}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -104,3 +105,21 @@ MonoBehaviour:
   useScriptableObject: 1
   pools: []
   groupUnderContainer: 1
+--- !u!114 &8724207655785170733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131788519651117330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7ac2f6e9cc02e48b5a822ec2668294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubtitleSystem
+  voiceDelayToMatchFade: 0.25
+  minLineDuration: 1.2
+  charactersPerSecond: 14
+  gapBetweenLines: 0.15
+  routeVoiceThroughSoundManager: 1
+  fallbackAudioSource: {fileID: 0}
