@@ -121,4 +121,20 @@ public class FlagCountdown : MonoBehaviour
             }
         }
     }
+
+    public void ResetAllCountdown()
+    {
+        foreach (FlagCDData flagData in flagCountdowns)
+        {
+            if (flagData.countdownCoroutine != null)
+            {
+                StopCoroutine(flagData.countdownCoroutine);
+                flagData.countdownCoroutine = null;
+            }
+
+            flagData.remainingTime = 0f;
+        }
+
+        flagCountdowns.Clear();
+    }
 }

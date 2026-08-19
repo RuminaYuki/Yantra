@@ -85,6 +85,41 @@ public class StateMachineController : MonoBehaviour
 
         return stateMachine;
     }
+    public void RestartTable(int tableIndex)
+    {
+        if (_stateMachines == null)
+        {
+            Debug.LogWarning(
+                "StateMachineController has not started yet.",
+                this);
+
+            return;
+        }
+
+        if (tableIndex < 0 || tableIndex >= _stateMachines.Length)
+        {
+            Debug.LogError(
+                $"Invalid state machine index: {tableIndex}.",
+                this);
+
+            return;
+        }
+
+        TransitionTableSO currentTable = _transitionTables[tableIndex];
+
+        if (currentTable == null)
+        {
+            Debug.LogError(
+                $"Transition table at index {tableIndex} is null.",
+                this);
+
+            return;
+        }
+
+        _stateMachines[tableIndex]?.Dispose();
+        _stateMachines[tableIndex] =
+            CreateStateMachine(currentTable);
+    }
 
     private void OnDestroy()
     {
