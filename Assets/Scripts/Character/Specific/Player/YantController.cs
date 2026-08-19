@@ -55,10 +55,10 @@ public class YantController : MonoBehaviour
             _holdTime += Time.deltaTime;
         }
 
-        if (_isHoldingLeftMouse && _isCasting)
+        /*if (_isHoldingLeftMouse && _isCasting)
         {
             _yantCaster?.tryCastYant(_holdTime, true);
-        }
+        }*/
     }
 
     private void HandlePressEInput()
@@ -72,6 +72,8 @@ public class YantController : MonoBehaviour
     private void HandlePressLeftClickInput(Vector2 position, InputAction.CallbackContext context)
     {
         if (!_isCasting) return;
+
+        Debug.Log(context.phase);
 
         if (context.started)
         {

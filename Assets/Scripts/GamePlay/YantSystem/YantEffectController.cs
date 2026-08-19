@@ -23,8 +23,14 @@ public class YantEffectController : MonoBehaviour
 
     [SerializeField] private List<YantEffectSettings> _effectSettings = new List<YantEffectSettings>();
 
-    [SerializeField] private GameObject _playerRoot;
+    [Header("Animation")]
+    [SerializeField] private string AnimationName = "";
+    [SerializeField] private string CancelHold = " ";
+    [SerializeField] private int LayerIndex = 0;
+
+    private GameObject _playerRoot;
     private Coroutine _destroyCoroutine;
+    private readonly List<IYantAnimationTiming> _pendingAnimationTimings = new();
 
     private void Awake()
     {
@@ -68,6 +74,8 @@ public class YantEffectController : MonoBehaviour
             }
 
             setting._yantEffect.Initialize(_playerRoot, false);
+            RegisterAnimationTiming(setting._yantEffect);
+            PlayAnimation(AnimationName);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
@@ -98,6 +106,14 @@ public class YantEffectController : MonoBehaviour
             }
 
             bool initialized = setting._yantEffect.Initialize(_playerRoot, holdLMB);
+            if (holdLMB)
+            {
+                RegisterAnimationTiming(setting._yantEffect);
+                PlayAnimation(AnimationName);
+            } else if (!string.IsNullOrWhiteSpace(CancelHold))
+            {
+                PlayAnimation(CancelHold);
+            }
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot) && initialized)
             {
@@ -117,6 +133,71 @@ public class YantEffectController : MonoBehaviour
     public void SetDefaultValue(GameObject playerRoot)
     {
         _playerRoot = playerRoot;
+    }
+
+    public void TriggerAnimationTiming()
+    {
+        foreach (IYantAnimationTiming animationTiming in _pendingAnimationTimings)
+        {
+            animationTiming.TriggerAnimationTiming();
+            Debug.Log(animationTiming);
+        }
+
+        _pendingAnimationTimings.Clear();
+    }
+
+    private void RegisterAnimationTiming(IYantEffect yantEffect)
+    {
+        if (yantEffect is IYantAnimationTiming animationTiming &&
+            !_pendingAnimationTimings.Contains(animationTiming))
+        {
+            _pendingAnimationTimings.Add(animationTiming);
+        }
+
+        if (_playerRoot == null || yantEffect is not IYantAnimationTiming)
+        {
+            return;
+        }
+
+        Animator animator = _playerRoot.GetComponentInChildren<Animator>(true);
+        if (animator == null)
+        {
+            return;
+        }
+
+        PlayerYantAnimationEvent animationEvent =
+            animator.GetComponent<PlayerYantAnimationEvent>();
+
+        if (animationEvent == null)
+        {
+            animationEvent = animator.gameObject.AddComponent<PlayerYantAnimationEvent>();
+        }
+
+        animationEvent.SetCurrentController(this);
+    }
+
+    private void PlayAnimation(string animationName)
+    {
+        if (string.IsNullOrWhiteSpace(animationName) || _playerRoot == null)
+        {
+            return;
+        }
+
+        Animator animator = _playerRoot.GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogWarning("Cannot play yant animation because the player has no Animator.");
+            return;
+        }
+
+        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(LayerIndex);
+        if (currentState.IsName(animationName))
+        {
+            return;
+        }
+
+        Debug.Log($"Player animation : {animationName}");
+        animator.Play(animationName, LayerIndex);
     }
 
     private void DestroyGameObject(float delay)

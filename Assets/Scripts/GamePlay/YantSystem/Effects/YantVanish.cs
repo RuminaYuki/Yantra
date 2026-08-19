@@ -7,6 +7,7 @@ public class YantVanish : MonoBehaviour
     private string _originalTag;
     private Coroutine _revertRoutine;
     private bool _isVanished;
+    private bool _hasMovementInput;
     private YantraInputObserverSO _inputObserver;
     [SerializeField] private StateFlagsAccess _stateFlags;
 
@@ -23,7 +24,10 @@ public class YantVanish : MonoBehaviour
         }
 
         if (_inputObserver != null)
+        {
             _inputObserver.OnMoveChannel -= OnMoveInput;
+            _inputObserver.OnCrouchChannel -= OnCrouchInput;
+        }
 
         if (!_isVanished)
             _originalTag = gameObject.tag;
@@ -34,10 +38,14 @@ public class YantVanish : MonoBehaviour
 
         gameObject.tag = vanishTag;
         _isVanished = true;
+        _hasMovementInput = false;
 
         _inputObserver = inputObserver;
         if (_inputObserver != null)
+        {
             _inputObserver.OnMoveChannel += OnMoveInput;
+            _inputObserver.OnCrouchChannel += OnCrouchInput;
+        }
 
         if (temporary)
             _revertRoutine = StartCoroutine(RevertAfter(duration));
@@ -104,7 +112,9 @@ public class YantVanish : MonoBehaviour
     private void OnMoveInput(Vector3 moveInput)
     {
         if (!_isVanished) return;
-        //if (moveInput.sqrMagnitude < 1e-6f) return;
+
+        _hasMovementInput = moveInput.sqrMagnitude > 1e-6f;
+        if (!_hasMovementInput) return;
 
         // ยังคงย่อเดินได้ถ้ากำลัง crouch อยู่
         if (_stateFlags != null && _isCrouchFlag != null && _stateFlags.Get(_isCrouchFlag))
@@ -115,11 +125,20 @@ public class YantVanish : MonoBehaviour
         Revert();
     }
 
+    private void OnCrouchInput(bool isCrouching)
+    {
+        if (_isVanished && !isCrouching && _hasMovementInput)
+        {
+            Revert();
+        }
+    }
+
     private void UnsubscribeObserver()
     {
         if (_inputObserver != null)
         {
             _inputObserver.OnMoveChannel -= OnMoveInput;
+            _inputObserver.OnCrouchChannel -= OnCrouchInput;
             _inputObserver = null;
         }
     }
