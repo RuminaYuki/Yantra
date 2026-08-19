@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d426a538c08fca8488b0a29231df1e61
+guid: d98923f9fa405ad46a67b686e3176ab6
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,11 +31,40 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Nawin_Idle
-      takeName: Nawin_Idle
-      internalID: -4259950061012214726
+      name: Nawin_RunFlipLeft
+      takeName: Nawin_RunFlipLeft
+      internalID: -4410144109859809714
       firstFrame: 0
-      lastFrame: 31
+      lastFrame: 16
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_RunFlipRight
+      takeName: Nawin_RunFlipRight
+      internalID: -1357136714091277346
+      firstFrame: 0
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -60,11 +89,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Nawin_WalkForward
-      takeName: Nawin_WalkForward
-      internalID: -8895885644107616865
+      name: Nawin_RunFlipBackward
+      takeName: Nawin_RunFlipBackward
+      internalID: -1311176910827316063
       firstFrame: 0
-      lastFrame: 31
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -74,7 +103,7 @@ ModelImporter:
       loopTime: 1
       loopBlend: 1
       loopBlendOrientation: 1
-      loopBlendPositionY: 1
+      loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 0
@@ -89,40 +118,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Nawin_WalkLeft
-      takeName: Nawin_WalkLeft
-      internalID: 4170047185708646382
+      name: Nawin_RunForwardFix
+      takeName: Nawin_RunForward.001
+      internalID: 119529648575123530
       firstFrame: 0
-      lastFrame: 31
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
-      keepOriginalPositionXZ: 1
-      heightFromFeet: 1
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Nawin_WalkBackWard
-      takeName: Nawin_WalkBackWard
-      internalID: 5281818210922651955
-      firstFrame: 0
-      lastFrame: 44
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d426a538c08fca8488b0a29231df1e61
+guid: 1077b4727a1af7d42aea227fccd235a4
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -17,7 +17,16 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Nawin_RunForwardFix' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Nawin_HipsPart1' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'Nawin_SpinePart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_Spine1Part2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLegPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLegPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftUpLegPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftUpLegPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -31,98 +40,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Nawin_Idle
-      takeName: Nawin_Idle
-      internalID: -4259950061012214726
+      name: Nawin_RunForwardNoHipmove
+      takeName: Nawin_RunForwardFix
+      internalID: 6598621923553782372
       firstFrame: 0
-      lastFrame: 31
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
-      keepOriginalPositionXZ: 1
-      heightFromFeet: 1
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Nawin_WalkForward
-      takeName: Nawin_WalkForward
-      internalID: -8895885644107616865
-      firstFrame: 0
-      lastFrame: 31
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
-      keepOriginalPositionXZ: 1
-      heightFromFeet: 1
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Nawin_WalkLeft
-      takeName: Nawin_WalkLeft
-      internalID: 4170047185708646382
-      firstFrame: 0
-      lastFrame: 31
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
-      keepOriginalPositionXZ: 1
-      heightFromFeet: 1
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Nawin_WalkBackWard
-      takeName: Nawin_WalkBackWard
-      internalID: 5281818210922651955
-      firstFrame: 0
-      lastFrame: 44
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
