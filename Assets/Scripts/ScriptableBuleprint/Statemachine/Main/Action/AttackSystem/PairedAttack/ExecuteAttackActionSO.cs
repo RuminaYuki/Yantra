@@ -9,7 +9,7 @@ public class ExecuteAttackActionSO : StateActionSO
 {
     [SerializeField] private GameObject _attackPrefab;
     [SerializeField, Min(0f)]
-    private float _damage = 10f;
+    private float _damage = 1f;
 
     public override StateAction CreateAction(StateMachine stateMachine)
     {
