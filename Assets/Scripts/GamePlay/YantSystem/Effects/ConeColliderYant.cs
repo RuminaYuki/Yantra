@@ -59,10 +59,10 @@ public class ConeColliderYant : MonoBehaviour, IYantEffect, IYantAnimationTiming
     /// </summary>
     private void UpdatePosition()
     {
-        Vector3 targetPos = _originTransform.position +
+        /*Vector3 targetPos = _originTransform.position +
                            _originTransform.TransformDirection(_positionOffset);
         transform.position = targetPos;
-        transform.rotation = _originTransform.rotation;
+        transform.rotation = _originTransform.rotation;*/
     }
 
     public bool Initialize(GameObject playerRoot, bool holdLMB = false)
@@ -98,9 +98,9 @@ public class ConeColliderYant : MonoBehaviour, IYantEffect, IYantAnimationTiming
         return true;
     }
 
-    public void TriggerAnimationTiming()
+    public void TriggerAnimationTiming(bool value)
     {
-        _isBeamActive = !_isBeamActive;
+        _isBeamActive = value;
         _beamEventChannel.Raise(_isBeamActive);
         _beamRoutine = StartCoroutine(BeamRoutine());
         _damageRoutine = StartCoroutine(DamageRoutine());

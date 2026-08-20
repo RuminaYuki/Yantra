@@ -11,5 +11,5 @@ public interface IYantEffect
 
 public interface IYantAnimationTiming
 {
-    void TriggerAnimationTiming();
+    void TriggerAnimationTiming(bool value);
 }
