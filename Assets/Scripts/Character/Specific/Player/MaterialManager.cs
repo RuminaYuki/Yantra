@@ -23,11 +23,16 @@ public class MaterialManager : MonoBehaviour
     [SerializeField] private Color _yantInvisbleColor = new(0.37f, 0.16f, 0.49f, 1f);
     [SerializeField] private ParticleSystem _yantInvisbleSmoke;
     [SerializeField] private bool _yantInvisible;
+    [SerializeField] private StatSO _statSOInvis;
 
     [Header("Heal Settings")]
     [SerializeField] private List<Material> _healMaterial;
     [SerializeField] private float _maxHealRadius = 2.5f;
     [SerializeField] private float _healDuration = 1.5f;
+    [SerializeField] private StatSO _statSOHeal;
+
+    [Header("References")]
+    [SerializeField] private StatObserver _statObserver;
 
     [SerializeField]
     private AnimationCurve _healEaseCurve =
@@ -58,8 +63,17 @@ public class MaterialManager : MonoBehaviour
         SetDefault();
     }
 
+    private void OnEnable()
+    {
+        _statObserver = GetComponent<StatObserver>();
+        if (_statObserver != null) _statObserver.OnStatChanged += HandleStatChanged;
+    }
+
     private void OnDisable()
     {
+        _statObserver = GetComponent<StatObserver>();
+        if (_statObserver != null) _statObserver.OnStatChanged -= HandleStatChanged;
+
         if (_healCoroutine != null)
         {
             StopCoroutine(_healCoroutine);
@@ -73,6 +87,8 @@ public class MaterialManager : MonoBehaviour
 
     private void Update()
     {
+        
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             _yantInvisible = !_yantInvisible;
@@ -86,6 +102,12 @@ public class MaterialManager : MonoBehaviour
     }
 
     #endregion
+
+    private void HandleStatChanged(StatSO statSO, bool value)
+    {
+        if (statSO == _statSOInvis) OnInvisible(value);
+        if (statSO == _statSOHeal && value == true) PlayHeal();
+    }
 
     #region Yant Invisible
 

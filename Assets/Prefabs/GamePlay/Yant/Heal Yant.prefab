@@ -133,6 +133,9 @@ MonoBehaviour:
     _effectType: 3
     _effectDuration: 1
     _holdDuration: 0
+  AnimationName: Nawin_UsedHealingYant
+  CancelHold: ' '
+  LayerIndex: 3
 --- !u!114 &-6395405659944346907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bed1ba1718a3a2c4f90f3267a0c7cfe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealYant
-  health: {fileID: 0}
   _healAmount: 5
+  statSO: {fileID: 11400000, guid: ca5525a1c415d8f4faf11c6262121e35, type: 2}
 --- !u!114 &-8560688348446518912
 MonoBehaviour:
   m_ObjectHideFlags: 0

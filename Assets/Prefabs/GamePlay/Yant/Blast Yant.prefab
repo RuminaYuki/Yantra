@@ -631,6 +631,7 @@ MonoBehaviour:
   _positionOffset: {x: 0, y: 0, z: 0}
   _beamDuration: 2.5
   _tickInterval: 1
+  _beamEventChannel: {fileID: 0}
   _owner: {fileID: 0}
 --- !u!114 &8384137283284004847
 MonoBehaviour:
@@ -660,11 +661,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2568030386955828209}
+  - component: {fileID: 7936817575255341737}
   - component: {fileID: -2280239117422937287}
   - component: {fileID: 2431005053422005515}
-  - component: {fileID: -1819665770508358220}
-  - component: {fileID: -4517172090575426864}
-  - component: {fileID: 7936817575255341737}
   m_Layer: 0
   m_Name: Blast Yant
   m_TagString: Untagged
@@ -689,98 +688,6 @@ Transform:
   - {fileID: 2348961796562133278}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &-2280239117422937287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117980074068866131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02643e0e27c3c5b46a059694c4dceeef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
-  _yantLifeTime: 20
-  _effectSettings:
-  - _yantReferences: {fileID: -4517172090575426864}
-    _effectType: 0
-    _effectDuration: 2
-    _holdDuration: 0
-  _playerRoot: {fileID: 0}
---- !u!114 &2431005053422005515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117980074068866131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Provider
-  Anchors:
-  - {fileID: 11400000, guid: 2aa02c22bc949974d8a7630d7b6d24e5, type: 2}
---- !u!114 &-1819665770508358220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117980074068866131}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3043cae583940c24ab5b524c9863bc01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BlastYant
-  _projectilePrefab: {fileID: 1835492911981352639, guid: 87aa2a20926f24b469e17a3a1a84bda1,
-    type: 3}
-  _throwSpeed: 18
-  _initialAngleDeg: 0
-  _useGravity: 0
-  _projectileLifetime: 6
-  _pushAcceleration: 6
-  _pushLifetime: 1.5
-  _pushAwayFromImpact: 1
-  _aimCamera: {fileID: 0}
-  _maxAimDistance: 100
-  _aimMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  debuff: {fileID: 11400000, guid: 1646ad0beb3e119458b2d03781b20d55, type: 2}
-  debuffDuration: 3
---- !u!114 &-4517172090575426864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117980074068866131}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83d5db550f5e7d148a3914a53f21412c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ConeLightYant
-  _coneAngle: 14.99
-  _range: 8
-  _beamDuration: 2.5
-  _tickInterval: 1
-  _damagePerTick: 1
-  _requiredTargetCount: 1
-  _damageBoostPerExtraTarget: 0
-  _targetMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  _frontAxisIsY: 0
-  _originOffset: {x: 0, y: 0, z: 1.1}
-  _originTransform: {fileID: 0}
-  _rotationOffset: {x: 0, y: 0, z: 0}
-  _rotateWithBeam: 0
-  _spinSpeed: 90
-  _spinAxis: {x: 0, y: 1, z: 0}
-  _drawDebugCone: 1
-  _owner: {fileID: 0}
 --- !u!114 &7936817575255341737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,4 +708,40 @@ MonoBehaviour:
   _positionOffset: {x: 0, y: 0, z: 1.1}
   _beamDuration: 2.5
   _tickInterval: 0.25
+  _beamEventChannel: {fileID: 11400000, guid: 1f94c85c3b127bd45892b63a839c76ec, type: 2}
   _owner: {fileID: 0}
+--- !u!114 &-2280239117422937287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117980074068866131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02643e0e27c3c5b46a059694c4dceeef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
+  _yantLifeTime: 20
+  _effectSettings:
+  - _yantReferences: {fileID: 7936817575255341737}
+    _effectType: 0
+    _effectDuration: 2
+    _holdDuration: 0
+  AnimationName: Nawin_HoldToAttack
+  CancelHold: Nawin_AttackToIdle
+  LayerIndex: 3
+--- !u!114 &2431005053422005515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117980074068866131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b62f809a9c40c4a9f8e36828d69982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Provider
+  Anchors:
+  - {fileID: 11400000, guid: 2aa02c22bc949974d8a7630d7b6d24e5, type: 2}

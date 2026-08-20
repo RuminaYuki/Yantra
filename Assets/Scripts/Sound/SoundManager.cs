@@ -13,6 +13,10 @@ public class SoundManager : Singleton<SoundManager>
     [Header("BGM")]
     [SerializeField] private AudioSource bgmSource;
 
+    [Header("Voice System")]
+    [Tooltip("ลำโพงเฉพาะสำหรับเสียงพากย์ (2D)")]
+    private AudioSource _voiceSource;
+
     [Header("🎙️ Voice / Dialogue")]
     [Tooltip("AudioSource เฉพาะเสียงพากย์ (แยกจาก BGM เพื่อให้หยุด/ข้ามได้อิสระ)")]
     [SerializeField] private AudioSource voiceSource;
