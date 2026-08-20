@@ -22,8 +22,11 @@ public class PlayerSoundController : MonoBehaviour
     [System.Serializable]
     public struct TerrainSound
     {
-        [Tooltip("ลากไฟล์ Terrain Layer Asset มาใส่ที่นี่ (ไม่ต้องจำตัวเลข Index)")]
-        public TerrainLayer terrainLayer;
+        [Tooltip("ตั้งชื่อกลุ่มให้ดูง่ายๆ เช่น Grass, Dirt, Rock")]
+        public string groupName;
+
+        [Tooltip("ใส่ Terrain Layer ได้หลายอันเลย (ยัดหญ้าทุกแบบเข้ามาในช่องนี้ได้เลย)")]
+        public TerrainLayer[] terrainLayers;
 
         public SoundID crouchSound;
         public SoundID walkSound;
@@ -143,38 +146,48 @@ public class PlayerSoundController : MonoBehaviour
         string hitTag = "Untagged";
 
         Vector3 rayOrigin = transform.position + (Vector3.up * 0.5f) + (currentMoveDir * 0.3f);
+
+        // จุดกำเนิดเสียง (เริ่มต้นที่ตำแหน่งตัวละคร)
         Vector3 soundSpawnPos = transform.position;
 
         if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 1.5f, groundLayer))
         {
+            // อัปเดตพิกัดเสียงให้ไปเกิดที่จุดกระทบพื้นแบบ 3D
             soundSpawnPos = hit.point;
 
             Terrain hitTerrain = hit.collider.GetComponent<Terrain>();
 
             if (hitTerrain != null)
             {
-                // โหมด Terrain: ดึง Layer Object จริงๆ ออกมาเทียบ
                 TerrainLayer dominantLayer = GetDominantTerrainLayer(hit.point, hitTerrain);
 
                 if (dominantLayer != null)
                 {
                     hitTag = dominantLayer.name;
+                    bool foundMatch = false;
 
                     foreach (var tSound in terrainSounds)
                     {
-                        if (tSound.terrainLayer == dominantLayer)
+                        if (tSound.terrainLayers == null) continue;
+
+                        // วนลูปเช็คว่าเลเยอร์ที่เหยียบอยู่ ตรงกับอันไหนในตะกร้าบ้าง
+                        foreach (var layer in tSound.terrainLayers)
                         {
-                            crouchToPlay = tSound.crouchSound;
-                            walkToPlay = tSound.walkSound;
-                            runToPlay = tSound.runSound;
-                            break;
+                            if (layer == dominantLayer)
+                            {
+                                crouchToPlay = tSound.crouchSound;
+                                walkToPlay = tSound.walkSound;
+                                runToPlay = tSound.runSound;
+                                foundMatch = true;
+                                break;
+                            }
                         }
+                        if (foundMatch) break;
                     }
                 }
             }
             else
             {
-                // โหมดพื้นผิวปกติ: อิงจาก Tag
                 hitTag = hit.collider.tag;
 
                 foreach (var surface in surfaceSounds)
@@ -217,7 +230,6 @@ public class PlayerSoundController : MonoBehaviour
         TerrainData terrainData = terrain.terrainData;
         Vector3 terrainPos = terrain.transform.position;
 
-        // คำนวณพิกัดจาก World Space เป็นพิกัดบนแผนที่แอลฟา (Alphamap)
         float mapX = ((worldPos.x - terrainPos.x) / terrainData.size.x) * terrainData.alphamapWidth;
         float mapZ = ((worldPos.z - terrainPos.z) / terrainData.size.z) * terrainData.alphamapHeight;
 
@@ -227,13 +239,11 @@ public class PlayerSoundController : MonoBehaviour
         if (x < 0 || z < 0 || x >= terrainData.alphamapWidth || z >= terrainData.alphamapHeight)
             return null;
 
-        // ดึงค่าน้ำหนักสีทุก Layer ที่จุดนั้น (ขนาด 1x1 พิกเซล)
         float[,,] aMap = terrainData.GetAlphamaps(x, z, 1, 1);
 
         float maxMix = 0f;
         int maxIndex = 0;
 
-        // หา Index ที่มีความเข้มของสีมากที่สุด
         for (int n = 0; n < aMap.GetUpperBound(2) + 1; n++)
         {
             if (aMap[0, 0, n] > maxMix)
@@ -243,7 +253,6 @@ public class PlayerSoundController : MonoBehaviour
             }
         }
 
-        // คืนค่า Object "TerrainLayer" ตัวนั้นกลับไปให้ใช้งาน
         if (terrainData.terrainLayers != null && maxIndex < terrainData.terrainLayers.Length)
         {
             return terrainData.terrainLayers[maxIndex];
@@ -251,10 +260,6 @@ public class PlayerSoundController : MonoBehaviour
 
         return null;
     }
-
-    // ==========================================
-    // Animation Event 
-    // ==========================================
 
     public void PlaySneakSound()
     {
@@ -274,9 +279,6 @@ public class PlayerSoundController : MonoBehaviour
         TriggerFootstep();
     }
 
-    // ==========================================
-    // Item Sounds
-    // ==========================================
     public void PlayFlashlightSound()
     {
         if (flashlightToggleID != null)
