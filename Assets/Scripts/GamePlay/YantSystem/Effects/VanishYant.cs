@@ -28,7 +28,7 @@ public class VanishYant : MonoBehaviour, IYantEffect, IYantAnimationTiming
         return true;
     }
 
-    public void TriggerAnimationTiming()
+    public void TriggerAnimationTiming(bool value)
     {
         if (!_playerRoot.TryGetComponent(out YantVanish vanish))
             vanish = _playerRoot.AddComponent<YantVanish>();

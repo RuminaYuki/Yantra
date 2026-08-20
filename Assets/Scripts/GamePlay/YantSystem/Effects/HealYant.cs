@@ -29,7 +29,7 @@ public class HealYant : MonoBehaviour, IYantEffect, IYantAnimationTiming
         //Destroy(gameObject);
     }
 
-    public void TriggerAnimationTiming()
+    public void TriggerAnimationTiming(bool value)
     {
         if (_playerRoot == null || statSO == null)
         {
