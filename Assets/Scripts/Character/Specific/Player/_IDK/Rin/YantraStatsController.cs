@@ -245,7 +245,13 @@ public class YantraStatsController : MonoBehaviour
 
     public void SetYantCount(int count)
     {
-        yantCount = count;
+        yantCount = Mathf.Max(0, count);
+    }
+
+    public void ApplySavedValues(float hp, float stamina)
+    {
+        CurrentHp = Mathf.Clamp(hp, MinHp, MaxHp);
+        CurrentStamina = Mathf.Clamp(stamina, MinStamina, MaxStamina);
     }
 
     public void AddYantCount(int amount)
