@@ -1194,6 +1194,8 @@ GameObject:
   - component: {fileID: 4564925348819248704}
   - component: {fileID: 2406845642419950503}
   - component: {fileID: 3064863031391641772}
+  - component: {fileID: 5031231248238384009}
+  - component: {fileID: 1803436951983232987}
   m_Layer: 0
   m_Name: EnemyController
   m_TagString: Untagged
@@ -1511,6 +1513,31 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _isColliding: 0
+--- !u!114 &5031231248238384009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4101296006397114742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16eea55c01a89c74b98834b072cd1822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterTeleporter
+--- !u!114 &1803436951983232987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4101296006397114742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d5238002c8ec574f86e1fba20284d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KaResetController
+  _defaultResetPoint: {fileID: 4813272296387939907}
 --- !u!1 &4107799863936931035
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,11 +20,19 @@ public class YantEffectController : MonoBehaviour
 {
     [Tooltip("อายุการใช้งานก่อนโดน Destroy")]
     [SerializeField] private float _yantLifeTime = 1.0f;
+    [Tooltip("เวลากักไว้ก่อน Destroy จริง ๆ เพื่อให้ VFX/cleanup ปิดเสร็จ")]
+    [SerializeField] private float _onDestroyDelay = 0.15f;
 
     [SerializeField] private List<YantEffectSettings> _effectSettings = new List<YantEffectSettings>();
 
-    [SerializeField] private GameObject _playerRoot;
+    [Header("Animation")]
+    [SerializeField] private string AnimationName = "";
+    [SerializeField] private string CancelHold = " ";
+    [SerializeField] private int LayerIndex = 0;
+
+    private GameObject _playerRoot;
     private Coroutine _destroyCoroutine;
+    private readonly List<IYantAnimationTiming> _pendingAnimationTimings = new();
 
     private void Awake()
     {
@@ -34,10 +42,7 @@ public class YantEffectController : MonoBehaviour
     private void Start()
     {
         TryInitializeStart();
-        if (_yantLifeTime > 0f)
-        {
-            _destroyCoroutine = StartCoroutine(DestroyAfterDelay(_yantLifeTime));
-        }
+        ScheduleDestroyByLongestEffectDuration();
     }
 
     private void CheckEffectReferences()
@@ -68,14 +73,13 @@ public class YantEffectController : MonoBehaviour
             }
 
             setting._yantEffect.Initialize(_playerRoot, false);
+            RegisterAnimationTiming(setting._yantEffect);
+            PlayAnimation(AnimationName);
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
-                if (_effectSettings.Count == 1)
-                {
-                    DestroyGameObject(setting._effectDuration);
-                }
                 _effectSettings.RemoveAt(i);
+                ScheduleDestroyByLongestEffectDuration();
             }
             else
             {
@@ -98,14 +102,19 @@ public class YantEffectController : MonoBehaviour
             }
 
             bool initialized = setting._yantEffect.Initialize(_playerRoot, holdLMB);
+            if (holdLMB)
+            {
+                RegisterAnimationTiming(setting._yantEffect);
+                PlayAnimation(AnimationName);
+            } else if (!string.IsNullOrWhiteSpace(CancelHold))
+            {
+                PlayAnimation(CancelHold);
+            }
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot) && initialized)
             {
-                if (_effectSettings.Count == 1)
-                {
-                    DestroyGameObject(setting._effectDuration);
-                }
                 _effectSettings.RemoveAt(i);
+                ScheduleDestroyByLongestEffectDuration();
             }
             else
             {
@@ -117,6 +126,104 @@ public class YantEffectController : MonoBehaviour
     public void SetDefaultValue(GameObject playerRoot)
     {
         _playerRoot = playerRoot;
+    }
+
+    public void TriggerAnimationTiming(bool value)
+    {
+        foreach (IYantAnimationTiming animationTiming in _pendingAnimationTimings)
+        {
+            animationTiming.TriggerAnimationTiming(value);
+        }
+
+        if (value) return;
+
+        _pendingAnimationTimings.Clear();
+    }
+
+    private void RegisterAnimationTiming(IYantEffect yantEffect)
+    {
+        if (yantEffect is IYantAnimationTiming animationTiming &&
+            !_pendingAnimationTimings.Contains(animationTiming))
+        {
+            _pendingAnimationTimings.Add(animationTiming);
+        }
+
+        if (_playerRoot == null || yantEffect is not IYantAnimationTiming)
+        {
+            return;
+        }
+
+        Animator animator = _playerRoot.GetComponentInChildren<Animator>(true);
+        if (animator == null)
+        {
+            return;
+        }
+
+        PlayerYantAnimationEvent animationEvent =
+            animator.GetComponent<PlayerYantAnimationEvent>();
+
+        if (animationEvent == null)
+        {
+            animationEvent = animator.gameObject.AddComponent<PlayerYantAnimationEvent>();
+        }
+
+        animationEvent.SetCurrentController(this);
+    }
+
+    private void PlayAnimation(string animationName)
+    {
+        if (string.IsNullOrWhiteSpace(animationName) || _playerRoot == null)
+        {
+            return;
+        }
+
+        Animator animator = _playerRoot.GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogWarning("Cannot play yant animation because the player has no Animator.");
+            return;
+        }
+
+        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(LayerIndex);
+        if (currentState.IsName(animationName))
+        {
+            return;
+        }
+
+        //Debug.Log($"Player animation : {animationName}");
+        animator.Play(animationName, LayerIndex);
+    }
+
+    private float GetLongestRemainingEffectDuration()
+    {
+        float longestDuration = 0f;
+
+        for (int i = 0; i < _effectSettings.Count; i++)
+        {
+            var setting = _effectSettings[i];
+            if (setting == null || setting._yantEffect == null)
+            {
+                continue;
+            }
+
+            if (setting._effectDuration > longestDuration)
+            {
+                longestDuration = setting._effectDuration;
+            }
+        }
+
+        return longestDuration;
+    }
+
+    private void ScheduleDestroyByLongestEffectDuration()
+    {
+        float destroyDelay = Mathf.Max(_yantLifeTime, GetLongestRemainingEffectDuration());
+        if (destroyDelay <= 0f)
+        {
+            return;
+        }
+
+        DestroyGameObject(destroyDelay);
     }
 
     private void DestroyGameObject(float delay)
@@ -132,7 +239,8 @@ public class YantEffectController : MonoBehaviour
 
     private IEnumerator DestroyAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        float totalDelay = Mathf.Max(0f, delay + _onDestroyDelay);
+        yield return new WaitForSeconds(totalDelay);
         Destroy(gameObject);
     }
 }

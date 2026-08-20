@@ -27,6 +27,8 @@ public class ItemData : ScriptableObject
     [SerializeField] private bool stackable = true;
     [SerializeField] private int maxStack = 99;
 
+    [SerializeField] private IntEventChannelSO eventChannel;
+
     public string ItemID => itemID;
     public string ItemName => itemName;
     public Sprite Icon => icon;
@@ -34,4 +36,5 @@ public class ItemData : ScriptableObject
     public ItemType ItemType => itemType;
     public bool Stackable => stackable;
     public int MaxStack => maxStack;
+    public IntEventChannelSO EventChannel => eventChannel;
 }

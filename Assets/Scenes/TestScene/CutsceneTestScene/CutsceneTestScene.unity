@@ -28285,6 +28285,7 @@ MonoBehaviour:
   _minPointDistance: 0.002
   _paperParent: {fileID: 995969570}
   _surfaceOffset: 0.01
+  drawingSoundID: {fileID: 0}
   _allStrokes: []
 --- !u!65 &995969566
 BoxCollider:
@@ -28941,6 +28942,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7ac2f6e9cc02e48b5a822ec2668294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubtitleSystem
+  voiceDelayToMatchFade: 0.25
+  minLineDuration: 1.2
+  charactersPerSecond: 14
+  gapBetweenLines: 0.15
+  routeVoiceThroughSoundManager: 1
+  fallbackAudioSource: {fileID: 1074350175}
 --- !u!82 &1074350175
 AudioSource:
   m_ObjectHideFlags: 0
@@ -54157,17 +54164,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocomotion
   _dampTime: 0.25
   _multiply: 0
+  _nameParameterMoveZ: VelocityZ
+  _nameParameterMoveX: VelocityX
+  _nameTurnAngle: StartTurnAngle
+  _nameStartTurn: StartTurn
+  _angleTurn: 45
   _rotateSpeed: 1
   _gravityMultiplier: 3
   _debugMoveMultiply: 0
   _debugRotateSpeed: 0
   _playerInput: {fileID: 11400000, guid: fc8461d942aeaf44baf2a1af4de7d24f, type: 2}
   _referencePoint: {fileID: 2076092243}
-  _nameParameterMoveZ: VelocityZ
-  _nameParameterMoveX: VelocityX
-  _nameTurnAngle: StartTurnAngle
-  _nameStartTurn: StartTurn
-  _angleTurn: 45
   _angleTurnbyCamera: 60
   _turnbyCamera: 0
 --- !u!114 &1936406789
@@ -54889,6 +54896,10 @@ MonoBehaviour:
   _playerRoot: {fileID: 0}
   _yantSpawnPoint: {fileID: 0}
   _yantPaper: {fileID: 995969564}
+  _drawOn3DMesh: {fileID: 0}
+  _inventory: {fileID: 0}
+  _useConsumableForCasting: 0
+  _itemConsumable: {fileID: 0}
   _minSimilarityPercent: 40
   _bindings:
   - CategoryName: Heal Yant

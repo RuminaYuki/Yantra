@@ -6,7 +6,7 @@ using UnityEngine;
 /// ตัวสั่ง Damage ผ่าน CollisionDetector
 /// เคลื่อน GameObject ตามตำแหน่ง _originTransform (กล้อง) + offset
 /// </summary>
-public class ConeColliderYant : MonoBehaviour, IYantEffect
+public class ConeColliderYant : MonoBehaviour, IYantEffect, IYantAnimationTiming
 {
     [Header("Collision Detection")]
     [Tooltip("CollisionDetector ที่จะใช้ตรวจจับ targets")]
@@ -27,12 +27,13 @@ public class ConeColliderYant : MonoBehaviour, IYantEffect
     [Header("Beam Settings")]
     [SerializeField] private float _beamDuration = 2.5f;
     [SerializeField] private float _tickInterval = 0.25f;
+    [SerializeField] private BoolEventChannelSO _beamEventChannel;
 
     [SerializeField] private GameObject _owner;
 
     private Coroutine _beamRoutine;
     private Coroutine _damageRoutine;
-    private bool _isBeamActive;
+    private bool _isBeamActive = false;
 
     private void Awake()
     {
@@ -58,10 +59,10 @@ public class ConeColliderYant : MonoBehaviour, IYantEffect
     /// </summary>
     private void UpdatePosition()
     {
-        Vector3 targetPos = _originTransform.position +
+        /*Vector3 targetPos = _originTransform.position +
                            _originTransform.TransformDirection(_positionOffset);
         transform.position = targetPos;
-        transform.rotation = _originTransform.rotation;
+        transform.rotation = _originTransform.rotation;*/
     }
 
     public bool Initialize(GameObject playerRoot, bool holdLMB = false)
@@ -92,30 +93,18 @@ public class ConeColliderYant : MonoBehaviour, IYantEffect
         if (!holdLMB)
         {
             StopBeam();
-            return true;
         }
-
-        if (_isBeamActive)
-        {
-            return true;
-        }
-
-        if (_beamRoutine != null)
-        {
-            StopCoroutine(_beamRoutine);
-        }
-
-        _isBeamActive = true;
-        _beamRoutine = StartCoroutine(BeamRoutine());
-
-        if (_damageRoutine != null)
-        {
-            StopCoroutine(_damageRoutine);
-        }
-
-        _damageRoutine = StartCoroutine(DamageRoutine());
 
         return true;
+    }
+
+    public void TriggerAnimationTiming(bool value)
+    {
+        _isBeamActive = value;
+        _beamEventChannel.Raise(_isBeamActive);
+        _beamRoutine = StartCoroutine(BeamRoutine());
+        _damageRoutine = StartCoroutine(DamageRoutine());
+        Debug.Log($"Beam active {_isBeamActive}");
     }
 
     private IEnumerator BeamRoutine()
