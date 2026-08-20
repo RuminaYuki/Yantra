@@ -107,6 +107,14 @@ public class ConeColliderYant : MonoBehaviour, IYantEffect, IYantAnimationTiming
         Debug.Log($"Beam active {_isBeamActive}");
     }
 
+    private void OnDestroy()
+    {
+        if (_beamEventChannel != null)
+        {
+            _beamEventChannel.Raise(false);
+        }
+    }
+
     private IEnumerator BeamRoutine()
     {
         float elapsedTime = 0f;

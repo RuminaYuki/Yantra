@@ -16,6 +16,6 @@ public class TestKaResetGUI : MonoBehaviour
             return;
         }
 
-        _kaResetController.ResetEnemy();
+        _kaResetController.Reset();
     }
 }
