@@ -14,16 +14,32 @@ public class PlayerSoundController : MonoBehaviour
         [Tooltip("Surface Tag name (e.g. Wood, Grass, Dirt)")]
         public string surfaceTag;
 
-        [Header("Sound IDs based on speed")]
         public SoundID crouchSound;
         public SoundID walkSound;
         public SoundID runSound;
     }
 
-    [Header("Surface Sounds Settings")]
+    [System.Serializable]
+    public struct TerrainSound
+    {
+        [Tooltip("ตั้งชื่อกลุ่มให้ดูง่ายๆ เช่น Grass, Dirt, Rock")]
+        public string groupName;
+
+        [Tooltip("ใส่ Terrain Layer ได้หลายอันเลย (ยัดหญ้าทุกแบบเข้ามาในช่องนี้ได้เลย)")]
+        public TerrainLayer[] terrainLayers;
+
+        public SoundID crouchSound;
+        public SoundID walkSound;
+        public SoundID runSound;
+    }
+
+    [Header("Surface Sounds Settings (For 3D Models)")]
     [SerializeField] private SurfaceSound[] surfaceSounds;
 
-    [Tooltip("Default sounds if surface tag is not found")]
+    [Header("Terrain Sounds Settings (For Unity Terrain)")]
+    [SerializeField] private TerrainSound[] terrainSounds;
+
+    [Header("Default Sounds (Fallback)")]
     [SerializeField] private SoundID defaultCrouchID;
     [SerializeField] private SoundID defaultWalkID;
     [SerializeField] private SoundID defaultRunID;
@@ -80,7 +96,6 @@ public class PlayerSoundController : MonoBehaviour
         if (Time.deltaTime > 0f)
             measuredSpeed = distanceThisFrame / Time.deltaTime;
 
-        // บันทึกทิศทางที่กำลังเดิน (เฉพาะแกน X, Z) เพื่อใช้ยื่นเรดาร์ไปข้างหน้า
         Vector3 flatDelta = new Vector3(delta.x, 0f, delta.z);
         if (flatDelta.magnitude > 0.001f)
         {
@@ -130,21 +145,60 @@ public class PlayerSoundController : MonoBehaviour
         SoundID runToPlay = defaultRunID;
         string hitTag = "Untagged";
 
-        // แก้ปัญหาพื้นไม่ตรงเวลาขึ้นบันได: ย้ายจุดยิงเรดาร์ไปข้างหน้า 0.3 เมตร และยกให้สูงขึ้น 0.5 เมตร
         Vector3 rayOrigin = transform.position + (Vector3.up * 0.5f) + (currentMoveDir * 0.3f);
+
+        // จุดกำเนิดเสียง (เริ่มต้นที่ตำแหน่งตัวละคร)
+        Vector3 soundSpawnPos = transform.position;
 
         if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 1.5f, groundLayer))
         {
-            hitTag = hit.collider.tag;
+            // อัปเดตพิกัดเสียงให้ไปเกิดที่จุดกระทบพื้นแบบ 3D
+            soundSpawnPos = hit.point;
 
-            foreach (var surface in surfaceSounds)
+            Terrain hitTerrain = hit.collider.GetComponent<Terrain>();
+
+            if (hitTerrain != null)
             {
-                if (surface.surfaceTag == hitTag)
+                TerrainLayer dominantLayer = GetDominantTerrainLayer(hit.point, hitTerrain);
+
+                if (dominantLayer != null)
                 {
-                    crouchToPlay = surface.crouchSound;
-                    walkToPlay = surface.walkSound;
-                    runToPlay = surface.runSound;
-                    break;
+                    hitTag = dominantLayer.name;
+                    bool foundMatch = false;
+
+                    foreach (var tSound in terrainSounds)
+                    {
+                        if (tSound.terrainLayers == null) continue;
+
+                        // วนลูปเช็คว่าเลเยอร์ที่เหยียบอยู่ ตรงกับอันไหนในตะกร้าบ้าง
+                        foreach (var layer in tSound.terrainLayers)
+                        {
+                            if (layer == dominantLayer)
+                            {
+                                crouchToPlay = tSound.crouchSound;
+                                walkToPlay = tSound.walkSound;
+                                runToPlay = tSound.runSound;
+                                foundMatch = true;
+                                break;
+                            }
+                        }
+                        if (foundMatch) break;
+                    }
+                }
+            }
+            else
+            {
+                hitTag = hit.collider.tag;
+
+                foreach (var surface in surfaceSounds)
+                {
+                    if (surface.surfaceTag == hitTag)
+                    {
+                        crouchToPlay = surface.crouchSound;
+                        walkToPlay = surface.walkSound;
+                        runToPlay = surface.runSound;
+                        break;
+                    }
                 }
             }
         }
@@ -168,20 +222,49 @@ public class PlayerSoundController : MonoBehaviour
         if (logFootsteps)
             Debug.Log($"Footstep: [{moveState}] on surface [{hitTag}], speed = {measuredSpeed:F2}");
 
-        SoundManager.Instance.PlaySFX(idToPlay, transform.position);
+        SoundManager.Instance.PlaySFX(idToPlay, soundSpawnPos);
     }
 
-    // ==========================================
-    // Animation Event 
-    // ==========================================
+    private TerrainLayer GetDominantTerrainLayer(Vector3 worldPos, Terrain terrain)
+    {
+        TerrainData terrainData = terrain.terrainData;
+        Vector3 terrainPos = terrain.transform.position;
+
+        float mapX = ((worldPos.x - terrainPos.x) / terrainData.size.x) * terrainData.alphamapWidth;
+        float mapZ = ((worldPos.z - terrainPos.z) / terrainData.size.z) * terrainData.alphamapHeight;
+
+        int x = Mathf.FloorToInt(mapX);
+        int z = Mathf.FloorToInt(mapZ);
+
+        if (x < 0 || z < 0 || x >= terrainData.alphamapWidth || z >= terrainData.alphamapHeight)
+            return null;
+
+        float[,,] aMap = terrainData.GetAlphamaps(x, z, 1, 1);
+
+        float maxMix = 0f;
+        int maxIndex = 0;
+
+        for (int n = 0; n < aMap.GetUpperBound(2) + 1; n++)
+        {
+            if (aMap[0, 0, n] > maxMix)
+            {
+                maxIndex = n;
+                maxMix = aMap[0, 0, n];
+            }
+        }
+
+        if (terrainData.terrainLayers != null && maxIndex < terrainData.terrainLayers.Length)
+        {
+            return terrainData.terrainLayers[maxIndex];
+        }
+
+        return null;
+    }
 
     public void PlaySneakSound()
     {
         if (mode != FootstepMode.AnimationEvent) return;
-
-        // เพิ่มความเข้มงวดของ minMoveSpeed ขึ้น 1.5 เท่า ป้องกันเสียงแถมตอนหยุดเดิน
         if (measuredSpeed < (minMoveSpeed * 1.5f)) return;
-
         if (!IsGrounded()) return;
 
         TriggerFootstep();
@@ -190,18 +273,12 @@ public class PlayerSoundController : MonoBehaviour
     public void PlayFootstepSound()
     {
         if (mode != FootstepMode.AnimationEvent) return;
-
-        // เพิ่มความเข้มงวดของ minMoveSpeed ขึ้น 1.5 เท่า ป้องกันเสียงแถมตอนหยุดเดิน
         if (measuredSpeed < (minMoveSpeed * 1.5f)) return;
-
         if (!IsGrounded()) return;
 
         TriggerFootstep();
     }
 
-    // ==========================================
-    // Item Sounds
-    // ==========================================
     public void PlayFlashlightSound()
     {
         if (flashlightToggleID != null)

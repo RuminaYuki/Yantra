@@ -16,31 +16,32 @@ public class DrawOn3DMesh : MonoBehaviour
     private bool _hasLastPoint = false;
 
     [SerializeField]
-    private float _minPointDistance = 0.002f; // ระยะขั้นต่ำระหว่าง Point บนกระดาษ
+    private float _minPointDistance = 0.002f;
 
     [Header("Drawing Setup")]
-    [Tooltip("วัตถุหลัก (กระดาษ) ที่จะให้เส้นทั้งหมดเข้าไปอยู่เป็นลูก")]
     [SerializeField] private Transform _paperParent;
 
     [Header("Drawing Offset")]
-    [Tooltip("ระยะห่างระหว่างเส้นปากกากับพื้นผิววัตถุ")]
     [SerializeField] private float _surfaceOffset = 0.05f;
 
     private LineRenderer _currentLine;
     private bool _isDrawing = false;
-    private Vector2 _lastMousePos;  
+    private Vector2 _lastMousePos;
 
     private bool _canDraw = false;
 
-    // เก็บรายการเส้นทั้งหมดที่วาดใน Session นี้
-    [SerializeField]private List<LineRenderer> _allStrokes = new List<LineRenderer>();
+    [Header("Drawing Sound")]
+    [SerializeField] private SoundID drawingSoundID;
+    private SFXPlayer currentDrawingSound;
+    private float _lastDrawTime;
+
+    [SerializeField] private List<LineRenderer> _allStrokes = new List<LineRenderer>();
 
     private void OnEnable()
     {
         if (_inputObserver)
             _inputObserver.OnLeftClickChannel += OnLeftClickInput;
 
-        // บังคับให้เมาส์แสดงผลและปลดล็อก
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -60,6 +61,12 @@ public class DrawOn3DMesh : MonoBehaviour
             return;
 
         AddPointToLine(Mouse.current.position.ReadValue());
+
+        // เพิ่มเวลาหน่วงเป็น 0.25 วินาที ให้มือชะงักตอนวาดส่วนโค้งได้โดยที่เสียงไม่ดับ
+        if (currentDrawingSound != null && Time.time - _lastDrawTime > 0.25f)
+        {
+            StopDrawingSound();
+        }
     }
 
     private void OnLeftClickInput(Vector2 clickPos, InputAction.CallbackContext context)
@@ -70,15 +77,11 @@ public class DrawOn3DMesh : MonoBehaviour
 
         if (_isDrawing)
         {
-            // เริ่ม stroke แรกของการวาดรอบนี้ → เล่นเสียงพากย์ "ขณะวาด" ครั้งเดียว
-            /*if (_allStrokes.Count == 0)
-                PlayerVoice.Publish(PlayerVoice.WhileDrawing);*/
-
-            // สร้างเส้นใหม่ทุกครั้งที่คลิกใหม่เพื่อไม่ให้เชื่อมกับเส้นเดิม
             CreateNewLine(clickPos);
         }
         else
         {
+            StopDrawingSound(); // ปล่อยคลิกปุ๊บ สั่งเฟดเสียงออก
             _currentLine = null;
             _hasLastPoint = false;
         }
@@ -97,10 +100,7 @@ public class DrawOn3DMesh : MonoBehaviour
         _currentLine.positionCount = 0;
 
         _allStrokes.Add(_currentLine);
-
         _lastMousePos = startPos;
-
-        // รีเซ็ตข้อมูลของเส้นใหม่
         _hasLastPoint = false;
 
         AddPointToLine(startPos);
@@ -111,16 +111,28 @@ public class DrawOn3DMesh : MonoBehaviour
         Ray ray = _mainCamera.ScreenPointToRay(screenPos);
 
         if (!Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _drawableLayer))
+        {
+            StopDrawingSound(); // ยิง Raycast ทะลุขอบกระดาษ สั่งเฟดเสียงออก
             return;
+        }
 
         Vector3 worldPoint = hitInfo.point + hitInfo.normal * _surfaceOffset;
         Vector3 localPoint = _paperParent.InverseTransformPoint(worldPoint);
 
-        // เช็คระยะจาก Point ก่อนหน้าใน Local Space
         if (_hasLastPoint)
         {
             if (Vector3.Distance(_lastLocalPoint, localPoint) < _minPointDistance)
+            {
                 return;
+            }
+        }
+
+        // --- มีการลากเส้นเกิดขึ้นจริง ---
+        _lastDrawTime = Time.time;
+
+        if (drawingSoundID != null && currentDrawingSound == null)
+        {
+            currentDrawingSound = SoundManager.Instance.PlayLoopSFXForever(drawingSoundID, transform.position);
         }
 
         _currentLine.positionCount++;
@@ -128,14 +140,9 @@ public class DrawOn3DMesh : MonoBehaviour
 
         _lastLocalPoint = localPoint;
         _hasLastPoint = true;
-
         _lastMousePos = screenPos;
     }
 
-    /// <summary>
-    /// ฟังก์ชันดึงพิกัดทั้งหมดเพื่อนำไปวัดความเหมือน (เปรียบเทียบ)
-    /// ต้องแปลงกลับเป็น World Space ก่อนนำไปเทียบค่า
-    /// </summary>
     public List<Vector3> GetAllDrawnPointsInWorldSpace()
     {
         List<Vector3> allPoints = new List<Vector3>();
@@ -146,13 +153,11 @@ public class DrawOn3DMesh : MonoBehaviour
 
             for (int i = 0; i < stroke.positionCount; i++)
             {
-                // ดึงตำแหน่งจาก LineRenderer (ซึ่งเป็น Local) แล้วแปลงกลับเป็น World
                 Vector3 localPoint = stroke.GetPosition(i);
                 Vector3 worldPoint = _paperParent.TransformPoint(localPoint);
                 allPoints.Add(worldPoint);
             }
         }
-        //Debug.Log(allPoints.Count);
         return allPoints;
     }
 
@@ -164,6 +169,17 @@ public class DrawOn3DMesh : MonoBehaviour
         }
         _allStrokes.Clear();
         _currentLine = null;
+    }
+
+    private void StopDrawingSound()
+    {
+        if (currentDrawingSound != null)
+        {
+            // เปลี่ยนมาใช้ FadeOutAndStop(0.15f) 
+            // ทำให้ตอนปล่อยเมาส์ หรือคลิกรัวๆ เสียงจะค่อยๆ เบาลงกลืนกันไป ไม่ตัดฉับให้รำคาญหู
+            currentDrawingSound.FadeOutAndStop(0.15f);
+            currentDrawingSound = null;
+        }
     }
 
     //API

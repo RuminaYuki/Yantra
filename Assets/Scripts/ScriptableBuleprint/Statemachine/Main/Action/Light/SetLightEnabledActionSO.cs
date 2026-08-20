@@ -11,12 +11,21 @@ public class SetLightEnabledActionSO : StateActionSO
     [SerializeField] private bool _enabled;
     [SerializeField] private bool _resetOnStateExit = true;
 
+    [Header("Audio (Optional)")]
+    [Tooltip("คูปองเสียงที่ต้องการให้เล่นเมื่อ 'เปิด' ไฟ")]
+    [SerializeField] private SoundID _turnOnSound;
+
+    [Tooltip("คูปองเสียงที่ต้องการให้เล่นเมื่อ 'ปิด' ไฟ")]
+    [SerializeField] private SoundID _turnOffSound;
+
     public override StateAction CreateAction(StateMachine stateMachine)
     {
         return new SetLightEnabledAction(
             _lightAnchor,
             _enabled,
-            _resetOnStateExit);
+            _resetOnStateExit,
+            _turnOnSound,
+            _turnOffSound);
     }
 }
 
@@ -25,6 +34,8 @@ public class SetLightEnabledAction : StateAction
     private readonly GameObjectAnchor _lightAnchor;
     private readonly bool _enabled;
     private readonly bool _resetOnStateExit;
+    private readonly SoundID _turnOnSound;
+    private readonly SoundID _turnOffSound;
 
     private GameObject _owner;
     private Light _targetLight;
@@ -34,11 +45,15 @@ public class SetLightEnabledAction : StateAction
     public SetLightEnabledAction(
         GameObjectAnchor lightAnchor,
         bool enabled,
-        bool resetOnStateExit)
+        bool resetOnStateExit,
+        SoundID turnOnSound,
+        SoundID turnOffSound)
     {
         _lightAnchor = lightAnchor;
         _enabled = enabled;
         _resetOnStateExit = resetOnStateExit;
+        _turnOnSound = turnOnSound;
+        _turnOffSound = turnOffSound;
     }
 
     public override void Awake(StateMachine stateMachine)
@@ -65,6 +80,14 @@ public class SetLightEnabledAction : StateAction
         _previousEnabled = _targetLight.enabled;
         _targetLight.enabled = _enabled;
         _isApplied = true;
+
+        SoundID soundToPlay = _enabled ? _turnOnSound : _turnOffSound;
+
+        if (soundToPlay != null && SoundManager.Instance != null)
+        {
+            Vector3 soundPos = _targetLight.transform.position;
+            SoundManager.Instance.PlaySFX(soundToPlay, soundPos);
+        }
     }
 
     public override void OnUpdate()
@@ -81,6 +104,13 @@ public class SetLightEnabledAction : StateAction
         if (_resetOnStateExit)
         {
             _targetLight.enabled = _previousEnabled;
+
+            // เพิ่มใหม่: ดักจับตอน State ถูก Reset แล้วเล่นเสียงให้ถูกต้อง
+            SoundID soundToPlay = _previousEnabled ? _turnOnSound : _turnOffSound;
+            if (soundToPlay != null && SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySFX(soundToPlay, _targetLight.transform.position);
+            }
         }
 
         _targetLight = null;
