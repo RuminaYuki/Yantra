@@ -148,9 +148,11 @@ MonoBehaviour:
   _effectSettings:
   - _yantReferences: {fileID: -9137451391539441850}
     _effectType: 2
-    _effectDuration: 0.5
+    _effectDuration: 1
     _holdDuration: 0
-  _playerRoot: {fileID: 0}
+  AnimationName: Nawin_UsedHealingYant
+  CancelHold: ' '
+  LayerIndex: 3
 --- !u!114 &-8642917754202229033
 MonoBehaviour:
   m_ObjectHideFlags: 0

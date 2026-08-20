@@ -8,3 +8,8 @@ public interface IYantEffect
 {
     bool Initialize(GameObject playerRoot ,bool holdLMB = false);
 }
+
+public interface IYantAnimationTiming
+{
+    void TriggerAnimationTiming();
+}
