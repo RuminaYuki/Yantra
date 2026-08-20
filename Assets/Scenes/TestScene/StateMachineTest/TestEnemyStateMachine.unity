@@ -14391,7 +14391,7 @@ PrefabInstance:
     - target: {fileID: 7719277014200645326, guid: fdfa3a8ab38565b409385a9ac0dfc24f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.888
       objectReference: {fileID: 0}
     - target: {fileID: 7719277014200645326, guid: fdfa3a8ab38565b409385a9ac0dfc24f,
         type: 3}
@@ -14457,6 +14457,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2676706639175309345, guid: 206c783f89f5b3442acc1f6a489780d8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3180403444768531153, guid: 206c783f89f5b3442acc1f6a489780d8,
+        type: 3}
+      propertyPath: '_transitionTables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5db900e6bd8b5934b9aee0a92e46f894,
+        type: 2}
     - target: {fileID: 6983528131908807266, guid: 206c783f89f5b3442acc1f6a489780d8,
         type: 3}
       propertyPath: m_LocalPosition.x
