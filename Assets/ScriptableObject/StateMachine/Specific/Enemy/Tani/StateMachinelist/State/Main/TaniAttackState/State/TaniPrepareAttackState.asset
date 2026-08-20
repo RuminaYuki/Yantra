@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7da57aa186da8c4a92fe7e1a7ef5add, type: 3}
-  m_Name: TaniAttackState
+  m_Name: TaniPrepareAttackState
   m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.StateSO
   _actions:
-  - {fileID: 11400000, guid: 1f8900a8fb662594e8e872258fcc00bd, type: 2}
-  - {fileID: 11400000, guid: f330d9b40e2bf184e8b5dbc875c1a15c, type: 2}
+  - {fileID: 11400000, guid: 1d95d2f00b1489641a0e59e82bb0e06e, type: 2}
+  - {fileID: 11400000, guid: 2958ea6d68a7b7242af443657f008670, type: 2}
+  - {fileID: 11400000, guid: b85b20b1061db3d4fb9d478584647a01, type: 2}
+  - {fileID: 11400000, guid: 22589970193758840bf61e914d404bfd, type: 2}
+  - {fileID: 11400000, guid: cc53b533c4b75684fa6ec76b658d737f, type: 2}
