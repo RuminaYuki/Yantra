@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Lib_Nawin_Movement
   m_EditorClassIdentifier: Assembly-CSharp::SoundLibrary
   sounds:
-  - idName: ID_Nawin_WalkDirt
-    id: {fileID: 11400000, guid: 18225abed158b74408acf7cee4d0610b, type: 2}
+  - idName: ID_Nawin_Crouch
+    id: {fileID: 11400000, guid: 54dcc49494528ee4482b8fc18c45dcaa, type: 2}
     mixerGroup: {fileID: 0}
     useRandomClips: 0
     randomChance: 40
@@ -32,7 +32,7 @@ MonoBehaviour:
     id: {fileID: 11400000, guid: 2b4cf4415bade6e47acad67d93238e23, type: 2}
     mixerGroup: {fileID: 0}
     useRandomClips: 1
-    randomChance: 30
+    randomChance: 1
     clip: {fileID: 8300000, guid: a4a43b45fc8c5104993fb49fc8f89859, type: 3}
     clips:
     - {fileID: 8300000, guid: dd03fcb7ad8ce024b8811c87ec1166ee, type: 3}
@@ -42,7 +42,7 @@ MonoBehaviour:
     useRandomVolume: 1
     minVolume: 0.1
     maxVolume: 0.2
-    volume: 0.341
+    volume: 0.3
     spatialBlend: 1
   - idName: ID_Nawin_WalkMud
     id: {fileID: 11400000, guid: c59767ae35d612d4e9c58519fe985c4a, type: 2}
@@ -57,7 +57,7 @@ MonoBehaviour:
     useRandomVolume: 1
     minVolume: 0.1
     maxVolume: 0.2
-    volume: 0.341
+    volume: 0.3
     spatialBlend: 1
   - idName: ID_Nawin_WalkRock
     id: {fileID: 11400000, guid: 03ee2a30cee3b274dbae9ec05888646a, type: 2}
@@ -71,8 +71,38 @@ MonoBehaviour:
     maxPitch: 1.1
     useRandomVolume: 1
     minVolume: 0.3
-    maxVolume: 0.5
-    volume: 0.341
+    maxVolume: 0.2
+    volume: 0.3
+    spatialBlend: 1
+  - idName: ID_Nawin_WalkDirt
+    id: {fileID: 11400000, guid: 3994f194b453dd54896295cf79928651, type: 2}
+    mixerGroup: {fileID: 0}
+    useRandomClips: 1
+    randomChance: 10
+    clip: {fileID: 8300000, guid: eb62d95ed1d4c6644adc30f5cd6e9330, type: 3}
+    clips: []
+    useRandomPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
+    useRandomVolume: 1
+    minVolume: 0.1
+    maxVolume: 0.2
+    volume: 0.3
+    spatialBlend: 1
+  - idName: ID_Nawin_WalkGrass
+    id: {fileID: 11400000, guid: 92686bf818070ad42ba079ee3d141ce5, type: 2}
+    mixerGroup: {fileID: 0}
+    useRandomClips: 1
+    randomChance: 10
+    clip: {fileID: 8300000, guid: e0bc1e86db031bf448e3c058ad21e119, type: 3}
+    clips: []
+    useRandomPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
+    useRandomVolume: 1
+    minVolume: 0.1
+    maxVolume: 0.2
+    volume: 0.3
     spatialBlend: 1
   - idName: ID_Nawin_WalkDefault
     id: {fileID: 11400000, guid: 8442d2cb80c62f44a823853449f2384c, type: 2}
@@ -86,6 +116,6 @@ MonoBehaviour:
     maxPitch: 1.1
     useRandomVolume: 1
     minVolume: 0.1
-    maxVolume: 0.2
-    volume: 0.341
+    maxVolume: 0.3
+    volume: 0.3
     spatialBlend: 1
