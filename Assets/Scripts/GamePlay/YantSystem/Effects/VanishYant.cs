@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// ติดบน Vanish Yantra prefab — เพิ่ม YantVanish ให้ผู้เล่น (ถ้ายังไม่มี) แล้วสั่งให้หายตัว
 /// </summary>
-public class VanishYant : MonoBehaviour, IYantEffect
+public class VanishYant : MonoBehaviour, IYantEffect, IYantAnimationTiming
 {
     [Header("Vanish Settings")]
     [SerializeField] private string _vanishTag = "Untagged";
@@ -11,6 +11,8 @@ public class VanishYant : MonoBehaviour, IYantEffect
     [SerializeField] private float _duration = 5f;
     [SerializeField] private bool _cancelOnMove = true;
     [SerializeField] private YantraInputObserverSO _inputObserver;
+
+    private GameObject _playerRoot;
 
     public bool Initialize(GameObject playerRoot, bool holdLMB)
     {
@@ -21,14 +23,19 @@ public class VanishYant : MonoBehaviour, IYantEffect
             return false;
         }
 
-        if (!playerRoot.TryGetComponent(out YantVanish vanish))
-            vanish = playerRoot.AddComponent<YantVanish>();
+        _playerRoot = playerRoot;
+
+        return true;
+    }
+
+    public void TriggerAnimationTiming(bool value)
+    {
+        if (!_playerRoot.TryGetComponent(out YantVanish vanish))
+            vanish = _playerRoot.AddComponent<YantVanish>();
 
         YantraInputObserverSO observer = _cancelOnMove ? _inputObserver : null;
         vanish.Apply(_vanishTag, _temporary, _duration, observer);
 
         Debug.Log($"<color=#AA88FF>[VanishYant]</color> ผู้เล่นหายตัว (tag={_vanishTag}, {_duration}s)");
-
-        return true;
     }
 }
