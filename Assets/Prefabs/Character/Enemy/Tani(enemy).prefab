@@ -73,6 +73,10 @@ GameObject:
   - component: {fileID: 5117411067980291529}
   - component: {fileID: 1652869897153868936}
   - component: {fileID: 7331526508121614760}
+  - component: {fileID: 413137225479566665}
+  - component: {fileID: 6774580909948645754}
+  - component: {fileID: 7264657642666186508}
+  - component: {fileID: 2495361903165509921}
   m_Layer: 0
   m_Name: EnemyController
   m_TagString: Untagged
@@ -350,6 +354,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackTokenUser
   _coordinator: {fileID: 0}
   _debugHasToken: 0
+--- !u!114 &413137225479566665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753491701661662287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38420767fc21b8f4e9ea5bf2a7a03eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PairedAnimationActor
+  _animations:
+  - id: {fileID: 11400000, guid: 4fd41b2dbd8e78e48a68b4b8ddd95ee7, type: 2}
+    stateName: P_KaCatchFromFront_remap
+    exitStateName: BaseMovement
+--- !u!114 &6774580909948645754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753491701661662287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07038389efe0fa4889e1cc47c326fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PairedAttackController
+  _victim: {fileID: 0}
+--- !u!114 &7264657642666186508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753491701661662287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c54768c9899d1dc40914132a4e4bd566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackTokenUser
+  _coordinator: {fileID: 0}
+  _debugHasToken: 0
+--- !u!114 &2495361903165509921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753491701661662287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d5238002c8ec574f86e1fba20284d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterResetController
+  _defaultResetPoint: {fileID: 8710171357471059200}
 --- !u!1 &1322102201380666121
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,8 +706,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5884116863967869297}
   - {fileID: 1432626474523465867}
+  - {fileID: 5884116863967869297}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4077710990366773488

@@ -2,7 +2,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(StateMachineController))]
 [RequireComponent(typeof(CharacterTeleporter))]
-public class KaResetController : MonoBehaviour, IReset
+[RequireComponent(typeof(Animator))]
+public class CharacterResetController : MonoBehaviour, IReset
 {
     [Header("Reset Setup")]
     [SerializeField] private Transform _defaultResetPoint;
