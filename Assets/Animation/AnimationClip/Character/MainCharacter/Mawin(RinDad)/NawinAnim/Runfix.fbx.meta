@@ -17,21 +17,32 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Nawin_RunForwardFix' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'Nawin_HipsPart1' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'Nawin_SpinePart1'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_Spine1Part2'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLegPart1'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLegPart2'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftUpLegPart1'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftUpLegPart2'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationImportWarnings: "\nClip 'Nawin_RunForwardNoHipMOve' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'Nawin_HipsPart1' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLeg'
+      has translation animation that will be discarded.\n\t'Nawin_LeftUpLeg' has
+      translation animation that will be discarded.\n\nClip 'Nawin_RunFlipBackwardNoHipMOve'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_HipsPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLeg'
+      has translation animation that will be discarded.\n\t'Nawin_LeftUpLeg' has
+      translation animation that will be discarded.\n\nClip 'Nawin_RunFlipRightNoHipMOve'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_HipsPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLeg'
+      has translation animation that will be discarded.\n\t'Nawin_LeftUpLeg' has
+      translation animation that will be discarded.\n\nClip 'Nawin_RunFlipLeftNoHipMOve.'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_HipsPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLeg'
+      has translation animation that will be discarded.\n\t'Nawin_LeftUpLeg' has
+      translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 0
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -40,11 +51,98 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Nawin_RunForwardNoHipmove
-      takeName: Nawin_RunForwardFix
+      name: Nawin_RunForwardNoHipMOve
+      takeName: Nawin_RunForwardNoHipMOve
       internalID: 6598621923553782372
       firstFrame: 0
-      lastFrame: 16
+      lastFrame: 18
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_RunFlipBackwardNoHipMOve
+      takeName: Nawin_RunFlipBackwardNoHipMOve
+      internalID: 8631868362762402656
+      firstFrame: 0
+      lastFrame: 18
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_RunFlipRightNoHipMOve
+      takeName: Nawin_RunFlipRightNoHipMOve
+      internalID: -4849184079458266853
+      firstFrame: 0
+      lastFrame: 18
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Nawin_RunFlipLeftNoHipMOve.
+      takeName: Nawin_RunFlipLeftNoHipMOve.
+      internalID: 7396065996163255008
+      firstFrame: 0
+      lastFrame: 18
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -259,6 +259,26 @@ public class YantraStatsController : MonoBehaviour
         yantCount += amount;
     }
 
+/*    public void Save(SaveSO save)
+    {
+        save.Set(name, new StatsSaveData
+        {
+            position = transform.root.position,
+            rotation = transform.root.rotation,
+            yantCount = yantCount,
+            currentHp = CurrentHp,
+            currentStamina = CurrentStamina
+        });
+    }
+
+    public void Load(SaveSO save)
+    {
+        if (!save.TryGet(name, out StatsSaveData data)) return;
+        transform.root.SetPositionAndRotation(data.position, data.rotation);
+        SetYantCount(data.yantCount);
+        ApplySavedValues(data.currentHp, data.currentStamina);
+    }*/
+
 
     private void StaminaManagement()
     {
@@ -308,4 +328,14 @@ public class YantraStatsController : MonoBehaviour
 
         }
     }
+}
+
+[System.Serializable]
+public struct StatsSaveData
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public int yantCount;
+    public float currentHp;
+    public float currentStamina;
 }

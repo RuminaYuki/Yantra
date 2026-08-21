@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(StateMachineController))]
 [RequireComponent(typeof(CharacterTeleporter))]
-public class KaResetController : MonoBehaviour, IReset
+public class KaResetController : MonoBehaviour, ISaveLoad
 {
     [Header("Reset Setup")]
     [SerializeField] private Transform _defaultResetPoint;
@@ -32,7 +32,12 @@ public class KaResetController : MonoBehaviour, IReset
         _animator = GetComponent<Animator>();
     }
 
-    public void Reset()
+    public void Load(SlotSaveSO slot)
+    {
+        ResetEnemy();
+    }
+
+    public void ResetEnemy()
     {
         ResetEnemy(_defaultResetPoint);
     }
