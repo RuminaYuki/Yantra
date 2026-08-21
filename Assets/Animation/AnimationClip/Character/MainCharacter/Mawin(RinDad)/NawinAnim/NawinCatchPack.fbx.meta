@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1077b4727a1af7d42aea227fccd235a4
+guid: 971da4f44a31cc64aa0cfb3728d7d3f5
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -17,27 +17,48 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Nawin_RunForwardNoHipMOve' has import animation
+    animationImportWarnings: "\nClip 'Nawin_CatchecFromFront' has import animation
       warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'Nawin_HipsPart1' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLeg'
-      has translation animation that will be discarded.\n\t'Nawin_LeftUpLeg' has
-      translation animation that will be discarded.\n\nClip 'Nawin_RunFlipBackwardNoHipMOve'
-      has import animation warnings that might lower retargeting quality:\nNote:
-      Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_HipsPart1'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLeg'
-      has translation animation that will be discarded.\n\t'Nawin_LeftUpLeg' has
-      translation animation that will be discarded.\n\nClip 'Nawin_RunFlipRightNoHipMOve'
-      has import animation warnings that might lower retargeting quality:\nNote:
-      Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_HipsPart1'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLeg'
-      has translation animation that will be discarded.\n\t'Nawin_LeftUpLeg' has
-      translation animation that will be discarded.\n\nClip 'Nawin_RunFlipLeftNoHipMOve.'
-      has import animation warnings that might lower retargeting quality:\nNote:
-      Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_HipsPart1'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightUpLeg'
-      has translation animation that will be discarded.\n\t'Nawin_LeftUpLeg' has
-      translation animation that will be discarded.\n"
+      DOF on avatar to improve retargeting quality.\n\t'Nawin_NeckPart1' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Nawin_CatchedFromLeft' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_RightArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Nawin_CatchedFromRIght' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_RightArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Nawin_CatchedFromBehide' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Nawin_RightArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_RightForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftForeArmPart1'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Nawin_LeftForeArmPart2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -51,19 +72,19 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Nawin_RunForwardNoHipMOve
-      takeName: Nawin_RunForwardNoHipMOve
-      internalID: 6598621923553782372
+      name: Nawin_CatchecFromFront
+      takeName: Nawin_CatchecFromFront
+      internalID: -8154249669368052944
       firstFrame: 0
-      lastFrame: 18
+      lastFrame: 81
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
@@ -80,19 +101,19 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Nawin_RunFlipBackwardNoHipMOve
-      takeName: Nawin_RunFlipBackwardNoHipMOve
-      internalID: 8631868362762402656
+      name: Nawin_CatchedFromLeft
+      takeName: Nawin_CatchedFromLeft
+      internalID: 1982381942094059565
       firstFrame: 0
-      lastFrame: 18
+      lastFrame: 104
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
@@ -109,19 +130,19 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Nawin_RunFlipRightNoHipMOve
-      takeName: Nawin_RunFlipRightNoHipMOve
-      internalID: -4849184079458266853
+      name: Nawin_CatchedFromRIght
+      takeName: Nawin_CatchedFromRIght
+      internalID: -5340104006836772494
       firstFrame: 0
-      lastFrame: 18
+      lastFrame: 104
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
@@ -138,25 +159,25 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Nawin_RunFlipLeftNoHipMOve.
-      takeName: Nawin_RunFlipLeftNoHipMOve.
-      internalID: 7396065996163255008
+      name: Nawin_CatchedFromBehide
+      takeName: Nawin_CatchedFromBehide
+      internalID: 504768516916708518
       firstFrame: 0
-      lastFrame: 18
+      lastFrame: 104
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 1
+      loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 0
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
