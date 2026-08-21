@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5492ed31ba40b643aaf3d94f1de0aa7, type: 3}
+  m_Name: TaniAttackTransitionTable
+  m_EditorClassIdentifier: Assembly-CSharp::Yuki.Learning.StateMachine.ScriptableObjects.TransitionTableSO
+  _initialState: {fileID: 11400000, guid: 872cfc68bb3dec24599569ff37c630bf, type: 2}
+  _anyTransitions: []
+  _transitions:
+  - FromState: {fileID: 11400000, guid: 872cfc68bb3dec24599569ff37c630bf, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 1d20c6f469c45e648bfa18b7408b8301, type: 2}
+        ExpectedResult: 0
+    ToState: {fileID: 11400000, guid: a857ba20d7b26f64cbf4d3005b17783e, type: 2}
+  - FromState: {fileID: 11400000, guid: a857ba20d7b26f64cbf4d3005b17783e, type: 2}
+    ConditionGroups:
+    - Conditions:
+      - Condition: {fileID: 11400000, guid: 5c0c206c87531844b8199679055a806c, type: 2}
+        ExpectedResult: 0
+    ToState: {fileID: 11400000, guid: e7aa8af1a642c984e892edfcef26229a, type: 2}

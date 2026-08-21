@@ -1,12 +1,10 @@
 using UnityEngine;
-using Unity.Cinemachine; // เพิ่มบรรทัดนี้
+using Unity.Cinemachine;
 
-// ลบ [RequireComponent(typeof(Camera))] ออกไปแล้ว เพราะเราจะไม่ใช้กล้องจริงที่นี่
 public class PlayerCameraController : MonoBehaviour
 {
     [Header("Cinemachine")]
-    [Tooltip("ลาก VCam มาใส่เพื่อคุมการซูม (FOV)")]
-    public CinemachineCamera vcamGameplay; // เพิ่มตัวแปรนี้
+    public CinemachineCamera vcamGameplay;
 
     [Header("Dependencies")]
     [SerializeField] private CameraAnimationController _cameraAnimationController;
@@ -17,7 +15,6 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private Transform _otsPivot;
     [SerializeField] private Transform _yantraPivot;
 
-    [Tooltip("เพิ่มการก้มหน้า +ก้มลง -ก้มขึ้น")]
     [SerializeField] private int _yantraOffsetRotationY;
 
     [Header("TPP Settings")]
@@ -49,7 +46,33 @@ public class PlayerCameraController : MonoBehaviour
     private bool _isFreeLookingInBook = false;
     private bool _isCutsceneMode = false;
 
+    // 1. เพิ่มตัวแปรเช็คสถานะ Pause
+    private bool _isPaused = false;
+
     #region Public Properties API
+
+    // 2. เพิ่ม Property สำหรับสลับโหมด Pause พร้อมจัดการลูกศรเมาส์
+    public bool IsPaused
+    {
+        get => _isPaused;
+        set
+        {
+            _isPaused = value;
+            if (_isPaused)
+            {
+                // ถ้า Pause ให้โชว์เมาส์ และปลดล็อคให้ออกไปคลิกเมนูได้
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                // ถ้าเลิก Pause ให้ซ่อนเมาส์ และล็อคไว้กลางจอเหมือนเดิม
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+    }
+
     public bool IsCutsceneMode
     {
         get => _isCutsceneMode;
@@ -77,7 +100,6 @@ public class PlayerCameraController : MonoBehaviour
 
     private void Start()
     {
-        // ลบการ Get Component Camera ทิ้งไป
         if (Application.isPlaying)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -144,11 +166,9 @@ public class PlayerCameraController : MonoBehaviour
             }
         }
 
-        // หมุนตัวมันเอง (ทำตัวเป็นร่างทรง)
         transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * _transitionSpeed);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _transitionSpeed);
 
-        // เปลี่ยนให้มันไปสั่ง FOV ของ Cinemachine แทน
         if (vcamGameplay != null)
         {
             vcamGameplay.Lens.FieldOfView = Mathf.Lerp(vcamGameplay.Lens.FieldOfView, targetFOV, Time.deltaTime * _transitionSpeed);

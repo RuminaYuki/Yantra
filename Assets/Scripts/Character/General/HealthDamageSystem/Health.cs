@@ -67,7 +67,7 @@ public class Health : MonoBehaviour, IDamageable,IHeal
         {
             Debug.Log($"{gameObject.name} is dead.");
             CurrentHP = 0;
-            DeadEvent();
+            Dead();
         }
     }
 
@@ -77,6 +77,12 @@ public class Health : MonoBehaviour, IDamageable,IHeal
 
         CurrentHP = 0;
         HealthChangedEvent();
+        Dead();
+    }
+
+    private void Dead()
+    {
+        if (SaveManager.Instance != null) SaveManager.Instance.LoadAll();
         DeadEvent();
     }
 
@@ -88,8 +94,8 @@ public class Health : MonoBehaviour, IDamageable,IHeal
     
     public void SetCurrentHealth(float amount)
     {
-        if(amount <= 0) return;
-        CurrentHP = amount;
+        CurrentHP = Mathf.Clamp(amount, 0f, maxHealth);
+        HealthChangedEvent();
     }
 
     public void RestoreFullHealth()
