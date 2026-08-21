@@ -15,7 +15,8 @@ MonoBehaviour:
   sounds:
   - idName: ID_Nawin_OpenBook
     id: {fileID: 11400000, guid: 94c449a949932f643bc995283fb95009, type: 2}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 6828953027838122716, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+      type: 2}
     useRandomClips: 0
     randomChance: 0
     clip: {fileID: 8300000, guid: 9983735a52d24234681b95fcd6f0cbd6, type: 3}
@@ -26,11 +27,12 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0
     maxVolume: 0
-    volume: 0.5
+    volume: 1
     spatialBlend: 1
   - idName: ID_Nawin_ChangePaper
     id: {fileID: 11400000, guid: bbbad143f609fd048aa650005fcef766, type: 2}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 6828953027838122716, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+      type: 2}
     useRandomClips: 0
     randomChance: 0
     clip: {fileID: 8300000, guid: fec8a12518ee5a74abdd86ebac5c2fed, type: 3}
@@ -41,11 +43,12 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0
     maxVolume: 0
-    volume: 0.5
+    volume: 1
     spatialBlend: 1
   - idName: ID_Nawin_DrawPaper
     id: {fileID: 11400000, guid: e718bd971f3dc8a449761cc6147716e3, type: 2}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 6828953027838122716, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+      type: 2}
     useRandomClips: 0
     randomChance: 0
     clip: {fileID: 8300000, guid: be59bb133af3d2144b70491e292feb0c, type: 3}
@@ -56,11 +59,12 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0.3
     maxVolume: 0.5
-    volume: 0.5
+    volume: 1
     spatialBlend: 1
   - idName: ID_Nawin_Flashlight_On
     id: {fileID: 11400000, guid: 446857c5529645d479ad3a97a6448835, type: 2}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 6828953027838122716, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+      type: 2}
     useRandomClips: 0
     randomChance: 0
     clip: {fileID: 8300000, guid: 2e01bd61005c3af4287624f1f6c215c2, type: 3}
@@ -71,11 +75,12 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0.1
     maxVolume: 0.3
-    volume: 0.3
+    volume: 1
     spatialBlend: 1
   - idName: ID_Nawin_Flashlight_Off
     id: {fileID: 11400000, guid: a8d26873aadb42d428aaf2c472088dd9, type: 2}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 6828953027838122716, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+      type: 2}
     useRandomClips: 0
     randomChance: 0
     clip: {fileID: 8300000, guid: ff1ee1595263c80449483656d05ae76d, type: 3}
@@ -86,5 +91,5 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0.3
     maxVolume: 0.3
-    volume: 0.3
+    volume: 1
     spatialBlend: 1

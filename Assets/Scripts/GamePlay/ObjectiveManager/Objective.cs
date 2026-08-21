@@ -39,7 +39,7 @@ public class Objective : MonoBehaviour
         // Setup each target and pass objective reference
         foreach (var target in objectiveTargets)
         {
-            if (target is InteractionPoint interactionPoint)
+            if (target is ObjectiveInteractionPoint interactionPoint)
             {
                 interactionPoint.Setup(this);
             }
