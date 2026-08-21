@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TestKaResetGUI : MonoBehaviour
 {
-    [SerializeField] private CharacterResetController _kaResetController;
+    [SerializeField] private KaResetController _kaResetController;
     [SerializeField] private Rect _buttonRect = new Rect(20f, 20f, 180f, 50f);
 
     private void OnGUI()
@@ -16,6 +16,6 @@ public class TestKaResetGUI : MonoBehaviour
             return;
         }
 
-        _kaResetController.Reset();
+        _kaResetController.ResetEnemy();
     }
 }

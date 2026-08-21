@@ -1,14 +1,9 @@
 public interface ISave
 {
-    void Save();
+    void Save(SlotSaveSO slot);
 }
 
-public interface IReset
+public interface ISaveLoad
 {
-    void Reset();
-}
-
-public interface IResetCompletely
-{
-    void ResetCompletely();
+    void Load(SlotSaveSO slot);
 }
