@@ -146,7 +146,7 @@ public class DummyCutsceneSound : MonoBehaviour
     }
 
     // ==========================================
-    // ⚔️ รับ Event เสียงพิเศษในคัตซีน (เช่น ฟันดาบ, โดนตบ)
+    // รับ Event เสียงพิเศษในคัตซีน (เช่น ฟันดาบ, โดนตบ)
     // ==========================================
     public void PlaySoundByIndex(int index)
     {
@@ -155,4 +155,5 @@ public class DummyCutsceneSound : MonoBehaviour
             SoundManager.Instance.PlaySFX(customSounds[index], transform.position);
         }
     }
+
 }

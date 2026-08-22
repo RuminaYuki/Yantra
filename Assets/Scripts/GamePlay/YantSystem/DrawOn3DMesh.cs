@@ -32,7 +32,7 @@ public class DrawOn3DMesh : MonoBehaviour
 
     [Header("Drawing Sound")]
     [SerializeField] private SoundID drawingSoundID;
-    private SFXPlayer currentDrawingSound;
+    private SFXHandle currentDrawingSound = SFXHandle.None;
     private float _lastDrawTime;
 
     [SerializeField] private List<LineRenderer> _allStrokes = new List<LineRenderer>();
@@ -63,7 +63,7 @@ public class DrawOn3DMesh : MonoBehaviour
         AddPointToLine(Mouse.current.position.ReadValue());
 
         // เพิ่มเวลาหน่วงเป็น 0.25 วินาที ให้มือชะงักตอนวาดส่วนโค้งได้โดยที่เสียงไม่ดับ
-        if (currentDrawingSound != null && Time.time - _lastDrawTime > 0.25f)
+        if (currentDrawingSound.IsValid && Time.time - _lastDrawTime > 0.25f)
         {
             StopDrawingSound();
         }
@@ -130,7 +130,7 @@ public class DrawOn3DMesh : MonoBehaviour
         // --- มีการลากเส้นเกิดขึ้นจริง ---
         _lastDrawTime = Time.time;
 
-        if (drawingSoundID != null && currentDrawingSound == null)
+        if (drawingSoundID != null && !currentDrawingSound.IsValid)
         {
             currentDrawingSound = SoundManager.Instance.PlayLoopSFXForever(drawingSoundID, transform.position);
         }
@@ -173,13 +173,9 @@ public class DrawOn3DMesh : MonoBehaviour
 
     private void StopDrawingSound()
     {
-        if (currentDrawingSound != null)
-        {
-            // เปลี่ยนมาใช้ FadeOutAndStop(0.15f) 
-            // ทำให้ตอนปล่อยเมาส์ หรือคลิกรัวๆ เสียงจะค่อยๆ เบาลงกลืนกันไป ไม่ตัดฉับให้รำคาญหู
-            currentDrawingSound.FadeOutAndStop(0.15f);
-            currentDrawingSound = null;
-        }
+
+        currentDrawingSound.FadeOutAndStop(0.15f);
+        currentDrawingSound = SFXHandle.None;
     }
 
     //API

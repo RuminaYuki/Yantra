@@ -48,6 +48,58 @@ public class PlayerSoundController : MonoBehaviour
     [SerializeField] private SoundID flashlightToggleID;
     [SerializeField] private SoundID openNotebookID;
 
+    // ==========================================
+    // Player Vocals & Actions
+    // ==========================================
+    [Header("Player Vocals & Actions")]
+    [Tooltip("เสียงร้องตอนโดนโจมตี (เช่น ท่า GotSlap)")]
+    [SerializeField] private SoundID hurtSound;
+
+    [Tooltip("เสียงตอนตาย (เช่น ท่า PlayerDead)")]
+    [SerializeField] private SoundID deathSound;
+
+    [Tooltip("กระเป๋าเสียงเผื่อไว้ใช้กับท่าอื่นๆ เช่น 0=ใช้ยันต์, 1=โดนผีจับ")]
+    [SerializeField] private SoundID[] actionSounds;
+
+    // ==========================================
+    // Foley Sounds (เสียงประกอบกริยา)
+    // ==========================================
+    [Header("Foley Sounds")]
+    [Tooltip("กระเป๋าเสียง Foley เช่น 0=ขยับเสื้อผ้า, 1=กระโดดลงพื้น, 2=หยิบของ")]
+    [SerializeField] private SoundID[] foleySounds;
+
+    [Header("Movement Foley (เสื้อผ้า/ของติดตัว)")]
+    [Tooltip("ปิดถ้าไม่อยากให้มีเสียงเสื้อผ้าตามการเคลื่อนไหว")]
+    [SerializeField] private bool enableMovementFoley = true;
+
+    [Tooltip("ถ้ามีไฟล์เดียว ใส่ SoundID ตัวเดียวกันทั้ง 3 ช่องได้เลย")]
+    [SerializeField] private SoundID foleyCrouchID;
+    [SerializeField] private SoundID foleyWalkID;
+    [SerializeField] private SoundID foleyRunID;
+
+    [Tooltip("เยื้องจังหวะจากฝีเท้า / 0.5 = ตกกลางระหว่างก้าวพอดี (กันเสียงกลบกัน)")]
+    [Range(0f, 1f)]
+    [SerializeField] private float foleyPhaseOffset = 0.5f;
+
+    [Tooltip("ความสูงที่เสียงเกิด นับจากเท้า / 1.0 = ระดับลำตัว ไม่ใช่พื้น")]
+    [SerializeField] private float foleyHeightOffset = 1.0f;
+
+    [Tooltip("ยิงกี่ครั้งต่อ 1 ก้าว / ผ้าเสียดสีถี่กว่าเท้าแตะพื้น เพราะทั้งขาเหวี่ยงและแขนแกว่ง แนะนำ 2-3")]
+    [Range(0.5f, 4f)]
+    [SerializeField] private float foleyPerStride = 2f;
+
+    [Tooltip("ห้ามยิงซ้ำจนกว่าเสียงเก่าเล่นไปกี่ % / ยิ่งต่ำยิ่งปล่อยให้หางเสียงเกยกัน = ฟังต่อเนื่องเหมือนผ้าจริง")]
+    [Range(0f, 1f)]
+    [SerializeField] private float foleyRetriggerGuard = 0.25f;
+
+    [Tooltip("สุ่มระยะก้าวให้เพี้ยนไปมา / 0.25 = บวกลบ 25% กันหูล็อกจังหวะได้")]
+    [Range(0f, 0.5f)]
+    [SerializeField] private float foleyStrideJitter = 0.25f;
+
+    [Tooltip("โอกาสที่จะดังจริงในแต่ละรอบ (%) / ผ้าจริงไม่ได้ดังทุกก้าว การขาดหายแบบสุ่มทำลาย pattern ได้ดีที่สุด")]
+    [Range(0f, 100f)]
+    [SerializeField] private float foleyPlayChance = 75f;
+
     [Header("Footstep Mode")]
     [SerializeField] private FootstepMode mode = FootstepMode.DistanceBased;
 
@@ -74,6 +126,10 @@ public class PlayerSoundController : MonoBehaviour
     private Vector3 lastPosition;
     private float measuredSpeed;
     private float distanceAccumulated;
+    private float foleyDistanceAccum;
+    private bool wasMovingForFoley;
+    private float foleyBusyUntil = -999f;
+    private float foleyTargetStride = -1f;
     private Vector3 currentMoveDir = Vector3.forward;
 
     public float CurrentSpeed => measuredSpeed;
@@ -104,6 +160,9 @@ public class PlayerSoundController : MonoBehaviour
 
         if (mode == FootstepMode.DistanceBased)
             UpdateDistanceFootstep(distanceThisFrame);
+
+        // Foley ทำงานทุกโหมด เพราะเสื้อผ้าขยับตลอด ไม่ขึ้นกับว่าฝีเท้าใช้ระบบไหน
+        UpdateMovementFoley(distanceThisFrame);
     }
 
     private void UpdateDistanceFootstep(float distanceThisFrame)
@@ -127,6 +186,96 @@ public class PlayerSoundController : MonoBehaviour
         }
     }
 
+    // ==========================================
+    // Movement Foley — เสียงเสื้อผ้า/ของติดตัว
+    // ==========================================
+    // ทำไมไม่ใช้ Animation Event: เสื้อผ้าเสียดสีตลอดเวลาที่ร่างกายขยับ
+    // ไม่ได้เกิดเป็นจังหวะเหมือนเท้าแตะพื้น ใส่ Event จะได้แค่ไม่กี่จุด ฟังออกว่าเป็นเครื่องจักร
+    //
+    // ทำไมไม่ใช้เสียงลูป: SFXPlayer สุ่มพิตช์ครั้งเดียวตอนเริ่มเล่น
+    // ลูปค้างไว้ = พิตช์เดิมตลอด หูจับ pattern ได้ภายในไม่กี่วินาที
+    //
+    // วิธีนี้: ยิงเสียงสั้นตามระยะทางที่เดินได้ สุ่มพิตช์ใหม่ทุกครั้ง
+    // ไฟล์เดียวก็ไม่ซ้ำ และวิ่งเร็วขึ้น = ถี่ขึ้นเองอัตโนมัติ
+    private void UpdateMovementFoley(float distanceThisFrame)
+    {
+        if (!enableMovementFoley) return;
+
+        // ยืนนิ่ง หรือลอยอยู่กลางอากาศ = ผ้าไม่เสียดสี
+        if (measuredSpeed < minMoveSpeed || !IsGrounded())
+        {
+            wasMovingForFoley = false;
+            return;
+        }
+
+        float stride = walkStrideLength;
+        if (IsRunning) stride = runStrideLength;
+        else if (IsCrouching) stride = crouchStrideLength;
+
+        // [FIX] ผ้าเสียดสีถี่กว่าเท้าแตะพื้น
+        // 1 ก้าวมีทั้งขาหน้าเหวี่ยง ขาหลังตาม และแขนแกว่งสวนทาง = ผ้าขยับ 2-3 จังหวะ
+        // ของเดิมยิงแค่ 1 ครั้งต่อก้าว เลยรู้สึกว่า 'ตัวขยับไปเยอะแล้วเสียงเพิ่งมา'
+        stride /= Mathf.Max(0.1f, foleyPerStride);
+
+        // เพิ่งเริ่มออกเดินจากที่ยืนนิ่ง → เซ็ตตัวนับให้เยื้องจากฝีเท้าตั้งแต่ก้าวแรก
+        // เสื้อผ้าเสียดสีแรงสุดตอน 'ขาเหวี่ยง' ไม่ใช่ตอนเท้าแตะพื้น
+        // วางไว้กลางระหว่างก้าวเลยทั้งถูกต้องตามจริง และไม่ไปกลบเสียงฝีเท้า
+        if (!wasMovingForFoley)
+        {
+            wasMovingForFoley = true;
+            foleyDistanceAccum = stride * foleyPhaseOffset;
+            foleyTargetStride = RollFoleyStride(stride);
+        }
+
+        if (foleyTargetStride <= 0f) foleyTargetStride = RollFoleyStride(stride);
+
+        foleyDistanceAccum += distanceThisFrame;
+
+        if (foleyDistanceAccum >= foleyTargetStride)
+        {
+            foleyDistanceAccum -= foleyTargetStride;
+
+            // สุ่มระยะของรอบถัดไปใหม่ทุกครั้ง
+            // ถ้าใช้ระยะคงที่ สมองคนจะทำนายจังหวะได้ภายในไม่กี่วินาที แล้วตีความว่าเป็นเครื่องจักร
+            foleyTargetStride = RollFoleyStride(stride);
+
+            TriggerFoley();
+        }
+    }
+
+    private float RollFoleyStride(float baseStride)
+    {
+        if (foleyStrideJitter <= 0f) return baseStride;
+        return baseStride * Random.Range(1f - foleyStrideJitter, 1f + foleyStrideJitter);
+    }
+
+    private void TriggerFoley()
+    {
+        // [FIX] ห้ามยิงทับตัวเอง
+        // ถ้าไฟล์เสียงยาวกว่าระยะเวลา 1 ก้าว เสียงเก่าจะยังไม่จบตอนเสียงใหม่มา
+        // ซ้อนกันไปเรื่อยๆ = ดังขึ้นเป็นเท่าตัว และไม่มีช่องว่างจนฟังเป็นลูป
+        if (Time.time < foleyBusyUntil) return;
+
+        // ไม่ดังทุกครั้ง — ผ้าจริงบางก้าวก็เงียบ
+        // การขาดหายแบบสุ่มคือตัวทำลาย pattern ที่ได้ผลที่สุด และลดจำนวนเสียงรวมไปในตัว
+        if (Random.Range(0f, 100f) > foleyPlayChance) return;
+
+        SoundID idToPlay = foleyWalkID;
+
+        if (IsRunning) idToPlay = foleyRunID != null ? foleyRunID : foleyWalkID;
+        else if (IsCrouching) idToPlay = foleyCrouchID != null ? foleyCrouchID : foleyWalkID;
+
+        if (idToPlay == null || SoundManager.Instance == null) return;
+
+        // เกิดที่ระดับลำตัว ไม่ใช่ที่พื้น เพราะเสื้อผ้าอยู่บนตัวเรา
+        float duration = SoundManager.Instance.PlaySFX(idToPlay, transform.position + Vector3.up * foleyHeightOffset);
+
+        // [FIX] เดิมจองไว้ 85% ซึ่งเข้มเกินไปสำหรับเสียงผ้า
+        // เสียงฝีเท้าต้องแยกกันชัด แต่เสียงผ้า 'ต้องเกยกัน' ถึงจะได้ texture ต่อเนื่อง
+        // ตอนนี้ปรับได้จาก Inspector ค่าต่ำ = เกยกันมาก = ฟังเป็นเนื้อผ้าต่อเนื่อง
+        foleyBusyUntil = Time.time + (duration * foleyRetriggerGuard);
+    }
+
     private bool IsGrounded()
     {
         if (!requireGrounded) return true;
@@ -146,21 +295,16 @@ public class PlayerSoundController : MonoBehaviour
         string hitTag = "Untagged";
 
         Vector3 rayOrigin = transform.position + (Vector3.up * 0.5f) + (currentMoveDir * 0.3f);
-
-        // จุดกำเนิดเสียง (เริ่มต้นที่ตำแหน่งตัวละคร)
         Vector3 soundSpawnPos = transform.position;
 
         if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 1.5f, groundLayer))
         {
-            // อัปเดตพิกัดเสียงให้ไปเกิดที่จุดกระทบพื้นแบบ 3D
             soundSpawnPos = hit.point;
-
             Terrain hitTerrain = hit.collider.GetComponent<Terrain>();
 
             if (hitTerrain != null)
             {
                 TerrainLayer dominantLayer = GetDominantTerrainLayer(hit.point, hitTerrain);
-
                 if (dominantLayer != null)
                 {
                     hitTag = dominantLayer.name;
@@ -169,8 +313,6 @@ public class PlayerSoundController : MonoBehaviour
                     foreach (var tSound in terrainSounds)
                     {
                         if (tSound.terrainLayers == null) continue;
-
-                        // วนลูปเช็คว่าเลเยอร์ที่เหยียบอยู่ ตรงกับอันไหนในตะกร้าบ้าง
                         foreach (var layer in tSound.terrainLayers)
                         {
                             if (layer == dominantLayer)
@@ -189,7 +331,6 @@ public class PlayerSoundController : MonoBehaviour
             else
             {
                 hitTag = hit.collider.tag;
-
                 foreach (var surface in surfaceSounds)
                 {
                     if (surface.surfaceTag == hitTag)
@@ -240,7 +381,6 @@ public class PlayerSoundController : MonoBehaviour
             return null;
 
         float[,,] aMap = terrainData.GetAlphamaps(x, z, 1, 1);
-
         float maxMix = 0f;
         int maxIndex = 0;
 
@@ -266,7 +406,6 @@ public class PlayerSoundController : MonoBehaviour
         if (mode != FootstepMode.AnimationEvent) return;
         if (measuredSpeed < (minMoveSpeed * 1.5f)) return;
         if (!IsGrounded()) return;
-
         TriggerFootstep();
     }
 
@@ -275,7 +414,6 @@ public class PlayerSoundController : MonoBehaviour
         if (mode != FootstepMode.AnimationEvent) return;
         if (measuredSpeed < (minMoveSpeed * 1.5f)) return;
         if (!IsGrounded()) return;
-
         TriggerFootstep();
     }
 
@@ -290,4 +428,39 @@ public class PlayerSoundController : MonoBehaviour
         if (openNotebookID != null)
             SoundManager.Instance.PlaySFX(openNotebookID, transform.position);
     }
+
+    // ==========================================
+    // Vocals & Actions Methods
+    // ==========================================
+    public void PlayHurtSound()
+    {
+        if (hurtSound != null && SoundManager.Instance != null)
+            SoundManager.Instance.PlaySFX(hurtSound, transform.position);
+    }
+
+    public void PlayDeathSound()
+    {
+        if (deathSound != null && SoundManager.Instance != null)
+            SoundManager.Instance.PlaySFX(deathSound, transform.position);
+    }
+
+    public void PlayFoleySound(int index)
+    {
+        if (foleySounds == null || index < 0 || index >= foleySounds.Length) return;
+        if (foleySounds[index] == null || SoundManager.Instance == null) return;
+
+        SoundManager.Instance.PlaySFX(foleySounds[index], transform.position + Vector3.up * foleyHeightOffset);
+    }
+
+    public void PlayActionSound(int index)
+    {
+        if (actionSounds != null && index >= 0 && index < actionSounds.Length)
+        {
+            if (actionSounds[index] != null && SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySFX(actionSounds[index], transform.position);
+            }
+        }
+    }
+
 }
