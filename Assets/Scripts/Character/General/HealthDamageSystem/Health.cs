@@ -25,15 +25,20 @@ public class Health : MonoBehaviour, IDamageable,IHeal
     private void Update()
     {
         // Debugging purpose only, remove this in production
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             TakeDamage(1f);
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             Kill();
+        }        
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            if (this.CompareTag("Player")) return;
+            Kill();
         }
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             if (IsDead)
             {
