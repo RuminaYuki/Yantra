@@ -4117,8 +4117,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113576675118559779}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.65843076, z: 0, w: -0.7526413}
-  m_LocalPosition: {x: 40.581, y: 9.989, z: -65.892}
+  m_LocalRotation: {x: 0, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.00000023841858, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10831,7 +10831,7 @@ Transform:
   m_GameObject: {fileID: 5739925800993149535}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.0000001872535, w: 1}
-  m_LocalPosition: {x: 0.00000008940697, y: 0.00000035762787, z: 0.0000001937151}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11720,13 +11720,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293821148687431485}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9148556, y: 0.19328474, z: -0.29074454, w: 0.20284931}
-  m_LocalPosition: {x: 0.03797013, y: 0.16687071, z: 0.04404524}
+  m_LocalRotation: {x: -0.61290395, y: 0.08252032, z: -0.78153914, w: 0.08207086}
+  m_LocalPosition: {x: 0.065189764, y: 0.04205019, z: 0.028561965}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1468904337529183186}
-  m_LocalEulerAnglesHint: {x: 168.346, y: 321.134, z: 9.192}
+  m_LocalEulerAnglesHint: {x: 178.374, y: 256.398, z: 13.268997}
 --- !u!108 &4889054194721000634
 Light:
   m_ObjectHideFlags: 0
@@ -11738,10 +11738,10 @@ Light:
   serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.9056604, g: 0.89541936, b: 0.756141, a: 1}
-  m_Intensity: 34.51697
+  m_Intensity: 45.724056
   m_Range: 10
-  m_SpotAngle: 126.3739
-  m_InnerSpotAngle: 66.32386
+  m_SpotAngle: 132.93616
+  m_InnerSpotAngle: 72.88607
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
     m_Type: 1
@@ -13057,8 +13057,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6952737346183225594}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000009362675, y: -8.7659685e-15, z: 0.00000009362675, w: 1}
-  m_LocalPosition: {x: 0.00000031292439, y: 0.00000023841858, z: 0.000000059604645}
+  m_LocalRotation: {x: 0.00000009362675, y: -1.7531937e-14, z: 0.0000001872535, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16800,6 +16800,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8005721335771320004}
   - component: {fileID: 1932528655066601654}
+  - component: {fileID: 1686632032200977885}
   m_Layer: 0
   m_Name: Nawin(player)
   m_TagString: Untagged
@@ -16847,6 +16848,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1686632032200977885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103408916130526773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d5b5ca9a9ae4a4eb99c4bed55e0fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTeleport
+  _teleportPoints: []
 --- !u!1 &9126579576381458844
 GameObject:
   m_ObjectHideFlags: 0

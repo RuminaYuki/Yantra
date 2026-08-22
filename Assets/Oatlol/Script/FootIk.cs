@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FootIk : MonoBehaviour
+public class OatFootIk : MonoBehaviour
 {
     private Animator animator;
 
