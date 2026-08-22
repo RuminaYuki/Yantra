@@ -30,7 +30,7 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0
     maxVolume: 0
-    volume: 1
+    volume: 0.5
     spatialBlend: 0.4
     minDistance: 1
     maxDistance: 6
@@ -51,7 +51,7 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0
     maxVolume: 0
-    volume: 1
+    volume: 0.5
     spatialBlend: 0.4
     minDistance: 1
     maxDistance: 6
@@ -72,7 +72,7 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0.3
     maxVolume: 0.5
-    volume: 1
+    volume: 0.5
     spatialBlend: 0.4
     minDistance: 1
     maxDistance: 6
@@ -120,7 +120,7 @@ MonoBehaviour:
     maxDistance: 6
   - idName: ID_Nawin_GetPunch
     id: {fileID: 11400000, guid: b89dd834ff35efe42894b610b153e1f1, type: 2}
-    mixerGroup: {fileID: 6828953027838122716, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+    mixerGroup: {fileID: -5337501770083687080, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
       type: 2}
     priority: 128
     useRandomClips: 1
@@ -145,7 +145,7 @@ MonoBehaviour:
     maxDistance: 6
   - idName: ID_Nawin_Choke
     id: {fileID: 11400000, guid: be6a75c0366a8194cae6f4d5d76be0fe, type: 2}
-    mixerGroup: {fileID: 6828953027838122716, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+    mixerGroup: {fileID: -5337501770083687080, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
       type: 2}
     priority: 128
     useRandomClips: 1
@@ -167,7 +167,7 @@ MonoBehaviour:
     maxDistance: 6
   - idName: ID_Nawin_Push
     id: {fileID: 11400000, guid: f2254ebabc19750458c5605a04b67fc9, type: 2}
-    mixerGroup: {fileID: 6828953027838122716, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+    mixerGroup: {fileID: -5337501770083687080, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
       type: 2}
     priority: 128
     useRandomClips: 1
