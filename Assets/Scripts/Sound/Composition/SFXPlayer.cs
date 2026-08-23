@@ -6,16 +6,32 @@ public class SFXPlayer : MonoBehaviour
 {
     private AudioSource audioSource;
     private Coroutine returnRoutine;
-    private Coroutine fadeRoutine; // คอยคุมการFade ขึ้นลง
-    private float baseVolume = 1f; // จำความดังดั้งเดิมเอาไว้
+    private Coroutine fadeRoutine;
+    private float baseVolume = 1f;
 
     [HideInInspector] public string myPoolTag;
+
+    private Transform targetToFollow;
+
+    private int version = 0;
+    public int Version => version;
 
     public bool IsPlaying => audioSource != null && audioSource.isPlaying;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void LateUpdate()
+    {
+        if (targetToFollow == null) return;
+        transform.position = targetToFollow.position;
+    }
+
+    public void FollowTarget(Transform target)
+    {
+        targetToFollow = target;
     }
 
     private float Setup(SoundData data, bool loop)
@@ -29,26 +45,41 @@ public class SFXPlayer : MonoBehaviour
             return 0f;
         }
 
+        // [NEW] เริ่มงานใหม่ = ขึ้นรุ่นใหม่ ใบเสร็จเก่าทุกใบหมดอายุทันที
+        version++;
+
         if (returnRoutine != null) { StopCoroutine(returnRoutine); returnRoutine = null; }
         if (fadeRoutine != null) { StopCoroutine(fadeRoutine); fadeRoutine = null; }
 
         float pitch = data.GetPitch();
-
-        // จำความดังดั้งเดิมไว้ จะได้หรี่และดันกลับมาถูก
         baseVolume = data.GetVolume();
 
         audioSource.clip = clipToPlay;
         audioSource.volume = baseVolume;
         audioSource.pitch = pitch;
+
         audioSource.spatialBlend = data.spatialBlend;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
+        audioSource.minDistance = data.minDistance;
+        audioSource.maxDistance = data.maxDistance;
+
         audioSource.loop = loop;
+
+        // ลำโพงมาจากพูล ถ้าไม่เซ็ตทุกครั้ง มันจะพก priority ของงานก่อนหน้าติดมาด้วย
+        audioSource.priority = Mathf.Clamp(data.priority, 0, 255);
 
         if (data.mixerGroup != null)
             audioSource.outputAudioMixerGroup = data.mixerGroup;
 
+        // ไม่ทำกับเสียงลูป เพราะลูปเล่นยาวอยู่แล้ว จุดเริ่มไม่มีความหมาย
+        float startOffset = loop ? 0f : data.GetStartOffset(clipToPlay);
+        audioSource.time = startOffset;   // ต้องเซ็ตหลังใส่ clip และก่อน Play()
+
         audioSource.Play();
 
-        return clipToPlay.length / Mathf.Max(0.01f, Mathf.Abs(pitch));
+        // หักเวลาที่ข้ามไปออกด้วย ไม่งั้นจะคำนวณเวลาคืนลำโพงนานเกินจริง
+        float remaining = clipToPlay.length - startOffset;
+        return remaining / Mathf.Max(0.01f, Mathf.Abs(pitch));
     }
 
     public float Play(SoundData data)
@@ -103,18 +134,12 @@ public class SFXPlayer : MonoBehaviour
         ReturnHome();
     }
 
-    // ==========================================
-    // ระบบเฟดเสียงแบบต่อเนื่อง (ไม่ปิดลำโพง แค่หรี่เสียง)
-    // ==========================================
-
-    /// <summary>บังคับหรี่เสียงทันที (เช่น เริ่มต้นที่ 0 เพื่อเตรียม Fade In)</summary>
     public void SetVolumeMultiplier(float multiplier)
     {
         if (audioSource != null)
             audioSource.volume = baseVolume * Mathf.Clamp01(multiplier);
     }
 
-    /// <summary>ค่อยๆ หรี่หรือเร่งเสียงตามตัวคูณ (1.0 = ดังปกติ, 0.3 = แว่วๆ)</summary>
     public void FadeToVolumeMultiplier(float targetMultiplier, float fadeTime)
     {
         if (!gameObject.activeInHierarchy) return;
@@ -139,17 +164,25 @@ public class SFXPlayer : MonoBehaviour
         fadeRoutine = null;
     }
 
-    // ==========================================
-
     private IEnumerator ReturnAfterFinished(float duration)
     {
-        yield return new WaitForSeconds(duration + 0.15f);
+        float target = duration + 0.15f;
+        float t = 0f;
+
+        while (t < target)
+        {
+            t += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
         returnRoutine = null;
         ReturnHome();
     }
 
     private void ReturnHome()
     {
+        targetToFollow = null;
+
         if (!gameObject.activeInHierarchy) return;
         if (ObjectPooler.Instance != null && !string.IsNullOrEmpty(myPoolTag))
             ObjectPooler.Instance.ReturnToPool(myPoolTag, gameObject);
@@ -159,6 +192,11 @@ public class SFXPlayer : MonoBehaviour
 
     private void OnDisable()
     {
+        // [NEW] กลับเข้าโกดัง = ใบเสร็จทุกใบที่ออกไปหมดอายุทันที
+        // จุดนี้สำคัญ เพราะทุกเส้นทางการคืนของจบที่ SetActive(false) เสมอ
+        version++;
+
+        targetToFollow = null;
         if (returnRoutine != null) { StopCoroutine(returnRoutine); returnRoutine = null; }
         if (fadeRoutine != null) { StopCoroutine(fadeRoutine); fadeRoutine = null; }
         if (audioSource != null) { audioSource.Stop(); audioSource.clip = null; }
