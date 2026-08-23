@@ -462,7 +462,8 @@ MonoBehaviour:
   foleyLoop: {fileID: 11400000, guid: 0e0daa9acf67fcd4ea88d637e4567094, type: 2}
   presenceFadeIn: 1.5
   presenceFadeOut: 1
-  actionSounds: []
+  actionSounds:
+  - {fileID: 11400000, guid: 1ddf3e58b6c37954886bcebed26a0374, type: 2}
 --- !u!114 &1686896734247775340
 MonoBehaviour:
   m_ObjectHideFlags: 0
