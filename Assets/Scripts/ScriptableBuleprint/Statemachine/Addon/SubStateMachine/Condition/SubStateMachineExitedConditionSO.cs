@@ -33,6 +33,11 @@ public class SubStateMachineExitedCondition : Condition
         _stateMachine.ChildStateMachineExited += OnChildExited;
     }
 
+    public override void OnStateEnter()
+    {
+        _exitReceived = false;
+    }
+
     protected override bool Statement()
     {
         bool result = _exitReceived;
