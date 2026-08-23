@@ -26,6 +26,7 @@ public class MaterialManager : MonoBehaviour
     [SerializeField] private StatSO _statSOInvis;
     [SerializeField] private FlagSO _flagSOBush;
     [SerializeField] private FlagSO _flagSOCrouch;
+    [SerializeField] private FlagSO _flagSOInvit;
 
     [Header("Heal Settings")]
     [SerializeField] private List<Material> _healMaterial;
@@ -96,9 +97,17 @@ public class MaterialManager : MonoBehaviour
     {
         if (TryGetComponent(out StateFlags _stateFlags))
         {
-            if (_stateFlags.Get(_flagSOBush) && _stateFlags.Get(_flagSOCrouch))
+            if (_stateFlags.Get(_flagSOBush))
             {
-                if (!_yantInvisible)
+                if (_stateFlags.Get(_flagSOCrouch))
+                {
+                    if (!_yantInvisible)
+                    {
+                        _yantInvisible = !_yantInvisible;
+                        OnInvisible(_yantInvisible);
+                    }
+                }
+                else if (_yantInvisible && !_stateFlags.Get(_flagSOInvit))
                 {
                     _yantInvisible = !_yantInvisible;
                     OnInvisible(_yantInvisible);
@@ -106,7 +115,7 @@ public class MaterialManager : MonoBehaviour
             }
             else
             {
-                if (_yantInvisible)
+                if (_yantInvisible && !_stateFlags.Get(_flagSOInvit))
                 {
                     _yantInvisible = !_yantInvisible;
                     OnInvisible(_yantInvisible);
