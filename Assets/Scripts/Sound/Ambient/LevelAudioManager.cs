@@ -15,11 +15,27 @@ public class LevelAudioManager : MonoBehaviour
     [Tooltip("เปิดเพื่อดูว่าใครเป็นคนสั่งหรี่เสียง ambient — ปิดเมื่อหาเจอแล้ว")]
     [SerializeField] private bool logMuffleCalls = false;
 
+    [Header("Cutscene Ducking")]
+    [Tooltip("ตัวคูณความดัง ambient ระหว่างคัตซีน (0.4 = เหลือ 40%)" +
+        "\nหรี่ลงเพื่อให้บทพูดกับเสียงในคัตซีนเด่นขึ้น")]
+    [Range(0f, 1f)]
+    [SerializeField] private float cutsceneAmbientMultiplier = 0.4f;
+
+    [SerializeField] private float cutsceneFadeTime = 1f;
+
     [Header("เสียงบรรยากาศภายนอก (Outside Ambient)")]
     [SerializeField] private SoundID[] outsideAmbientSounds;
 
     // [CHANGED] เก็บ "ใบเสร็จ" แทนตัวลำโพงจริง
     private List<SFXHandle> activeOutsideAmbients = new List<SFXHandle>();
+
+    // [ADD] แยกความดังเป็น 2 ชั้นคูณกัน
+    //   zoneMultiplier    = เข้า/ออกบ้าน (สั่งจาก AmbientZoneTrigger)
+    //   cutsceneMultiplier = หรี่ตอนคัตซีน
+    // ถ้าเขียนทับกันตรงๆ พอคัตซีนจบ ambient จะดันกลับเป็น 1.0
+    // ทั้งที่ตัวละครยังอยู่ในบ้าน — หลักการเดียวกับ crossfade x duck ใน BGM
+    private float zoneMultiplier = 1f;
+    private float cutsceneMultiplier = 1f;
 
     private void Awake()
     {
@@ -28,6 +44,7 @@ public class LevelAudioManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        // [ADD] เคลียร์ static ตอนเปลี่ยนฉาก
         // ไม่งั้นฉากใหม่จะเห็น Instance ค้างเป็นตัวเก่าที่ถูก Destroy ไปแล้ว
         if (Instance == this) Instance = null;
     }
@@ -43,11 +60,22 @@ public class LevelAudioManager : MonoBehaviour
     private void OnDisable()
     {
         CutsceneController.OnGlobalCutsceneStateChanged -= HandleCutsceneState;
+
+        // [FIX] MEMORY LEAK — ambient ที่เปิดด้วย PlayLoopSFXForever ไม่คืนลำโพงเอง
+        // ตอนเปลี่ยนฉาก ลำโพงพวกนี้จะค้างอยู่ตลอดกาล กินโควต้าพูลถาวร
+        // ฉากไหนมี ambient 3 ตัว เปลี่ยนฉากไปมา 5 รอบ = เสียลำโพงถาวร 15 ตัว
+        for (int i = 0; i < activeOutsideAmbients.Count; i++)
+            activeOutsideAmbients[i].Stop();
+
+        activeOutsideAmbients.Clear();
     }
 
     private void HandleCutsceneState(bool isPlaying)
     {
         IsCutsceneActive = isPlaying;
+
+        cutsceneMultiplier = isPlaying ? cutsceneAmbientMultiplier : 1f;
+        ApplyAmbientVolume(cutsceneFadeTime);
     }
 
     private void Start()
@@ -65,6 +93,7 @@ public class LevelAudioManager : MonoBehaviour
 
                 SFXHandle handle = SoundManager.Instance.PlayLoopSFXForever(ambient, transform.position);
 
+                // [CHANGED] เช็คใบเสร็จว่าใช้ได้จริงก่อนเก็บ
                 if (handle.IsValid) activeOutsideAmbients.Add(handle);
             }
         }
@@ -81,19 +110,26 @@ public class LevelAudioManager : MonoBehaviour
         }
 #endif
 
-        // ถ้าเดินหน้าแล้ว RemoveAt กลางทาง index จะเลื่อน → ข้ามสมาชิกบางตัว
+        zoneMultiplier = targetMultiplier;
+        ApplyAmbientVolume(fadeTime);
+    }
+
+    private void ApplyAmbientVolume(float fadeTime)
+    {
+        float finalMultiplier = zoneMultiplier * cutsceneMultiplier;
+
+        // เดินถอยหลัง เพื่อลบใบเสร็จหมดอายุออกจาก list ได้อย่างปลอดภัย
         for (int i = activeOutsideAmbients.Count - 1; i >= 0; i--)
         {
             SFXHandle handle = activeOutsideAmbients[i];
 
             if (!handle.IsValid)
             {
-                // ลำโพงตัวนี้ไปทำงานอื่นแล้ว ทิ้งใบเสร็จไป จะได้ไม่ต้องเช็คซ้ำทุกรอบ
                 activeOutsideAmbients.RemoveAt(i);
                 continue;
             }
 
-            handle.FadeToVolumeMultiplier(targetMultiplier, fadeTime);
+            handle.FadeToVolumeMultiplier(finalMultiplier, fadeTime);
         }
     }
 }

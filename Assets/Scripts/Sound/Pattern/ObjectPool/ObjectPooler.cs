@@ -41,14 +41,6 @@ public class ObjectPooler : Singleton<ObjectPooler>
         finalPools = new List<Pool>();
         containers = new Dictionary<string, Transform>();
 
-        // ==========================================================
-        // [FIX] จุดนี้คือบั๊กที่เนียนที่สุด
-        // Pool เป็น class (reference type) ไม่ใช่ struct
-        // ถ้า Add ตัวจริงจาก ScriptableObject เข้ามาตรงๆ แล้วไปทำ size += ...
-        // มันจะไปบวกทับค่าใน "ไฟล์ asset จริง" ซึ่งค่าที่แก้ตอน runtime จะค้างใน Editor
-        // ผลคือกด Play ทุกครั้ง size จะงอกขึ้นเรื่อยๆ 10 → 20 → 30 → กินแรมไปเรื่อยๆ
-        // ทางแก้: Clone() ก่อนเสมอ
-        // ==========================================================
         if (pools != null)
         {
             foreach (var p in pools)
@@ -145,7 +137,10 @@ public class ObjectPooler : Singleton<ObjectPooler>
             }
 
             if (!pool[i].activeInHierarchy)
+            {
                 objectToSpawn = pool[i];
+                break;   // [FIX] เดิมไม่มี break เลยสแกนทั้งลิสต์ทุกครั้งที่เล่นเสียง
+            }
         }
 
         // ถ้าไม่มีตัวว่างเลย → ปั๊มเพิ่ม (overflow)

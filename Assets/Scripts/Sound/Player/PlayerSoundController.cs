@@ -189,14 +189,7 @@ public class PlayerSoundController : MonoBehaviour
     // ==========================================
     // Movement Foley — เสียงเสื้อผ้า/ของติดตัว
     // ==========================================
-    // ทำไมไม่ใช้ Animation Event: เสื้อผ้าเสียดสีตลอดเวลาที่ร่างกายขยับ
-    // ไม่ได้เกิดเป็นจังหวะเหมือนเท้าแตะพื้น ใส่ Event จะได้แค่ไม่กี่จุด ฟังออกว่าเป็นเครื่องจักร
-    //
-    // ทำไมไม่ใช้เสียงลูป: SFXPlayer สุ่มพิตช์ครั้งเดียวตอนเริ่มเล่น
-    // ลูปค้างไว้ = พิตช์เดิมตลอด หูจับ pattern ได้ภายในไม่กี่วินาที
-    //
-    // วิธีนี้: ยิงเสียงสั้นตามระยะทางที่เดินได้ สุ่มพิตช์ใหม่ทุกครั้ง
-    // ไฟล์เดียวก็ไม่ซ้ำ และวิ่งเร็วขึ้น = ถี่ขึ้นเองอัตโนมัติ
+
     private void UpdateMovementFoley(float distanceThisFrame)
     {
         if (!enableMovementFoley) return;
@@ -212,14 +205,8 @@ public class PlayerSoundController : MonoBehaviour
         if (IsRunning) stride = runStrideLength;
         else if (IsCrouching) stride = crouchStrideLength;
 
-        // [FIX] ผ้าเสียดสีถี่กว่าเท้าแตะพื้น
-        // 1 ก้าวมีทั้งขาหน้าเหวี่ยง ขาหลังตาม และแขนแกว่งสวนทาง = ผ้าขยับ 2-3 จังหวะ
-        // ของเดิมยิงแค่ 1 ครั้งต่อก้าว เลยรู้สึกว่า 'ตัวขยับไปเยอะแล้วเสียงเพิ่งมา'
         stride /= Mathf.Max(0.1f, foleyPerStride);
 
-        // เพิ่งเริ่มออกเดินจากที่ยืนนิ่ง → เซ็ตตัวนับให้เยื้องจากฝีเท้าตั้งแต่ก้าวแรก
-        // เสื้อผ้าเสียดสีแรงสุดตอน 'ขาเหวี่ยง' ไม่ใช่ตอนเท้าแตะพื้น
-        // วางไว้กลางระหว่างก้าวเลยทั้งถูกต้องตามจริง และไม่ไปกลบเสียงฝีเท้า
         if (!wasMovingForFoley)
         {
             wasMovingForFoley = true;
@@ -251,9 +238,7 @@ public class PlayerSoundController : MonoBehaviour
 
     private void TriggerFoley()
     {
-        // [FIX] ห้ามยิงทับตัวเอง
-        // ถ้าไฟล์เสียงยาวกว่าระยะเวลา 1 ก้าว เสียงเก่าจะยังไม่จบตอนเสียงใหม่มา
-        // ซ้อนกันไปเรื่อยๆ = ดังขึ้นเป็นเท่าตัว และไม่มีช่องว่างจนฟังเป็นลูป
+
         if (Time.time < foleyBusyUntil) return;
 
         // ไม่ดังทุกครั้ง — ผ้าจริงบางก้าวก็เงียบ
@@ -270,9 +255,6 @@ public class PlayerSoundController : MonoBehaviour
         // เกิดที่ระดับลำตัว ไม่ใช่ที่พื้น เพราะเสื้อผ้าอยู่บนตัวเรา
         float duration = SoundManager.Instance.PlaySFX(idToPlay, transform.position + Vector3.up * foleyHeightOffset);
 
-        // [FIX] เดิมจองไว้ 85% ซึ่งเข้มเกินไปสำหรับเสียงผ้า
-        // เสียงฝีเท้าต้องแยกกันชัด แต่เสียงผ้า 'ต้องเกยกัน' ถึงจะได้ texture ต่อเนื่อง
-        // ตอนนี้ปรับได้จาก Inspector ค่าต่ำ = เกยกันมาก = ฟังเป็นเนื้อผ้าต่อเนื่อง
         foleyBusyUntil = Time.time + (duration * foleyRetriggerGuard);
     }
 
