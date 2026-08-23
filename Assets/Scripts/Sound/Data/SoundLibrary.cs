@@ -20,6 +20,13 @@ public class SoundData
     public SoundID id;
     public AudioMixerGroup mixerGroup;
 
+    [Header("Voice Priority")]
+    [Tooltip("0 = สำคัญที่สุด ห้ามโดนตัด / 255 = ตัดทิ้งได้ก่อนเพื่อน" +
+        "\nUnity เล่นได้จริงแค่ 32 เสียงพร้อมกัน เกินนั้นจะเลือกตัดเอง" +
+        "\nถ้าไม่ตั้ง มันจะตัดตัวที่เบาที่สุด ซึ่งมักเป็น ambient ที่ขาดไม่ได้" +
+        "\nแนะนำ: BGM 0 / เสียงพูด 10 / ambient 32 / เสียงร้องผี 60 / ฝีเท้าผู้เล่น 100 / ฝีเท้าผี 180 / foley 200")]
+    [Range(0, 255)] public int priority = 128;
+
     [Header("Audio Clip")]
     [Tooltip("เปิดเพื่อใช้ระบบสุ่มเสียงจากหลายๆ ไฟล์ (ถ้าปิด จะใช้แค่ช่อง Clip เดี่ยวๆ)")]
     public bool useRandomClips = false;
@@ -33,6 +40,15 @@ public class SoundData
 
     [Tooltip("ใส่ไฟล์เสียงหลายๆ ไฟล์ที่นี่ (กรณีเปิดการสุ่ม)")]
     public AudioClip[] clips;
+
+    [Header("Random Start Offset")]
+    [Tooltip("สุ่มจุดเริ่มเล่นในไฟล์ ทำให้ไฟล์เดียวให้ 'รูปทรงความดัง' คนละแบบทุกครั้ง\n" +
+        "เหมาะกับเสียงต่อเนื่องอย่างผ้าเสียดสี / ห้ามใช้กับเสียงที่มีหัวชัดเจนอย่างฝีเท้า เพราะจะแหว่ง")]
+    public bool useRandomStartOffset = false;
+
+    [Tooltip("เริ่มเล่นได้ลึกสุดกี่ % ของไฟล์ / 0.6 = สุ่มเริ่มที่ไหนก็ได้ในช่วง 60% แรก\n" +
+        "อย่าตั้งสูงเกินไป ไม่งั้นจะไปเริ่มตรงหางเสียงที่เบาจนแทบไม่ได้ยิน")]
+    [Range(0f, 0.95f)] public float maxStartOffsetPercent = 0.5f;
 
     [Header("Pitch Settings")]
     [Tooltip("เปิดเพื่อสุ่มเสียงแหลม/ทุ้ม (ทำให้เสียงดูไม่ซ้ำซาก)")]
@@ -50,6 +66,12 @@ public class SoundData
     [Tooltip("0 = 2D (เสียงดังเท่ากันหมด), 1 = 3D (ดังตามระยะทาง)")]
     [Range(0f, 1f)] public float spatialBlend = 1f;
 
+    [Header("3D Distance Settings")]
+    [Tooltip("ระยะใกล้สุดที่จะได้ยินเสียงดังเต็ม 100%")]
+    public float minDistance = 1f;
+    [Tooltip("ระยะไกลสุดที่เสียงจะเบาลงจน 'ดับสนิท' (แนะนำ: ฝีเท้าผี = 10, เสียงร้อง = 20)")]
+    public float maxDistance = 15f;
+
     // ==========================================
     // Core Logic
     // ==========================================
@@ -65,6 +87,15 @@ public class SoundData
         }
 
         return clip;
+    }
+
+    public float GetStartOffset(AudioClip targetClip)
+    {
+        if (!useRandomStartOffset || targetClip == null) return 0f;
+        if (targetClip.length < 0.1f) return 0f;   // ไฟล์สั้นมาก ตัดหัวแล้วจะไม่เหลืออะไร
+
+        float maxOffset = targetClip.length * Mathf.Clamp01(maxStartOffsetPercent);
+        return UnityEngine.Random.Range(0f, maxOffset);
     }
 
     public float GetPitch()

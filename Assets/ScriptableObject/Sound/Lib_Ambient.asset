@@ -29,6 +29,8 @@ MonoBehaviour:
     maxVolume: 0
     volume: 1
     spatialBlend: 0
+    minDistance: 1
+    maxDistance: 15
   - idName: ID_IndoorAmbient
     id: {fileID: 11400000, guid: d193e8fe0e0ff664eaeeede979a9c55d, type: 2}
     mixerGroup: {fileID: 9183250927903690338, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
@@ -45,3 +47,5 @@ MonoBehaviour:
     maxVolume: 0
     volume: 1
     spatialBlend: 0
+    minDistance: 1
+    maxDistance: 15

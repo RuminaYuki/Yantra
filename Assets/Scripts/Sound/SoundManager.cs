@@ -14,17 +14,13 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private AudioSource bgmSource;
 
     [Header("Voice System")]
-    [Tooltip("ลำโพงเฉพาะสำหรับเสียงพากย์ (2D)")]
     private AudioSource _voiceSource;
 
-    [Header("🎙️ Voice / Dialogue")]
-    [Tooltip("AudioSource เฉพาะเสียงพากย์ (แยกจาก BGM เพื่อให้หยุด/ข้ามได้อิสระ)")]
+    [Header("Voice / Dialogue")]
     [SerializeField] private AudioSource voiceSource;
-
-    [Tooltip("ช่องเสียงพากย์ใน Mixer — ผู้เล่นจะได้ปรับดังเบาแยกได้")]
     [SerializeField] private AudioMixerGroup voiceMixerGroup;
 
-    [Header("🔉 Ducking (หรี่เพลงตอนมีคนพูด)")]
+    [Header("Ducking")]
     [SerializeField] private bool duckBgmDuringVoice = true;
     [Range(0f, 1f)][SerializeField] private float duckedBgmMultiplier = 0.35f;
     [SerializeField] private float duckFadeTime = 0.25f;
@@ -46,7 +42,6 @@ public class SoundManager : Singleton<SoundManager>
 
     protected override bool UseDontDestroyOnLoad => false;
 
-    /// <summary>ตอนนี้มีเสียงพากย์เล่นอยู่มั้ย</summary>
     public bool IsVoicePlaying => voiceSource != null && voiceSource.isPlaying;
 
     protected override void Awake()
@@ -58,9 +53,9 @@ public class SoundManager : Singleton<SoundManager>
             Debug.LogWarning("[SoundManager] BGM source is missing!");
 
         if (voiceSource == null)
-            Debug.LogWarning("[SoundManager] Voice source is missing! (เสียงพากย์จะเล่นไม่ได้)");
+            Debug.LogWarning("[SoundManager] Voice source is missing!");
         else
-            voiceSource.spatialBlend = 0f; // เสียงพากย์เป็น 2D เสมอ ดังเท่ากันทุกมุมกล้อง
+            voiceSource.spatialBlend = 0f;
 
         BuildSoundLookup();
     }
@@ -69,11 +64,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         soundsById = new Dictionary<SoundID, SoundData>();
 
-        if (soundTable == null || soundTable.soundLibraries == null)
-        {
-            Debug.LogWarning("[SoundManager] SoundTable ว่างเปล่า!");
-            return;
-        }
+        if (soundTable == null || soundTable.soundLibraries == null) return;
 
         foreach (SoundLibrary library in soundTable.soundLibraries)
         {
@@ -82,10 +73,6 @@ public class SoundManager : Singleton<SoundManager>
             foreach (SoundData sound in library.sounds)
             {
                 if (sound == null || sound.id == null) continue;
-
-                if (soundsById.ContainsKey(sound.id))
-                    Debug.LogWarning($"[SoundManager] SoundID '{sound.id.name}' ซ้ำ! ตัวใน '{library.name}' ทับของเดิม");
-
                 soundsById[sound.id] = sound;
             }
         }
@@ -94,26 +81,12 @@ public class SoundManager : Singleton<SoundManager>
     private bool TryGetData(SoundID id, out SoundData data)
     {
         data = null;
-
-        if (id == null)
-        {
-            Debug.LogWarning("[SoundManager] เรียกเสียงด้วย SoundID ที่เป็น null");
-            return false;
-        }
-
-        if (soundsById == null) return false;
-
-        if (!soundsById.TryGetValue(id, out data))
-        {
-            Debug.LogWarning($"[SoundManager] ไม่พบ SoundID '{id.name}' ใน SoundTable!");
-            return false;
-        }
-
-        return true;
+        if (id == null || soundsById == null) return false;
+        return soundsById.TryGetValue(id, out data);
     }
 
     // ==========================================
-    // 🔊 SFX
+    // SFX (One-shot) — ไม่ต้องใช้ใบเสร็จ เพราะยิงแล้วจบ ไม่มีใครสั่งงานมันทีหลัง
     // ==========================================
     public float PlaySFX(SoundID id, Vector3 position)
     {
@@ -122,36 +95,51 @@ public class SoundManager : Singleton<SoundManager>
         return player.Play(data);
     }
 
-    public SFXPlayer PlayLoopSFX(SoundID id, Vector3 position, float duration)
+    public float PlaySFXAttached(SoundID id, Transform target)
     {
-        SFXPlayer player = SpawnPlayer(id, position, out SoundData data);
-        if (player == null) return null;
+        if (target == null) return 0f;
 
-        player.PlayLoop(data, duration);
-        return player;
+        SFXPlayer player = SpawnPlayer(id, target.position, out SoundData data);
+        if (player == null) return 0f;
+
+        player.FollowTarget(target);
+        return player.Play(data);
     }
 
-    public SFXPlayer PlayLoopSFXForever(SoundID id, Vector3 position)
+    // ==========================================
+    // SFX (Loop) — [CHANGED] คืน SFXHandle แทน SFXPlayer
+    // ==========================================
+    // เสียงลูปคือเสียงที่ "มีคนถือไว้สั่งงานทีหลัง" (หรี่, fade, หยุด)
+    // เลยต้องออกใบเสร็จให้ ห้ามยื่นตัวลำโพงจริงให้ใครถือเด็ดขาด
+    //
+    // ⚠️ สังเกตลำดับให้ดี: ต้อง Play ก่อน แล้วค่อยอ่าน Version
+    //    เพราะ Setup() ข้างใน Play จะ +1 ให้ version
+    //    ถ้าอ่าน Version ก่อน จะได้เลขเก่า → ใบเสร็จหมดอายุตั้งแต่วินาทีแรก
+    public SFXHandle PlayLoopSFX(SoundID id, Vector3 position, float duration)
     {
         SFXPlayer player = SpawnPlayer(id, position, out SoundData data);
-        if (player == null) return null;
+        if (player == null) return SFXHandle.None;
+
+        player.PlayLoop(data, duration);
+        return new SFXHandle(player, player.Version);
+    }
+
+    public SFXHandle PlayLoopSFXForever(SoundID id, Vector3 position)
+    {
+        SFXPlayer player = SpawnPlayer(id, position, out SoundData data);
+        if (player == null) return SFXHandle.None;
 
         player.PlayLoopForever(data);
-        return player;
+        return new SFXHandle(player, player.Version);
     }
 
     private SFXPlayer SpawnPlayer(SoundID id, Vector3 position, out SoundData data)
     {
         if (!TryGetData(id, out data)) return null;
 
-        if (ObjectPooler.Instance == null)
-        {
-            Debug.LogWarning("[SoundManager] ไม่พบ ObjectPooler ในซีน");
-            return null;
-        }
+        if (ObjectPooler.Instance == null) return null;
 
         SFXPlayer result = null;
-
         GameObject audioObject = ObjectPooler.Instance.SpawnFromPool(
             audioPoolTag, position, Quaternion.identity,
             (obj) =>
@@ -163,11 +151,6 @@ public class SoundManager : Singleton<SoundManager>
                 }
             }
         );
-
-        if (audioObject == null) return null;
-
-        if (result == null)
-            Debug.LogWarning($"[SoundManager] Prefab ในพูล '{audioPoolTag}' ไม่มี SFXPlayer");
 
         return result;
     }
@@ -183,23 +166,16 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     // ==========================================
-    // 🎙️ Voice / Dialogue
+    // Voice & Ducking
     // ==========================================
-
-    /// <summary>
-    /// เล่นเสียงพากย์ 1 ประโยค — ระบบซับไตเติ้ลเรียกอันนี้แทน PlayOneShot
-    /// </summary>
-    /// <returns>ความยาวเสียง (วินาที) เอาไปตั้งเวลาโชว์ซับได้เลย</returns>
     public float PlayVoice(AudioClip clip, float volume = 1f)
     {
         if (clip == null || voiceSource == null) return 0f;
 
-        // ประโยคใหม่มาแทรก = ตัดประโยคเดิมทิ้งทันที (บทพูดเล่นทีละประโยค)
         voiceSource.Stop();
-
         voiceSource.clip = clip;
         voiceSource.volume = Mathf.Clamp01(volume);
-        voiceSource.pitch = 1f;      // เสียงพากย์ห้ามสุ่ม pitch เด็ดขาด
+        voiceSource.pitch = 1f;
         voiceSource.loop = false;
         voiceSource.spatialBlend = 0f;
 
@@ -214,20 +190,15 @@ public class SoundManager : Singleton<SoundManager>
         return clip.length;
     }
 
-    /// <summary>หยุดเสียงพากย์กลางคัน (เช่น ผู้เล่นกดข้ามบทพูด)</summary>
     public void StopVoice()
     {
-        if (voiceSource != null)
-            voiceSource.Stop();
-
-        if (duckBgmDuringVoice)
-            StartDuck(false);
+        if (voiceSource != null) voiceSource.Stop();
+        if (duckBgmDuringVoice) StartDuck(false);
     }
 
     private void StartDuck(bool ducked)
     {
         if (bgmSource == null) return;
-
         if (duckRoutine != null) StopCoroutine(duckRoutine);
         duckRoutine = StartCoroutine(DuckRoutine(ducked));
     }
@@ -247,19 +218,17 @@ public class SoundManager : Singleton<SoundManager>
 
         bgmSource.volume = target;
 
-        // ถ้ากำลังหรี่อยู่ ให้เฝ้ารอจนเสียงพากย์จบแล้วค่อยดันเพลงกลับเอง
         if (ducked)
         {
             while (IsVoicePlaying) yield return null;
             duckRoutine = StartCoroutine(DuckRoutine(false));
             yield break;
         }
-
         duckRoutine = null;
     }
 
     // ==========================================
-    // 🎶 BGM
+    // BGM
     // ==========================================
     public void PlayBGM(SoundID id)
     {
@@ -275,9 +244,7 @@ public class SoundManager : Singleton<SoundManager>
         bgmBaseVolume = data.volume;
 
         bgmSource.clip = clipToPlay;
-        bgmSource.volume = IsVoicePlaying && duckBgmDuringVoice
-            ? bgmBaseVolume * duckedBgmMultiplier
-            : bgmBaseVolume;
+        bgmSource.volume = IsVoicePlaying && duckBgmDuringVoice ? bgmBaseVolume * duckedBgmMultiplier : bgmBaseVolume;
         bgmSource.loop = true;
         bgmSource.spatialBlend = 0f;
 
@@ -294,7 +261,7 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     // ==========================================
-    // 🎛️ Volume (รับค่า 0–1 จาก Slider แล้วแปลงเป็น dB ให้เอง)
+    // Volume Control
     // ==========================================
     public void SetMasterVolume(float level01) => SetMixerVolume(masterParam, level01);
     public void SetSoundFXVolume(float level01) => SetMixerVolume(sfxParam, level01);
@@ -304,7 +271,6 @@ public class SoundManager : Singleton<SoundManager>
     private void SetMixerVolume(string param, float level01)
     {
         if (audioMixer == null || string.IsNullOrEmpty(param)) return;
-
         float db = level01 <= 0.0001f ? -80f : Mathf.Log10(Mathf.Clamp01(level01)) * 20f;
         audioMixer.SetFloat(param, db);
     }

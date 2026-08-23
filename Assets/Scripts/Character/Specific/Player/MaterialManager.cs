@@ -24,6 +24,8 @@ public class MaterialManager : MonoBehaviour
     [SerializeField] private ParticleSystem _yantInvisbleSmoke;
     [SerializeField] private bool _yantInvisible;
     [SerializeField] private StatSO _statSOInvis;
+    [SerializeField] private FlagSO _flagSOBush;
+    [SerializeField] private FlagSO _flagSOCrouch;
 
     [Header("Heal Settings")]
     [SerializeField] private List<Material> _healMaterial;
@@ -87,7 +89,30 @@ public class MaterialManager : MonoBehaviour
 
     private void Update()
     {
-        
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (TryGetComponent(out StateFlags _stateFlags))
+        {
+            if (_stateFlags.Get(_flagSOBush) && _stateFlags.Get(_flagSOCrouch))
+            {
+                if (!_yantInvisible)
+                {
+                    _yantInvisible = !_yantInvisible;
+                    OnInvisible(_yantInvisible);
+                }
+            }
+            else
+            {
+                if (_yantInvisible)
+                {
+                    _yantInvisible = !_yantInvisible;
+                    OnInvisible(_yantInvisible);
+                }
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
