@@ -1,18 +1,22 @@
+using System.Collections.Generic;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 public class TriggerInvoke : MonoBehaviour
 {
-    [SerializeField] private VoidEventChannelSO EventChannel;
+    [SerializeField] private List<VoidEventChannelSO> EventChannels = new();
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (EventChannel != null)
+            foreach (var channel in EventChannels)
             {
-                EventChannel.Raise();
+                if (channel != null)
+                {
+                    channel.Raise();
+                }
             }
         }
     }
