@@ -48,9 +48,9 @@ ModelImporter:
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
+      keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
-      heightFromFeet: 1
+      heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
@@ -279,7 +279,7 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: Nawin_NeckPart2
+    - boneName: Nawin_Head
       humanName: Head
       limit:
         min: {x: 0, y: 0, z: 0}
@@ -367,7 +367,7 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: Nawin_Head
+    - boneName: Nawin_RightEye
       humanName: RightEye
       limit:
         min: {x: 0, y: 0, z: 0}
@@ -617,6 +617,22 @@ ModelImporter:
         modified: 0
     - boneName: Nawin_Spine2
       humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftEye
+      humanName: LeftEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_Jaw
+      humanName: Jaw
       limit:
         min: {x: 0, y: 0, z: 0}
         max: {x: 0, y: 0, z: 0}
@@ -933,7 +949,7 @@ ModelImporter:
     - name: Nawin_LeftHand
       parentName: Nawin_LeftForeArmPart2
       position: {x: -0.000000047683713, y: 0.10106385, z: 0.000000057220458}
-      rotation: {x: 0.060722567, y: -0.049963668, z: 0.12279074, w: 0.9893124}
+      rotation: {x: 0.06072256, y: -0.049963668, z: 0.122790724, w: 0.9893124}
       scale: {x: 0.9999999, y: 0.9999999, z: 1}
     - name: Nawin_LeftCup
       parentName: Nawin_LeftHand
@@ -943,7 +959,7 @@ ModelImporter:
     - name: Nawin_LeftHandPinky1
       parentName: Nawin_LeftCup
       position: {x: -0.03487884, y: 0.08230693, z: -0.019036269}
-      rotation: {x: 0.08136128, y: -0.38061488, z: 0.04098718, w: 0.9202351}
+      rotation: {x: 0.08136129, y: -0.3806149, z: 0.040987182, w: 0.92023516}
       scale: {x: 0.9999999, y: 0.9999998, z: 1}
     - name: Nawin_LeftHandPinky2
       parentName: Nawin_LeftHandPinky1
@@ -978,7 +994,7 @@ ModelImporter:
     - name: Nawin_LeftHandIndex2
       parentName: Nawin_LeftHandIndex1
       position: {x: -0.000000028610229, y: 0.04342166, z: -0.00000000834465}
-      rotation: {x: 0.03298666, y: -0.030690625, z: -0.017218001, w: 0.99883604}
+      rotation: {x: 0.032986663, y: -0.030690627, z: -0.017218003, w: 0.9988361}
       scale: {x: 1.0000001, y: 0.99999946, z: 0.9999999}
     - name: Nawin_LeftHandIndex3
       parentName: Nawin_LeftHandIndex2
@@ -1136,7 +1152,7 @@ ModelImporter:
     - name: Nawin_RightHand
       parentName: Nawin_RightForeArmPart2
       position: {x: 0.0000000333786, y: 0.10106366, z: 0.0000000667572}
-      rotation: {x: 0.0607245, y: 0.04996442, z: -0.122791104, w: 0.9893121}
+      rotation: {x: 0.0607245, y: 0.049964424, z: -0.122791104, w: 0.9893122}
       scale: {x: 1.0000004, y: 0.9999999, z: 1}
     - name: Nawin_RightCup
       parentName: Nawin_RightHand
@@ -1146,12 +1162,12 @@ ModelImporter:
     - name: Nawin_RightHandPinkyFinger1
       parentName: Nawin_RightCup
       position: {x: 0.034878552, y: 0.08230669, z: -0.019036254}
-      rotation: {x: 0.08136199, y: 0.38061312, z: -0.04098641, w: 0.92023593}
+      rotation: {x: 0.08136198, y: 0.38061312, z: -0.040986408, w: 0.92023593}
       scale: {x: 1.0000001, y: 0.9999999, z: 1}
     - name: Nawin_RightHandPinkyFinger2
       parentName: Nawin_RightHandPinkyFinger1
       position: {x: -0.0000000047683715, y: 0.036436733, z: 0.00000002324581}
-      rotation: {x: 0.037144016, y: -0.0060177105, z: 0.0072913473, w: 0.9992652}
+      rotation: {x: 0.037144016, y: -0.006017711, z: 0.0072913473, w: 0.99926525}
       scale: {x: 0.99999964, y: 0.9999999, z: 0.99999964}
     - name: Nawin_RightHandPinkyFinger3
       parentName: Nawin_RightHandPinkyFinger2
@@ -1161,12 +1177,12 @@ ModelImporter:
     - name: Nawin_RightHandRingFinger1
       parentName: Nawin_RightCup
       position: {x: 0.010442438, y: 0.09255815, z: -0.008056398}
-      rotation: {x: 0.09028478, y: 0.37337926, z: -0.030504093, w: 0.92277086}
+      rotation: {x: 0.09028479, y: 0.37337926, z: -0.030504094, w: 0.92277086}
       scale: {x: 0.99999994, y: 1.0000005, z: 0.9999998}
     - name: Nawin_RightHandRingFinger2
       parentName: Nawin_RightHandRingFinger1
       position: {x: 0.0000000047683715, y: 0.050973576, z: 0.000000034570693}
-      rotation: {x: 0.040275555, y: 0.007822837, z: 0.008157305, w: 0.99912465}
+      rotation: {x: 0.04027556, y: 0.007822838, z: 0.008157306, w: 0.9991247}
       scale: {x: 0.9999997, y: 0.99999994, z: 0.99999976}
     - name: Nawin_RightHandRingFinger3
       parentName: Nawin_RightHandRingFinger2
@@ -1196,7 +1212,7 @@ ModelImporter:
     - name: Nawin_RightHandMiddleFinger2
       parentName: Nawin_RightHandMiddleFinger1
       position: {x: 0.000000009536743, y: 0.04876967, z: 0.000000011920928}
-      rotation: {x: 0.033167597, y: 0.0034486454, z: 0.022628414, w: 0.99918765}
+      rotation: {x: 0.033167597, y: 0.0034486456, z: 0.022628414, w: 0.9991877}
       scale: {x: 0.9999997, y: 0.99999994, z: 1}
     - name: Nawin_RightHandMiddleFinger3
       parentName: Nawin_RightHandMiddleFinger2
@@ -1206,7 +1222,7 @@ ModelImporter:
     - name: Nawin_RightHandThumbFinger1
       parentName: Nawin_RightHand
       position: {x: -0.025456047, y: 0.052464034, z: 0.043019317}
-      rotation: {x: -0.0406452, y: 0.40013775, z: 0.37279123, w: 0.8362203}
+      rotation: {x: -0.040645204, y: 0.40013775, z: 0.37279126, w: 0.8362203}
       scale: {x: 1, y: 1.0000002, z: 1.0000001}
     - name: Nawin_RightHandThumbFinger2
       parentName: Nawin_RightHandThumbFinger1
