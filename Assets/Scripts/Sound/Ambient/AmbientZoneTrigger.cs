@@ -6,7 +6,7 @@ public class AmbientZoneTrigger : MonoBehaviour
 {
     [Header("Trigger Settings")]
     [Tooltip("Tag ที่นับตอนเล่นเกมปกติ")]
-    [SerializeField] private string[] normalTags = { "Player" };
+    [SerializeField] private string[]    normalTags = { "Player" };
 
     [Tooltip("Tag ที่นับตอนคัตซีนกำลังเล่น" +
         "\nทีมคัตซีนใช้ Dummy เดินแทนผู้เล่น ส่วนผู้เล่นจริงถูกซ่อนไว้ใต้พื้น" +
