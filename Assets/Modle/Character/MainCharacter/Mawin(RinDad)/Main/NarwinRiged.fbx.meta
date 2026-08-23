@@ -3,7 +3,17 @@ guid: b67304e647c21ef4d92c49e76ccc86b5
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_head_eye.003
+    second: {fileID: 2100000, guid: 5123badd3f62e68458f24f16bbd5e3b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: openPBR_shader1.003
+    second: {fileID: 2100000, guid: 1a39dc85f6a040848a452c98ee201b75, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
