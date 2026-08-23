@@ -14,6 +14,11 @@ public class RaycastCheckBookTab : MonoBehaviour
     private void HandlePressLeftClickInput(Vector2 position, InputAction.CallbackContext context)
     {
         if (!context.started) return;
+        if (mainCamera == null)
+        {
+            Debug.LogWarning("camera in RaycastCheckBookTab is null");
+            mainCamera = Camera.main;
+        }
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
