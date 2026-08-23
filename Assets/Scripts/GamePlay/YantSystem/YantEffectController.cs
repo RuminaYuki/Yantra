@@ -42,7 +42,7 @@ public class YantEffectController : MonoBehaviour
     private void Start()
     {
         TryInitializeStart();
-        ScheduleDestroyByLongestEffectDuration();
+        _destroyCoroutine = StartCoroutine(DestroyAfterDelay(_yantLifeTime));
     }
 
     private void CheckEffectReferences()
@@ -78,8 +78,13 @@ public class YantEffectController : MonoBehaviour
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot))
             {
+                if (_effectSettings.Count <= 1)
+                {
+                    float delay = _effectSettings[i]._effectDuration;
+                    ScheduleDestroyByLongestEffectDuration(delay);
+                }
                 _effectSettings.RemoveAt(i);
-                ScheduleDestroyByLongestEffectDuration();
+
             }
             else
             {
@@ -113,8 +118,12 @@ public class YantEffectController : MonoBehaviour
 
             if (setting._effectType.HasFlag(YantEffectType.OneShot) && initialized)
             {
+                if (_effectSettings.Count <= 1)
+                {
+                    float delay = _effectSettings[i]._effectDuration;
+                    ScheduleDestroyByLongestEffectDuration(delay);
+                }
                 _effectSettings.RemoveAt(i);
-                ScheduleDestroyByLongestEffectDuration();
             }
             else
             {
@@ -215,14 +224,10 @@ public class YantEffectController : MonoBehaviour
         return longestDuration;
     }
 
-    private void ScheduleDestroyByLongestEffectDuration()
+    private void ScheduleDestroyByLongestEffectDuration(float delay)
     {
-        float destroyDelay = Mathf.Max(_yantLifeTime, GetLongestRemainingEffectDuration());
-        if (destroyDelay <= 0f)
-        {
-            return;
-        }
-
+        float destroyDelay = Mathf.Max(delay, GetLongestRemainingEffectDuration());
+        Debug.Log(destroyDelay);
         DestroyGameObject(destroyDelay);
     }
 

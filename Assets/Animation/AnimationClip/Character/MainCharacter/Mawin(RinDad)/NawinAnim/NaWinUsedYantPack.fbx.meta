@@ -88,7 +88,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9131833
+      - time: 0.8987976
         functionName: TriggerYantEffect
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: f70ba9e05a3cf404b850293b3273102c,
@@ -248,7 +248,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.5819936
+        functionName: TriggerYantEffect
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: f70ba9e05a3cf404b850293b3273102c,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

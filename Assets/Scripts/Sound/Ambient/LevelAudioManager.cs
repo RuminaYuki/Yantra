@@ -3,20 +3,51 @@ using System.Collections.Generic;
 
 public class LevelAudioManager : MonoBehaviour
 {
-    public static LevelAudioManager Instance { get; private set; } // ให้สคริปต์ประตูเรียกใช้ได้
+    public static LevelAudioManager Instance { get; private set; }
+
+    // ตัวแปรสำหรับล็อคกล่องเสียงตอนคัตซีนทำงาน
+    public static bool IsCutsceneActive = false;
 
     [Header("เพลงประกอบฉาก (BGM)")]
     [SerializeField] private SoundID sceneBGM;
 
+    [Header("Debug")]
+    [Tooltip("เปิดเพื่อดูว่าใครเป็นคนสั่งหรี่เสียง ambient — ปิดเมื่อหาเจอแล้ว")]
+    [SerializeField] private bool logMuffleCalls = false;
+
     [Header("เสียงบรรยากาศภายนอก (Outside Ambient)")]
     [SerializeField] private SoundID[] outsideAmbientSounds;
 
-    // จดจำว่าลำโพงตัวไหนกำลังเล่นเสียงข้างนอกอยู่
-    private List<SFXPlayer> activeOutsideAmbients = new List<SFXPlayer>();
+    // [CHANGED] เก็บ "ใบเสร็จ" แทนตัวลำโพงจริง
+    private List<SFXHandle> activeOutsideAmbients = new List<SFXHandle>();
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        // ไม่งั้นฉากใหม่จะเห็น Instance ค้างเป็นตัวเก่าที่ถูก Destroy ไปแล้ว
+        if (Instance == this) Instance = null;
+    }
+
+    // ==========================================
+    // เชื่อมต่อกับระบบ Cutscene
+    // ==========================================
+    private void OnEnable()
+    {
+        CutsceneController.OnGlobalCutsceneStateChanged += HandleCutsceneState;
+    }
+
+    private void OnDisable()
+    {
+        CutsceneController.OnGlobalCutsceneStateChanged -= HandleCutsceneState;
+    }
+
+    private void HandleCutsceneState(bool isPlaying)
+    {
+        IsCutsceneActive = isPlaying;
     }
 
     private void Start()
@@ -30,25 +61,39 @@ public class LevelAudioManager : MonoBehaviour
         {
             foreach (var ambient in outsideAmbientSounds)
             {
-                if (ambient != null)
-                {
-                    // เรียกใช้งานผ่าน SoundManager 
-                    SFXPlayer p = SoundManager.Instance.PlayLoopSFXForever(ambient, transform.position);
-                    if (p != null) activeOutsideAmbients.Add(p);
-                }
+                if (ambient == null) continue;
+
+                SFXHandle handle = SoundManager.Instance.PlayLoopSFXForever(ambient, transform.position);
+
+                if (handle.IsValid) activeOutsideAmbients.Add(handle);
             }
         }
     }
 
-    /// <summary>ฟังก์ชันสั่งเสียงข้างนอกให้ดังหรือแว่วๆ (รับค่าเป๊ะๆ จากกล่อง Trigger)</summary>
     public void MuffleOutsideAmbients(float targetMultiplier, float fadeTime)
     {
-        foreach (var p in activeOutsideAmbients)
+#if UNITY_EDITOR
+        if (logMuffleCalls)
         {
-            if (p != null && p.IsPlaying)
+            // StackTrace จะบอกว่าใครเรียกฟังก์ชันนี้ ไล่ดูบรรทัดที่ 2-3 จากบนจะเจอตัวการ
+            Debug.Log($"[Muffle] หรี่เป็น {targetMultiplier} ใน {fadeTime} วิ | เฟรม {Time.frameCount}\n"
+                + System.Environment.StackTrace);
+        }
+#endif
+
+        // ถ้าเดินหน้าแล้ว RemoveAt กลางทาง index จะเลื่อน → ข้ามสมาชิกบางตัว
+        for (int i = activeOutsideAmbients.Count - 1; i >= 0; i--)
+        {
+            SFXHandle handle = activeOutsideAmbients[i];
+
+            if (!handle.IsValid)
             {
-                p.FadeToVolumeMultiplier(targetMultiplier, fadeTime);
+                // ลำโพงตัวนี้ไปทำงานอื่นแล้ว ทิ้งใบเสร็จไป จะได้ไม่ต้องเช็คซ้ำทุกรอบ
+                activeOutsideAmbients.RemoveAt(i);
+                continue;
             }
+
+            handle.FadeToVolumeMultiplier(targetMultiplier, fadeTime);
         }
     }
 }
