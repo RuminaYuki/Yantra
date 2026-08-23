@@ -17,7 +17,10 @@ namespace Yuki.Learning.StateMachine
 
         public GameObject Owner => _owner;
         public bool IsDisposed => _isDisposed;
+        public string CurrentStateName => _currentState?.DebugName ?? "None";
 
+        public event Action<string, string> StateChanged;
+        public event Action<string, string> ChildStateChanged;
         public event Action<string> Exited;
         public event Action<string> ChildStateMachineExited;
 
@@ -98,7 +101,10 @@ namespace Yuki.Learning.StateMachine
                 return;
             }
 
+            string previousStateName = CurrentStateName;
+
             _currentState = initialState;
+            StateChanged?.Invoke(previousStateName,CurrentStateName);
             _currentState.OnStateEnter();
         }
 
@@ -111,8 +117,11 @@ namespace Yuki.Learning.StateMachine
                 return;
             }
 
+            string previousStateName = CurrentStateName;
+
             _currentState?.OnStateExit();
             _currentState = nextState;
+            StateChanged?.Invoke(previousStateName,CurrentStateName);
             _currentState.OnStateEnter();
         }
 
@@ -147,6 +156,16 @@ namespace Yuki.Learning.StateMachine
             ChildStateMachineExited?.Invoke(exitId);
         }
 
+        public void NotifyChildStateChanged(string previousStateName, string currentStateName)
+        {
+            if (_isDisposed)
+                return;
+
+            ChildStateChanged?.Invoke(
+                previousStateName,
+                currentStateName);
+        }
+
         public void Dispose()
         {
             if (_isDisposed)
@@ -167,6 +186,8 @@ namespace Yuki.Learning.StateMachine
             _anyTransitions = Array.Empty<StateTransition>();
             _pendingExitId = null;
             _hasPendingExit = false;
+            StateChanged = null;
+            ChildStateChanged = null;
             Exited = null;
             ChildStateMachineExited = null;
         }
