@@ -53,10 +53,10 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0
     maxVolume: 0
-    volume: 0.55
+    volume: 0.3
     spatialBlend: 1
-    minDistance: 2
-    maxDistance: 10
+    minDistance: 1
+    maxDistance: 50
   - idName: ID_PTani_Chase
     id: {fileID: 11400000, guid: a0e35a3badb4c8042a4c54a81ed9251d, type: 2}
     mixerGroup: {fileID: -5337501770083687080, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,

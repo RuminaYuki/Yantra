@@ -30,7 +30,28 @@ MonoBehaviour:
     useRandomVolume: 0
     minVolume: 0
     maxVolume: 0
-    volume: 0.5
+    volume: 0.1
     spatialBlend: 1
+    minDistance: 2
+    maxDistance: 14
+  - idName: ID_PTani_Alert
+    id: {fileID: 11400000, guid: 798cf334eab0fdf40b4b846415d703eb, type: 2}
+    mixerGroup: {fileID: -5337501770083687080, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+      type: 2}
+    priority: 10
+    useRandomClips: 0
+    randomChance: 100
+    clip: {fileID: 8300000, guid: 478cc8f5b93a223408ad2cc72e16272c, type: 3}
+    clips: []
+    useRandomStartOffset: 0
+    maxStartOffsetPercent: 0
+    useRandomPitch: 1
+    minPitch: 0.85
+    maxPitch: 0.95
+    useRandomVolume: 0
+    minVolume: 0
+    maxVolume: 0
+    volume: 0.3
+    spatialBlend: 0
     minDistance: 2
     maxDistance: 14

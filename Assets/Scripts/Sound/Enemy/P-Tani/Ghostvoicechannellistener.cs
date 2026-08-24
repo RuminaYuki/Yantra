@@ -18,7 +18,14 @@ public class GhostVoiceChannelListener : MonoBehaviour
         [Tooltip("Event Channel ที่จะฟัง เช่น TaniAlertedVoidEventChannel")]
         public VoidEventChannelSO channel;
 
-        [Tooltip("พอสัญญาณมาถึง ให้พูดประโยคของสถานะไหน")]
+        [Tooltip("เล่นเสียงเตือน (ช่อง Alert Sound) — ดังแน่นอน 100% ไม่มีเงื่อนไข" +
+            "\nใช้กับสัญญาณที่ผู้เล่นห้ามพลาด เช่นตอนผีเปลี่ยนสถานะ")]
+        public bool playAlertSound;
+
+        [Tooltip("พูดประโยคด้วย — ผ่านระบบสุ่มและ cooldown อาจไม่ดังทุกครั้ง")]
+        public bool playVoiceLine;
+
+        [Tooltip("ประโยคของสถานะไหน (ใช้เมื่อติ๊ก Play Voice Line)")]
         public GhostVoiceState voiceState;
     }
 
@@ -71,8 +78,8 @@ public class GhostVoiceChannelListener : MonoBehaviour
                 continue;
             }
 
-            GhostVoiceState state = _bindings[i].voiceState;
-            _handlers[i] = () => HandleEvent(state, channel.name);
+            ChannelBinding binding = _bindings[i];
+            _handlers[i] = () => HandleEvent(binding, channel.name);
 
             channel.Raised += _handlers[i];
         }
@@ -94,13 +101,19 @@ public class GhostVoiceChannelListener : MonoBehaviour
         _handlers = null;
     }
 
-    private void HandleEvent(GhostVoiceState state, string channelName)
+    private void HandleEvent(ChannelBinding binding, string channelName)
     {
         if (_logEvents)
-            Debug.Log($"[GhostVoice] {name} รับสัญญาณจาก {channelName} → {state}", this);
+            Debug.Log($"[GhostVoice] {name} รับสัญญาณจาก {channelName}", this);
 
         if (_soundController == null) return;
 
-        _soundController.PlayVoiceLine(state);
+        // เสียงเตือนก่อนเสมอ — เป็นข้อมูลที่ผู้เล่นห้ามพลาด
+        if (binding.playAlertSound)
+            _soundController.PlayAlert();
+
+        // ประโยคพูดเป็นของเสริม ผ่านระบบสุ่มตามปกติ อาจไม่ดังก็ได้
+        if (binding.playVoiceLine)
+            _soundController.PlayVoiceLine(binding.voiceState);
     }
 }

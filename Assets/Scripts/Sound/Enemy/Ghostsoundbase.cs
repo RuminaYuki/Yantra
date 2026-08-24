@@ -106,6 +106,40 @@ public abstract class GhostSoundBase : MonoBehaviour
     private SFXHandle presenceHandle = SFXHandle.None;
     private SFXHandle foleyHandle = SFXHandle.None;
 
+    // ==========================================
+    // Alert Sound — เสียงเตือนผู้เล่น
+    // ==========================================
+    // ต่างจาก Voice Lines อย่างสิ้นเชิง:
+    //   Voice Lines = เสียงบรรยากาศ มีสุ่ม มี cooldown หายบ้างก็ไม่เป็นไร
+    //   Alert Sound = ข้อมูล ห้ามหายแม้แต่ครั้งเดียว ไม่มีด่านคัดกรองใดๆ ทั้งสิ้น
+    //
+    // ถ้าเสียงเตือนหายไปครั้งหนึ่ง ผู้เล่นอาจตายเพราะไม่รู้ตัว
+    // เสียงประเภทนี้จึงต้องดัง 100% เสมอ
+    [Header("Alert Sound")]
+    [Tooltip("เสียงเตือนตอนผีเปลี่ยนสถานะ — ดังทุกครั้ง 100% ไม่มีสุ่ม ไม่มี cooldown" +
+        "\n⚠️ ตั้ง Spatial Blend = 0 ใน SoundData เพื่อให้ได้ยินจากทุกที่ในแมพ" +
+        "\nถ้าตั้งเป็น 3D แล้วผีวาร์ปไปไกล ผู้เล่นจะไม่ได้ยินเลย ซึ่งผิดจุดประสงค์")]
+    [SerializeField] private SoundID alertSound;
+
+    /// <summary>
+    /// เล่นเสียงเตือนทันที ไม่ผ่านด่านคัดกรองใดๆ
+    /// เรียกได้จาก Event Channel หรือ Animation Event
+    /// </summary>
+    public void PlayAlert()
+    {
+        if (alertSound == null || SoundManager.Instance == null) return;
+
+        // เกิดที่ตำแหน่งหูผู้ฟัง — การันตีว่าได้ยินแน่นอนไม่ว่าผีจะอยู่ไกลแค่ไหน
+        SoundManager.Instance.PlayEventSFX(alertSound);
+
+        if (logVoiceLines)
+            Debug.Log($"[Alert] {name} เล่นเสียงเตือน", this);
+    }
+
+    [Header("Debug")]
+    [Tooltip("เปิดเพื่อดูว่าทำไมประโยคถึงไม่ถูกพูด — ปิดเมื่อหาเจอแล้ว")]
+    [SerializeField] private bool logVoiceLines = false;
+
     [Header("Action Sounds")]
     [SerializeField] private SoundID[] actionSounds;
 
@@ -267,16 +301,25 @@ public abstract class GhostSoundBase : MonoBehaviour
     // ==========================================
     private void TrySpeak(GhostVoiceState state)
     {
-        if (IsDead) return;
+        if (IsDead) { LogSkip(state, "ผีตายแล้ว (IsDead)"); return; }
 
         int index = FindLineIndex(state);
-        if (index < 0 || voiceLines[index].line == null) return;
+        if (index < 0) { LogSkip(state, "ไม่มีแถวนี้ใน Voice Lines"); return; }
+        if (voiceLines[index].line == null) { LogSkip(state, "ช่อง Line ว่าง"); return; }
 
         // กฎเหล็ก: หนึ่งผีพูดได้ทีละประโยค
         // ยกเว้นเสียงที่ติ๊ก Can Interrupt ไว้ ซึ่งจะตัดคิวประโยคเก่าทิ้ง
-        if (IsVoiceBusy && !voiceLines[index].canInterrupt) return;
+        if (IsVoiceBusy && !voiceLines[index].canInterrupt)
+        {
+            LogSkip(state, $"กำลังพูดประโยคอื่นอยู่ อีก {voiceBusyUntil - Time.time:F1} วิถึงจบ (ติ๊ก Can Interrupt ถ้าอยากให้แทรกได้)");
+            return;
+        }
 
-        if (Time.time < voiceLines[index].nextAllowedTime) return;
+        if (Time.time < voiceLines[index].nextAllowedTime)
+        {
+            LogSkip(state, $"ติด cooldown อีก {voiceLines[index].nextAllowedTime - Time.time:F1} วิ");
+            return;
+        }
 
         // ตั้ง cooldown ก่อนเสมอ แม้รอบนี้จะสุ่มแล้วไม่พูด
         // ไม่งั้น Animation Event ที่ยิงถี่ๆ จะสุ่มรัวจนโอกาสพูดสูงกว่าที่ตั้งไว้มาก
@@ -285,7 +328,11 @@ public abstract class GhostSoundBase : MonoBehaviour
         voiceLines[index].nextAllowedTime = Time.time + Random.Range(min, max);
 
         // ความเงียบคือเครื่องมือ — ผีที่บางครั้งไม่พูด ทำให้ผู้เล่นไม่กล้าไว้ใจความเงียบ
-        if (Random.Range(0f, 100f) > voiceLines[index].chance) return;
+        if (Random.Range(0f, 100f) > voiceLines[index].chance)
+        {
+            LogSkip(state, $"สุ่มไม่ผ่าน (Chance {voiceLines[index].chance}%)");
+            return;
+        }
 
         // ตัดประโยคเก่าแบบเฟดสั้นๆ ไม่ตัดฉับ เพราะจะได้ยินเป็นเสียง 'ป๊อป'
         if (IsVoiceBusy) currentVoiceHandle.FadeOutAndStop(0.08f);
@@ -300,7 +347,18 @@ public abstract class GhostSoundBase : MonoBehaviour
 
         voiceBusyUntil = Time.time + duration;
 
+        if (logVoiceLines)
+            Debug.Log($"[Voice] {name} พูด {state} ยาว {duration:F2} วิ", this);
+
         ResetMoanTimer(duration);
+    }
+
+    private void LogSkip(GhostVoiceState state, string reason)
+    {
+#if UNITY_EDITOR
+        if (logVoiceLines)
+            Debug.LogWarning($"[Voice] {name} ไม่พูด {state} — {reason}", this);
+#endif
     }
 
     private int FindLineIndex(GhostVoiceState state)
