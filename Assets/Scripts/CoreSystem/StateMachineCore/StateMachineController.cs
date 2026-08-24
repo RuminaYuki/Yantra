@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Yuki.Learning.StateMachine;
 using Yuki.Learning.StateMachine.ScriptableObjects;
@@ -5,6 +6,8 @@ using Yuki.Learning.StateMachine.ScriptableObjects;
 public class StateMachineController : MonoBehaviour
 {
     [SerializeField] private TransitionTableSO[] _transitionTables;
+    public event Action<string, string> MainStateChanged;
+    public event Action<string, string> ChildStateChanged;
 
     private StateMachine[] _stateMachines;
 
@@ -79,6 +82,9 @@ public class StateMachineController : MonoBehaviour
         }
 
         StateMachine stateMachine = new StateMachine(gameObject);
+
+        stateMachine.StateChanged += HandleMainStateChanged;
+        stateMachine.ChildStateChanged += HandleChildStateChanged;
         State initialState = table.CreateInitialState(stateMachine);
 
         stateMachine.SetInitialState(initialState);
@@ -132,5 +138,38 @@ public class StateMachineController : MonoBehaviour
         {
             stateMachine?.Dispose();
         }
+    }
+
+    public string GetCurrentStateName(int tableIndex)
+    {
+        if (_stateMachines == null)
+            return "Not Started";
+
+        if (tableIndex < 0 || tableIndex >= _stateMachines.Length)
+            return "Invalid Index";
+
+        StateMachine stateMachine = _stateMachines[tableIndex];
+
+        return stateMachine != null
+            ? stateMachine.CurrentStateName
+            : "None";
+    }
+
+    private void HandleChildStateChanged(
+        string previousStateName,
+        string currentStateName)
+    {
+        ChildStateChanged?.Invoke(
+            previousStateName,
+            currentStateName);
+    }
+
+    private void HandleMainStateChanged(
+        string previousStateName,
+        string currentStateName)
+    {
+        MainStateChanged?.Invoke(
+            previousStateName,
+            currentStateName);
     }
 }

@@ -56,11 +56,41 @@ public class RandomWalkPoint : MonoBehaviour
             float distance = Random.Range(minDistance, availableDistance);
 
             Vector3 candidate = origin + direction * distance;
+            Vector3 pathStart = origin + Vector3.up * bodyRadius;
+            Vector3 pathEnd = candidate + Vector3.up * bodyRadius;
 
-            if (TryGetGround(candidate, groundLayer, out Vector3 groundPoint))
+            // Prevent random points from crossing an obstacle.
+            if (Physics.Linecast(
+                    pathStart,
+                    pathEnd,
+                    obstacleLayer,
+                    QueryTriggerInteraction.Ignore))
             {
-                validPoints.Add(groundPoint);
+                continue;
             }
+
+            if (!TryGetGround(
+                    candidate,
+                    groundLayer,
+                    out Vector3 groundPoint))
+            {
+                continue;
+            }
+
+            // Prevent the destination from overlapping an obstacle.
+            Vector3 overlapCenter =
+                groundPoint + Vector3.up * bodyRadius;
+
+            if (Physics.CheckSphere(
+                    overlapCenter,
+                    bodyRadius,
+                    obstacleLayer,
+                    QueryTriggerInteraction.Ignore))
+            {
+                continue;
+            }
+
+            validPoints.Add(groundPoint);
         }
 
         if (validPoints.Count == 0)

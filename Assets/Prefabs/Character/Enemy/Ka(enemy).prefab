@@ -2924,7 +2924,7 @@ GameObject:
   - component: {fileID: 3064863031391641772}
   - component: {fileID: 5031231248238384009}
   - component: {fileID: 1803436951983232987}
-  - component: {fileID: 7911411683602572248}
+  - component: {fileID: 2467254770739927560}
   m_Layer: 0
   m_Name: EnemyController
   m_TagString: Untagged
@@ -3268,7 +3268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KaResetController
   _defaultResetPoint: {fileID: 4813272296387939907}
---- !u!114 &7911411683602572248
+--- !u!114 &2467254770739927560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3277,9 +3277,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4101296006397114742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f9be7be5c45d142b256c16f4dd1722, type: 3}
+  m_Script: {fileID: 11500000, guid: debd8e6decccedf42a91111e9b2cf8af, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostSoundController
+  m_EditorClassIdentifier: Assembly-CSharp::KaSoundController
   voiceProfiles:
   - profileName: Poom
     dropWeight: 100
@@ -3308,8 +3308,11 @@ MonoBehaviour:
     death: {fileID: 11400000, guid: 3d08c003a6502094589766a0e302966b, type: 2}
   useAutoMoan: 1
   moanChance: 40
-  minMoanDelay: 5
-  maxMoanDelay: 10
+  minMoanDelay: 8
+  maxMoanDelay: 15
+  voiceLines: []
+  autoPickByDistance: 1
+  chaseDistanceThreshold: 8
   actionSounds: []
   minStepInterval: 0.2
   maxFootstepHearDistance: 14
@@ -3318,7 +3321,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   raycastDistance: 1.5
-  surfaceSounds: []
+  surfaceSounds:
+  - surfaceTag: Wood
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 2b4cf4415bade6e47acad67d93238e23, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Dirt
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 9f17a5de0185a21468859f9be378ecbc, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Rock
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 03ee2a30cee3b274dbae9ec05888646a, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Mud
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: c59767ae35d612d4e9c58519fe985c4a, type: 2}
+    runSound: {fileID: 0}
   terrainSounds:
   - groupName: Grass
     terrainLayers:
@@ -5946,7 +5965,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2d1a879c7fa420b448fd90a29353f936, type: 2}
+  - {fileID: 2100000, guid: 8fcb97082e6edb347a0851c9c8017d5f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

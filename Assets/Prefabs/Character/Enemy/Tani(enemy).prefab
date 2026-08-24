@@ -77,6 +77,8 @@ GameObject:
   - component: {fileID: 6774580909948645754}
   - component: {fileID: 7264657642666186508}
   - component: {fileID: 2495361903165509921}
+  - component: {fileID: 552487685256433264}
+  - component: {fileID: 1686896734247775340}
   m_Layer: 0
   m_Name: EnemyController
   m_TagString: Untagged
@@ -410,6 +412,75 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterResetController
   _defaultResetPoint: {fileID: 8710171357471059200}
+--- !u!114 &552487685256433264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753491701661662287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a20d19b7d2b2df43bdbbc70191a3887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaniSoundController
+  voiceProfiles:
+  - profileName: Tani
+    dropWeight: 1
+    idleMoan: {fileID: 11400000, guid: 4e58c0a2c171e8f40b9a78ea10742d44, type: 2}
+    attackScream: {fileID: 0}
+    death: {fileID: 0}
+  useAutoMoan: 1
+  moanChance: 40
+  minMoanDelay: 8
+  maxMoanDelay: 15
+  voiceLines:
+  - state: 2
+    line: {fileID: 11400000, guid: f71a73a42e2f2544d8bc0dc9a828ba15, type: 2}
+    chance: 65
+    minCooldown: 6
+    maxCooldown: 11
+    canInterrupt: 0
+    nextAllowedTime: 0
+  - state: 3
+    line: {fileID: 11400000, guid: a0e35a3badb4c8042a4c54a81ed9251d, type: 2}
+    chance: 80
+    minCooldown: 7
+    maxCooldown: 13
+    canInterrupt: 0
+    nextAllowedTime: 0
+  - state: 4
+    line: {fileID: 11400000, guid: fac15d52fa745a746902117920d1e062, type: 2}
+    chance: 100
+    minCooldown: 0
+    maxCooldown: 0
+    canInterrupt: 0
+    nextAllowedTime: 0
+  autoPickByDistance: 1
+  chaseDistanceThreshold: 8
+  presenceLoop: {fileID: 11400000, guid: ef27aa975f49b7142adf79a5da674efc, type: 2}
+  foleyLoop: {fileID: 11400000, guid: 0e0daa9acf67fcd4ea88d637e4567094, type: 2}
+  presenceFadeIn: 1.5
+  presenceFadeOut: 1
+  actionSounds:
+  - {fileID: 11400000, guid: 1ddf3e58b6c37954886bcebed26a0374, type: 2}
+--- !u!114 &1686896734247775340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753491701661662287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ff6c31fbf807884aa6ce78b040ab176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostVoiceChannelListener
+  _soundController: {fileID: 552487685256433264}
+  _bindings:
+  - channel: {fileID: 11400000, guid: 00258178a1b34514690060e5be2003bb, type: 2}
+    voiceState: 2
+  _logEvents: 1
 --- !u!1 &1322102201380666121
 GameObject:
   m_ObjectHideFlags: 0
