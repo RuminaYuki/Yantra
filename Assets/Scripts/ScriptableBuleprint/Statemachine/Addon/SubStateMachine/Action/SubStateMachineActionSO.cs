@@ -51,6 +51,7 @@ public class SubStateMachineAction : StateAction
             _parentStateMachine.Owner);
 
         _childStateMachine.Exited += OnChildExited;
+        _childStateMachine.StateChanged += OnChildStateChanged;
 
         State initialState = _transitionTable.CreateInitialState(
             _childStateMachine);
@@ -78,14 +79,20 @@ public class SubStateMachineAction : StateAction
         _parentStateMachine.NotifyChildStateMachineExited(exitId);
     }
 
+    private void OnChildStateChanged(string previousStateName, string currentStateName)
+    {
+        _parentStateMachine.NotifyChildStateChanged(previousStateName, currentStateName);
+    }
+
     private void DisposeChildStateMachine()
     {
         if (_childStateMachine == null)
         {
             return;
         }
-
         _childStateMachine.Exited -= OnChildExited;
+        _childStateMachine.StateChanged -= OnChildStateChanged;
+
         _childStateMachine.Dispose();
         _childStateMachine = null;
     }

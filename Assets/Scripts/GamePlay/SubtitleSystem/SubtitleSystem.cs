@@ -89,6 +89,11 @@ public class SubtitleSystem : MonoBehaviour
     {
         OnSubtitleToggle?.Invoke(true);
 
+        // ล็อกให้เพลงหรี่ค้างตลอดบทสนทนา
+        // ไม่งั้นเพลงจะเด้งขึ้นลงทุกช่องว่างระหว่างประโยค
+        if (routeVoiceThroughSoundManager && SoundManager.Instance != null)
+            SoundManager.Instance.SetVoiceDuckHold(true);
+
         foreach (var line in subtitleData.Lines)
         {
             // 1. จัดฟอร์แมตข้อความและสี
@@ -110,6 +115,9 @@ public class SubtitleSystem : MonoBehaviour
             if (gapBetweenLines > 0f)
                 yield return new WaitForSecondsRealtime(gapBetweenLines);
         }
+
+        if (routeVoiceThroughSoundManager && SoundManager.Instance != null)
+            SoundManager.Instance.SetVoiceDuckHold(false);
 
         OnSubtitleToggle?.Invoke(false);
         _subtitleCoroutine = null;
@@ -144,7 +152,10 @@ public class SubtitleSystem : MonoBehaviour
     private void StopVoice()
     {
         if (routeVoiceThroughSoundManager && SoundManager.Instance != null)
+        {
             SoundManager.Instance.StopVoice();
+            SoundManager.Instance.SetVoiceDuckHold(false);   // ปลดล็อก ไม่งั้นเพลงหรี่ค้างตลอดเกม
+        }
 
         if (fallbackAudioSource != null)
             fallbackAudioSource.Stop();

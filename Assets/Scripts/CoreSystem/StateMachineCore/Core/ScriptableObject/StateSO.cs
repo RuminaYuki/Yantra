@@ -22,6 +22,7 @@ namespace Yuki.Learning.StateMachine.ScriptableObjects
             }
 
             State state = new State(
+                name,
                 runtimeActions,
                 stateMachine
             );

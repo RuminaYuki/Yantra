@@ -25,6 +25,11 @@ public class SoundManager : Singleton<SoundManager>
     [Range(0f, 1f)][SerializeField] private float duckedBgmMultiplier = 0.35f;
     [SerializeField] private float duckFadeTime = 0.25f;
 
+    [Tooltip("หลังเสียงพูดจบ รอกี่วินาทีก่อนดันเพลงกลับขึ้น" +
+        "\nกันเพลงกระเพื่อมขึ้นลงระหว่างประโยคในบทสนทนายาวๆ" +
+        "\nควรตั้งให้มากกว่าช่องว่างระหว่างประโยคของระบบ Subtitle")]
+    [SerializeField] private float duckReleaseDelay = 0.8f;
+
     [Header("Mixer")]
     [SerializeField] private AudioMixer audioMixer;
 
@@ -34,11 +39,20 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private string bgmParam = "BGMVolume";
     [SerializeField] private string voiceParam = "VoiceVolume";
 
+    [Header("Mixer Base Levels (dB)")]
+    [Tooltip("ใส่ค่า dB ที่คุณลากไว้ในหน้าต่าง Audio Mixer ของแต่ละกลุ่ม\n" +
+        "Slider ของผู้เล่นจะ 'หรี่ลงจากค่านี้' แทนที่จะเขียนทับมัน")]
+    [Range(-80f, 20f)][SerializeField] private float masterBaseDb = 0f;
+    [Range(-80f, 20f)][SerializeField] private float sfxBaseDb = 0f;
+    [Range(-80f, 20f)][SerializeField] private float bgmBaseDb = 0f;
+    [Range(-80f, 20f)][SerializeField] private float voiceBaseDb = 0f;
+
     private SoundID currentBgmId;
     private Dictionary<SoundID, SoundData> soundsById;
 
     private float bgmBaseVolume = 1f;
     private Coroutine duckRoutine;
+    private bool duckHold;
 
     protected override bool UseDontDestroyOnLoad => false;
 
@@ -74,6 +88,16 @@ public class SoundManager : Singleton<SoundManager>
             {
                 if (sound == null || sound.id == null) continue;
                 soundsById[sound.id] = sound;
+
+#if UNITY_EDITOR
+                // เตือนตั้งแต่ตอนเริ่มเกม ดีกว่าไปงงตอนกดแล้วไม่มีเสียง
+                if (sound.GetClip() == null)
+                    Debug.LogWarning($"[SoundManager] '{sound.id.name}' ไม่มีไฟล์เสียงในช่อง Clip", library);
+                else if (sound.volume <= 0f && !sound.useRandomVolume)
+                    Debug.LogWarning($"[SoundManager] '{sound.id.name}' ตั้ง Volume = 0 จะไม่ได้ยินเสียง", library);
+                else if (sound.spatialBlend > 0f && sound.maxDistance <= 0f)
+                    Debug.LogWarning($"[SoundManager] '{sound.id.name}' เป็นเสียง 3D แต่ Max Distance = 0 จะไม่ได้ยินเสียง", library);
+#endif
             }
         }
     }
@@ -82,7 +106,16 @@ public class SoundManager : Singleton<SoundManager>
     {
         data = null;
         if (id == null || soundsById == null) return false;
-        return soundsById.TryGetValue(id, out data);
+
+        if (soundsById.TryGetValue(id, out data)) return true;
+
+#if UNITY_EDITOR
+        // [ADD] เดิมจุดนี้ return false เงียบๆ ทำให้หาสาเหตุ 'ไม่มีเสียง' ยากมาก
+        // สาเหตุที่พบบ่อยที่สุดคือลืมลาก SoundLibrary เข้า SoundTable
+        Debug.LogWarning($"[SoundManager] ไม่พบ '{id.name}' ใน SoundTable\n" +
+            "เช็ค: SoundData ที่มี Id นี้อยู่ในไลบรารีไหน และไลบรารีนั้นถูกลากเข้า SoundTable แล้วหรือยัง", id);
+#endif
+        return false;
     }
 
     // ==========================================
@@ -109,12 +142,6 @@ public class SoundManager : Singleton<SoundManager>
     // ==========================================
     // SFX (Loop) — [CHANGED] คืน SFXHandle แทน SFXPlayer
     // ==========================================
-    // เสียงลูปคือเสียงที่ "มีคนถือไว้สั่งงานทีหลัง" (หรี่, fade, หยุด)
-    // เลยต้องออกใบเสร็จให้ ห้ามยื่นตัวลำโพงจริงให้ใครถือเด็ดขาด
-    //
-    // ⚠️ สังเกตลำดับให้ดี: ต้อง Play ก่อน แล้วค่อยอ่าน Version
-    //    เพราะ Setup() ข้างใน Play จะ +1 ให้ version
-    //    ถ้าอ่าน Version ก่อน จะได้เลขเก่า → ใบเสร็จหมดอายุตั้งแต่วินาทีแรก
     public SFXHandle PlayLoopSFX(SoundID id, Vector3 position, float duration)
     {
         SFXPlayer player = SpawnPlayer(id, position, out SoundData data);
@@ -129,6 +156,35 @@ public class SoundManager : Singleton<SoundManager>
         SFXPlayer player = SpawnPlayer(id, position, out SoundData data);
         if (player == null) return SFXHandle.None;
 
+        player.PlayLoopForever(data);
+        return new SFXHandle(player, player.Version);
+    }
+
+    // [ADD] เสียงติดตามแบบยิงครั้งเดียว แต่คืน handle ไว้สั่งหยุดกลางคันได้
+    // ใช้กับเสียงพูดที่ต้องตัดคิวกันได้ เช่นเสียงกรี๊ดต้องแทรกประโยคที่พูดค้างอยู่
+    public SFXHandle PlaySFXAttachedTracked(SoundID id, Transform target, out float duration)
+    {
+        duration = 0f;
+        if (target == null) return SFXHandle.None;
+
+        SFXPlayer player = SpawnPlayer(id, target.position, out SoundData data);
+        if (player == null) return SFXHandle.None;
+
+        player.FollowTarget(target);
+        duration = player.Play(data);
+        return new SFXHandle(player, player.Version);
+    }
+
+    // [ADD] เสียงลูปที่ 'วิ่งตาม' วัตถุ — จำเป็นสำหรับผีที่ลอยไปมา
+    // ของเดิม PlayLoopSFXForever ปักเสียงไว้กับที่ พอผีลอยไป เสียงจะค้างอยู่จุดเดิม
+    public SFXHandle PlayLoopSFXForeverAttached(SoundID id, Transform target)
+    {
+        if (target == null) return SFXHandle.None;
+
+        SFXPlayer player = SpawnPlayer(id, target.position, out SoundData data);
+        if (player == null) return SFXHandle.None;
+
+        player.FollowTarget(target);
         player.PlayLoopForever(data);
         return new SFXHandle(player, player.Version);
     }
@@ -159,8 +215,9 @@ public class SoundManager : Singleton<SoundManager>
 
     private Vector3 GetListenerPosition()
     {
-        AudioListener listener = FindObjectOfType<AudioListener>();
-        if (listener != null) return listener.transform.position;
+        // AudioListenerCache หาครั้งเดียวแล้วจำไว้ (และ deprecated ใน Unity 6 ด้วย)
+        Transform listener = AudioListenerCache.Transform;
+        if (listener != null) return listener.position;
         if (Camera.main != null) return Camera.main.transform.position;
         return Vector3.zero;
     }
@@ -196,6 +253,17 @@ public class SoundManager : Singleton<SoundManager>
         if (duckBgmDuringVoice) StartDuck(false);
     }
 
+    /// <summary>
+    /// ล็อกการหรี่เพลงไว้ตลอดบทสนทนา
+    /// ระบบ Subtitle เรียก true ตอนเริ่มชุด และ false ตอนจบ
+    /// ทำให้เพลงหรี่ค้างตลอด ไม่กระเพื่อมขึ้นลงตามช่องว่างระหว่างประโยค
+    /// </summary>
+    public void SetVoiceDuckHold(bool hold)
+    {
+        duckHold = hold;
+        if (hold && duckBgmDuringVoice) StartDuck(true);
+    }
+
     private void StartDuck(bool ducked)
     {
         if (bgmSource == null) return;
@@ -206,6 +274,41 @@ public class SoundManager : Singleton<SoundManager>
     private IEnumerator DuckRoutine(bool ducked)
     {
         float target = ducked ? bgmBaseVolume * duckedBgmMultiplier : bgmBaseVolume;
+        yield return FadeBgmTo(target);
+
+        if (!ducked)
+        {
+            duckRoutine = null;
+            yield break;
+        }
+
+        // ตอนนี้จะรอให้เงียบครบ duckReleaseDelay ก่อน ถ้าประโยคใหม่มาก่อนก็รอต่อ
+        while (true)
+        {
+            while (IsVoicePlaying || duckHold) yield return null;
+
+            float t = 0f;
+            bool voiceResumed = false;
+
+            while (t < duckReleaseDelay)
+            {
+                if (IsVoicePlaying || duckHold)
+                {
+                    voiceResumed = true;
+                    break;
+                }
+                t += Time.unscaledDeltaTime;
+                yield return null;
+            }
+
+            if (!voiceResumed) break;
+        }
+
+        duckRoutine = StartCoroutine(DuckRoutine(false));
+    }
+
+    private IEnumerator FadeBgmTo(float target)
+    {
         float start = bgmSource.volume;
         float t = 0f;
 
@@ -217,14 +320,6 @@ public class SoundManager : Singleton<SoundManager>
         }
 
         bgmSource.volume = target;
-
-        if (ducked)
-        {
-            while (IsVoicePlaying) yield return null;
-            duckRoutine = StartCoroutine(DuckRoutine(false));
-            yield break;
-        }
-        duckRoutine = null;
     }
 
     // ==========================================
@@ -261,17 +356,42 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     // ==========================================
+    // Mixer Snapshots (Adaptive Audio)
+    // ==========================================
+    public void TransitionToSnapshot(string snapshotName, float transitionTime)
+    {
+        if (audioMixer == null || string.IsNullOrEmpty(snapshotName)) return;
+
+        AudioMixerSnapshot snapshot = audioMixer.FindSnapshot(snapshotName);
+
+        if (snapshot == null)
+        {
+            Debug.LogWarning($"[SoundManager] ไม่พบ Snapshot ชื่อ '{snapshotName}'");
+            return;
+        }
+
+        snapshot.TransitionTo(Mathf.Max(0f, transitionTime));
+    }
+
+    // ==========================================
     // Volume Control
     // ==========================================
-    public void SetMasterVolume(float level01) => SetMixerVolume(masterParam, level01);
-    public void SetSoundFXVolume(float level01) => SetMixerVolume(sfxParam, level01);
-    public void SetMusicVolume(float level01) => SetMixerVolume(bgmParam, level01);
-    public void SetVoiceVolume(float level01) => SetMixerVolume(voiceParam, level01);
+    public void SetMasterVolume(float level01) => SetMixerVolume(masterParam, level01, masterBaseDb);
+    public void SetSoundFXVolume(float level01) => SetMixerVolume(sfxParam, level01, sfxBaseDb);
+    public void SetMusicVolume(float level01) => SetMixerVolume(bgmParam, level01, bgmBaseDb);
+    public void SetVoiceVolume(float level01) => SetMixerVolume(voiceParam, level01, voiceBaseDb);
 
-    private void SetMixerVolume(string param, float level01)
+    private void SetMixerVolume(string param, float level01, float baseDb)
     {
         if (audioMixer == null || string.IsNullOrEmpty(param)) return;
-        float db = level01 <= 0.0001f ? -80f : Mathf.Log10(Mathf.Clamp01(level01)) * 20f;
-        audioMixer.SetFloat(param, db);
+
+        if (level01 <= 0.0001f)
+        {
+            audioMixer.SetFloat(param, -80f);   // -80 คือเงียบสนิทของ Unity
+            return;
+        }
+
+        float userDb = Mathf.Log10(Mathf.Clamp01(level01)) * 20f;   // 1.0 = 0 dB, 0.5 = -6 dB
+        audioMixer.SetFloat(param, Mathf.Max(-80f, baseDb + userDb));
     }
 }

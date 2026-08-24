@@ -5,10 +5,13 @@ namespace Yuki.Learning.StateMachine
         private readonly StateAction[] _actions;
         private StateTransition[] _transitions;
 
-        public State(StateAction[] actions, StateMachine stateMachine)
+        public string DebugName { get; }
+
+        public State(string debugName, StateAction[] actions, StateMachine stateMachine)
         {
+            DebugName = debugName;
             _actions = actions;
-             _transitions = new StateTransition[0];
+            _transitions = new StateTransition[0];
 
 
             foreach (StateAction action in _actions)

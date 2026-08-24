@@ -1,0 +1,1190 @@
+fileFormatVersion: 2
+guid: 651086a5c92a96e45bb50083547a25a9
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyeR
+    second: {fileID: 2100000, guid: 1a39dc85f6a040848a452c98ee201b75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 5123badd3f62e68458f24f16bbd5e3b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: arm.002
+    second: {fileID: 2100000, guid: 1f708d332102c6848ad45746556add5d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cloch.002
+    second: {fileID: 2100000, guid: b3ca843235e329d40bb52cdf9e7adb8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyeGlss
+    second: {fileID: 2100000, guid: 74b58b177e4d9cb4a9f9cf565220d544, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair1
+    second: {fileID: 2100000, guid: 855e5489cf82aa5408262227877a5087, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: head_eye.002
+    second: {fileID: 2100000, guid: 1a470f646cfee9e4bb54c29d4d56f2f1, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: Nawin_Root
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftToeBases
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightToeBases
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftEye
+      humanName: LeftEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightEye
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_Jaw
+      humanName: Jaw
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandThumb1
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandThumb2
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandThumb3
+      humanName: Left Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandIndex1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandIndex2
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandIndex3
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandMiddle1
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandMiddle2
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandMiddle3
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandRing1
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandRing2
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandRing3
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandPinky1
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandPinky2
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_LeftHandPinky3
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandThumbFinger1
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandThumbFinger2
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandThumbFinger3
+      humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandIndexFinger1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandIndexFinger2
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandIndexFinger3
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandMiddleFinger1
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandMiddleFinger2
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandMiddleFinger3
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandRingFinger1
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandRingFinger2
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandRingFinger3
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandPinkyFinger1
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandPinkyFinger2
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_RightHandPinkyFinger3
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Nawin_Spine2
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: NarwinRiged(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bodydad.001
+      parentName: NarwinRiged(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 0.01, y: 0.01, z: 0.01}
+    - name: ClothTopology_(2).034
+      parentName: NarwinRiged(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 0.01, y: 0.01, z: 0.01}
+    - name: Head
+      parentName: NarwinRiged(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 0.01, y: 0.01, z: 0.01}
+    - name: Nawin_rig
+      parentName: NarwinRiged(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Nawin_Root
+      parentName: Nawin_rig
+      position: {x: 0, y: -1.4901161e-10, z: 0.0003752053}
+      rotation: {x: 0.7071069, y: -0, z: -0, w: 0.7071067}
+      scale: {x: 0.9999998, y: 0.9999998, z: 0.9999998}
+    - name: Nawin_Hips
+      parentName: Nawin_Root
+      position: {x: 6.196195e-19, y: 0.0085155405, z: 0.00014530195}
+      rotation: {x: 0.07723412, y: 0.7028762, z: 0.07723412, w: 0.7028762}
+      scale: {x: 1.0000008, y: 1, z: 1.0000008}
+    - name: Nawin_HipsPart1
+      parentName: Nawin_Hips
+      position: {x: -7.4505804e-11, y: 0.0011802816, z: -1.6500372e-17}
+      rotation: {x: 0.000000026077027, y: 0.000000089406946, z: -0.00000027567143,
+        w: 1}
+      scale: {x: 1.0000051, y: 1.0000001, z: 1.0000068}
+    - name: Nawin_Spine
+      parentName: Nawin_HipsPart1
+      position: {x: -2.9802322e-10, y: 0.00028689197, z: -1.6411771e-18}
+      rotation: {x: -0.000000026077027, y: -0.000000089406946, z: 0.00000027567143,
+        w: 1}
+      scale: {x: 1.0000026, y: 1.0000002, z: 1.0000018}
+    - name: Nawin_SpinePart1
+      parentName: Nawin_Spine
+      position: {x: 2.9802322e-10, y: 0.00073358906, z: 1.8893324e-18}
+      rotation: {x: 0.000000048428763, y: 0.000000029802319, z: -0.15119727, w: 0.98850363}
+      scale: {x: 1.000003, y: 0.99999976, z: 1.000004}
+    - name: Nawin_Spine1
+      parentName: Nawin_SpinePart1
+      position: {x: 2.6077032e-10, y: 0.00072013435, z: 1.2962285e-17}
+      rotation: {x: -0.0000000114827525, y: 0.00000014898826, z: -0.00000019371508,
+        w: 1}
+      scale: {x: 0.9999994, y: 1, z: 1.0000002}
+    - name: Nawin_Spine1Part2
+      parentName: Nawin_Spine1
+      position: {x: -7.4505804e-11, y: 0.00072013476, z: -5.7008216e-17}
+      rotation: {x: 0.000000011482716, y: -0.00000014898826, z: 0.00000041723246,
+        w: 1}
+      scale: {x: 1.0000026, y: 1.0000004, z: 1.0000015}
+    - name: Nawin_Spine2
+      parentName: Nawin_Spine1Part2
+      position: {x: -1.11758706e-10, y: 0.0007201393, z: -6.7132485e-18}
+      rotation: {x: -0.000000021432127, y: -0.000000037753974, z: -0.090864114, w: 0.9958633}
+      scale: {x: 1.0000032, y: 0.9999933, z: 0.99999744}
+    - name: Nawin_Neck
+      parentName: Nawin_Spine2
+      position: {x: 2.6077032e-10, y: 0.0027282601, z: 3.5284775e-17}
+      rotation: {x: -0.000000040291997, y: -0.0000000043032067, z: 0.29575306, w: 0.95526445}
+      scale: {x: 0.9999708, y: 1.0000267, z: 0.9999969}
+    - name: Nawin_NeckPart1
+      parentName: Nawin_Neck
+      position: {x: -9.126961e-10, y: 0.00030509374, z: -4.114272e-17}
+      rotation: {x: -0.000000022314802, y: 0.0000000012839706, z: 0.00000008940696,
+        w: 1}
+      scale: {x: 0.9999991, y: 1.0000008, z: 1.0000002}
+    - name: Nawin_NeckPart2
+      parentName: Nawin_NeckPart1
+      position: {x: 0.0000000017695129, y: 0.00030509714, z: 7.835324e-17}
+      rotation: {x: 0.000000044629648, y: -0.0000000025679117, z: -0.00000038743013,
+        w: 1}
+      scale: {x: 1.0000002, y: 0.9999999, z: 0.9999991}
+    - name: Nawin_Head
+      parentName: Nawin_NeckPart2
+      position: {x: -7.4505804e-11, y: 0.00030509094, z: 4.418648e-17}
+      rotation: {x: -0.000000015171818, y: 0.000000060576184, z: -0.10872618, w: 0.9940717}
+      scale: {x: 0.9999825, y: 1.000017, z: 1.0000007}
+    - name: Nawin_HeadEnd
+      parentName: Nawin_Head
+      position: {x: -2.4214386e-10, y: 0.0020257658, z: 1.1709384e-18}
+      rotation: {x: 0.00000002232214, y: 0.000000001149864, z: -0.000000022351735,
+        w: 1}
+      scale: {x: 0.9999996, y: 1.0000012, z: 1.0000005}
+    - name: Nawin_RightEye
+      parentName: Nawin_Head
+      position: {x: -0.0006091933, y: 0.0010295182, z: 0.0003107264}
+      rotation: {x: -0.000055177145, y: 0.000061767976, z: 0.6651616, w: 0.7466994}
+      scale: {x: 1.0000174, y: 0.9999827, z: 1.0000005}
+    - name: Nawin_Jaw
+      parentName: Nawin_Head
+      position: {x: -0.00024317003, y: 0.00013039137, z: -1.178468e-11}
+      rotation: {x: -0.00000002364296, y: -0.00000005257144, z: 0.7895419, w: 0.61369675}
+      scale: {x: 0.9999642, y: 1.0000381, z: 1.0000015}
+    - name: Nawin_LeftEye
+      parentName: Nawin_Head
+      position: {x: -0.0006091935, y: 0.0010295182, z: -0.00031072646}
+      rotation: {x: -0.000055177145, y: 0.000061767976, z: 0.6651616, w: 0.7466994}
+      scale: {x: 1.0000174, y: 0.99998254, z: 1.0000005}
+    - name: Nawin_RightShoulder
+      parentName: Nawin_Spine2
+      position: {x: 0.00029281998, y: 0.0018912492, z: 0.00041506137}
+      rotation: {x: 0.6558128, y: 0.13477981, z: 0.047839407, w: 0.74125254}
+      scale: {x: 0.9999858, y: 0.99999887, z: 1.0000145}
+    - name: Nawin_RightArm
+      parentName: Nawin_RightShoulder
+      position: {x: -3.4458936e-10, y: 0.0016704787, z: -4.0910889e-10}
+      rotation: {x: -0.074931495, y: 0.10190706, z: -0.06104099, w: -0.99008805}
+      scale: {x: 1.0000019, y: 0.99999565, z: 1.0000082}
+    - name: Nawin_RightArmPart1
+      parentName: Nawin_RightArm
+      position: {x: -0, y: 0.00095547823, z: -9.685754e-10}
+      rotation: {x: 0.00000020861621, y: -0.00000029802317, z: -0.000000141561, w: 1}
+      scale: {x: 1.0000036, y: 1.0000103, z: 0.9999991}
+    - name: Nawin_RightArmPart2
+      parentName: Nawin_RightArmPart1
+      position: {x: -7.4505804e-11, y: 0.00095547555, z: -5.494803e-10}
+      rotation: {x: -0.00000038743016, y: 0.00000017136325, z: 0.00000005215411, w: 1}
+      scale: {x: 1.0000019, y: 1.0000023, z: 1.0000021}
+    - name: Nawin_RightForeArm
+      parentName: Nawin_RightArmPart2
+      position: {x: -0, y: 0.00095732464, z: -6.519258e-10}
+      rotation: {x: -0.014381618, y: -0.003581448, z: 0.032911006, w: 0.9993484}
+      scale: {x: 0.99999577, y: 1.000001, z: 0.9999982}
+    - name: Nawin_RightForeArmPart1
+      parentName: Nawin_RightForeArm
+      position: {x: -0.0000000024028122, y: 0.0010072544, z: 0.0000000019255093}
+      rotation: {x: 0.000000022817394, y: -0.0007347698, z: -0.0005050598, w: 0.9999996}
+      scale: {x: 1.0000026, y: 1.000003, z: 1.0000029}
+    - name: Nawin_RightForeArmPart2
+      parentName: Nawin_RightForeArmPart1
+      position: {x: 0.0000000013411044, y: 0.0010087956, z: -0.000000002235174}
+      rotation: {x: -0.0000005497743, y: -0.00000037933924, z: 0.00000080497034, w: 1}
+      scale: {x: 1.0000023, y: 1.0000033, z: 0.9999998}
+    - name: Nawin_RightHand
+      parentName: Nawin_RightForeArmPart2
+      position: {x: -1.862645e-10, y: 0.0010106362, z: 4.2840836e-10}
+      rotation: {x: -0.060725477, y: -0.04996415, z: 0.12279164, w: -0.98931205}
+      scale: {x: 1.0000134, y: 1.0000032, z: 1.0000029}
+    - name: Nawin_RightHandMiddleFinger1
+      parentName: Nawin_RightHand
+      position: {x: -0.00000019192696, y: 0.0011946582, z: -0.00000012565404}
+      rotation: {x: 0.07383715, y: 0.027638817, z: -0.0030439403, w: 0.9968826}
+      scale: {x: 0.9999988, y: 1.0000223, z: 0.99998105}
+    - name: Nawin_RightHandMiddleFinger2
+      parentName: Nawin_RightHandMiddleFinger1
+      position: {x: 4.4703483e-10, y: 0.00048769717, z: 1.11758706e-10}
+      rotation: {x: 0.033172604, y: 0.0034484125, z: 0.022629952, w: 0.99918747}
+      scale: {x: 1.0000007, y: 1.0000147, z: 0.99999774}
+    - name: Nawin_RightHandMiddleFinger3
+      parentName: Nawin_RightHandMiddleFinger2
+      position: {x: 1.11758706e-10, y: 0.00039676193, z: -3.352761e-10}
+      rotation: {x: 0.049520664, y: 0.0016568695, z: -0.015724458, w: 0.9986479}
+      scale: {x: 1.0000035, y: 1.0000169, z: 0.999991}
+    - name: Nawin_RightHandThumbFinger1
+      parentName: Nawin_RightHand
+      position: {x: -0.00025456108, y: 0.00052463857, z: 0.00043019297}
+      rotation: {x: -0.040647767, y: 0.40013778, z: 0.3727934, w: 0.8362192}
+      scale: {x: 0.99996835, y: 1.0000162, z: 1.0000098}
+    - name: Nawin_RightHandThumbFinger2
+      parentName: Nawin_RightHandThumbFinger1
+      position: {x: -9.313225e-11, y: 0.0002724438, z: -5.2154064e-10}
+      rotation: {x: 0.04128344, y: 0.0068528033, z: -0.0021006402, w: 0.9991218}
+      scale: {x: 1.0000025, y: 0.99999845, z: 0.9999978}
+    - name: Nawin_RightHandThumbFinger3
+      parentName: Nawin_RightHandThumbFinger2
+      position: {x: 8.381903e-11, y: 0.00030491292, z: 4.4703483e-10}
+      rotation: {x: 0.02192135, y: 0.0033397444, z: -0.00016022475, w: 0.99975413}
+      scale: {x: 1.000001, y: 1.0000008, z: 1.000002}
+    - name: Nawin_RightHandIndexFinger1
+      parentName: Nawin_RightHand
+      position: {x: -0.00033366727, y: 0.0011068883, z: 0.000048920483}
+      rotation: {x: 0.07443613, y: 0.043333728, z: 0.009138881, w: 0.996242}
+      scale: {x: 0.9999961, y: 1.0000223, z: 0.9999824}
+    - name: Nawin_RightHandIndexFinger2
+      parentName: Nawin_RightHandIndexFinger1
+      position: {x: -2.2351741e-10, y: 0.00043421364, z: -1.6763806e-10}
+      rotation: {x: 0.03299101, y: 0.030691195, z: 0.01722316, w: 0.9988358}
+      scale: {x: 0.9999985, y: 1.0000253, z: 0.9999924}
+    - name: Nawin_RightHandIndexFinger3
+      parentName: Nawin_RightHandIndexFinger2
+      position: {x: -0.0000000010430813, y: 0.00030891603, z: -5.2154064e-10}
+      rotation: {x: 0.017807003, y: 0.017438587, z: -0.051191974, w: 0.9983778}
+      scale: {x: 1.0000006, y: 0.9999958, z: 0.9999961}
+    - name: Nawin_RightCup
+      parentName: Nawin_RightHand
+      position: {x: 0.00009089842, y: 0.00022800098, z: 0.000056499102}
+      rotation: {x: 0.031898823, y: 0.3436035, z: 0.010745385, w: -0.93851143}
+      scale: {x: 1.0000105, y: 0.9999969, z: 0.9999912}
+    - name: Nawin_RightHandPinkyFinger1
+      parentName: Nawin_RightCup
+      position: {x: 0.00034878723, y: 0.00082306814, z: -0.00019036353}
+      rotation: {x: -0.08136788, y: -0.38061336, z: 0.04098793, w: -0.92023516}
+      scale: {x: 0.99999976, y: 1.0000143, z: 0.9999878}
+    - name: Nawin_RightHandPinkyFinger2
+      parentName: Nawin_RightHandPinkyFinger1
+      position: {x: -5.9604643e-10, y: 0.00036436718, z: -0.0000000019650905}
+      rotation: {x: 0.037132803, y: -0.0060175927, z: 0.0072922544, w: 0.9992656}
+      scale: {x: 0.9999971, y: 1.0000184, z: 0.99999166}
+    - name: Nawin_RightHandPinkyFinger3
+      parentName: Nawin_RightHandPinkyFinger2
+      position: {x: -1.11758706e-10, y: 0.0002610295, z: 3.1664968e-10}
+      rotation: {x: 0.018694792, y: -0.018911194, z: 0.01769069, w: 0.99948984}
+      scale: {x: 0.9999984, y: 1.000012, z: 1.0000018}
+    - name: Nawin_RightHandRingFinger1
+      parentName: Nawin_RightCup
+      position: {x: 0.00010442495, y: 0.0009255819, z: -0.00008056424}
+      rotation: {x: -0.09028629, y: -0.37337986, z: 0.030500326, w: -0.92277056}
+      scale: {x: 0.9999991, y: 1.0000235, z: 0.99998856}
+    - name: Nawin_RightHandRingFinger2
+      parentName: Nawin_RightHandRingFinger1
+      position: {x: -0, y: 0.00050973706, z: -2.9802322e-10}
+      rotation: {x: 0.040272046, y: 0.007823106, z: 0.0081565045, w: 0.9991248}
+      scale: {x: 1.0000019, y: 1.0000123, z: 0.999998}
+    - name: Nawin_RightHandRingFinger3
+      parentName: Nawin_RightHandRingFinger2
+      position: {x: 7.4505804e-11, y: 0.00031640753, z: -5.9604643e-10}
+      rotation: {x: 0.07730074, y: 0.0006489202, z: 0.033571035, w: 0.99644226}
+      scale: {x: 0.99999374, y: 1.000018, z: 0.9999851}
+    - name: Nawin_RightHandPartial
+      parentName: Nawin_RightForeArmPart2
+      position: {x: -2.6077032e-10, y: 0.0010124783, z: 0.0000000010803342}
+      rotation: {x: 0.44213808, y: -0.49457467, z: -0.6181754, w: 0.4216267}
+      scale: {x: 0.99999636, y: 1.0000006, z: 1.0000086}
+    - name: Nawin_RightHandHandMiddleSlider0
+      parentName: Nawin_RightHandPartial
+      position: {x: 0.0000035341084, y: 0.0000005729729, z: -0.00043856798}
+      rotation: {x: 0.00000031292436, y: 0.00000056624407, z: -0.0000008046626, w: 1}
+      scale: {x: 1.0000019, y: 1.0000012, z: 0.99999934}
+    - name: Nawin_RightHandHandMiddleSlider1
+      parentName: Nawin_RightHandPartial
+      position: {x: 0.0000035331398, y: 0.00019004832, z: -0.00000087983904}
+      rotation: {x: 0.00000032782552, y: 0.00000058114523, z: -0.0000009089707, w: 1}
+      scale: {x: 0.9999987, y: 0.9999994, z: 0.9999991}
+    - name: Nawin_RightHandHandMiddleSlider2
+      parentName: Nawin_RightHandPartial
+      position: {x: 0.0000035330652, y: 0.0000005717389, z: 0.0004368092}
+      rotation: {x: -0.00000029802317, y: 0.0000006556509, z: -0.00000011920926, w: 1}
+      scale: {x: 1.0000025, y: 1.0000031, z: 0.9999988}
+    - name: Nawin_RightHandHandMiddleSlider3
+      parentName: Nawin_RightHandPartial
+      position: {x: 0.0000035320222, y: -0.00018890211, z: -0.00000087946654}
+      rotation: {x: 0.00000068545336, y: 0.00000004470348, z: -0.000001773238, w: 1}
+      scale: {x: 1.0000005, y: 1.0000017, z: 0.9999992}
+    - name: Nawin_RightForeArmPartial
+      parentName: Nawin_RightArmPart2
+      position: {x: 1.862645e-10, y: 0.0009591674, z: -6.239861e-10}
+      rotation: {x: 0.8808079, y: -0.47347382, z: 0.0000009213602, w: 0.00000030293793}
+      scale: {x: 0.9999986, y: 0.99999595, z: 0.9999993}
+    - name: Nawin_RightForeArmHandMiddleSlider0
+      parentName: Nawin_RightForeArmPartial
+      position: {x: 0.00014753666, y: -0.00047826435, z: 0.0000000020302833}
+      rotation: {x: -0.00000012751008, y: -0.00000013638402, z: 0.14556481, w: 0.9893487}
+      scale: {x: 0.9999914, y: 1.0000149, z: 1.0000021}
+    - name: Nawin_RightForeArmHandMiddleSlider2
+      parentName: Nawin_RightForeArmPartial
+      position: {x: -0.00014138789, y: 0.0004823315, z: 8.1956386e-10}
+      rotation: {x: -0.00000059807155, y: -0.000000661646, z: 0.14556569, w: 0.98934865}
+      scale: {x: 0.9999918, y: 1.000015, z: 1.0000033}
+    - name: Nawin_LeftShoulder
+      parentName: Nawin_Spine2
+      position: {x: 0.00029282, y: 0.0018912492, z: -0.00041506137}
+      rotation: {x: -0.047839563, y: 0.74125236, z: -0.655813, w: 0.13477989}
+      scale: {x: 0.99998456, y: 0.9999974, z: 1.0000141}
+    - name: Nawin_LeftArm
+      parentName: Nawin_LeftShoulder
+      position: {x: 3.4458936e-10, y: 0.001670479, z: -0.000000001416829}
+      rotation: {x: -0.074930914, y: -0.101907335, z: 0.061041035, w: -0.99008805}
+      scale: {x: 1.0000044, y: 0.99999565, z: 1.0000082}
+    - name: Nawin_LeftArmPart1
+      parentName: Nawin_LeftArm
+      position: {x: 1.11758706e-10, y: 0.0009554792, z: -4.6566126e-11}
+      rotation: {x: -0.00000014901158, y: -0.00000026822084, z: 0.00000002793967,
+        w: 1}
+      scale: {x: 1.0000005, y: 1.0000064, z: 0.999999}
+    - name: Nawin_LeftArmPart2
+      parentName: Nawin_LeftArmPart1
+      position: {x: -2.6077032e-10, y: 0.00095547346, z: -1.7695129e-10}
+      rotation: {x: 0.000000089407024, y: 0.0000010579822, z: 0.00000021234166, w: 1}
+      scale: {x: 1.0000019, y: 0.9999987, z: 0.99999857}
+    - name: Nawin_LeftForeArm
+      parentName: Nawin_LeftArmPart2
+      position: {x: 7.4505804e-11, y: 0.0009573222, z: -4.0978193e-10}
+      rotation: {x: -0.01438105, y: 0.003581052, z: -0.032909513, w: 0.9993485}
+      scale: {x: 1.0000021, y: 1.0000081, z: 1.0000017}
+    - name: Nawin_LeftForeArmPart1
+      parentName: Nawin_LeftForeArm
+      position: {x: 8.381903e-11, y: 0.0010072563, z: -1.5133991e-11}
+      rotation: {x: -0.00000028163774, y: 0.0007343317, z: 0.00050413585, w: 0.99999964}
+      scale: {x: 1.0000043, y: 1.0000075, z: 1.000004}
+    - name: Nawin_LeftForeArmPart2
+      parentName: Nawin_LeftForeArmPart1
+      position: {x: 7.4505804e-11, y: 0.001008794, z: 4.749745e-10}
+      rotation: {x: 0.00000037185333, y: -0.00000009825451, z: 0.00000017907888, w: 1}
+      scale: {x: 1.0000024, y: 1.0000017, z: 1.0000018}
+    - name: Nawin_LeftHand
+      parentName: Nawin_LeftForeArmPart2
+      position: {x: -9.313226e-10, y: 0.0010106385, z: -0.0000000010430813}
+      rotation: {x: 0.060722668, y: -0.04996352, z: 0.122791134, w: 0.98931223}
+      scale: {x: 1.0000002, y: 1.0000043, z: 0.9999971}
+    - name: Nawin_LeftHandMiddle1
+      parentName: Nawin_LeftHand
+      position: {x: 0.0000001911819, y: 0.0011946572, z: -0.00000012489035}
+      rotation: {x: 0.07383886, y: -0.02763862, z: 0.003044338, w: 0.9968825}
+      scale: {x: 1.0000005, y: 1.0000234, z: 0.9999804}
+    - name: Nawin_LeftHandMiddle2
+      parentName: Nawin_LeftHandMiddle1
+      position: {x: -4.4703483e-10, y: 0.0004877, z: -3.9115547e-10}
+      rotation: {x: 0.033174425, y: -0.0034462952, z: -0.022631124, w: 0.9991874}
+      scale: {x: 0.9999993, y: 1.0000092, z: 0.99999005}
+    - name: Nawin_LeftHandMiddle3
+      parentName: Nawin_LeftHandMiddle2
+      position: {x: 1.862645e-10, y: 0.00039676545, z: -2.2351741e-10}
+      rotation: {x: 0.049523786, y: -0.001660191, z: 0.015723672, w: 0.9986478}
+      scale: {x: 1.0000056, y: 1.0000212, z: 0.9999904}
+    - name: Nawin_LeftHandThumb1
+      parentName: Nawin_LeftHand
+      position: {x: 0.00025455965, y: 0.0005246397, z: 0.0004301934}
+      rotation: {x: -0.04064828, y: -0.40013784, z: -0.37279674, w: 0.83621776}
+      scale: {x: 0.9999775, y: 1.00001, z: 1.0000074}
+    - name: Nawin_LeftHandThumb2
+      parentName: Nawin_LeftHandThumb1
+      position: {x: -0.0000000010989606, y: 0.00027244686, z: 0.0000000010430813}
+      rotation: {x: 0.041283995, y: -0.0068512806, z: 0.002102098, w: 0.9991218}
+      scale: {x: 1.0000005, y: 1.0000019, z: 1.0000038}
+    - name: Nawin_LeftHandThumb3
+      parentName: Nawin_LeftHandThumb2
+      position: {x: 5.7742e-10, y: 0.00030491335, z: -0.0000000013411044}
+      rotation: {x: 0.021920865, y: -0.00334695, z: 0.00015588065, w: 0.9997541}
+      scale: {x: 0.9999982, y: 1.0000026, z: 1.0000026}
+    - name: Nawin_LeftHandIndex1
+      parentName: Nawin_LeftHand
+      position: {x: 0.0003336662, y: 0.001106886, z: 0.00004891914}
+      rotation: {x: 0.07443982, y: -0.04333393, z: -0.009140009, w: 0.99624157}
+      scale: {x: 0.9999992, y: 1.000022, z: 0.9999818}
+    - name: Nawin_LeftHandIndex2
+      parentName: Nawin_LeftHandIndex1
+      position: {x: -8.1956386e-10, y: 0.00043421658, z: -0.0000000014342367}
+      rotation: {x: 0.03298722, y: -0.03069131, z: -0.017221281, w: 0.998836}
+      scale: {x: 1.0000017, y: 1.0000225, z: 0.99998456}
+    - name: Nawin_LeftHandIndex3
+      parentName: Nawin_LeftHandIndex2
+      position: {x: -2.2351741e-10, y: 0.00030891798, z: -4.4703483e-10}
+      rotation: {x: 0.017809968, y: -0.01744154, z: 0.05119, w: 0.9983778}
+      scale: {x: 1.000004, y: 1.0000021, z: 0.9999965}
+    - name: Nawin_LeftCup
+      parentName: Nawin_LeftHand
+      position: {x: -0.000090899506, y: 0.00022800203, z: 0.000056499437}
+      rotation: {x: -0.031898808, y: 0.3436043, z: 0.010745533, w: 0.93851113}
+      scale: {x: 1.0000072, y: 1.000001, z: 0.9999974}
+    - name: Nawin_LeftHandPinky1
+      parentName: Nawin_LeftCup
+      position: {x: -0.00034878647, y: 0.0008230692, z: -0.0001903627}
+      rotation: {x: 0.08136764, y: -0.38061562, z: 0.040987257, w: 0.9202343}
+      scale: {x: 1.0000006, y: 1.000022, z: 0.99998575}
+    - name: Nawin_LeftHandPinky2
+      parentName: Nawin_LeftHandPinky1
+      position: {x: 2.6077032e-10, y: 0.00036436567, z: -9.126961e-10}
+      rotation: {x: 0.037146147, y: 0.0060331183, z: -0.007291822, w: 0.9992651}
+      scale: {x: 1.0000002, y: 1.0000188, z: 0.9999825}
+    - name: Nawin_LeftHandPinky3
+      parentName: Nawin_LeftHandPinky2
+      position: {x: -2.6077032e-10, y: 0.00026103194, z: 1.2107193e-10}
+      rotation: {x: 0.01870249, y: 0.018887423, z: -0.017688816, w: 0.99949026}
+      scale: {x: 0.99999964, y: 1.000008, z: 0.9999976}
+    - name: Nawin_LeftHandRing1
+      parentName: Nawin_LeftCup
+      position: {x: -0.00010442562, y: 0.00092558336, z: -0.000080564096}
+      rotation: {x: 0.09028789, y: -0.37337887, z: 0.03050476, w: 0.9227708}
+      scale: {x: 1.0000015, y: 1.0000246, z: 0.9999862}
+    - name: Nawin_LeftHandRing2
+      parentName: Nawin_LeftHandRing1
+      position: {x: -3.7252902e-11, y: 0.00050973624, z: 7.0780515e-10}
+      rotation: {x: 0.04028401, y: -0.007812434, z: -0.008160242, w: 0.9991244}
+      scale: {x: 1.0000018, y: 1.0000082, z: 0.9999895}
+    - name: Nawin_LeftHandRing3
+      parentName: Nawin_LeftHandRing2
+      position: {x: -5.2154064e-10, y: 0.0003164065, z: -5.9604643e-10}
+      rotation: {x: 0.0773015, y: -0.00066217995, z: -0.03356874, w: 0.9964423}
+      scale: {x: 1.0000006, y: 1.0000299, z: 0.99998564}
+    - name: Nawin_LeftHandPartial
+      parentName: Nawin_LeftForeArmPart2
+      position: {x: -0.0000000018253922, y: 0.0010124817, z: -3.1664968e-10}
+      rotation: {x: -0.44213852, y: -0.4945751, z: -0.6181746, w: -0.42162684}
+      scale: {x: 1.000006, y: 0.9999987, z: 0.99999917}
+    - name: Nawin_LeftHandHandMiddleSlider0
+      parentName: Nawin_LeftHandPartial
+      position: {x: -0.0000035327114, y: 0.00000057258643, z: -0.00043856862}
+      rotation: {x: 0.00000044703478, y: -0.00000026822087, z: 0.00000078976143, w: 1}
+      scale: {x: 0.9999996, y: 0.9999982, z: 0.99999917}
+    - name: Nawin_LeftHandHandMiddleSlider1
+      parentName: Nawin_LeftHandPartial
+      position: {x: -0.000003535114, y: 0.00019004817, z: -0.00000087946654}
+      rotation: {x: 0.00000013411042, y: -0.00000034272662, z: -0.00000011920926,
+        w: 1}
+      scale: {x: 1.0000002, y: 0.9999996, z: 0.999999}
+    - name: Nawin_LeftHandHandMiddleSlider2
+      parentName: Nawin_LeftHandPartial
+      position: {x: -0.0000035321711, y: 0.00000057303345, z: 0.0004368082}
+      rotation: {x: 0.00000084936596, y: 0.00000014901158, z: 0.0000017732377, w: 1}
+      scale: {x: 1, y: 0.999998, z: 0.9999988}
+    - name: Nawin_LeftHandHandMiddleSlider3
+      parentName: Nawin_LeftHandPartial
+      position: {x: -0.0000035332887, y: -0.00018890257, z: -0.0000008799508}
+      rotation: {x: 0.000000044703473, y: -0.00000043213356, z: 0.000000044703473,
+        w: 1}
+      scale: {x: 1.0000027, y: 1.0000017, z: 0.999999}
+    - name: Nawin_LeftForeArmPartial
+      parentName: Nawin_LeftArmPart2
+      position: {x: 7.4505804e-11, y: 0.00095916673, z: -9.685754e-10}
+      rotation: {x: 0.8808081, y: 0.47347346, z: -0.00000043844125, w: 0.00000080758105}
+      scale: {x: 1.0000054, y: 1.0000004, z: 1.0000033}
+    - name: Nawin_LeftForeArmHandMiddleSlider0
+      parentName: Nawin_LeftForeArmPartial
+      position: {x: -0.00014753568, y: -0.00047826327, z: -1.862645e-10}
+      rotation: {x: 0.00000010064774, y: -0.00000031946757, z: -0.14556487, w: 0.9893487}
+      scale: {x: 0.99999726, y: 1.0000031, z: 0.9999988}
+    - name: Nawin_LeftForeArmHandMiddleSlider2
+      parentName: Nawin_LeftForeArmPartial
+      position: {x: 0.00014138628, y: 0.00048233298, z: -9.546056e-11}
+      rotation: {x: -0.0000004542531, y: 0.00000046497564, z: -0.14556602, w: 0.9893486}
+      scale: {x: 1.0000004, y: 1.0000049, z: 1.0000018}
+    - name: Nawin_BabySnapJoint
+      parentName: Nawin_Spine2
+      position: {x: -0.0010226936, y: 0.0004963933, z: -0.00081998255}
+      rotation: {x: 0.5620278, y: -0.42909768, z: 0.42909756, w: -0.5620279}
+      scale: {x: 1.0000185, y: 1.0000025, z: 0.99999136}
+    - name: Nawin_BookSnap
+      parentName: Nawin_Spine1
+      position: {x: 0.0014121847, y: -0.00055238453, z: -0.0013026485}
+      rotation: {x: 0.7061343, y: 0.037052214, z: 0.7061364, w: -0.037049964}
+      scale: {x: 1.0000306, y: 1.0000017, z: 0.99999505}
+    - name: Nawin_RightUpLeg
+      parentName: Nawin_Hips
+      position: {x: -0.0000068982818, y: 0.0002732806, z: 0.0012627007}
+      rotation: {x: 0.98816895, y: -0.1081074, z: 0.10542803, w: 0.026832905}
+      scale: {x: 1.0000062, y: 1.0000083, z: 1.0000064}
+    - name: Nawin_RightUpLegPart1
+      parentName: Nawin_RightUpLeg
+      position: {x: 1.16415315e-11, y: 0.001205213, z: -1.1641532e-10}
+      rotation: {x: 0.00000012107192, y: 0.00000025145707, z: -0.000000014901159,
+        w: 1}
+      scale: {x: 1.000003, y: 1.000006, z: 1.0000035}
+    - name: Nawin_RightUpLegPart2
+      parentName: Nawin_RightUpLegPart1
+      position: {x: 2.3283064e-12, y: 0.0012052155, z: 9.313225e-11}
+      rotation: {x: -0.00000008195639, y: 0.0000006204935, z: -0.00000001490125, w: 1}
+      scale: {x: 1.0000038, y: 1.0000061, z: 1.0000033}
+    - name: Nawin_RightLeg
+      parentName: Nawin_RightUpLegPart2
+      position: {x: 3.4924594e-11, y: 0.0012070566, z: -1.862645e-10}
+      rotation: {x: -0.0000052917085, y: -0.000080612444, z: -0.07684259, w: 0.9970433}
+      scale: {x: 1.0000036, y: 1.0000083, z: 1.0000058}
+    - name: Nawin_RightFoot
+      parentName: Nawin_RightLeg
+      position: {x: -1.862645e-10, y: 0.004000828, z: 2.7939677e-11}
+      rotation: {x: -0.49217647, y: 0.8577903, z: -0.044039134, w: 0.14148794}
+      scale: {x: 1.0000079, y: 0.99999857, z: 1.0000026}
+    - name: Nawin_RightToeBases
+      parentName: Nawin_RightFoot
+      position: {x: -0.00014520968, y: 0.0019239481, z: -0.00003624967}
+      rotation: {x: -0.34671468, y: -0.9365202, z: 0.05117255, w: 0.010010887}
+      scale: {x: 0.9999775, y: 1.0000302, z: 1.0000031}
+    - name: Nawin_RightLegPartial
+      parentName: Nawin_RightUpLegPart2
+      position: {x: 1.3969838e-11, y: 0.0012089, z: -1.4901161e-10}
+      rotation: {x: 0.0000022534205, y: -0.000002117004, z: -0.7593291, w: 0.6507069}
+      scale: {x: 1.000008, y: 1.0000038, z: 1.000006}
+    - name: Nawin_RightLegHandMiddleSlider0
+      parentName: Nawin_RightLegPartial
+      position: {x: -0.00004772073, y: 0.00066732644, z: -6.3329936e-10}
+      rotation: {x: -0.0000001379237, y: -0.00000018597594, z: 0.038431995, w: 0.99926126}
+      scale: {x: 0.9999989, y: 1.0000014, z: 1.0000018}
+    - name: Nawin_RightLegHandMiddleSlider2
+      parentName: Nawin_RightLegPartial
+      position: {x: 0.000055007014, y: -0.00066619716, z: -3.9115547e-10}
+      rotation: {x: 0.000000021169397, y: -0.00000011625694, z: 0.038432058, w: 0.99926126}
+      scale: {x: 0.9999983, y: 1.0000011, z: 1.0000019}
+    - name: Nawin_LeftUpLeg
+      parentName: Nawin_Hips
+      position: {x: -0.0000068980326, y: 0.0002732812, z: -0.0012627007}
+      rotation: {x: 0.105428666, y: -0.026835544, z: 0.98816884, w: 0.10810708}
+      scale: {x: 1.0000105, y: 1.0000064, z: 1.0000067}
+    - name: Nawin_LeftUpLegPart1
+      parentName: Nawin_LeftUpLeg
+      position: {x: -2.0954757e-11, y: 0.0012052127, z: 9.3132255e-12}
+      rotation: {x: 0.00000013411042, y: 0.000000057741985, z: 0.000000050058578,
+        w: 1}
+      scale: {x: 0.99999845, y: 0.9999963, z: 0.9999967}
+    - name: Nawin_LeftUpLegPart2
+      parentName: Nawin_LeftUpLegPart1
+      position: {x: 8.8475643e-11, y: 0.0012052146, z: 2.2351741e-10}
+      rotation: {x: -0.00000013783576, y: -0.000001045875, z: -0.00000006379545, w: 1}
+      scale: {x: 1.000003, y: 1.0000068, z: 1.0000043}
+    - name: Nawin_LeftLeg
+      parentName: Nawin_LeftUpLegPart2
+      position: {x: -7.4505804e-11, y: 0.0012070574, z: 1.3969838e-11}
+      rotation: {x: -0.0000012270018, y: 0.00008079121, z: 0.076842025, w: 0.9970433}
+      scale: {x: 1.000001, y: 1.0000061, z: 1.0000013}
+    - name: Nawin_LeftFoot
+      parentName: Nawin_LeftLeg
+      position: {x: 2.4214386e-10, y: 0.0040008277, z: 5.7742e-10}
+      rotation: {x: -0.4921749, y: -0.8577909, z: 0.044042267, w: 0.14148846}
+      scale: {x: 0.9999973, y: 1.0000086, z: 1.0000024}
+    - name: Nawin_LeftToeBases
+      parentName: Nawin_LeftFoot
+      position: {x: 0.00014520934, y: 0.0019239433, z: -0.000036249752}
+      rotation: {x: -0.34671703, y: 0.9365193, z: -0.051172696, w: 0.010010366}
+      scale: {x: 1.0000161, y: 0.9999914, z: 1.0000072}
+    - name: Nawin_LeftLegPartial
+      parentName: Nawin_LeftUpLegPart2
+      position: {x: -7.4505804e-11, y: 0.0012089002, z: 3.7252902e-11}
+      rotation: {x: -0.000004895264, y: -0.0000015565778, z: -0.7593289, w: -0.65070707}
+      scale: {x: 1.0000006, y: 1.0000006, z: 1.0000011}
+    - name: Nawin_LeftLegHandMiddleSlider0
+      parentName: Nawin_LeftLegPartial
+      position: {x: 0.000047720543, y: 0.0006673233, z: 4.6566126e-11}
+      rotation: {x: -0.0000002104, y: 0.00000007345602, z: -0.03843254, w: 0.99926126}
+      scale: {x: 1.0000042, y: 1.0000021, z: 1.0000066}
+    - name: Nawin_LeftLegHandMiddleSlider2
+      parentName: Nawin_LeftLegPartial
+      position: {x: -0.00005500706, y: -0.00066619425, z: 3.5390257e-10}
+      rotation: {x: -0.00000020051513, y: -0.000000055441426, z: -0.038432594, w: 0.99926126}
+      scale: {x: 1.0000082, y: 1.0000052, z: 1.0000103}
+    - name: Nawin_LeftHipPartial
+      parentName: Nawin_Hips
+      position: {x: -0.0000068979953, y: 0.00026959425, z: -0.0012627007}
+      rotation: {x: 0.40073407, y: -0.48200905, z: -0.6142676, w: 0.47932756}
+      scale: {x: 1.0000054, y: 1.000009, z: 1.0000026}
+    - name: Nawin_LeftHipHandMiddleSlider0
+      parentName: Nawin_LeftHipPartial
+      position: {x: -0.000003596362, y: -0.00000027975068, z: -0.00096890185}
+      rotation: {x: 0.00000005960463, y: -0, z: -0.00000040233127, w: 1}
+      scale: {x: 1.0000029, y: 1.0000027, z: 0.9999999}
+    - name: Nawin_LeftHipHandMiddleSlider1
+      parentName: Nawin_LeftHipPartial
+      position: {x: -0.0000035964802, y: 0.0009693888, z: 0.0000007669837}
+      rotation: {x: 0.00000005960463, y: -0, z: -0.00000040233127, w: 1}
+      scale: {x: 1.0000033, y: 1.0000025, z: 1.0000005}
+    - name: Nawin_LeftHipHandMiddleSlider2
+      parentName: Nawin_LeftHipPartial
+      position: {x: -0.000003595218, y: -0.00000027932225, z: 0.0009704356}
+      rotation: {x: 0.00000005960463, y: -0, z: -0.00000040233127, w: 1}
+      scale: {x: 1.0000033, y: 1.0000021, z: 1.0000005}
+    - name: Nawin_LeftHipHandMiddleSlider3
+      parentName: Nawin_LeftHipPartial
+      position: {x: -0.0000035968958, y: -0.0009699477, z: 0.00000076691384}
+      rotation: {x: 0.00000005960463, y: -0, z: -0.00000040233127, w: 1}
+      scale: {x: 1.0000029, y: 1.000003, z: 1.0000007}
+    - name: Nawin_RightHipPartial
+      parentName: Nawin_Hips
+      position: {x: -0.000006897928, y: 0.00027696873, z: 0.0012627007}
+      rotation: {x: -0.61426765, y: -0.47932744, z: 0.4007344, w: 0.48200884}
+      scale: {x: 1.000004, y: 1.0000069, z: 1.0000021}
+    - name: Nawin_RightHipHandMiddleSlider0
+      parentName: Nawin_RightHipPartial
+      position: {x: -0.000003595015, y: 0.00000027930363, z: -0.0009704356}
+      rotation: {x: -0.00000008940696, y: 0.0000002533197, z: -0.000000059604638,
+        w: 1}
+      scale: {x: 1.000002, y: 1.0000017, z: 1.0000005}
+    - name: Nawin_RightHipHandMiddleSlider1
+      parentName: Nawin_RightHipPartial
+      position: {x: -0.0000035950732, y: 0.0009699483, z: -0.00000076671944}
+      rotation: {x: -0.00000008940696, y: 0.0000002533197, z: -0.000000059604638,
+        w: 1}
+      scale: {x: 1, y: 0.9999999, z: 1.0000002}
+    - name: Nawin_RightHipHandMiddleSlider2
+      parentName: Nawin_RightHipPartial
+      position: {x: -0.000003594316, y: 0.0000002796948, z: 0.00096890255}
+      rotation: {x: -0.0000001490116, y: 0.00000028312203, z: -0.00000008940696, w: 1}
+      scale: {x: 1.0000026, y: 1.0000006, z: 1.0000006}
+    - name: Nawin_RightHipHandMiddleSlider3
+      parentName: Nawin_RightHipPartial
+      position: {x: -0.0000035960463, y: -0.00096938916, z: -0.00000076671364}
+      rotation: {x: -0.00000008940696, y: 0.00000023841855, z: -0.00000008940696,
+        w: 1}
+      scale: {x: 1.000002, y: 1.0000017, z: 1.0000002}
+    - name: papa.001
+      parentName: NarwinRiged(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 0.01, y: 0.01, z: 0.01}
+    - name: Plane.001
+      parentName: NarwinRiged(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 0.01, y: 0.01, z: 0.01}
+    - name: Plane.3300
+      parentName: NarwinRiged(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 0.01, y: 0.01, z: 0.01}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

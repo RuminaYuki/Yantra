@@ -1441,10 +1441,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4813272296387939907}
-  - {fileID: 7122128662095374181}
-  - {fileID: 7410104197745311921}
-  - {fileID: 889403597306264303}
-  - {fileID: 4481405152454119573}
   m_Father: {fileID: 6822742963822158080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2505384191297380910
@@ -1492,37 +1488,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 450658767422458297}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2284807413456734723
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7410104197745311921}
-  m_Layer: 0
-  m_Name: Point (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7410104197745311921
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2284807413456734723}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.12, y: 0.42, z: 13.62}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1834963662155422197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2311129573506939057
 GameObject:
@@ -2618,37 +2583,6 @@ Transform:
   - {fileID: 3740084250975129717}
   m_Father: {fileID: 554432134505568114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3506575752815056216
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4481405152454119573}
-  m_Layer: 0
-  m_Name: Point (5)
-  m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4481405152454119573
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3506575752815056216}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.44, y: 2.4, z: -22.52}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1834963662155422197}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3547598809874338429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,37 +2897,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 632674623518777096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4037034370615953609
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7122128662095374181}
-  m_Layer: 0
-  m_Name: Point (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7122128662095374181
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4037034370615953609}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.68, y: 0.32, z: 1.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1834963662155422197}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4101296006397114742
 GameObject:
   m_ObjectHideFlags: 0
@@ -3021,7 +2924,7 @@ GameObject:
   - component: {fileID: 3064863031391641772}
   - component: {fileID: 5031231248238384009}
   - component: {fileID: 1803436951983232987}
-  - component: {fileID: 7911411683602572248}
+  - component: {fileID: 2467254770739927560}
   m_Layer: 0
   m_Name: EnemyController
   m_TagString: Untagged
@@ -3365,7 +3268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KaResetController
   _defaultResetPoint: {fileID: 4813272296387939907}
---- !u!114 &7911411683602572248
+--- !u!114 &2467254770739927560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3374,9 +3277,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4101296006397114742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f9be7be5c45d142b256c16f4dd1722, type: 3}
+  m_Script: {fileID: 11500000, guid: debd8e6decccedf42a91111e9b2cf8af, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostSoundController
+  m_EditorClassIdentifier: Assembly-CSharp::KaSoundController
   voiceProfiles:
   - profileName: Poom
     dropWeight: 100
@@ -3405,8 +3308,11 @@ MonoBehaviour:
     death: {fileID: 11400000, guid: 3d08c003a6502094589766a0e302966b, type: 2}
   useAutoMoan: 1
   moanChance: 40
-  minMoanDelay: 5
-  maxMoanDelay: 10
+  minMoanDelay: 8
+  maxMoanDelay: 15
+  voiceLines: []
+  autoPickByDistance: 1
+  chaseDistanceThreshold: 8
   actionSounds: []
   minStepInterval: 0.2
   maxFootstepHearDistance: 14
@@ -3415,7 +3321,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   raycastDistance: 1.5
-  surfaceSounds: []
+  surfaceSounds:
+  - surfaceTag: Wood
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 2b4cf4415bade6e47acad67d93238e23, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Dirt
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 9f17a5de0185a21468859f9be378ecbc, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Rock
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 03ee2a30cee3b274dbae9ec05888646a, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Mud
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: c59767ae35d612d4e9c58519fe985c4a, type: 2}
+    runSound: {fileID: 0}
   terrainSounds:
   - groupName: Grass
     terrainLayers:
@@ -4907,37 +4829,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0000030696392, y: 0.0019261017, z: -0.78321713}
     m_Extent: {x: 0.8834686, y: 0.1334858, z: 0.8189121}
   m_DirtyAABB: 0
---- !u!1 &5952822809399865356
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 889403597306264303}
-  m_Layer: 0
-  m_Name: Point (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &889403597306264303
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5952822809399865356}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -49.48, y: 0.7, z: -0.24}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1834963662155422197}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6000950049779397349
 GameObject:
   m_ObjectHideFlags: 0
@@ -6074,7 +5965,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2d1a879c7fa420b448fd90a29353f936, type: 2}
+  - {fileID: 2100000, guid: 8fcb97082e6edb347a0851c9c8017d5f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
