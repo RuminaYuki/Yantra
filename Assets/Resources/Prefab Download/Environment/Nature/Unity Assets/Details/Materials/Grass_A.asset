@@ -23,7 +23,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grass_A
-  m_Shader: {fileID: -6465566751694194690, guid: dfa3b96612ed4df4a97b7fd06217ba23, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: dfa3b96612ed4df4a97b7fd06217ba23,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -57,7 +58,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_8713F080:
-        m_Texture: {fileID: 2800000, guid: 5bdbe53dce2414e458937234dce49479, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_9DCAAA49:
@@ -110,7 +111,7 @@ Material:
     - Vector1_593c5cea6c4a42e993ed03ced4685732: 1
     - Vector1_8651797e3e304e108dbd25f9d5a426ba: 0.426
     - Vector1_a5b8b09028ce49a39f4d090894c89e22: 0.415
-    - Vector1_a6983181c8dc4691ba6a28a34c4223a6: 1.82
+    - Vector1_a6983181c8dc4691ba6a28a34c4223a6: 1.91
     - Wind_Blast: 0.05
     - Wind_Intensity: 0.1
     - Wind_Ripples: 0.05
@@ -185,10 +186,11 @@ Material:
     - Terrain_Origin: {r: 0, g: 0, b: 0, a: 0}
     - Terrain_Scale: {r: 0, g: 0, b: 0, a: 0}
     - _BlendScale: {r: 2, g: 2, b: 0, a: 0}
-    - _DiffusionProfileAsset: {r: -5.7855046e-23, g: -2.7243504e-36, b: -1.8891285e+22, a: -12817017}
+    - _DiffusionProfileAsset: {r: -5.7855046e-23, g: -2.7243504e-36, b: -1.8891285e+22,
+        a: -12817017}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Thickness_Remap: {r: 0, g: 1, b: 0, a: 0}
+    - _Thickness_Remap: {r: 0, g: 0, b: 0, a: 0}
     - _blendOffset: {r: 1024, g: 1024, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
