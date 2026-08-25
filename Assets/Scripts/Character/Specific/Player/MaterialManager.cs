@@ -265,6 +265,7 @@ public class MaterialManager : MonoBehaviour
         ApplyHealRadius(_maxHealRadius);
 
         _healCoroutine = null;
+        RemoveHealMaterials();
     }
 
     private void AddHealMaterials()
