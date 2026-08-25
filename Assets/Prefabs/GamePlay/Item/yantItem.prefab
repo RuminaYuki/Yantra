@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5667818463353329649}
   - component: {fileID: 7005027114586173024}
   - component: {fileID: 7589144413638221990}
+  - component: {fileID: 8516347183720117668}
   m_Layer: 9
   m_Name: yantItem
-  m_TagString: Untagged
+  m_TagString: Yant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89,6 +90,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PickupInteractable
   itemData: {fileID: 11400000, guid: 6ef828eaf8f2a7940b077e4a0dfd501e, type: 2}
   amount: 2
+--- !u!114 &8516347183720117668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3658257764421604894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d34197e48628ef45ab7a825545dae2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableSound
+  _interactable: {fileID: 0}
+  _interactSound: {fileID: 11400000, guid: 2b306c23111eb4548bde347efe6bee3d, type: 2}
+  _endInteractSound: {fileID: 0}
 --- !u!1 &5454596574076172759
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +296,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 992
+  m_VersionIndex: 998
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

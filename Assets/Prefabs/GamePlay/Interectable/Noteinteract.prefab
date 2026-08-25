@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.88366926, z: -0, w: 0.4681117}
   m_LocalPosition: {x: 0, y: 0.172, z: 0}
-  m_LocalScale: {x: 0.07, y: 0.07, z: -0.07}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9182947527880130960}
   m_LocalEulerAnglesHint: {x: 0, y: -124.176, z: 0}
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b25052f1d21c71e44af7da2f6bbc5446, type: 2}
+  - {fileID: 2100000, guid: 872789cb7ae2fe04585e53c7a0fe3e71, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Billboard
   targetCamera: {fileID: 0}
   lockYAxis: 0
+  reverseZ: 1
 --- !u!1 &2826308972162881349
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Billboard
   targetCamera: {fileID: 0}
   lockYAxis: 0
+  reverseZ: 0
 --- !u!1 &2905323091003622660
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,9 +224,10 @@ GameObject:
   - component: {fileID: 3919198148196084313}
   - component: {fileID: 6620450940398190693}
   - component: {fileID: 162180486601444218}
+  - component: {fileID: 9116842061896074778}
   m_Layer: 9
   m_Name: Noteinteract
-  m_TagString: Untagged
+  m_TagString: Paper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -302,7 +305,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PaperDataInteractable
   interactable: {fileID: 3919198148196084313}
-  dataSO: {fileID: 11400000, guid: d137b3a91dec98a4a9ea5cb4d58d36dd, type: 2}
+  dataSO: {fileID: 11400000, guid: 0005a09a8b99f0c49bb428f694fef5ba, type: 2}
+--- !u!114 &9116842061896074778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2905323091003622660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d34197e48628ef45ab7a825545dae2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableSound
+  _interactable: {fileID: 0}
+  _interactSound: {fileID: 11400000, guid: c08bb0bc08d317f46a9efafe3d93b470, type: 2}
+  _endInteractSound: {fileID: 11400000, guid: 316381792eaefce4d95ef4667fac55c8, type: 2}
 --- !u!1 &3312044615290667008
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +544,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 946
+  m_VersionIndex: 967
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
