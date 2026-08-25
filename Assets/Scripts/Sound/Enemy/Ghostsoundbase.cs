@@ -19,6 +19,15 @@ public struct VoiceLineSet
     public float minCooldown;
     public float maxCooldown;
 
+    [Tooltip("พูดได้เฉพาะในช่วงหลังได้รับสัญญาณ Alert เท่านั้น" +
+        "\nแก้ปัญหาคลิปอนิเมชันที่วนตลอดเวลา ทำให้ผีพูดแม้ตอนไม่ได้ทำกิจกรรมนั้น" +
+        "\nเช่น ตานีลอยตลอดเวลา แต่ควรพูด 'มึงอยู่ไหน' เฉพาะตอนกำลังหาจริงๆ")]
+    public bool onlyDuringAlertWindow;
+
+    [Tooltip("พูดประโยคนี้แล้วปิดหน้าต่าง Alert ทันที" +
+        "\nติ๊กกับประโยคที่แปลว่า 'เลิกหาแล้ว' เช่นตอนเจอตัวหรือตอนโจมตี")]
+    public bool closesAlertWindow;
+
     [Tooltip("ตัดคิวประโยคที่กำลังพูดค้างอยู่ได้ไหม" +
         "\nเปิดเฉพาะเสียงที่พลาดไม่ได้ เช่นเสียงกรี๊ดตอนโจมตี" +
         "\nถ้าเปิดหมดทุกอัน ผีจะพูดขัดตัวเองตลอดเวลา")]
@@ -109,17 +118,29 @@ public abstract class GhostSoundBase : MonoBehaviour
     // ==========================================
     // Alert Sound — เสียงเตือนผู้เล่น
     // ==========================================
-    // ต่างจาก Voice Lines อย่างสิ้นเชิง:
-    //   Voice Lines = เสียงบรรยากาศ มีสุ่ม มี cooldown หายบ้างก็ไม่เป็นไร
-    //   Alert Sound = ข้อมูล ห้ามหายแม้แต่ครั้งเดียว ไม่มีด่านคัดกรองใดๆ ทั้งสิ้น
-    //
-    // ถ้าเสียงเตือนหายไปครั้งหนึ่ง ผู้เล่นอาจตายเพราะไม่รู้ตัว
-    // เสียงประเภทนี้จึงต้องดัง 100% เสมอ
     [Header("Alert Sound")]
     [Tooltip("เสียงเตือนตอนผีเปลี่ยนสถานะ — ดังทุกครั้ง 100% ไม่มีสุ่ม ไม่มี cooldown" +
         "\n⚠️ ตั้ง Spatial Blend = 0 ใน SoundData เพื่อให้ได้ยินจากทุกที่ในแมพ" +
         "\nถ้าตั้งเป็น 3D แล้วผีวาร์ปไปไกล ผู้เล่นจะไม่ได้ยินเลย ซึ่งผิดจุดประสงค์")]
     [SerializeField] private SoundID alertSound;
+
+    [Tooltip("หลังได้รับ Alert ให้ถือว่าผี 'กำลังหา' นานกี่วินาที" +
+        "\nประโยคที่ติ๊ก Only During Alert Window ไว้ จะพูดได้เฉพาะในช่วงนี้" +
+        "\nตั้งให้ยาวพอที่ผีจะหาเจอ แต่ไม่ยาวจนพูดตอนทำอย่างอื่นอยู่")]
+    [SerializeField] private float alertWindowDuration = 15f;
+
+    private float alertWindowUntil = -999f;
+
+    /// <summary>ตอนนี้อยู่ในช่วงเวลาหลังได้รับ Alert หรือเปล่า</summary>
+    public bool IsAlertWindowOpen => Time.time < alertWindowUntil;
+
+    /// <summary>ปิดหน้าต่างทันที — เรียกได้จาก Animation Event หรือ Event Channel</summary>
+    public void CloseAlertWindow()
+    {
+        alertWindowUntil = -999f;
+
+        if (logVoiceLines) Debug.Log($"[Alert] {name} ปิดหน้าต่าง Alert", this);
+    }
 
     /// <summary>
     /// เล่นเสียงเตือนทันที ไม่ผ่านด่านคัดกรองใดๆ
@@ -128,6 +149,9 @@ public abstract class GhostSoundBase : MonoBehaviour
     public void PlayAlert()
     {
         if (alertSound == null || SoundManager.Instance == null) return;
+
+        // เปิดหน้าต่างเวลาให้ประโยคที่ผูกไว้กับ Alert พูดได้
+        alertWindowUntil = Time.time + alertWindowDuration;
 
         // เกิดที่ตำแหน่งหูผู้ฟัง — การันตีว่าได้ยินแน่นอนไม่ว่าผีจะอยู่ไกลแค่ไหน
         SoundManager.Instance.PlayEventSFX(alertSound);
@@ -307,6 +331,12 @@ public abstract class GhostSoundBase : MonoBehaviour
         if (index < 0) { LogSkip(state, "ไม่มีแถวนี้ใน Voice Lines"); return; }
         if (voiceLines[index].line == null) { LogSkip(state, "ช่อง Line ว่าง"); return; }
 
+        if (voiceLines[index].onlyDuringAlertWindow && !IsAlertWindowOpen)
+        {
+            LogSkip(state, "อยู่นอกช่วง Alert Window (ยังไม่ได้รับสัญญาณ หรือหมดเวลาแล้ว)");
+            return;
+        }
+
         // กฎเหล็ก: หนึ่งผีพูดได้ทีละประโยค
         // ยกเว้นเสียงที่ติ๊ก Can Interrupt ไว้ ซึ่งจะตัดคิวประโยคเก่าทิ้ง
         if (IsVoiceBusy && !voiceLines[index].canInterrupt)
@@ -346,6 +376,8 @@ public abstract class GhostSoundBase : MonoBehaviour
         }
 
         voiceBusyUntil = Time.time + duration;
+
+        if (voiceLines[index].closesAlertWindow) CloseAlertWindow();
 
         if (logVoiceLines)
             Debug.Log($"[Voice] {name} พูด {state} ยาว {duration:F2} วิ", this);

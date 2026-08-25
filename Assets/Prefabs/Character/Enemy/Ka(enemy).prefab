@@ -3313,6 +3313,17 @@ MonoBehaviour:
   voiceLines: []
   autoPickByDistance: 1
   chaseDistanceThreshold: 8
+  presenceLoop: {fileID: 0}
+  foleyLoop: {fileID: 0}
+  presenceFadeIn: 1.5
+  presenceFadeOut: 1
+  activityLoop: {fileID: 11400000, guid: 241507cb0ff0d53418de4f6c4f1c33f3, type: 2}
+  activityTimeout: 4
+  activityFadeIn: 1
+  activityFadeOut: 0.6
+  alertSound: {fileID: 0}
+  alertWindowDuration: 15
+  logVoiceLines: 0
   actionSounds: []
   minStepInterval: 0.2
   maxFootstepHearDistance: 14
