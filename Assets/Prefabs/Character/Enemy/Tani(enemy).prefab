@@ -441,7 +441,7 @@ MonoBehaviour:
     chance: 65
     minCooldown: 6
     maxCooldown: 11
-    canInterrupt: 0
+    canInterrupt: 1
     nextAllowedTime: 0
   - state: 3
     line: {fileID: 11400000, guid: a0e35a3badb4c8042a4c54a81ed9251d, type: 2}
@@ -463,7 +463,7 @@ MonoBehaviour:
   foleyLoop: {fileID: 11400000, guid: 0e0daa9acf67fcd4ea88d637e4567094, type: 2}
   presenceFadeIn: 1.5
   presenceFadeOut: 1
-  alertSound: {fileID: 0}
+  alertSound: {fileID: 11400000, guid: 798cf334eab0fdf40b4b846415d703eb, type: 2}
   logVoiceLines: 0
   actionSounds:
   - {fileID: 11400000, guid: 1ddf3e58b6c37954886bcebed26a0374, type: 2}
@@ -482,8 +482,8 @@ MonoBehaviour:
   _soundController: {fileID: 552487685256433264}
   _bindings:
   - channel: {fileID: 11400000, guid: 00258178a1b34514690060e5be2003bb, type: 2}
-    playAlertSound: 0
-    playVoiceLine: 0
+    playAlertSound: 1
+    playVoiceLine: 1
     voiceState: 2
   _logEvents: 1
 --- !u!1 &1322102201380666121
