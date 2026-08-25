@@ -10,6 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 235397671597574291, guid: c9eba979550f57945bdbb313dc4505cf,
         type: 3}
+      propertyPath: barkMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b36295e640f89cc4db4e1cd8366b1354, type: 2}
+    - target: {fileID: 235397671597574291, guid: c9eba979550f57945bdbb313dc4505cf,
+        type: 3}
       propertyPath: exportedFolderName
       value: TallTreeSpread_Source_14k_01
       objectReference: {fileID: 0}
