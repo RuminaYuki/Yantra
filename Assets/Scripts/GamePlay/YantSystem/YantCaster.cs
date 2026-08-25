@@ -52,9 +52,9 @@ public class YantCaster : MonoBehaviour
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     #region Analyze Input
-    public void Analyze()
+    public bool Analyze()
     {
-        TryAnalyze();
+        return TryAnalyze();
     }
 
     private bool TryAnalyze()
