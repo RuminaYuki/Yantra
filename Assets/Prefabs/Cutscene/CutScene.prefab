@@ -5674,18 +5674,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5123998983100036164}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 353281538526814186}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8152130014160264368}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3805095139040953173}
   m_SourcePrefab: {fileID: 100100000, guid: 651086a5c92a96e45bb50083547a25a9, type: 3}
 --- !u!4 &541414214572133367 stripped
@@ -5700,69 +5688,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2748922704833564}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5123998983100036164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 921177372606796109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02351ef04efb79649ae1b609163d0b8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DummyCutsceneSound
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  raycastDistance: 2
-  surfaceSounds: []
-  terrainSounds: []
-  defaultWalkID: {fileID: 0}
-  defaultRunID: {fileID: 0}
-  customSounds: []
---- !u!114 &353281538526814186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 921177372606796109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02351ef04efb79649ae1b609163d0b8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DummyCutsceneSound
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  raycastDistance: 2
-  surfaceSounds: []
-  terrainSounds: []
-  defaultWalkID: {fileID: 0}
-  defaultRunID: {fileID: 0}
-  customSounds: []
---- !u!114 &8152130014160264368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 921177372606796109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02351ef04efb79649ae1b609163d0b8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DummyCutsceneSound
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  raycastDistance: 2
-  surfaceSounds: []
-  terrainSounds: []
-  defaultWalkID: {fileID: 0}
-  defaultRunID: {fileID: 0}
-  customSounds: []
 --- !u!114 &3805095139040953173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5777,11 +5702,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DummyCutsceneSound
   groundLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   raycastDistance: 2
-  surfaceSounds: []
-  terrainSounds: []
-  defaultWalkID: {fileID: 0}
+  surfaceSounds:
+  - surfaceTag: Wood
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 2b4cf4415bade6e47acad67d93238e23, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Dirt
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 9f17a5de0185a21468859f9be378ecbc, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Rock
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 03ee2a30cee3b274dbae9ec05888646a, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Mud
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: c59767ae35d612d4e9c58519fe985c4a, type: 2}
+    runSound: {fileID: 0}
+  terrainSounds:
+  - groupName: Grass
+    terrainLayers:
+    - {fileID: 8574412962073106934, guid: 302854f4bdb6efd4c9c42168f5685aa2, type: 2}
+    - {fileID: 8574412962073106934, guid: 74554ebea0ab6414db8cd4ee1c19ab26, type: 2}
+    - {fileID: 8574412962073106934, guid: 55e7c08cb3cf095418e61da0f1150ff9, type: 2}
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 92686bf818070ad42ba079ee3d141ce5, type: 2}
+    runSound: {fileID: 0}
+  - groupName: Drit
+    terrainLayers:
+    - {fileID: 8574412962073106934, guid: f891a858e06782c4caf9bc0485cf20b0, type: 2}
+    - {fileID: 8574412962073106934, guid: d779024423457e041adec601a01081f5, type: 2}
+    - {fileID: 8574412962073106934, guid: 8a75c5890bcb8c64b875484b6b86ef27, type: 2}
+    - {fileID: 8574412962073106934, guid: 4487b38be3d636444b4197ac27947fe7, type: 2}
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 9f17a5de0185a21468859f9be378ecbc, type: 2}
+    runSound: {fileID: 0}
+  defaultWalkID: {fileID: 11400000, guid: 8442d2cb80c62f44a823853449f2384c, type: 2}
   defaultRunID: {fileID: 0}
   customSounds: []
 --- !u!95 &5864620786649043341 stripped
@@ -8521,7 +8479,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6743769153487374514}
   m_SourcePrefab: {fileID: 100100000, guid: 651086a5c92a96e45bb50083547a25a9, type: 3}
 --- !u!95 &842311715523442617 stripped
 Animator:
@@ -8529,6 +8491,66 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 6546804094087727656}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6204696342034462585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6546804094087727656}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6743769153487374514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6204696342034462585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02351ef04efb79649ae1b609163d0b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DummyCutsceneSound
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  raycastDistance: 2
+  surfaceSounds:
+  - surfaceTag: Wood
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 2b4cf4415bade6e47acad67d93238e23, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Dirt
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 9f17a5de0185a21468859f9be378ecbc, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Rock
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 03ee2a30cee3b274dbae9ec05888646a, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Mud
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: c59767ae35d612d4e9c58519fe985c4a, type: 2}
+    runSound: {fileID: 0}
+  terrainSounds:
+  - groupName: Grass
+    terrainLayers:
+    - {fileID: 8574412962073106934, guid: 302854f4bdb6efd4c9c42168f5685aa2, type: 2}
+    - {fileID: 8574412962073106934, guid: 74554ebea0ab6414db8cd4ee1c19ab26, type: 2}
+    - {fileID: 8574412962073106934, guid: 55e7c08cb3cf095418e61da0f1150ff9, type: 2}
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 92686bf818070ad42ba079ee3d141ce5, type: 2}
+    runSound: {fileID: 0}
+  - groupName: Drit
+    terrainLayers:
+    - {fileID: 8574412962073106934, guid: f891a858e06782c4caf9bc0485cf20b0, type: 2}
+    - {fileID: 8574412962073106934, guid: d779024423457e041adec601a01081f5, type: 2}
+    - {fileID: 8574412962073106934, guid: 8a75c5890bcb8c64b875484b6b86ef27, type: 2}
+    - {fileID: 8574412962073106934, guid: 4487b38be3d636444b4197ac27947fe7, type: 2}
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 9f17a5de0185a21468859f9be378ecbc, type: 2}
+    runSound: {fileID: 0}
+  defaultWalkID: {fileID: 11400000, guid: 8442d2cb80c62f44a823853449f2384c, type: 2}
+  defaultRunID: {fileID: 0}
+  customSounds: []
 --- !u!4 &6723965358787620291 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 651086a5c92a96e45bb50083547a25a9,
@@ -8625,23 +8647,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1948583544500082008}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 811779943090602507}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 676500645612377066}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4418496168817595925}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3132930637014902350}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 651086a5c92a96e45bb50083547a25a9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4309718166877408750}
     - targetCorrespondingSourceObject: {fileID: 7595531971254371901, guid: 651086a5c92a96e45bb50083547a25a9,
         type: 3}
       insertIndex: -1
@@ -8717,63 +8731,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6683595209936718484}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1948583544500082008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765047049633068997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff8e3d21ac89ebc4cbe22877f935d41c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AddGravityFordummy
-  gravity: -9.81
-  controller: {fileID: 0}
-  groundCheck: {fileID: 3805363727352470828}
-  groundDistance: 0.2
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!114 &811779943090602507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765047049633068997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff8e3d21ac89ebc4cbe22877f935d41c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AddGravityFordummy
-  gravity: -9.81
-  controller: {fileID: 0}
-  groundCheck: {fileID: 1140714121674628464}
-  groundDistance: 0.2
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!114 &676500645612377066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765047049633068997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff8e3d21ac89ebc4cbe22877f935d41c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AddGravityFordummy
-  gravity: -9.81
-  controller: {fileID: 0}
-  groundCheck: {fileID: 8607892130436633867}
-  groundDistance: 0.2
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &4418496168817595925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8818,6 +8775,60 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.95, z: 0}
+--- !u!114 &4309718166877408750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5765047049633068997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02351ef04efb79649ae1b609163d0b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DummyCutsceneSound
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  raycastDistance: 2
+  surfaceSounds:
+  - surfaceTag: Wood
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 2b4cf4415bade6e47acad67d93238e23, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Dirt
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 9f17a5de0185a21468859f9be378ecbc, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Rock
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 03ee2a30cee3b274dbae9ec05888646a, type: 2}
+    runSound: {fileID: 0}
+  - surfaceTag: Mud
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: c59767ae35d612d4e9c58519fe985c4a, type: 2}
+    runSound: {fileID: 0}
+  terrainSounds:
+  - groupName: Grass
+    terrainLayers:
+    - {fileID: 8574412962073106934, guid: 302854f4bdb6efd4c9c42168f5685aa2, type: 2}
+    - {fileID: 8574412962073106934, guid: 74554ebea0ab6414db8cd4ee1c19ab26, type: 2}
+    - {fileID: 8574412962073106934, guid: 55e7c08cb3cf095418e61da0f1150ff9, type: 2}
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 92686bf818070ad42ba079ee3d141ce5, type: 2}
+    runSound: {fileID: 0}
+  - groupName: Drit
+    terrainLayers:
+    - {fileID: 8574412962073106934, guid: f891a858e06782c4caf9bc0485cf20b0, type: 2}
+    - {fileID: 8574412962073106934, guid: d779024423457e041adec601a01081f5, type: 2}
+    - {fileID: 8574412962073106934, guid: 8a75c5890bcb8c64b875484b6b86ef27, type: 2}
+    - {fileID: 8574412962073106934, guid: 4487b38be3d636444b4197ac27947fe7, type: 2}
+    crouchSound: {fileID: 0}
+    walkSound: {fileID: 11400000, guid: 9f17a5de0185a21468859f9be378ecbc, type: 2}
+    runSound: {fileID: 0}
+  defaultWalkID: {fileID: 11400000, guid: 8442d2cb80c62f44a823853449f2384c, type: 2}
+  defaultRunID: {fileID: 0}
+  customSounds: []
 --- !u!4 &6578174744568966527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 651086a5c92a96e45bb50083547a25a9,
