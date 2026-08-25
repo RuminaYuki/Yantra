@@ -13,6 +13,7 @@ public class YantController : MonoBehaviour
     [ReadOnly][SerializeField] private float _holdTime = 0;
     private bool _holding = false;
     private bool _isHoldingLeftMouse = false;
+    [SerializeField] GameObject _yant;
 
     [ReadOnly][SerializeField]private bool _isDrawing = false;
     private bool IsDrawing
@@ -35,6 +36,7 @@ public class YantController : MonoBehaviour
 
     private void OnEnable()
     {
+        _playerInput.OnPressQ_ButtonChannel += HandlePressQInput;
         _playerInput.OnPressE_ButtonChannel += HandlePressEInput;
         _playerInput.OnLeftClickChannel += HandlePressLeftClickInput;
         _playerInput.OnRightClickChannel += HandleHoldRightClickInput;
@@ -42,6 +44,7 @@ public class YantController : MonoBehaviour
 
     private void OnDisable()
     {
+        _playerInput.OnPressQ_ButtonChannel -= HandlePressQInput;
         _playerInput.OnPressE_ButtonChannel -= HandlePressEInput;
         _playerInput.OnLeftClickChannel -= HandlePressLeftClickInput;
         _playerInput.OnRightClickChannel -= HandleHoldRightClickInput;
@@ -65,7 +68,18 @@ public class YantController : MonoBehaviour
     {
         if (_yantCaster != null && _isDrawing)
         {
-            _yantCaster.Analyze();
+            if (_yantCaster.Analyze())
+            {
+                _yant = _yantCaster._lastSpawnedYant;
+            }
+        }
+    }
+
+    private void HandlePressQInput()
+    {
+        if (_yant != null && _yant.activeSelf)
+        {
+            Destroy(_yant);
         }
     }
 
