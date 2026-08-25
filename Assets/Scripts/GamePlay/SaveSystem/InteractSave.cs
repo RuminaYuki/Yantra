@@ -7,7 +7,7 @@ public class InteractSave : MonoBehaviour
     private void Awake()
     {
         interactable = GetComponent<Iinteractable>();
-        if (interactable != null ) gameObject.SetActive(false);
+        if (interactable == null ) gameObject.SetActive(false);
     }
 
     private void OnEnable()
