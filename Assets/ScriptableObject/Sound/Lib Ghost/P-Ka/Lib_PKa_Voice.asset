@@ -337,3 +337,25 @@ MonoBehaviour:
     spatialBlend: 1
     minDistance: 1
     maxDistance: 12
+  - idName: ID_PKa_Poom_Eating
+    id: {fileID: 11400000, guid: f685110250674cd4a9c88107dfaf087b, type: 2}
+    mixerGroup: {fileID: 9183250927903690338, guid: 2fd5cbcfcb432d84cb5a4e241e65e2df,
+      type: 2}
+    priority: 50
+    useRandomClips: 1
+    randomChance: 50
+    clip: {fileID: 8300000, guid: 0dbcd32705a8f6e43ab1d659e1d7ed35, type: 3}
+    clips:
+    - {fileID: 8300000, guid: 0ed68f41a720d8043afd82af15c36073, type: 3}
+    useRandomStartOffset: 0
+    maxStartOffsetPercent: 0.5
+    useRandomPitch: 0
+    minPitch: 0.85
+    maxPitch: 1.15
+    useRandomVolume: 0
+    minVolume: 0
+    maxVolume: 0
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 30
