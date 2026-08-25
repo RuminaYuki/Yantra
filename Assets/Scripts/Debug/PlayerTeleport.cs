@@ -1,25 +1,20 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
-
-[Serializable]
-public class TeleportPoint
-{
-    public Vector3 Position;
-    public Quaternion Rotation;
-    public Vector3 Scale;
-    public TeleportPoint(Transform transform)
-    {
-        Position = transform.position;
-        Rotation = transform.rotation;
-        Scale = transform.localScale;
-    }
-}
-
+using UnityEngine.SceneManagement;
 
 public class PlayerTeleport : MonoBehaviour
 {
-    [SerializeField] private List<TeleportPoint> _teleportPoints = new(5);
+    [SerializeField] private List<TeleportPointSO> _teleportPoints = new(5);
+
+    [SerializeField] private VoidEventChannelSO _kaVoidEventChannel;
+    [SerializeField] private VoidEventChannelSO _taniVoidEventChannel;
+
+    [SerializeField] private IntEventChannelSO _taniEventChannel;
+
+#if UNITY_EDITOR
+    [Tooltip("Folder where new TeleportPointSO assets are saved when pressing I.")]
+    [SerializeField] private string _saveFolder = "Assets/TeleportPoints";
+#endif
 
     private void Update()
     {
@@ -36,26 +31,38 @@ public class PlayerTeleport : MonoBehaviour
                 break;
             case "4":
                 TeleportToPoint(3);
+                _kaVoidEventChannel.Raise();
+                _taniVoidEventChannel.Raise();
                 break;
             case "5":
                 TeleportToPoint(4);
+                _kaVoidEventChannel.Raise();
+                _taniVoidEventChannel.Raise();
+                _taniEventChannel.Raise(1);
                 break;
             case "6":
                 TeleportToPoint(5);
-                break; 
+                _kaVoidEventChannel.Raise();
+                _taniVoidEventChannel.Raise();
+                _taniEventChannel.Raise(2);
+                break;
         }
 
-        if (Input.GetKeyUp(KeyCode.Minus))
+        if (Input.GetKeyUp(KeyCode.I))
         {
             SetPosition();
         }
     }
 
+    /// <param name="index">จุดที่ teleport</param>
     private void TeleportToPoint(int index)
     {
         if (index >= 0 && index < _teleportPoints.Count)
         {
-            TeleportPoint targetPoint = _teleportPoints[index];
+            int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(sceneIndex);
+
+            TeleportPointSO targetPoint = _teleportPoints[index];
             transform.position = targetPoint.Position;
             transform.rotation = targetPoint.Rotation;
         }
@@ -67,6 +74,12 @@ public class PlayerTeleport : MonoBehaviour
 
     private void SetPosition()
     {
-        _teleportPoints.Add(new TeleportPoint(transform));
+#if UNITY_EDITOR
+        var point = TeleportPointSO.CreateFromTransform(transform, _saveFolder);
+#else
+        var point = ScriptableObject.CreateInstance<TeleportPointSO>();
+        point.Init(transform);
+#endif
+        _teleportPoints.Add(point);
     }
 }
