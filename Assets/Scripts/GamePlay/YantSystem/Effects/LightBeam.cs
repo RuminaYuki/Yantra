@@ -12,7 +12,7 @@ public class LightBeam : MonoBehaviour
 
     private void HandleBeam(bool value)
     {
-        Debug.Log(_beamGameObject.name);
+        //Debug.Log(_beamGameObject.name);
         _beamGameObject.SetActive(value);
     }
 }

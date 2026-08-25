@@ -61,16 +61,16 @@ public class CollisionDetector : MonoBehaviour
     /// <summary>
     /// OnCollisionStay ถูกเรียกทุก frame ที่ object ยังคงอยู่ใน collision
     /// </summary>
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider otherCollider)
     {
-        Collider otherCollider = collision.collider;
-
         if (otherCollider == null)
         {
             return;
         }
 
-        // ถ้ารู้ collider ไป แล้ว ข้าม
+        //Debug.Log(otherCollider.gameObject.name);
+
+        // ถ้ารู้ collider นี้แล้ว ข้าม
         if (_activeColliders.Contains(otherCollider))
         {
             return;
@@ -84,13 +84,8 @@ public class CollisionDetector : MonoBehaviour
         _activeColliders.Add(otherCollider);
     }
 
-    /// <summary>
-    /// OnCollisionExit ถูกเรียกเมื่อ object ออกจาก collision
-    /// </summary>
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider otherCollider)
     {
-        Collider otherCollider = collision.collider;
-
         if (otherCollider == null)
         {
             return;

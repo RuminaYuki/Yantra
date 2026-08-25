@@ -31,7 +31,7 @@ public class PlayerInteract : MonoBehaviour
             return;
             
         activeInteractable = rayInteract.CurrentInteractable;
-        Debug.Log(activeInteractable);
+        //Debug.Log(activeInteractable);
         if (activeInteractable == null )
             return;
 

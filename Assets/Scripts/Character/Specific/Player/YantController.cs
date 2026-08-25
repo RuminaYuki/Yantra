@@ -87,7 +87,7 @@ public class YantController : MonoBehaviour
     {
         if (!_isCasting) return;
 
-        Debug.Log(context.phase);
+        //Debug.Log(context.phase);
 
         if (context.started)
         {

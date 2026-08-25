@@ -126,7 +126,6 @@ GameObject:
   - component: {fileID: 8490469283959842495}
   - component: {fileID: 2976914023240564500}
   - component: {fileID: 8540827176870847009}
-  - component: {fileID: 7562265002597406231}
   - component: {fileID: 8384137283284004847}
   m_Layer: 0
   m_Name: Cylinder
@@ -611,28 +610,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &7562265002597406231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8840817357137097875}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e077b3680e902ae489779986c00f2d48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ConeColliderYant
-  _collisionDetector: {fileID: 0}
-  _damagePerTick: 1
-  _requiredTargetCount: 1
-  _damageBoostPerExtraTarget: 0
-  _originTransform: {fileID: 0}
-  _positionOffset: {x: 0, y: 0, z: 0}
-  _beamDuration: 2.5
-  _tickInterval: 1
-  _beamEventChannel: {fileID: 0}
-  _owner: {fileID: 0}
 --- !u!114 &8384137283284004847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,9 +678,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConeColliderYant
   _collisionDetector: {fileID: 8384137283284004847}
-  _damagePerTick: 5
+  _damagePerTick: 1
   _requiredTargetCount: 1
-  _damageBoostPerExtraTarget: 0.5
+  _damageBoostPerExtraTarget: 0
   _originTransform: {fileID: 0}
   _positionOffset: {x: 0, y: 0, z: 1.1}
   _beamDuration: 2.5
