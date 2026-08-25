@@ -143,13 +143,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8840817357137097875}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 2, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2568030386955828209}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7035800071642741096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,7 +651,7 @@ MonoBehaviour:
   _ownerToIgnore: {fileID: 0}
   _originTransform: {fileID: 0}
   _positionOffset: {x: 0, y: 0, z: 1.1}
-  _rotationOffset: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
+  _rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &9117980074068866131
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,6 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YantEffectController
   _yantLifeTime: 20
+  _onDestroyDelay: 0.15
   _effectSettings:
   - _yantReferences: {fileID: 7936817575255341737}
     _effectType: 0
