@@ -110,9 +110,23 @@ public class YantCaster : MonoBehaviour
         GameObject paper = _yantPaper != null ? _yantPaper : (_matcher != null ? _matcher.gameObject : gameObject);
         Vector3 spawnPos = _yantSpawnPoint.transform.position;
         Quaternion spawnRot = _yantSpawnPoint.transform.rotation;
-        GameObject yantObj = null;
+        GameObject yantObj = Instantiate(
+            binding.YantPrefab,
+            spawnPos,
+            spawnRot,
+            _yantSpawnPoint
+        );
 
-        yantObj = Instantiate(binding.YantPrefab, spawnPos, spawnRot, _yantSpawnPoint);
+        // ทำให้ขนาด World เท่ากับ Prefab เดิม
+        Vector3 worldScale = binding.YantPrefab.transform.lossyScale;
+
+        Vector3 parentScale = _yantSpawnPoint.lossyScale;
+
+        yantObj.transform.localScale = new Vector3(
+            worldScale.x / parentScale.x,
+            worldScale.y / parentScale.y,
+            worldScale.z / parentScale.z
+        );
 
         if (yantObj.TryGetComponent<YantEffectController>(out YantEffectController yantEffectController))
         {

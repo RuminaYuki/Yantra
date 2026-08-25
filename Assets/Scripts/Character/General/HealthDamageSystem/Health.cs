@@ -87,7 +87,7 @@ public class Health : MonoBehaviour, IDamageable,IHeal
 
     private void Dead()
     {
-        if (SaveManager.Instance != null) SaveManager.Instance.LoadAll();
+        if (SaveManager.Instance != null && this.gameObject.CompareTag("Player")) SaveManager.Instance.LoadAll();
         DeadEvent();
     }
 

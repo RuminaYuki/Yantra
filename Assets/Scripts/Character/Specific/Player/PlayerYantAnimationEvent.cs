@@ -16,7 +16,7 @@ public class PlayerYantAnimationEvent : MonoBehaviour
 
         if (_currentController != null)
         {
-            Debug.Log(_currentController);
+            //Debug.Log(_currentController);
             _currentController.TriggerAnimationTiming(value);
             //_currentController = null;
         }
