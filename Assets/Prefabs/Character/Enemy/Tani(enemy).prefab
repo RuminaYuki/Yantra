@@ -112,7 +112,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753491701661662287}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9fc0593f0b38ff1409c7734938b9a1b1, type: 3}
+  m_Avatar: {fileID: 9000000, guid: a8c610d100bef2849b8664e5c0f97c3a, type: 3}
   m_Controller: {fileID: 9100000, guid: d84bbd2189e1870459e0d7d21b726405, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -441,6 +441,8 @@ MonoBehaviour:
     chance: 65
     minCooldown: 6
     maxCooldown: 11
+    onlyDuringAlertWindow: 0
+    closesAlertWindow: 0
     canInterrupt: 1
     nextAllowedTime: 0
   - state: 3
@@ -448,6 +450,8 @@ MonoBehaviour:
     chance: 80
     minCooldown: 7
     maxCooldown: 13
+    onlyDuringAlertWindow: 0
+    closesAlertWindow: 0
     canInterrupt: 0
     nextAllowedTime: 0
   - state: 4
@@ -455,6 +459,8 @@ MonoBehaviour:
     chance: 100
     minCooldown: 0
     maxCooldown: 0
+    onlyDuringAlertWindow: 0
+    closesAlertWindow: 0
     canInterrupt: 0
     nextAllowedTime: 0
   autoPickByDistance: 1
@@ -464,6 +470,7 @@ MonoBehaviour:
   presenceFadeIn: 1.5
   presenceFadeOut: 1
   alertSound: {fileID: 11400000, guid: 798cf334eab0fdf40b4b846415d703eb, type: 2}
+  alertWindowDuration: 15
   logVoiceLines: 0
   actionSounds:
   - {fileID: 11400000, guid: 1ddf3e58b6c37954886bcebed26a0374, type: 2}
