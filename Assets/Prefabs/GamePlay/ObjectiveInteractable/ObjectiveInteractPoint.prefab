@@ -205,6 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Billboard
   targetCamera: {fileID: 0}
   lockYAxis: 0
+  reverseZ: 0
 --- !u!1 &7811789807087009314
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5466503197695901332
 Transform:
   m_ObjectHideFlags: 0
@@ -272,7 +273,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b25052f1d21c71e44af7da2f6bbc5446, type: 2}
+  - {fileID: 2100000, guid: 872789cb7ae2fe04585e53c7a0fe3e71, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -310,3 +311,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Billboard
   targetCamera: {fileID: 0}
   lockYAxis: 0
+  reverseZ: 0
