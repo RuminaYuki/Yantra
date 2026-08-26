@@ -8,8 +8,8 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private CenterRayInteract rayInteract;
     [SerializeField] private GameObject rootPlayer;
 
-    [SerializeField] private bool onInteractable = false;
-    private Iinteractable activeInteractable;
+    [SerializeField] private bool isHoldingInteraction = false;
+    private Iinteractable activeInteraction;
 
     private void Awake()
     {
@@ -22,44 +22,50 @@ public class PlayerInteract : MonoBehaviour
             return;
         }
 
-        inputAction.action.started += HandleMoveInput;
+        inputAction.action.started += HandleInteractInput;
     }
 
-    private void HandleMoveInput(InputAction.CallbackContext context)
+    private void OnDestroy()
+    {
+        if (inputAction != null)
+            inputAction.action.started -= HandleInteractInput;
+    }
+
+    private void HandleInteractInput(InputAction.CallbackContext context)
     {
         if (!context.started)
             return;
-            
-        activeInteractable = rayInteract.CurrentInteractable;
-        //Debug.Log(activeInteractable);
-        if (activeInteractable == null )
-            return;
 
-        if (!activeInteractable.HoldInteract)
+        if (isHoldingInteraction)
         {
-            activeInteractable.Interact(rootPlayer);
-            return;
-        }
-
-        if (!onInteractable)
-        {
-            if (activeInteractable != null && activeInteractable.Interact(rootPlayer))
-            {
-                onInteractable = true;
-                rayInteract.SetInteractEnabled(false);
-                rayInteract.StopHighlightingAll();
-            }
-        }
-        else
-        {
-            onInteractable = false;
+            isHoldingInteraction = false;
             rayInteract.SetInteractEnabled(true);
 
-            if (activeInteractable != null)
+            if (activeInteraction != null)
             {
-                activeInteractable.CancelInteraction(rootPlayer);
-                activeInteractable = null;
+                activeInteraction.CancelInteraction(rootPlayer);
+                activeInteraction = null;
             }
+
+            return;
+        }
+
+        Iinteractable targetInteractable = rayInteract.CurrentInteractable;
+        if (targetInteractable == null || !targetInteractable.CanInteract)
+            return;
+
+        if (!targetInteractable.HoldInteract)
+        {
+            targetInteractable.Interact(rootPlayer);
+            return;
+        }
+
+        if (targetInteractable.Interact(rootPlayer))
+        {
+            activeInteraction = targetInteractable;
+            isHoldingInteraction = true;
+            rayInteract.SetInteractEnabled(false);
+            rayInteract.StopHighlightingAll();
         }
     }
 }

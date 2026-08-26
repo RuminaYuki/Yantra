@@ -2256,6 +2256,12 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 320637025206408243}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2012801899879045507 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2278198010112478640, guid: 651086a5c92a96e45bb50083547a25a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 320637025206408243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4324631368615841226 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5154636963782862343, guid: 651086a5c92a96e45bb50083547a25a9,
@@ -2826,6 +2832,11 @@ PrefabInstance:
       propertyPath: _playerRoot
       value: 
       objectReference: {fileID: 3388754409268780033}
+    - target: {fileID: 6147809767875308379, guid: d6f2c258a18b0514f8959d610175256e,
+        type: 3}
+      propertyPath: _yantSpawnPoint
+      value: 
+      objectReference: {fileID: 2012801899879045507}
     - target: {fileID: 6147809767875308379, guid: d6f2c258a18b0514f8959d610175256e,
         type: 3}
       propertyPath: _minSimilarityPercent

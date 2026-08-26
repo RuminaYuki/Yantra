@@ -7,12 +7,28 @@ public class LightBeam : MonoBehaviour
 
     private void Awake()
     {
-        _beamEventChannel.Raised += HandleBeam;
+        if (_beamEventChannel != null)
+        {
+            _beamEventChannel.Raised += HandleBeam;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (_beamEventChannel != null)
+        {
+            _beamEventChannel.Raised -= HandleBeam;
+        }
     }
 
     private void HandleBeam(bool value)
     {
         //Debug.Log(_beamGameObject.name);
+        if (_beamGameObject == null)
+        {
+            return;
+        }
+
         _beamGameObject.SetActive(value);
     }
 }

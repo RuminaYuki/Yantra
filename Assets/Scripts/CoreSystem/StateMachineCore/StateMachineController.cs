@@ -11,7 +11,7 @@ public class StateMachineController : MonoBehaviour
 
     private StateMachine[] _stateMachines;
 
-    private void Start()
+    private void Awake()
     {
         _stateMachines = new StateMachine[_transitionTables.Length];
 

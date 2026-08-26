@@ -13,6 +13,7 @@ public class TaniPhaseController : MonoBehaviour
     void Awake()
     {
         _stateMachineController = GetComponent<StateMachineController>();
+        _sealTaniEvent.Raised += HandleSealTaniEvent;
     }
 
     void OnEnable()
@@ -32,6 +33,7 @@ public class TaniPhaseController : MonoBehaviour
     }
     private void HandleSealTaniEvent(int amount)
     {
+        Debug.Log(amount);
         if (amount <= 0)
             return;
 

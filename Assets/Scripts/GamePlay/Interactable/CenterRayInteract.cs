@@ -31,6 +31,11 @@ public class CenterRayInteract : MonoBehaviour
 
     private bool isInteractableInSight = false;
 
+    void Awake()
+    {
+        highlightedInteractables.Clear();
+    }
+
     private void Update()
     {
         if(isInteractableInSight)
@@ -194,16 +199,28 @@ public class CenterRayInteract : MonoBehaviour
         currentInteractable = null;
     }
 
-    public void SetInteractEnabled(bool enabled) => isInteractableInSight = !enabled;
+    public void SetInteractEnabled(bool enabled)
+    {
+        isInteractableInSight = !enabled;
+
+        if (!enabled)
+        {
+            ClearCurrentInteractable();
+            currentInteractableDebug = null;
+        }
+    }
 
     public void StopHighlightingAll()
     {
         foreach (Iinteractable interactable in highlightedInteractables)
         {
-            interactable.HideHighlight();
+            if (interactable != null)
+                interactable.HideHighlight();
         }
 
         highlightedInteractables.Clear();
+        ClearCurrentInteractable();
+        currentInteractableDebug = null;
     }
 
     private void OnDrawGizmosSelected()
