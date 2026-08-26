@@ -7,8 +7,38 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_Belt
+    second: {fileID: 2100000, guid: d04475ef6cf5d04439a2cac6ed85b523, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Model_TaniMat_BodySkin
     second: {fileID: 2100000, guid: cc3a629d695f84b4792655b93b732d59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_Cloth
+    second: {fileID: 2100000, guid: d04475ef6cf5d04439a2cac6ed85b523, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_Earing
+    second: {fileID: 2100000, guid: d04475ef6cf5d04439a2cac6ed85b523, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_Earing2
+    second: {fileID: 2100000, guid: d04475ef6cf5d04439a2cac6ed85b523, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_EyeMount
+    second: {fileID: 2100000, guid: 0293aa173d5291c4aaeea79306071653, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_Eyeglass
+    second: {fileID: 2100000, guid: 0ffb3341971330448b27b4dbd2f17ed3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -19,6 +49,21 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Model_TaniMat_Skin
     second: {fileID: 2100000, guid: 0293aa173d5291c4aaeea79306071653, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_Tooth
+    second: {fileID: 2100000, guid: 0293aa173d5291c4aaeea79306071653, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_necklace
+    second: {fileID: 2100000, guid: d04475ef6cf5d04439a2cac6ed85b523, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Model_TaniMat_necklace2
+    second: {fileID: 2100000, guid: d04475ef6cf5d04439a2cac6ed85b523, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
