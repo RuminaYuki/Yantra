@@ -12,23 +12,49 @@ public class ChangePositionOnObjectiveCompleted : MonoBehaviour
     [Header("Target")]
     [SerializeField] private GameObject targetObj;
     [SerializeField] private Transform targetTranform;
+    private bool isSubscribed;
+
     private void Awake()
     {
         if (objectiveSO == null)
         {
             objive = GetComponent<Objective>();
-            objectiveSO = objive.ObjectiveSO;
+            objectiveSO = objive != null ? objive.ObjectiveSO : null;
         }
-        if (eventChannel == null ) gameObject.SetActive(false);
 
-        eventChannel.Raised += OnObjtiveCompleted;
+        if (eventChannel == null)
+        {
+            Debug.LogWarning($"{nameof(ChangePositionOnObjectiveCompleted)} needs an event channel.", this);
+            enabled = false;
+        }
     }
 
-    private void OnObjtiveCompleted(string NameObjive)
+    private void OnEnable()
     {
-        if (objectiveSO.ObjectiveName == NameObjive)
+        if (eventChannel == null || isSubscribed)
+            return;
+
+        eventChannel.Raised += OnObjectiveCompleted;
+        isSubscribed = true;
+    }
+
+    private void OnDisable()
+    {
+        if (eventChannel == null || !isSubscribed)
+            return;
+
+        eventChannel.Raised -= OnObjectiveCompleted;
+        isSubscribed = false;
+    }
+
+    private void OnObjectiveCompleted(string objectiveName)
+    {
+        if (objectiveSO == null || targetObj == null || targetTranform == null)
+            return;
+
+        if (objectiveSO.ObjectiveName == objectiveName)
         {
-            targetObj.transform.position = targetTranform.transform.position;
+            targetObj.transform.position = targetTranform.position;
         }
     }
 }

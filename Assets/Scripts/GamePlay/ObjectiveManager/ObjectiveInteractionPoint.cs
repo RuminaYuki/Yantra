@@ -13,8 +13,18 @@ public class ObjectiveInteractionPoint : MonoBehaviour, IObjectiveTarget
     private void Awake()
     {
         interactable = GetComponent<Iinteractable>();
+    }
 
-        if (interactable != null) interactable.OnInteract += TyInteract;
+    private void OnEnable()
+    {
+        if (interactable != null)
+            interactable.OnInteract += TryInteract;
+    }
+
+    private void OnDisable()
+    {
+        if (interactable != null)
+            interactable.OnInteract -= TryInteract;
     }
 
     public void Setup(Objective obj)
@@ -22,21 +32,31 @@ public class ObjectiveInteractionPoint : MonoBehaviour, IObjectiveTarget
         objective = obj;
     }
 
-    private void TyInteract(GameObject rootplayer)
+    private void TryInteract(GameObject rootplayer)
     {
         Complete();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Complete();
+        }
     }
 
     public void Complete()
     {
         if (isCompleted)
+        {
+            Debug.Log("here");
             return;
+        }
 
         isCompleted = true;
         Debug.Log($"✅ Completed: {pointName}");
         
         // Notify objective
-        if (objective != null)
+        if (objective != null && objective.gameObject != null)
         {
             objective.OnTargetCompleted();
         }

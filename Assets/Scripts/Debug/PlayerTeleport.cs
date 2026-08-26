@@ -99,6 +99,8 @@ public class PlayerTeleport : MonoBehaviour
             _pendingRotation = targetPoint.Rotation;
             _hasPendingTeleport = true;
 
+            ClearInputObserverCallbacks();
+
             if (index >= 3)
             {
                 _hasKaVoidEventChannel = true;
@@ -128,5 +130,13 @@ public class PlayerTeleport : MonoBehaviour
         point.Init(transform);
 #endif
         _teleportPoints.Add(point);
+    }
+
+    private static void ClearInputObserverCallbacks()
+    {
+        foreach (YantraInputObserverSO observer in Resources.FindObjectsOfTypeAll<YantraInputObserverSO>())
+        {
+            observer.ClearAllChannels();
+        }
     }
 }

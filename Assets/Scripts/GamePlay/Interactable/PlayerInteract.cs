@@ -10,6 +10,7 @@ public class PlayerInteract : MonoBehaviour
 
     [SerializeField] private bool isHoldingInteraction = false;
     private Iinteractable activeInteraction;
+    private InputAction subscribedAction;
 
     private void Awake()
     {
@@ -21,19 +22,52 @@ public class PlayerInteract : MonoBehaviour
             rayInteract.enabled = false;
             return;
         }
+    }
 
-        inputAction.action.started += HandleInteractInput;
+    private void OnEnable()
+    {
+        SubscribeInput();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeInput();
+        ResetInteractionState();
     }
 
     private void OnDestroy()
     {
-        if (inputAction != null)
-            inputAction.action.started -= HandleInteractInput;
+        UnsubscribeInput();
+    }
+
+    private void SubscribeInput()
+    {
+        if (inputAction == null || inputAction.action == null)
+            return;
+
+        if (subscribedAction == inputAction.action)
+            return;
+
+        UnsubscribeInput();
+        subscribedAction = inputAction.action;
+        subscribedAction.started += HandleInteractInput;
+    }
+
+    private void UnsubscribeInput()
+    {
+        if (subscribedAction == null)
+            return;
+
+        subscribedAction.started -= HandleInteractInput;
+        subscribedAction = null;
     }
 
     private void HandleInteractInput(InputAction.CallbackContext context)
     {
         if (!context.started)
+            return;
+
+        if (rayInteract == null || rootPlayer == null)
             return;
 
         if (isHoldingInteraction)
@@ -68,6 +102,15 @@ public class PlayerInteract : MonoBehaviour
             rayInteract.SetInteractEnabled(false);
             rayInteract.StopHighlightingAll();
         }
+    }
+
+    private void ResetInteractionState()
+    {
+        isHoldingInteraction = false;
+        activeInteraction = null;
+
+        if (rayInteract != null)
+            rayInteract.SetInteractEnabled(true);
     }
 
     private static bool IsAlive(Iinteractable interactable)

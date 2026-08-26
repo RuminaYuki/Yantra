@@ -5,20 +5,31 @@ public class YantAmountUI : MonoBehaviour
 {
     [SerializeField] private IntEventChannelSO EventChannel;
     [SerializeField] private TextMeshProUGUI TextAmount;
+    private bool isSubscribed;
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (EventChannel != null)
-        {
-            EventChannel.Raised += OnEventRaised;
-        }
+        if (EventChannel == null || isSubscribed)
+            return;
+
+        EventChannel.Raised += OnEventRaised;
+        isSubscribed = true;
+    }
+
+    private void OnDisable()
+    {
+        if (EventChannel == null || !isSubscribed)
+            return;
+
+        EventChannel.Raised -= OnEventRaised;
+        isSubscribed = false;
     }
 
     private void OnEventRaised(int value)
     {
-        if (EventChannel != null)
-        {
-            TextAmount.text = value.ToString();
-        }
+        if (TextAmount == null)
+            return;
+
+        TextAmount.text = value.ToString();
     }
 }

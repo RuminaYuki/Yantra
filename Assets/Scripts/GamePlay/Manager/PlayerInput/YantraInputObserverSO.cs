@@ -58,9 +58,14 @@ public class YantraInputObserverSO : ScriptableObject
         OnMoveChannel = null;
         OnJumpChannel = null;
         OnRunChannel = null;
+        OnCrouchChannel = null;
         OnInteractionChannel = null;
         OnLeftClickChannel = null;
         OnRightClickChannel = null;
         OnMiddleClickChannel = null;
+        OnPressQ_ButtonChannel = null;
+        OnPressF_ButtonChannel = null;
+        OnPressE_ButtonChannel = null;
+        OnPressCtalR_ButtonChannel = null;
     }
 }

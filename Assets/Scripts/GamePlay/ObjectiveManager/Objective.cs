@@ -55,7 +55,7 @@ public class Objective : MonoBehaviour
                 objectiveTargets.Add(target);
             }
         }
-        SetobjectiveTargetsInspecter.Clear();
+        //SetobjectiveTargetsInspecter.Clear();
     }
 
     public void OnTargetCompleted()
