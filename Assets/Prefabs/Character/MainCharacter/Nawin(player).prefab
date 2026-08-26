@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 1651477607954239820}
   - component: {fileID: 3358683504348664095}
   - component: {fileID: 8091581075070772616}
+  - component: {fileID: 3118397315722404479}
   m_Layer: 3
   m_Name: PlayerController
   m_TagString: Player
@@ -666,7 +667,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.9
+  m_Height: 1.7
   m_Radius: 0.15
   m_SlopeLimit: 55
   m_StepOffset: 0.3
@@ -908,8 +909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306277f8f9662d0469954596bb87b235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StaminaSystem
-  _maxStamina: 1000
-  _recoverThreshold: 30
+  _maxStamina: 300
+  _recoverThreshold: 60
   _exhaustedDelay: 1.5
   _currentStamina: 0
 --- !u!114 &7564764884602532370
@@ -966,7 +967,7 @@ MonoBehaviour:
     type: 3}
   rayInteract: {fileID: 5829247252735835381}
   rootPlayer: {fileID: 9103408916130526773}
-  onInteractable: 0
+  isHoldingInteraction: 0
 --- !u!114 &3311584235873488721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1012,7 +1013,7 @@ MonoBehaviour:
   _statSOInvis: {fileID: 11400000, guid: e8f9d967926733d4d90cf3f410734c41, type: 2}
   _flagSOBush: {fileID: 11400000, guid: e6c4709f4f37fe94e983f55676fcc7be, type: 2}
   _flagSOCrouch: {fileID: 11400000, guid: 46e0baaa43de6c642b2241e0654ad3e2, type: 2}
-  _flagSOInvit: {fileID: 0}
+  _flagSOInvit: {fileID: 11400000, guid: a3cf3693d09433046a344ab222c28e42, type: 2}
   _healMaterial:
   - {fileID: 2100000, guid: 3131e2c68ab757744ae8837fe4e40c57, type: 2}
   _maxHealRadius: 2.5
@@ -1219,6 +1220,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSaveStat
   PlayerRoot: {fileID: 3388754409268780033}
   PlayerSave: {fileID: 11400000, guid: e5c8ff41098db4f45bb09a1e18dfed94, type: 2}
+--- !u!114 &3118397315722404479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388754409268780033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd5a3937dd17c664686a910016086aa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DebugAddItem
+  _inventory: {fileID: 7429501560264599608}
+  yantItem: {fileID: 11400000, guid: 6ef828eaf8f2a7940b077e4a0dfd501e, type: 2}
 --- !u!1 &5027508932175920405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,7 +1326,7 @@ ParentConstraint:
   m_Active: 1
   m_IsLocked: 1
   m_Sources:
-  - sourceTransform: {fileID: 0}
+  - sourceTransform: {fileID: 2524895845469912956}
     weight: 1
 --- !u!1 &5801342987927120064
 GameObject:
@@ -1362,7 +1377,7 @@ MonoBehaviour:
   _tppPivot: {fileID: 2331765517946729004}
   _fppEyePosition: {fileID: 4998768242501833454}
   _otsPivot: {fileID: 0}
-  _yantraPivot: {fileID: 6992557839641635557}
+  _yantraPivot: {fileID: 3752545034867571398}
   _yantraOffsetRotationY: 0
   _tppOffset: {x: 0.35, y: 0.2, z: -1}
   _tppFOV: 60
@@ -2151,13 +2166,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4d5b5ca9a9ae4a4eb99c4bed55e0fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTeleport
-  _teleportPoints: []
+  _teleportPoints:
+  - {fileID: 11400000, guid: 2be4409c146650545990966d38ac1a25, type: 2}
+  - {fileID: 11400000, guid: a3382686fafded94cb1c48928d5a9c04, type: 2}
+  - {fileID: 11400000, guid: f05309b28126ae144b534e6136594034, type: 2}
+  - {fileID: 11400000, guid: f19f34304ca31574d86d40d80d52cdae, type: 2}
+  - {fileID: 11400000, guid: 8e1aaa35a83fb3a4baff9b0a4dab9fbb, type: 2}
+  - {fileID: 11400000, guid: ab7d8f643026f914289adce6ede6a3b9, type: 2}
   _kaVoidEventChannel: {fileID: 11400000, guid: 701aed625b5275c4bb335da1df630781,
     type: 2}
   _taniVoidEventChannel: {fileID: 11400000, guid: a582233bfc3f29a49810ce24880efa5d,
     type: 2}
   _taniEventChannel: {fileID: 11400000, guid: 2a69c53af48bee84db12bbfef3a7b590, type: 2}
   _saveFolder: Assets/ScriptableObject/TeleportPoints
+  _playerControllerObj: {fileID: 652001588548712837}
 --- !u!1001 &320637025206408243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2259,6 +2281,12 @@ SkinnedMeshRenderer:
 --- !u!4 &2012801899879045507 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2278198010112478640, guid: 651086a5c92a96e45bb50083547a25a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 320637025206408243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2524895845469912956 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -6379037950204449969, guid: 651086a5c92a96e45bb50083547a25a9,
     type: 3}
   m_PrefabInstance: {fileID: 320637025206408243}
   m_PrefabAsset: {fileID: 0}
@@ -2907,6 +2935,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookSoundListener
   pageTurnSoundID: {fileID: 11400000, guid: bbbad143f609fd048aa650005fcef766, type: 2}
+--- !u!4 &3752545034867571398 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4687853307995437419, guid: d6f2c258a18b0514f8959d610175256e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8438952321389085613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4885503127846260121 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3950190518940257844, guid: d6f2c258a18b0514f8959d610175256e,
@@ -2919,12 +2953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95f09dbc687e0f468f6de29d9902f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrawOn3DMesh
---- !u!4 &6992557839641635557 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1447801874587363656, guid: d6f2c258a18b0514f8959d610175256e,
-    type: 3}
-  m_PrefabInstance: {fileID: 8438952321389085613}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7033827375117849626 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1477183803868551095, guid: d6f2c258a18b0514f8959d610175256e,

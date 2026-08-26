@@ -23,7 +23,19 @@ public class CenterRayInteract : MonoBehaviour
     public GameObject currentInteractableDebug;
     private Iinteractable currentInteractable;
 
-    public Iinteractable CurrentInteractable => currentInteractable;
+    public Iinteractable CurrentInteractable
+    {
+        get
+        {
+            if (currentInteractable is MonoBehaviour target && target == null)
+            {
+                currentInteractable = null;
+                currentInteractableDebug = null;
+            }
+
+            return currentInteractable;
+        }
+    }
 
     private readonly Collider[] interactableBuffer = new Collider[32];
 
@@ -74,7 +86,7 @@ public class CenterRayInteract : MonoBehaviour
             Iinteractable interactable =
                 collider.GetComponentInParent<Iinteractable>();
 
-            if (interactable == null)
+            if (!IsAlive(interactable))
                 continue;
 
             detectedThisFrame.Add(interactable);
@@ -112,7 +124,7 @@ public class CenterRayInteract : MonoBehaviour
 
         foreach (Iinteractable interactable in highlightedInteractables)
         {
-            if (interactable == null)
+            if (!IsAlive(interactable))
                 continue;
 
             MonoBehaviour target = interactable as MonoBehaviour;
@@ -180,7 +192,7 @@ public class CenterRayInteract : MonoBehaviour
 
     private void SetFocus(Iinteractable interactable)
     {
-        if (interactable == null || interactable == currentInteractable)
+        if (!IsAlive(interactable) || interactable == currentInteractable)
             return;
 
         ClearCurrentInteractable();
@@ -191,12 +203,21 @@ public class CenterRayInteract : MonoBehaviour
 
     private void ClearCurrentInteractable()
     {
-        if (currentInteractable == null)
+        if (!IsAlive(currentInteractable))
+        {
+            currentInteractable = null;
+            currentInteractableDebug = null;
             return;
+        }
 
         //Debug.Log($"Lost focus on {currentInteractable as MonoBehaviour}");
         currentInteractable.OnLoseFocus();
         currentInteractable = null;
+    }
+
+    private static bool IsAlive(Iinteractable interactable)
+    {
+        return interactable is MonoBehaviour target && target != null;
     }
 
     public void SetInteractEnabled(bool enabled)
@@ -214,7 +235,7 @@ public class CenterRayInteract : MonoBehaviour
     {
         foreach (Iinteractable interactable in highlightedInteractables)
         {
-            if (interactable != null)
+            if (IsAlive(interactable))
                 interactable.HideHighlight();
         }
 

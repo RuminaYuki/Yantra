@@ -41,17 +41,18 @@ public class PlayerInteract : MonoBehaviour
             isHoldingInteraction = false;
             rayInteract.SetInteractEnabled(true);
 
-            if (activeInteraction != null)
+            if (IsAlive(activeInteraction))
             {
                 activeInteraction.CancelInteraction(rootPlayer);
-                activeInteraction = null;
             }
+
+            activeInteraction = null;
 
             return;
         }
 
         Iinteractable targetInteractable = rayInteract.CurrentInteractable;
-        if (targetInteractable == null || !targetInteractable.CanInteract)
+        if (!IsAlive(targetInteractable) || !targetInteractable.CanInteract)
             return;
 
         if (!targetInteractable.HoldInteract)
@@ -67,5 +68,10 @@ public class PlayerInteract : MonoBehaviour
             rayInteract.SetInteractEnabled(false);
             rayInteract.StopHighlightingAll();
         }
+    }
+
+    private static bool IsAlive(Iinteractable interactable)
+    {
+        return interactable is MonoBehaviour target && target != null;
     }
 }
