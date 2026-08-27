@@ -8,6 +8,7 @@ public class TaniAlertMockup : MonoBehaviour
 {
     public VoidEventChannelSO TaniAlertEvent;
     public TextMeshProUGUI text;
+    public float Time = 5f;
     void OnEnable()
     {
         TaniAlertEvent.Raised += HeadelEvent;
@@ -24,7 +25,7 @@ public class TaniAlertMockup : MonoBehaviour
     IEnumerator TaniCountdown()
     {
         text.text = "Tani Ready To Attack you";
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(Time);
         text.text = "";
     }
 

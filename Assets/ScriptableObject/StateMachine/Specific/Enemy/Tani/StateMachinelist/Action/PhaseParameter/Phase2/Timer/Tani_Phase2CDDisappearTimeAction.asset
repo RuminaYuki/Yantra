@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96502417bafda194193aca23d57d21d9, type: 3}
   m_Name: Tani_Phase2CDDisappearTimeAction
   m_EditorClassIdentifier: Assembly-CSharp::CountDownTimerActionSO
-  MinDuration: 15
-  MaxDuration: 20
+  MinDuration: 80
+  MaxDuration: 90
   FlagSO: {fileID: 11400000, guid: d01d1976ba0e15245af857cd6d0476c4, type: 2}
   EnableDebugLogs: 0
